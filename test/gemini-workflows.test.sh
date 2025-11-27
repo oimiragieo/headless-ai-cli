@@ -128,7 +128,7 @@ test_case "Environment variable usage" \
 
 # Test 13: CI/CD pattern - json and model
 test_case "CI/CD pattern - json and model" \
-    "gemini -p --model gemini-2.5-pro --output-format json 'Say test' > $TEST_DIR/cicd.json 2>&1" 0
+    "gemini -p --model gemini-3.0-pro --output-format json 'Say test' > $TEST_DIR/cicd.json 2>&1" 0
 
 # Test 14: CI/CD pattern with error handling
 test_case "CI/CD pattern with error handling" \
@@ -144,7 +144,7 @@ test_case "Conditional execution based on exit code" \
 
 # Test 17: Multiple flags for automation
 test_case "Multiple flags for automation" \
-    "gemini -p --model gemini-2.5-pro --output-format json --yolo 'Say test' > $TEST_DIR/auto.json 2>&1" 0
+    "gemini -p --model gemini-3.0-pro --output-format json --yolo 'Say test' > $TEST_DIR/auto.json 2>&1" 0
 
 # Test 18: Artifact generation pattern
 test_case "Artifact generation pattern" \

@@ -119,7 +119,7 @@ gemini [options] -p "Your prompt"
 
 **Common options:**
 - `-p, --prompt TEXT`: Provide prompt directly (enables headless mode)
-- `--model MODEL`: Specify model (default: gemini-2.5-pro)
+- `--model MODEL`: Specify model (latest: gemini-3.0-pro, previous: gemini-2.5-pro)
 - `--output-format FORMAT`: Output format (`text`, `json`, `stream-json`)
 - `--yolo`: Auto-approve all actions (use with caution)
 - `--include-directories DIRS`: Include additional directories (comma-separated)
@@ -261,7 +261,7 @@ jobs:
           git diff origin/${{ github.base_ref }}...HEAD | \
             gemini -p "Review these code changes for bugs, security issues, and best practices. Provide actionable feedback." \
             --output-format json \
-            --model gemini-2.5-pro \
+            --model gemini-3.0-pro \
             > gemini_review.json || exit 1
           
           if command -v jq &> /dev/null; then

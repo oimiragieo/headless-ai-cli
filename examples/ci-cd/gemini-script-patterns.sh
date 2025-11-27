@@ -12,7 +12,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Configuration
-GEMINI_MODEL="${GEMINI_MODEL:-gemini-2.5-pro}"
+GEMINI_MODEL="${GEMINI_MODEL:-gemini-3.0-pro}"
 GEMINI_OUTPUT_FORMAT="${GEMINI_OUTPUT_FORMAT:-json}"
 
 # Function: Check if Gemini CLI is installed
@@ -284,7 +284,7 @@ get_current_model() {
 
 # Function: Set default model
 set_default_model() {
-    local model="${1:-gemini-2.5-pro}"
+    local model="${1:-gemini-3.0-pro}"
     echo -e "${BLUE}Setting default model to: $model${NC}" >&2
     gemini config set model "$model"
     return $?
@@ -343,7 +343,7 @@ if [ "${BASH_SOURCE[0]}" = "${0}" ]; then
             get_current_model
             ;;
         set-model)
-            set_default_model "${2:-gemini-2.5-pro}"
+            set_default_model "${2:-gemini-3.0-pro}"
             ;;
         *)
             echo "Usage: $0 {review|batch|security|commit|release|logs|extract|models|get-model|set-model} [args...]"
@@ -358,7 +358,7 @@ if [ "${BASH_SOURCE[0]}" = "${0}" ]; then
             echo "  $0 extract output.json response"
             echo "  $0 models"
             echo "  $0 get-model"
-            echo "  $0 set-model gemini-2.5-pro"
+            echo "  $0 set-model gemini-3.0-pro"
             exit 1
             ;;
     esac

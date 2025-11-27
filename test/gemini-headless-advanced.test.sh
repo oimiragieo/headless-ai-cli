@@ -82,9 +82,9 @@ trap "rm -rf $TEST_DIR" EXIT
 test_case "List models command" \
     "gemini models list | head -1" 0
 
-# Test 2: Model selection with gemini-2.5-pro
-test_case "Model selection with gemini-2.5-pro" \
-    "gemini -p --model gemini-2.5-pro 'Say test'" 0
+# Test 2: Model selection with gemini-3.0-pro
+test_case "Model selection with gemini-3.0-pro" \
+    "gemini -p --model gemini-3.0-pro 'Say test'" 0
 
 # Test 3: Model selection with gemini-2.5-flash
 test_case "Model selection with gemini-2.5-flash" \
@@ -100,23 +100,23 @@ test_case "Model selection with gemini-1.5-flash" \
 
 # Test 6: JSON output with model selection
 test_case "JSON output with model selection" \
-    "gemini -p --model gemini-2.5-pro --output-format json 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
+    "gemini -p --model gemini-3.0-pro --output-format json 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
 
 # Test 7: Stream JSON with model selection
 test_case "Stream JSON with model selection" \
-    "gemini -p --model gemini-2.5-pro --output-format stream-json 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
+    "gemini -p --model gemini-3.0-pro --output-format stream-json 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
 
 # Test 8: Yolo with model selection
 test_case "Yolo with model selection" \
-    "gemini -p --model gemini-2.5-pro --yolo 'Say test'" 0
+    "gemini -p --model gemini-3.0-pro --yolo 'Say test'" 0
 
 # Test 9: Include directories with model
 test_case "Include directories with model" \
-    "gemini -p --model gemini-2.5-pro --include-directories src,docs 'Say test'" 0
+    "gemini -p --model gemini-3.0-pro --include-directories src,docs 'Say test'" 0
 
 # Test 10: Debug with model selection
 test_case "Debug with model selection" \
-    "gemini -p --model gemini-2.5-pro --debug 'Say test'" 0
+    "gemini -p --model gemini-3.0-pro --debug 'Say test'" 0
 
 # Test 11: Extract response from JSON
 if command -v jq &> /dev/null && [ -n "$GEMINI_API_KEY" ]; then
@@ -153,7 +153,7 @@ fi
 if command -v jq &> /dev/null && [ -n "$GEMINI_API_KEY" ]; then
     test_count=$((test_count + 1))
     echo -n "Test $test_count: Extract tokens from JSON ... "
-    JSON_OUTPUT=$(gemini -p --output-format json 'Say test' 2>/dev/null || echo '{"stats":{"models":{"gemini-2.5-pro":{"tokens":{}}}}}')
+    JSON_OUTPUT=$(gemini -p --output-format json 'Say test' 2>/dev/null || echo '{"stats":{"models":{"gemini-3.0-pro":{"tokens":{}}}}}')
     
     if echo "$JSON_OUTPUT" | jq -e '.stats.models' > /dev/null 2>&1; then
         echo -e "${GREEN}PASS${NC}"
@@ -166,7 +166,7 @@ fi
 
 # Test 14: Complex command with all flags
 test_case "Complex command with all flags" \
-    "gemini -p --model gemini-2.5-pro --output-format stream-json --yolo --include-directories src --debug 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
+    "gemini -p --model gemini-3.0-pro --output-format stream-json --yolo --include-directories src --debug 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
 
 # Test 15: Config commands
 test_case "Config init (gemini config init)" \
@@ -174,7 +174,7 @@ test_case "Config init (gemini config init)" \
 
 # Test 16: Config set and get model
 test_case "Config set and get model" \
-    "gemini config set model gemini-2.5-pro 2>&1 && gemini config get model 2>&1" 0
+    "gemini config set model gemini-3.0-pro 2>&1 && gemini config get model 2>&1" 0
 
 # Test 17: Error handling - invalid model
 test_case "Error handling - invalid model" \

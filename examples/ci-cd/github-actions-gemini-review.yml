@@ -53,7 +53,7 @@ jobs:
             echo "$DIFF_CONTENT" | \
               gemini -p "Review these code changes for potential bugs, security vulnerabilities, and adherence to best practices. Provide actionable suggestions for improvement. Format your response as a markdown list." \
               --output-format json \
-              --model gemini-2.5-pro \
+              --model gemini-3.0-pro \
               > gemini_review_output.json 2>&1 || {
                 echo "Gemini review failed." > gemini_review_output.json
                 echo '{"response":"Review failed"}' >> gemini_review_output.json

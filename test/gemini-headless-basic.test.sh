@@ -91,9 +91,9 @@ test_case "JSON output format (--output-format json)" \
 test_case "Stream JSON output format (--output-format stream-json)" \
     "gemini -p --output-format stream-json 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
 
-# Test 8: Model selection with gemini-2.5-pro
-test_case "Model selection (gemini-2.5-pro)" \
-    "gemini -p --model gemini-2.5-pro 'Say test'" 0
+# Test 8: Model selection with gemini-3.0-pro
+test_case "Model selection (gemini-3.0-pro)" \
+    "gemini -p --model gemini-3.0-pro 'Say test'" 0
 
 # Test 9: Model selection with gemini-2.5-flash
 test_case "Model selection (gemini-2.5-flash)" \
@@ -121,11 +121,11 @@ test_case "Debug mode (--debug)" \
 
 # Test 15: Combined flags - model and json
 test_case "Combined flags - model and json" \
-    "gemini -p --model gemini-2.5-pro --output-format json 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
+    "gemini -p --model gemini-3.0-pro --output-format json 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
 
 # Test 16: Combined flags - model, json, yolo
 test_case "Combined flags - model, json, yolo" \
-    "gemini -p --model gemini-2.5-pro --output-format json --yolo 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
+    "gemini -p --model gemini-3.0-pro --output-format json --yolo 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
 
 # Test 17: List models command
 test_case "List models command (gemini models list)" \
@@ -137,7 +137,7 @@ test_case "Config get model (gemini config get model)" \
 
 # Test 19: Config set model (syntax check)
 test_case "Config set model (gemini config set model)" \
-    "gemini config set model gemini-2.5-pro 2>&1 || true" 0
+    "gemini config set model gemini-3.0-pro 2>&1 || true" 0
 
 # Test 20: Help flag (should work without API key)
 test_case "Help flag" \
@@ -161,7 +161,7 @@ test_case "File input via pipe" \
 
 # Test 25: Complex command with all flags
 test_case "Complex command with all flags" \
-    "gemini -p --model gemini-2.5-pro --output-format json --yolo --include-directories src --debug 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
+    "gemini -p --model gemini-3.0-pro --output-format json --yolo --include-directories src --debug 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
 
 echo ""
 echo "=========================================="
