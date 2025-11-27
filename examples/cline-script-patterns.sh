@@ -1,6 +1,10 @@
 #!/bin/bash
 # Reusable Script Patterns for Cline CLI
 # This file contains common patterns and utilities for using Cline CLI in automation
+#
+# Two approaches are available:
+# 1. Simple Direct Syntax (recommended for most use cases)
+# 2. Advanced Task/Instance Management (for complex workflows)
 
 set -e
 
@@ -21,6 +25,97 @@ check_cline_installed() {
         exit 1
     fi
 }
+
+#############################################
+# SIMPLE DIRECT SYNTAX FUNCTIONS (Recommended)
+#############################################
+
+# Function: Run Cline with direct prompt (simple)
+run_cline_direct() {
+    local prompt="$1"
+    local output_format="${2:-rich}"  # rich, json, or plain
+
+    echo -e "${BLUE}Running Cline: $prompt${NC}" >&2
+
+    cline "$prompt" --yolo --output-format "$output_format"
+    return $?
+}
+
+# Function: Run Cline with file attachment
+run_cline_with_file() {
+    local prompt="$1"
+    local file="$2"
+
+    echo -e "${BLUE}Running Cline with file: $file${NC}" >&2
+
+    cline "$prompt" -f "$file" --yolo
+    return $?
+}
+
+# Function: Run Cline in plan mode
+run_cline_plan() {
+    local prompt="$1"
+
+    echo -e "${BLUE}Running Cline in plan mode: $prompt${NC}" >&2
+
+    cline "$prompt" --mode plan --yolo
+    return $?
+}
+
+# Function: Generate unit tests (simple)
+generate_tests_simple() {
+    local file_pattern="${1:-*.js}"
+
+    echo -e "${BLUE}Generating unit tests for: $file_pattern${NC}" >&2
+
+    local prompt="Generate comprehensive unit tests for all files matching pattern: $file_pattern"
+    cline "$prompt" --yolo --output-format json
+    return $?
+}
+
+# Function: Code review with git diff (simple)
+code_review_simple() {
+    local output_format="${1:-plain}"
+
+    echo -e "${BLUE}Running code review on git diff...${NC}" >&2
+
+    git diff | cline "Review these code changes for bugs and security issues" --yolo --output-format "$output_format"
+    return $?
+}
+
+# Function: Batch process files (simple)
+batch_process_simple() {
+    local pattern="$1"
+    local prompt_template="$2"
+
+    echo -e "${BLUE}Batch processing files matching: $pattern${NC}" >&2
+
+    local processed=0
+    local failed=0
+
+    for file in $(find . -type f -name "$pattern" 2>/dev/null | head -20); do
+        if [ -f "$file" ]; then
+            local prompt="${prompt_template/\{FILE\}/$file}"
+
+            echo -e "${BLUE}Processing: $file${NC}" >&2
+
+            if cline "$prompt" -f "$file" --yolo; then
+                processed=$((processed + 1))
+                echo -e "${GREEN}✓ Processed: $file${NC}" >&2
+            else
+                failed=$((failed + 1))
+                echo -e "${RED}✗ Failed: $file${NC}" >&2
+            fi
+        fi
+    done
+
+    echo -e "${GREEN}Batch processing complete: $processed processed, $failed failed${NC}" >&2
+    return $failed
+}
+
+#############################################
+# ADVANCED TASK/INSTANCE FUNCTIONS
+#############################################
 
 # Function: Check if API key is set
 check_api_key() {
@@ -204,8 +299,29 @@ if [ "${BASH_SOURCE[0]}" = "${0}" ]; then
     # Script is being executed directly
     check_cline_installed
     check_api_key
-    
+
     case "${1:-help}" in
+        # Simple direct syntax commands (recommended)
+        direct)
+            run_cline_direct "${2:-}" "${3:-rich}"
+            ;;
+        plan)
+            run_cline_plan "${2:-}"
+            ;;
+        with-file)
+            run_cline_with_file "${2:-}" "${3:-}"
+            ;;
+        review-simple)
+            code_review_simple "${2:-plain}"
+            ;;
+        generate-tests-simple)
+            generate_tests_simple "${2:-*.js}"
+            ;;
+        batch-simple)
+            batch_process_simple "${2:-*.js}" "${3:-Review {FILE} for improvements}"
+            ;;
+
+        # Advanced task/instance commands
         task)
             run_cline_task "${2:-}" "${3:-$CLINE_INSTANCE}"
             ;;
@@ -245,19 +361,27 @@ if [ "${BASH_SOURCE[0]}" = "${0}" ]; then
             view_task "${2:-false}"
             ;;
         *)
-            echo "Usage: $0 {task|review|refactor|generate-tests|batch|instance|task-list|task-view} [args...]"
+            echo "Usage: $0 {COMMAND} [args...]"
             echo ""
-            echo "Examples:"
-            echo "  $0 task 'Generate unit tests'"
-            echo "  $0 review review.md"
-            echo "  $0 refactor 'Improve code quality'"
-            echo "  $0 generate-tests '*.js'"
-            echo "  $0 batch '*.js' 'Review {FILE}'"
+            echo "Simple Direct Syntax (Recommended):"
+            echo "  $0 direct 'Your prompt' [json|rich|plain]"
+            echo "  $0 plan 'Design architecture'"
+            echo "  $0 with-file 'Review this code' path/to/file"
+            echo "  $0 review-simple [json|plain]"
+            echo "  $0 generate-tests-simple '*.js'"
+            echo "  $0 batch-simple '*.js' 'Review {FILE}'"
+            echo ""
+            echo "Advanced Task/Instance Management:"
+            echo "  $0 task 'Generate unit tests' [instance-name]"
+            echo "  $0 review review.md [instance-name]"
+            echo "  $0 refactor 'Improve code quality' [instance-name]"
+            echo "  $0 generate-tests '*.js' [instance-name]"
+            echo "  $0 batch '*.js' 'Review {FILE}' [instance-name]"
             echo "  $0 instance new my-instance"
             echo "  $0 instance list"
             echo "  $0 instance switch instance-id"
             echo "  $0 task-list"
-            echo "  $0 task-view true"
+            echo "  $0 task-view [true|false]"
             exit 1
             ;;
     esac
