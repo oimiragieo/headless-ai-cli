@@ -80,75 +80,75 @@ trap "rm -rf $TEST_DIR" EXIT
 
 # Test 1: Output redirection to file
 test_case "Output redirection to file" \
-    "claude -p 'Say test' --no-interactive > $TEST_DIR/output.txt 2>&1 && test -f $TEST_DIR/output.txt" 0
+    "claude -p 'Say test' --permission-mode bypassPermissions > $TEST_DIR/output.txt 2>&1 && test -f $TEST_DIR/output.txt" 0
 
 # Test 2: Stderr redirection
 test_case "Stderr redirection" \
-    "claude -p 'Say test' --no-interactive 2> $TEST_DIR/error.txt && test -f $TEST_DIR/error.txt" 0
+    "claude -p 'Say test' --permission-mode bypassPermissions 2> $TEST_DIR/error.txt && test -f $TEST_DIR/error.txt" 0
 
 # Test 3: Combined stdout and stderr redirection
 test_case "Combined stdout and stderr redirection" \
-    "claude -p 'Say test' --no-interactive > $TEST_DIR/combined.txt 2>&1 && test -f $TEST_DIR/combined.txt" 0
+    "claude -p 'Say test' --permission-mode bypassPermissions > $TEST_DIR/combined.txt 2>&1 && test -f $TEST_DIR/combined.txt" 0
 
 # Test 4: Exit code capture
 test_case "Exit code capture" \
-    "claude -p 'Say test' --no-interactive; EXIT_CODE=\$?; [ \$EXIT_CODE -eq 0 ] || [ \$EXIT_CODE -ne 0 ]" 0
+    "claude -p 'Say test' --permission-mode bypassPermissions; EXIT_CODE=\$?; [ \$EXIT_CODE -eq 0 ] || [ \$EXIT_CODE -ne 0 ]" 0
 
 # Test 5: Exit code on success
 test_case "Exit code on success" \
-    "claude -p 'Say OK' --no-interactive; [ \$? -eq 0 ]" 0
+    "claude -p 'Say OK' --permission-mode bypassPermissions; [ \$? -eq 0 ]" 0
 
 # Test 6: Exit code on failure (empty prompt)
 test_case "Exit code on failure" \
-    "claude -p '' --no-interactive 2>&1; [ \$? -ne 0 ]" 0
+    "claude -p '' --permission-mode bypassPermissions 2>&1; [ \$? -ne 0 ]" 0
 
 # Test 7: Error handling with if statement
 test_case "Error handling with if statement" \
-    "if claude -p 'Say test' --no-interactive; then echo 'success'; else echo 'failure'; fi" 0
+    "if claude -p 'Say test' --permission-mode bypassPermissions; then echo 'success'; else echo 'failure'; fi" 0
 
 # Test 8: Error handling with || operator
 test_case "Error handling with || operator" \
-    "claude -p 'Say test' --no-interactive || echo 'handled error'" 0
+    "claude -p 'Say test' --permission-mode bypassPermissions || echo 'handled error'" 0
 
 # Test 9: Batch processing pattern
 test_case "Batch processing pattern" \
-    "for prompt in 'Say hello' 'Say world'; do claude -p \"\$prompt\" --no-interactive > /dev/null 2>&1; done" 0
+    "for prompt in 'Say hello' 'Say world'; do claude -p \"\$prompt\" --permission-mode bypassPermissions > /dev/null 2>&1; done" 0
 
 # Test 10: Batch processing with JSON output
 test_case "Batch processing with JSON output" \
-    "for i in 1 2; do claude -p 'Say test' --output-format json --no-interactive > $TEST_DIR/batch_\$i.json 2>&1; done && test -f $TEST_DIR/batch_1.json" 0
+    "for i in 1 2; do claude -p 'Say test' --output-format json --permission-mode bypassPermissions > $TEST_DIR/batch_\$i.json 2>&1; done && test -f $TEST_DIR/batch_1.json" 0
 
 # Test 11: Environment variable usage
 test_case "Environment variable usage" \
-    "ANTHROPIC_API_KEY=\${ANTHROPIC_API_KEY:-test} claude -p 'Say test' --no-interactive > /dev/null 2>&1" 0
+    "ANTHROPIC_API_KEY=\${ANTHROPIC_API_KEY:-test} claude -p 'Say test' --permission-mode bypassPermissions > /dev/null 2>&1" 0
 
 # Test 12: CI/CD pattern - json and no-interactive
 test_case "CI/CD pattern - json and no-interactive" \
-    "claude -p 'Say test' --output-format json --no-interactive > $TEST_DIR/cicd.json 2>&1" 0
+    "claude -p 'Say test' --output-format json --permission-mode bypassPermissions > $TEST_DIR/cicd.json 2>&1" 0
 
 # Test 13: CI/CD pattern with error handling
 test_case "CI/CD pattern with error handling" \
-    "claude -p 'Say test' --output-format json --no-interactive > $TEST_DIR/cicd.json 2>&1 || exit 1" 0
+    "claude -p 'Say test' --output-format json --permission-mode bypassPermissions > $TEST_DIR/cicd.json 2>&1 || exit 1" 0
 
 # Test 14: Timeout handling
 test_case "Timeout handling" \
-    "timeout 10 claude -p 'Say quick test' --no-interactive 2>&1 || [ \$? -eq 124 ] || [ \$? -eq 0 ]" 0
+    "timeout 10 claude -p 'Say quick test' --permission-mode bypassPermissions 2>&1 || [ \$? -eq 124 ] || [ \$? -eq 0 ]" 0
 
 # Test 15: Pipe output to another command
 test_case "Pipe output to another command" \
-    "claude -p 'Say test' --no-interactive 2>&1 | head -1 > /dev/null" 0
+    "claude -p 'Say test' --permission-mode bypassPermissions 2>&1 | head -1 > /dev/null" 0
 
 # Test 16: Conditional execution based on exit code
 test_case "Conditional execution based on exit code" \
-    "claude -p 'Say test' --no-interactive && echo 'success' || echo 'failure'" 0
+    "claude -p 'Say test' --permission-mode bypassPermissions && echo 'success' || echo 'failure'" 0
 
 # Test 17: Multiple flags for automation
 test_case "Multiple flags for automation" \
-    "claude -p 'Say test' --model claude-sonnet-4.5 --output-format json --no-interactive --allowedTools 'Read' > $TEST_DIR/auto.json 2>&1" 0
+    "claude -p 'Say test' --model claude-sonnet-4.5 --output-format json --permission-mode bypassPermissions --allowedTools 'Read' > $TEST_DIR/auto.json 2>&1" 0
 
 # Test 18: Artifact generation pattern
 test_case "Artifact generation pattern" \
-    "claude -p 'Generate report' --output-format json --no-interactive > $TEST_DIR/artifact.json 2>&1 && test -f $TEST_DIR/artifact.json" 0
+    "claude -p 'Generate report' --output-format json --permission-mode bypassPermissions > $TEST_DIR/artifact.json 2>&1 && test -f $TEST_DIR/artifact.json" 0
 
 # Test 19: Error output parsing
 test_case "Error output parsing" \
@@ -156,23 +156,23 @@ test_case "Error output parsing" \
 
 # Test 20: Success output parsing
 test_case "Success output parsing" \
-    "claude -p 'Say test' --no-interactive 2>&1 | grep -q . || echo 'output check'" 0
+    "claude -p 'Say test' --permission-mode bypassPermissions 2>&1 | grep -q . || echo 'output check'" 0
 
 # Test 21: Exit code propagation in script
 test_case "Exit code propagation" \
-    "(claude -p 'Say test' --no-interactive; EXIT=\$?; exit \$EXIT) && echo 'propagated'" 0
+    "(claude -p 'Say test' --permission-mode bypassPermissions; EXIT=\$?; exit \$EXIT) && echo 'propagated'" 0
 
 # Test 22: JSON parsing with jq
 if command -v jq &> /dev/null; then
     test_case "JSON parsing with jq" \
-        "claude -p 'Say test' --output-format json --no-interactive 2>&1 | jq . > /dev/null || echo '{}' | jq . > /dev/null" 0
+        "claude -p 'Say test' --output-format json --permission-mode bypassPermissions 2>&1 | jq . > /dev/null || echo '{}' | jq . > /dev/null" 0
 fi
 
 # Test 23: Extract result from JSON
 if command -v jq &> /dev/null && [ -n "$ANTHROPIC_API_KEY" ]; then
     test_count=$((test_count + 1))
     echo -n "Test $test_count: Extract result from JSON ... "
-    JSON_OUTPUT=$(claude -p 'Say hello' --output-format json --no-interactive 2>/dev/null || echo '{"result":"hello"}')
+    JSON_OUTPUT=$(claude -p 'Say hello' --output-format json --permission-mode bypassPermissions 2>/dev/null || echo '{"result":"hello"}')
     RESULT=$(echo "$JSON_OUTPUT" | jq -r '.result // empty' 2>/dev/null || echo "")
     
     if [ -n "$RESULT" ] || echo "$JSON_OUTPUT" | jq -e '.result' > /dev/null 2>&1; then
@@ -186,11 +186,11 @@ fi
 
 # Test 24: Retry pattern (syntax check)
 test_case "Retry pattern syntax" \
-    "for i in 1 2; do claude -p 'Say test' --no-interactive && break || sleep 1; done" 0
+    "for i in 1 2; do claude -p 'Say test' --permission-mode bypassPermissions && break || sleep 1; done" 0
 
 # Test 25: Working directory in automation
 test_case "Working directory in automation" \
-    "claude -p 'Say test' --cwd . --no-interactive" 0
+    "claude -p 'Say test' --cwd . --permission-mode bypassPermissions" 0
 
 # Cleanup
 rm -rf $TEST_DIR

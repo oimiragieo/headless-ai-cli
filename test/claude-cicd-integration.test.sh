@@ -89,31 +89,31 @@ test_case "Environment variable detection" \
 
 # Test 2: Non-interactive mode in CI
 test_case "Non-interactive mode in CI" \
-    "claude -p 'Say test' --no-interactive" 0
+    "claude -p 'Say test' --permission-mode bypassPermissions" 0
 
 # Test 3: Structured JSON output for automation
 test_case "Structured JSON output for automation" \
-    "claude -p 'Say test' --output-format json --no-interactive | grep -q '{' || echo '{}' | grep -q '{'" 0
+    "claude -p 'Say test' --output-format json --permission-mode bypassPermissions | grep -q '{' || echo '{}' | grep -q '{'" 0
 
 # Test 4: Exit code handling
 test_case "Exit code handling on success" \
-    "claude -p 'Say OK' --no-interactive; echo \$? | grep -q '^0$' || echo '0'" 0
+    "claude -p 'Say OK' --permission-mode bypassPermissions; echo \$? | grep -q '^0$' || echo '0'" 0
 
 # Test 5: Exit code handling on error
 test_case "Exit code handling on error" \
-    "claude -p '' --no-interactive 2>&1; [ \$? -ne 0 ] || echo '0'" 0
+    "claude -p '' --permission-mode bypassPermissions 2>&1; [ \$? -ne 0 ] || echo '0'" 0
 
 # Test 6: Parse JSON response in CI script
 if [ "$HAS_JQ" = true ]; then
     test_case "Parse JSON response in CI script" \
-        "RESULT=\$(claude -p 'Say OK' --output-format json --no-interactive 2>/dev/null || echo '{\"result\":\"OK\"}'); echo \$RESULT | jq -r '.result // .response // \"OK\"' | grep -q ." 0
+        "RESULT=\$(claude -p 'Say OK' --output-format json --permission-mode bypassPermissions 2>/dev/null || echo '{\"result\":\"OK\"}'); echo \$RESULT | jq -r '.result // .response // \"OK\"' | grep -q ." 0
 fi
 
 # Test 7: Extract cost for reporting
 if [ "$HAS_JQ" = true ] && [ -n "$ANTHROPIC_API_KEY" ]; then
     test_count=$((test_count + 1))
     echo -n "Test $test_count: Extract cost for reporting ... "
-    JSON_OUTPUT=$(claude -p 'Say test' --output-format json --no-interactive 2>/dev/null || echo '{"total_cost_usd":0}')
+    JSON_OUTPUT=$(claude -p 'Say test' --output-format json --permission-mode bypassPermissions 2>/dev/null || echo '{"total_cost_usd":0}')
     COST=$(echo "$JSON_OUTPUT" | jq -r '.total_cost_usd // "0"' 2>/dev/null || echo "0")
     
     if [ -n "$COST" ]; then
@@ -126,16 +126,16 @@ fi
 
 # Test 8: Error handling in CI context
 test_case "Error handling in CI context" \
-    "claude -p 'Invalid command that might fail' --no-interactive --output-format json 2>&1 | grep -q '{' || echo '{}' | grep -q '{'" 0
+    "claude -p 'Invalid command that might fail' --permission-mode bypassPermissions --output-format json 2>&1 | grep -q '{' || echo '{}' | grep -q '{'" 0
 
 # Test 9: Timeout handling
 test_case "Timeout handling" \
-    "timeout 10 claude -p 'Say test' --no-interactive 2>&1 | head -1 || echo 'timeout handled'" 0
+    "timeout 10 claude -p 'Say test' --permission-mode bypassPermissions 2>&1 | head -1 || echo 'timeout handled'" 0
 
 # Test 10: CI/CD pattern - code review simulation
 if [ "$HAS_JQ" = true ]; then
     test_case "CI/CD pattern - code review simulation" \
-        "echo 'def hello(): return \"world\"' | claude -p 'Review this code' --output-format json --no-interactive | jq . > /dev/null 2>&1 || echo '{}' | jq . > /dev/null" 0
+        "echo 'def hello(): return \"world\"' | claude -p 'Review this code' --output-format json --permission-mode bypassPermissions | jq . > /dev/null 2>&1 || echo '{}' | jq . > /dev/null" 0
 fi
 
 # Test 11: Structured output for artifacts
@@ -144,7 +144,7 @@ if [ "$HAS_JQ" = true ] && [ -n "$ANTHROPIC_API_KEY" ]; then
     echo -n "Test $test_count: Structured output for artifacts ... "
     
     OUTPUT_FILE="/tmp/claude_cicd_test.json"
-    claude -p 'Say test' --output-format json --no-interactive > "$OUTPUT_FILE" 2>/dev/null || echo '{"result":"test"}' > "$OUTPUT_FILE"
+    claude -p 'Say test' --output-format json --permission-mode bypassPermissions > "$OUTPUT_FILE" 2>/dev/null || echo '{"result":"test"}' > "$OUTPUT_FILE"
     
     if [ -f "$OUTPUT_FILE" ] && jq . "$OUTPUT_FILE" > /dev/null 2>&1; then
         rm -f "$OUTPUT_FILE"
@@ -162,11 +162,11 @@ test_case "CI environment variable simulation" \
 
 # Test 13: Fail-fast behavior
 test_case "Fail-fast behavior" \
-    "set -e; claude -p 'Say test' --no-interactive > /dev/null 2>&1 || exit 1; echo 'success'" 0
+    "set -e; claude -p 'Say test' --permission-mode bypassPermissions > /dev/null 2>&1 || exit 1; echo 'success'" 0
 
 # Test 14: Retry logic simulation
 test_case "Retry logic simulation" \
-    "for i in 1 2 3; do claude -p 'Say test' --no-interactive > /dev/null 2>&1 && break || sleep 1; done" 0
+    "for i in 1 2 3; do claude -p 'Say test' --permission-mode bypassPermissions > /dev/null 2>&1 && break || sleep 1; done" 0
 
 echo ""
 echo "=========================================="

@@ -63,47 +63,47 @@ fi
 
 # Test 1: Basic headless mode with -p flag
 test_case "Basic headless mode (-p flag)" \
-    "claude -p 'Say hello' --no-interactive" 0
+    "claude -p 'Say hello' --permission-mode bypassPermissions" 0
 
 # Test 2: Basic headless mode with --print flag
 test_case "Basic headless mode (--print flag)" \
-    "claude --print 'Say hello' --no-interactive" 0
+    "claude --print 'Say hello' --permission-mode bypassPermissions" 0
 
 # Test 3: Verify -p and --print are equivalent
 test_case "Verify -p and --print equivalence" \
-    "claude -p 'test' --no-interactive && claude --print 'test' --no-interactive" 0
+    "claude -p 'test' --permission-mode bypassPermissions && claude --print 'test' --permission-mode bypassPermissions" 0
 
 # Test 4: Exit code on success
 test_case "Exit code on success" \
-    "claude -p 'Say OK' --no-interactive; echo \$?" 0
+    "claude -p 'Say OK' --permission-mode bypassPermissions; echo \$?" 0
 
 # Test 5: Text output format (default)
 test_case "Text output format (default)" \
-    "claude -p 'Say test' --no-interactive | grep -q ." 0
+    "claude -p 'Say test' --permission-mode bypassPermissions | grep -q ." 0
 
 # Test 6: JSON output format
 test_case "JSON output format" \
-    "claude -p 'Say test' --output-format json --no-interactive | jq . > /dev/null 2>&1 || echo '{}' | jq . > /dev/null" 0
+    "claude -p 'Say test' --output-format json --permission-mode bypassPermissions | jq . > /dev/null 2>&1 || echo '{}' | jq . > /dev/null" 0
 
 # Test 7: Stream JSON output format
 test_case "Stream JSON output format" \
-    "claude -p 'Say test' --output-format stream-json --no-interactive 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
+    "claude -p 'Say test' --output-format stream-json --permission-mode bypassPermissions 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
 
 # Test 8: Non-interactive flag
 test_case "Non-interactive flag" \
-    "claude -p 'Say test' --no-interactive" 0
+    "claude -p 'Say test' --permission-mode bypassPermissions" 0
 
 # Test 9: Stdin input
 test_case "Stdin input" \
-    "echo 'Say test' | claude -p --no-interactive" 0
+    "echo 'Say test' | claude -p --permission-mode bypassPermissions" 0
 
 # Test 10: Empty prompt handling (should fail gracefully)
 test_case "Empty prompt handling" \
-    "claude -p '' --no-interactive" 1
+    "claude -p '' --permission-mode bypassPermissions" 1
 
 # Test 11: Invalid output format (should fail)
 test_case "Invalid output format" \
-    "claude -p 'test' --output-format invalid --no-interactive" 1
+    "claude -p 'test' --output-format invalid --permission-mode bypassPermissions" 1
 
 # Test 12: Help flag (should work without API key)
 test_case "Help flag" \
@@ -115,15 +115,15 @@ test_case "Version flag" \
 
 # Test 14: Model selection
 test_case "Model selection (--model)" \
-    "claude -p 'Say test' --model claude-sonnet-4.5 --no-interactive" 0
+    "claude -p 'Say test' --model claude-sonnet-4.5 --permission-mode bypassPermissions" 0
 
 # Test 15: Working directory control
 test_case "Working directory control (--cwd)" \
-    "claude -p 'Say test' --cwd . --no-interactive" 0
+    "claude -p 'Say test' --cwd . --permission-mode bypassPermissions" 0
 
 # Test 16: Tool control with allowedTools
 test_case "Tool control with allowedTools" \
-    "claude -p 'Say test' --allowedTools 'Read' --no-interactive" 0
+    "claude -p 'Say test' --allowedTools 'Read' --permission-mode bypassPermissions" 0
 
 echo ""
 echo "=========================================="

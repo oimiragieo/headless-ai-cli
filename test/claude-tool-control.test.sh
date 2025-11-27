@@ -71,39 +71,39 @@ fi
 
 # Test 1: --allowedTools flag
 test_case "Allow specific tools (--allowedTools)" \
-    "claude -p 'List files' --allowedTools 'Bash' --no-interactive" 0
+    "claude -p 'List files' --allowedTools 'Bash' --permission-mode bypassPermissions" 0
 
 # Test 2: Multiple allowed tools
 test_case "Allow multiple tools" \
-    "claude -p 'Read README.md' --allowedTools 'Bash,Read' --no-interactive" 0
+    "claude -p 'Read README.md' --allowedTools 'Bash,Read' --permission-mode bypassPermissions" 0
 
 # Test 3: --disallowedTools flag
 test_case "Disallow specific tools (--disallowedTools)" \
-    "claude -p 'Say test' --disallowedTools 'Bash(git commit)' --no-interactive" 0
+    "claude -p 'Say test' --disallowedTools 'Bash(git commit)' --permission-mode bypassPermissions" 0
 
 # Test 4: Permission mode
 test_case "Permission mode (--permission-mode)" \
-    "claude -p 'Say test' --permission-mode acceptEdits --no-interactive" 0
+    "claude -p 'Say test' --permission-mode acceptEdits --permission-mode bypassPermissions" 0
 
 # Test 5: Combined tool control flags
 test_case "Combined tool control flags" \
-    "claude -p 'Say test' --allowedTools 'Read' --disallowedTools 'Bash(git push)' --no-interactive" 0
+    "claude -p 'Say test' --allowedTools 'Read' --disallowedTools 'Bash(git push)' --permission-mode bypassPermissions" 0
 
 # Test 6: Tool control with JSON output
 test_case "Tool control with JSON output" \
-    "claude -p 'Say test' --allowedTools 'Read' --output-format json --no-interactive | grep -q '{' || echo '{}' | grep -q '{'" 0
+    "claude -p 'Say test' --allowedTools 'Read' --output-format json --permission-mode bypassPermissions | grep -q '{' || echo '{}' | grep -q '{'" 0
 
 # Test 7: Tool control with non-interactive
-test_case "Tool control with --no-interactive" \
-    "claude -p 'Say test' --allowedTools 'Read' --no-interactive" 0
+test_case "Tool control with --permission-mode bypassPermissions" \
+    "claude -p 'Say test' --allowedTools 'Read' --permission-mode bypassPermissions" 0
 
 # Test 8: Empty allowed tools (should still work)
 test_case "Empty allowed tools handling" \
-    "claude -p 'Say test' --allowedTools '' --no-interactive" 0
+    "claude -p 'Say test' --allowedTools '' --permission-mode bypassPermissions" 0
 
 # Test 9: Invalid tool name handling
 test_case "Invalid tool name handling" \
-    "claude -p 'Say test' --allowedTools 'InvalidTool123' --no-interactive" 0
+    "claude -p 'Say test' --allowedTools 'InvalidTool123' --permission-mode bypassPermissions" 0
 
 # Test 10: Tool approval behavior verification
 if [ -n "$ANTHROPIC_API_KEY" ]; then
@@ -111,7 +111,7 @@ if [ -n "$ANTHROPIC_API_KEY" ]; then
     echo -n "Test $test_count: Tool approval behavior verification ... "
     
     # Try to use a tool that requires approval
-    OUTPUT=$(claude -p 'List current directory files' --allowedTools 'Bash' --no-interactive --output-format json 2>&1 || echo '{"result":"test"}')
+    OUTPUT=$(claude -p 'List current directory files' --allowedTools 'Bash' --permission-mode bypassPermissions --output-format json 2>&1 || echo '{"result":"test"}')
     
     # Check if command executed (even if tool was denied, command should complete)
     if echo "$OUTPUT" | grep -q '{' || echo "$OUTPUT" | grep -q 'result'; then
@@ -124,7 +124,7 @@ fi
 
 # Test 11: MCP tool specification
 test_case "MCP tool specification" \
-    "claude -p 'Say test' --allowedTools 'mcp__filesystem' --no-interactive" 0
+    "claude -p 'Say test' --allowedTools 'mcp__filesystem' --permission-mode bypassPermissions" 0
 
 # Test 12: Tool control with session resume
 if [ -n "$ANTHROPIC_API_KEY" ]; then
@@ -132,12 +132,12 @@ if [ -n "$ANTHROPIC_API_KEY" ]; then
     echo -n "Test $test_count: Tool control with session resume ... "
     
     # Create session
-    SESSION_OUTPUT=$(claude -p 'Say test' --output-format json --no-interactive 2>/dev/null || echo '{"session_id":"test"}')
+    SESSION_OUTPUT=$(claude -p 'Say test' --output-format json --permission-mode bypassPermissions 2>/dev/null || echo '{"session_id":"test"}')
     SESSION_ID=$(echo "$SESSION_OUTPUT" | jq -r '.session_id // empty' 2>/dev/null || echo "")
     
     if [ -n "$SESSION_ID" ] && [ "$SESSION_ID" != "null" ]; then
         # Resume with tool control
-        claude --resume "$SESSION_ID" 'Say OK' --allowedTools 'Read' --no-interactive > /dev/null 2>&1
+        claude --resume "$SESSION_ID" 'Say OK' --allowedTools 'Read' --permission-mode bypassPermissions > /dev/null 2>&1
         
         echo -e "${GREEN}PASS${NC}"
         PASSED=$((PASSED + 1))

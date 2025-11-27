@@ -81,17 +81,17 @@ fi
 # Test 1: JSON output format produces valid JSON
 if [ "$HAS_JQ" = true ]; then
     test_case "JSON output is valid JSON" \
-        "claude -p 'Say test' --output-format json --no-interactive | jq . > /dev/null" 0
+        "claude -p 'Say test' --output-format json --permission-mode bypassPermissions | jq . > /dev/null" 0
 else
     test_case "JSON output format" \
-        "claude -p 'Say test' --output-format json --no-interactive | grep -q '{'" 0
+        "claude -p 'Say test' --output-format json --permission-mode bypassPermissions | grep -q '{'" 0
 fi
 
 # Test 2: JSON contains required fields
 if [ "$HAS_JQ" = true ] && [ -n "$ANTHROPIC_API_KEY" ]; then
     test_count=$((test_count + 1))
     echo -n "Test $test_count: JSON contains required fields ... "
-    JSON_OUTPUT=$(claude -p 'Say test' --output-format json --no-interactive 2>/dev/null || echo '{}')
+    JSON_OUTPUT=$(claude -p 'Say test' --output-format json --permission-mode bypassPermissions 2>/dev/null || echo '{}')
     
     if echo "$JSON_OUTPUT" | jq -e '.type' > /dev/null 2>&1; then
         echo -e "${GREEN}PASS${NC}"
@@ -105,7 +105,7 @@ fi
 if [ "$HAS_JQ" = true ] && [ -n "$ANTHROPIC_API_KEY" ]; then
     test_count=$((test_count + 1))
     echo -n "Test $test_count: Extract result field from JSON ... "
-    JSON_OUTPUT=$(claude -p 'Say hello' --output-format json --no-interactive 2>/dev/null || echo '{"result":"test"}')
+    JSON_OUTPUT=$(claude -p 'Say hello' --output-format json --permission-mode bypassPermissions 2>/dev/null || echo '{"result":"test"}')
     RESULT=$(echo "$JSON_OUTPUT" | jq -r '.result // empty' 2>/dev/null || echo "")
     
     if [ -n "$RESULT" ]; then
@@ -120,7 +120,7 @@ fi
 if [ "$HAS_JQ" = true ] && [ -n "$ANTHROPIC_API_KEY" ]; then
     test_count=$((test_count + 1))
     echo -n "Test $test_count: Extract session_id from JSON ... "
-    JSON_OUTPUT=$(claude -p 'Say test' --output-format json --no-interactive 2>/dev/null || echo '{"session_id":"test"}')
+    JSON_OUTPUT=$(claude -p 'Say test' --output-format json --permission-mode bypassPermissions 2>/dev/null || echo '{"session_id":"test"}')
     SESSION_ID=$(echo "$JSON_OUTPUT" | jq -r '.session_id // empty' 2>/dev/null || echo "")
     
     if [ -n "$SESSION_ID" ]; then
@@ -135,7 +135,7 @@ fi
 if [ "$HAS_JQ" = true ] && [ -n "$ANTHROPIC_API_KEY" ]; then
     test_count=$((test_count + 1))
     echo -n "Test $test_count: Extract cost from JSON ... "
-    JSON_OUTPUT=$(claude -p 'Say test' --output-format json --no-interactive 2>/dev/null || echo '{"total_cost_usd":0}')
+    JSON_OUTPUT=$(claude -p 'Say test' --output-format json --permission-mode bypassPermissions 2>/dev/null || echo '{"total_cost_usd":0}')
     COST=$(echo "$JSON_OUTPUT" | jq -r '.total_cost_usd // empty' 2>/dev/null || echo "")
     
     if [ -n "$COST" ] || [ "$COST" = "0" ]; then
@@ -148,13 +148,13 @@ fi
 
 # Test 6: Error handling in JSON
 test_case "Error handling produces valid JSON" \
-    "claude -p '' --output-format json --no-interactive 2>&1 | grep -q '{' || echo '{}' | grep -q '{'" 0
+    "claude -p '' --output-format json --permission-mode bypassPermissions 2>&1 | grep -q '{' || echo '{}' | grep -q '{'" 0
 
 # Test 7: JSON structure validation
 if [ "$HAS_JQ" = true ] && [ -n "$ANTHROPIC_API_KEY" ]; then
     test_count=$((test_count + 1))
     echo -n "Test $test_count: JSON structure validation ... "
-    JSON_OUTPUT=$(claude -p 'Say test' --output-format json --no-interactive 2>/dev/null || echo '{"type":"result"}')
+    JSON_OUTPUT=$(claude -p 'Say test' --output-format json --permission-mode bypassPermissions 2>/dev/null || echo '{"type":"result"}')
     
     # Check for common fields
     HAS_TYPE=$(echo "$JSON_OUTPUT" | jq -e '.type' > /dev/null 2>&1 && echo "yes" || echo "no")
@@ -170,7 +170,7 @@ fi
 # Test 8: Parse JSON response in script
 if [ "$HAS_JQ" = true ]; then
     test_case "Parse JSON response in script" \
-        "RESULT=\$(claude -p 'Say OK' --output-format json --no-interactive 2>/dev/null || echo '{\"result\":\"OK\"}'); echo \$RESULT | jq -r '.result // .response // \"OK\"' | grep -q ." 0
+        "RESULT=\$(claude -p 'Say OK' --output-format json --permission-mode bypassPermissions 2>/dev/null || echo '{\"result\":\"OK\"}'); echo \$RESULT | jq -r '.result // .response // \"OK\"' | grep -q ." 0
 fi
 
 echo ""

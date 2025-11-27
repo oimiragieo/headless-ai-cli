@@ -1,6 +1,6 @@
 #!/bin/bash
 # Session Management Tests for Claude CLI
-# Tests --continue, --resume, session persistence, and --no-interactive mode
+# Tests --continue, --resume, session persistence, and --permission-mode bypassPermissions mode
 
 set -e
 
@@ -81,7 +81,7 @@ fi
 if [ "$HAS_JQ" = true ] && [ -n "$ANTHROPIC_API_KEY" ]; then
     test_count=$((test_count + 1))
     echo -n "Test $test_count: Extract session ID from JSON ... "
-    SESSION_OUTPUT=$(claude -p 'Remember the number 42' --output-format json --no-interactive 2>/dev/null || echo '{"session_id":"test-session-123"}')
+    SESSION_OUTPUT=$(claude -p 'Remember the number 42' --output-format json --permission-mode bypassPermissions 2>/dev/null || echo '{"session_id":"test-session-123"}')
     SESSION_ID=$(echo "$SESSION_OUTPUT" | jq -r '.session_id // empty' 2>/dev/null || echo "")
     
     if [ -n "$SESSION_ID" ] && [ "$SESSION_ID" != "null" ]; then
@@ -98,34 +98,34 @@ fi
 if [ -f /tmp/claude_test_session_id.txt ]; then
     SESSION_ID=$(cat /tmp/claude_test_session_id.txt)
     test_case "Resume session with --resume flag" \
-        "claude --resume \"$SESSION_ID\" 'What number did I ask you to remember?' --no-interactive" 0
+        "claude --resume \"$SESSION_ID\" 'What number did I ask you to remember?' --permission-mode bypassPermissions" 0
 fi
 
 # Test 3: Resume session in headless mode
 if [ -f /tmp/claude_test_session_id.txt ]; then
     SESSION_ID=$(cat /tmp/claude_test_session_id.txt)
     test_case "Resume session in headless mode (-p --resume)" \
-        "claude -p --resume \"$SESSION_ID\" 'Continue the conversation' --no-interactive" 0
+        "claude -p --resume \"$SESSION_ID\" 'Continue the conversation' --permission-mode bypassPermissions" 0
 fi
 
 # Test 4: Resume with non-interactive flag
 if [ -f /tmp/claude_test_session_id.txt ]; then
     SESSION_ID=$(cat /tmp/claude_test_session_id.txt)
-    test_case "Resume with --no-interactive flag" \
-        "claude --resume \"$SESSION_ID\" 'Say OK' --no-interactive" 0
+    test_case "Resume with --permission-mode bypassPermissions flag" \
+        "claude --resume \"$SESSION_ID\" 'Say OK' --permission-mode bypassPermissions" 0
 fi
 
 # Test 5: Continue most recent conversation
 test_case "Continue most recent conversation (--continue)" \
-    "claude --continue 'Say test' --no-interactive" 0
+    "claude --continue 'Say test' --permission-mode bypassPermissions" 0
 
 # Test 6: Continue in headless mode
 test_case "Continue in headless mode (-p --continue)" \
-    "claude -p --continue 'Say test' --no-interactive" 0
+    "claude -p --continue 'Say test' --permission-mode bypassPermissions" 0
 
 # Test 7: Invalid session ID handling
 test_case "Invalid session ID handling" \
-    "claude --resume 'invalid-session-id-12345' 'Say test' --no-interactive" 1
+    "claude --resume 'invalid-session-id-12345' 'Say test' --permission-mode bypassPermissions" 1
 
 # Test 8: Session persistence verification
 if [ "$HAS_JQ" = true ] && [ -n "$ANTHROPIC_API_KEY" ] && [ -f /tmp/claude_test_session_id.txt ]; then
@@ -134,7 +134,7 @@ if [ "$HAS_JQ" = true ] && [ -n "$ANTHROPIC_API_KEY" ] && [ -f /tmp/claude_test_
     SESSION_ID=$(cat /tmp/claude_test_session_id.txt)
     
     # Try to resume and check if it works
-    RESUME_OUTPUT=$(claude --resume "$SESSION_ID" 'Say OK' --output-format json --no-interactive 2>/dev/null || echo '{"result":"OK"}')
+    RESUME_OUTPUT=$(claude --resume "$SESSION_ID" 'Say OK' --output-format json --permission-mode bypassPermissions 2>/dev/null || echo '{"result":"OK"}')
     RESULT=$(echo "$RESUME_OUTPUT" | jq -r '.result // .response // empty' 2>/dev/null || echo "")
     
     if [ -n "$RESULT" ]; then
@@ -151,13 +151,13 @@ if [ -n "$ANTHROPIC_API_KEY" ]; then
     echo -n "Test $test_count: Multiple session operations ... "
     
     # Create session
-    SESSION_OUTPUT=$(claude -p 'Remember: test123' --output-format json --no-interactive 2>/dev/null || echo '{"session_id":"multi-test"}')
+    SESSION_OUTPUT=$(claude -p 'Remember: test123' --output-format json --permission-mode bypassPermissions 2>/dev/null || echo '{"session_id":"multi-test"}')
     SESSION_ID=$(echo "$SESSION_OUTPUT" | jq -r '.session_id // empty' 2>/dev/null || echo "multi-test")
     
     if [ -n "$SESSION_ID" ] && [ "$SESSION_ID" != "null" ]; then
         # Resume multiple times
-        claude --resume "$SESSION_ID" 'Say first' --no-interactive > /dev/null 2>&1
-        claude --resume "$SESSION_ID" 'Say second' --no-interactive > /dev/null 2>&1
+        claude --resume "$SESSION_ID" 'Say first' --permission-mode bypassPermissions > /dev/null 2>&1
+        claude --resume "$SESSION_ID" 'Say second' --permission-mode bypassPermissions > /dev/null 2>&1
         
         echo -e "${GREEN}PASS${NC}"
         PASSED=$((PASSED + 1))
@@ -170,7 +170,7 @@ fi
 if [ -f /tmp/claude_test_session_id.txt ]; then
     SESSION_ID=$(cat /tmp/claude_test_session_id.txt)
     test_case "Session with JSON output" \
-        "claude --resume \"$SESSION_ID\" 'Say test' --output-format json --no-interactive | jq . > /dev/null 2>&1 || echo '{}' | jq . > /dev/null" 0
+        "claude --resume \"$SESSION_ID\" 'Say test' --output-format json --permission-mode bypassPermissions | jq . > /dev/null 2>&1 || echo '{}' | jq . > /dev/null" 0
 fi
 
 # Cleanup
