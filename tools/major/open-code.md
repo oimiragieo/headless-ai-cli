@@ -63,16 +63,15 @@ brew install opencode
 ```bash
 # Install OpenCode
 npm install -g open-code
-# or
-pip install opencode
 
-# Set API key
-export OPENAI_API_KEY=your_key
-# or
-export ANTHROPIC_API_KEY=your_key
+# Authenticate with provider
+opencode auth login
 
-# Start OpenCode
+# Start OpenCode TUI (interactive mode)
 opencode
+
+# Or run with a message (headless)
+opencode run "Review this code for bugs"
 ```
 
 ## Headless Mode
@@ -81,193 +80,270 @@ opencode
 
 **Basic Headless Usage:**
 ```bash
-# Non-interactive mode with prompt
-opencode --headless --prompt "Review this code for bugs" --file src/main.py
+# Run with a message (single command execution)
+opencode run "Review this code for bugs"
 
-# With multiple files
-opencode --headless --prompt "Refactor code" --files src/main.py src/utils.py
+# Run with multiple message arguments
+opencode run "Analyze" "the codebase" "for security issues"
 
-# Using stdin
-echo "Add error handling" | opencode --headless --file src/api.py
+# Start headless server
+opencode serve
 
-# Directory-based processing
-opencode --headless --prompt "Analyze codebase" --directory src/
+# Start headless web server
+opencode web
 
-# With output file
-opencode --headless --prompt "Generate documentation" --file src/api.py --output docs/api.md
+# With specific model
+opencode run "Generate tests" --model anthropic/claude-3.5-sonnet
+
+# Continue last session
+opencode run "Add error handling" --continue
+
+# Continue specific session
+opencode run "Refactor code" --session <session-id>
+
+# With custom agent
+opencode run "Review PR" --agent code-reviewer
+
+# With specific port and hostname
+opencode serve --port 3000 --hostname 0.0.0.0
 ```
 
-**Headless Mode with Config:**
-```bash
-# Use config file for headless mode
-opencode --headless --config config.json --prompt "Your task"
+**Key Commands for Headless Mode:**
+- `opencode run [message..]` - Run opencode with a message
+- `opencode serve` - Start headless opencode server
+- `opencode web` - Start headless opencode web server
+- `opencode attach <url>` - Attach to a running opencode server
 
-# Headless mode with specific model
-opencode --headless --model gpt-4o --prompt "Your task" --file src/main.py
-```
-
-**Key Headless Flags:**
-- `--headless`: Enable headless mode (required for automation)
-- `--prompt, -p TEXT`: Provide prompt directly
-- `--file, -f FILE`: Include file in context
-- `--files, -F FILES`: Include multiple files (space-separated)
-- `--directory, -d DIR`: Include directory in context
-- `--output, -o FILE`: Save output to file
-- `--config FILE`: Use configuration file
-- `--model, -m MODEL`: Specify LLM model
-
-**Limitations:**
-- Requires API key for LLM provider
-- Best used in Git repositories
-- May require user confirmation for file edits (use `--yes` if available)
+**Key Options:**
+- `-m, --model` - Model to use in format provider/model
+- `-c, --continue` - Continue the last session
+- `-s, --session` - Session ID to continue
+- `-p, --prompt` - Prompt to use
+- `--agent` - Agent to use
+- `--port` - Port to listen on (default: 0)
+- `--hostname` - Hostname to listen on (default: 127.0.0.1)
 
 ## Available Models
 
-OpenCode supports multiple LLM providers:
+**List all available models:**
+```bash
+opencode models
+```
 
-| Provider | Models | Description |
-|----------|--------|-------------|
-| OpenAI | `gpt-4o`, `gpt-4o-mini`, `o1`, `o3-mini`, `gpt-3.5-turbo` | Default provider, excellent code generation |
-| Anthropic | `claude-3.7-sonnet`, `claude-3-opus`, `claude-3.5-sonnet`, `claude-3-haiku` | Strong reasoning, excellent for refactoring |
-| DeepSeek | `deepseek-r1`, `deepseek-chat`, `deepseek-v3` | Alternative with strong reasoning |
-| Google | `gemini-pro`, `gemini-1.5-pro` | Alternative option |
-| Local | Various via Ollama | Run models locally (requires Ollama setup) |
+**Default OpenCode Models:**
+- `opencode/big-pickle`
+- `opencode/grok-code`
+
+**Supported Providers** (from `opencode auth login`):
+
+| Provider | Description |
+|----------|-------------|
+| **OpenCode Zen** | Recommended default provider |
+| **Anthropic** | Claude models (Sonnet, Opus, Haiku) |
+| **GitHub Copilot** | GitHub's AI assistant models |
+| **OpenAI** | GPT models (GPT-4, GPT-3.5-turbo, etc.) |
+| **Google** | Gemini models |
+| **OpenRouter** | Access to multiple models via OpenRouter |
+| **Vercel AI Gateway** | Vercel's AI model gateway |
 
 **Model Selection:**
 ```bash
-# Use specific model
-opencode --headless --model gpt-4o --prompt "Your task"
+# Use specific model (format: provider/model)
+opencode run "Your task" --model anthropic/claude-3.5-sonnet
 
-# Use Anthropic Claude
-opencode --headless --model claude-3.7-sonnet --prompt "Your task"
+# Use OpenAI model
+opencode run "Generate tests" --model openai/gpt-4
 
-# Configure default model via environment variable
-export OPENCODE_MODEL=gpt-4o
-opencode --headless --prompt "Your task"
+# Use Google Gemini
+opencode run "Review code" --model google/gemini-pro
+
+# Use default OpenCode models
+opencode run "Analyze code" --model opencode/big-pickle
 ```
 
-**Default Model:**
-- If no model is specified, OpenCode uses the default from your configuration or environment
-- Set default via `OPENCODE_MODEL` environment variable or config file
+**Authentication:**
+```bash
+# Log in to a provider
+opencode auth login
+
+# List configured providers
+opencode auth list
+# or shorthand
+opencode auth ls
+
+# Log out from a provider
+opencode auth logout
+```
 
 ## CLI Syntax
 
-**Basic usage:**
+**Commands:**
 ```bash
-opencode [options] [command]
+opencode acp                 # Start ACP (Agent Client Protocol) server
+opencode [project]           # Start opencode TUI (default)
+opencode attach <url>        # Attach to a running opencode server
+opencode run [message..]     # Run opencode with a message
+opencode auth                # Manage credentials
+opencode agent               # Manage agents
+opencode upgrade [target]    # Upgrade opencode to the latest or specific version
+opencode serve               # Start a headless opencode server
+opencode web                 # Start a headless opencode web server
+opencode models              # List all available models
+opencode stats               # Show token usage and cost statistics
+opencode export [sessionID]  # Export session data as JSON
+opencode import <file>       # Import session data from JSON file or URL
+opencode github              # Manage GitHub agent
 ```
 
-**Common options:**
-- `--headless`: Enable headless mode (required for automation)
-- `--prompt, -p TEXT`: Provide prompt directly
-- `--file, -f FILE`: Include file in context
-- `--files, -F FILES`: Include multiple files (space-separated)
-- `--directory, -d DIR`: Include directory in context
-- `--output, -o FILE`: Save output to file
-- `--model, -m MODEL`: Specify LLM model
-- `--config FILE`: Use configuration file
-- `--yes, -y`: Auto-accept all changes (if available)
-- `--version`: Show version
-- `--help`: Show help message
-
-**Headless Mode Examples:**
+**Positionals:**
 ```bash
-# Basic headless chat
-opencode --headless --prompt "Review this code for bugs"
+project  # Path to start opencode in [string]
+```
 
-# With file context
-opencode --headless --prompt "Add error handling" --file src/main.py
+**Options:**
+```bash
+-h, --help        # Show help [boolean]
+-v, --version     # Show version number [boolean]
+--print-logs      # Print logs to stderr [boolean]
+--log-level       # Log level [choices: "DEBUG", "INFO", "WARN", "ERROR"]
+-m, --model       # Model to use in format of provider/model [string]
+-c, --continue    # Continue the last session [boolean]
+-s, --session     # Session ID to continue [string]
+-p, --prompt      # Prompt to use [string]
+--agent           # Agent to use [string]
+--port            # Port to listen on [number] [default: 0]
+--hostname        # Hostname to listen on [string] [default: "127.0.0.1"]
+```
 
-# Multiple files
-opencode --headless --prompt "Refactor code" --files src/main.py src/utils.py
-
-# Directory-based
-opencode --headless --prompt "Analyze codebase" --directory src/
-
-# Save output
-opencode --headless --prompt "Generate documentation" --file src/api.py --output docs/api.md
+**Auth Commands:**
+```bash
+opencode auth login [url]  # Log in to a provider
+opencode auth logout       # Log out from a configured provider
+opencode auth list         # List providers [aliases: ls]
 ```
 
 **Interactive Mode:**
 ```bash
-# Start interactive session
+# Start interactive TUI (default)
 opencode
 
-# In OpenCode prompt:
-# > Review src/main.py for bugs
-# > Generate tests for src/calculator.py
-# > Refactor src/api.py to use async/await
-# > exit
+# Start in specific project directory
+opencode /path/to/project
 ```
 
 ## Configuration
 
-**Environment Variables:**
+**Authentication:**
 ```bash
-export OPENAI_API_KEY=your_key
-export ANTHROPIC_API_KEY=your_key
-export OPENCODE_MODEL=gpt-4o
+# Log in to a provider (interactive)
+opencode auth login
+
+# Select from providers:
+# - OpenCode Zen (recommended)
+# - Anthropic
+# - GitHub Copilot
+# - OpenAI
+# - Google
+# - OpenRouter
+# - Vercel AI Gateway
+
+# List configured providers
+opencode auth list
+
+# Log out
+opencode auth logout
 ```
 
-**Config file:**
-- Location: `~/.opencode/config.json` or `.opencode/config.json` in project
-- Format: JSON configuration
+**Session Management:**
+```bash
+# Export session data as JSON
+opencode export [sessionID]
 
-**Example config:**
-```json
-{
-  "model": "gpt-4o",
-  "auto_accept": false,
-  "headless": true,
-  "output_format": "text"
-}
+# Import session data from JSON file or URL
+opencode import <file>
+
+# View token usage and cost statistics
+opencode stats
+```
+
+**Agent Management:**
+```bash
+# Manage agents
+opencode agent
+
+# Use specific agent
+opencode run "Review code" --agent code-reviewer
 ```
 
 ## Examples
 
-**Code Review (Headless):**
+**Code Review:**
 ```bash
-# Review code file
-opencode --headless --prompt "Review this code for bugs, security issues, and best practices" --file src/main.py
+# Run code review with message
+opencode run "Review this code for bugs, security issues, and best practices"
 
-# Review multiple files
-opencode --headless --prompt "Review these changes for potential issues" --files src/main.py src/utils.py
+# Review with specific model
+opencode run "Review code changes for potential issues" --model anthropic/claude-3.5-sonnet
 
-# Review directory
-opencode --headless --prompt "Analyze codebase for security vulnerabilities" --directory src/
+# Continue previous review session
+opencode run "Apply the suggested fixes" --continue
 ```
 
-**Code Transformation (Headless):**
+**Code Transformation:**
 ```bash
-# Modernize legacy code
-opencode --headless --prompt "Convert this code to use async/await patterns" --file legacy.py
+# Refactor code
+opencode run "Refactor to apply SOLID principles and improve maintainability"
 
-# Refactor codebase
-opencode --headless --prompt "Refactor to apply SOLID principles and improve maintainability" --directory src/
+# Modernize code with specific model
+opencode run "Convert this code to use async/await patterns" --model openai/gpt-4
 
 # Add error handling
-opencode --headless --prompt "Add comprehensive error handling and input validation" --file src/api.py
+opencode run "Add comprehensive error handling and input validation"
 ```
 
-**Code Generation (Headless):**
+**Code Generation:**
 ```bash
 # Generate unit tests
-opencode --headless --prompt "Generate comprehensive unit tests with 80%+ coverage" --file src/calculator.py --output tests/test_calculator.py
+opencode run "Generate comprehensive unit tests with 80%+ coverage"
 
 # Generate documentation
-opencode --headless --prompt "Generate API documentation following OpenAPI 3.0 specification" --file src/api.py --output docs/api.md
+opencode run "Generate API documentation following OpenAPI 3.0 specification"
 
 # Add type hints
-opencode --headless --prompt "Add type hints to all functions and classes" --file src/main.py
+opencode run "Add type hints to all functions and classes"
 ```
 
-**Codebase Analysis (Headless):**
+**Headless Server:**
 ```bash
-# Analyze entire codebase
-opencode --headless --prompt "Analyze codebase structure, identify technical debt, and suggest improvements" --directory . --output analysis.md
+# Start headless server
+opencode serve
 
-# Security audit
-opencode --headless --prompt "Perform security audit: identify vulnerabilities, insecure patterns, and suggest fixes" --directory src/
+# Start headless server on custom port
+opencode serve --port 3000 --hostname 0.0.0.0
+
+# Start web server
+opencode web
+
+# Attach to running server
+opencode attach http://localhost:3000
+```
+
+**Session Management:**
+```bash
+# Continue last session
+opencode run "Continue the refactoring task" --continue
+
+# Continue specific session
+opencode run "Apply fixes" --session abc123
+
+# Export session data
+opencode export abc123 > session.json
+
+# Import session data
+opencode import session.json
+
+# View statistics
+opencode stats
 ```
 
 ## CI/CD Integration
@@ -279,13 +355,11 @@ opencode --headless --prompt "Perform security audit: identify vulnerabilities, 
 #!/bin/bash
 set -e
 
-# Set API key
-export OPENAI_API_KEY=$OPENAI_API_KEY
-# or
-export ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY
+# Authenticate OpenCode (run once to set up credentials)
+# opencode auth login
 
-# Run OpenCode in headless mode
-opencode --headless --prompt "Fix linting issues and add type hints" --directory src/
+# Run OpenCode with a message
+opencode run "Fix linting issues and add type hints"
 
 # Check exit code
 if [ $? -eq 0 ]; then
@@ -315,8 +389,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -324,55 +396,36 @@ jobs:
           node-version: '20'
 
       - name: Install OpenCode CLI
+        run: npm install -g open-code
+
+      - name: Setup OpenCode Authentication
         run: |
-          npm install -g open-code
+          # Note: Authentication required - configure credentials before running
+          # opencode auth login (must be done interactively beforehand)
+          echo "Ensure OpenCode credentials are configured"
 
       - name: Run OpenCode Code Review
         id: opencode_review
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          # Alternative: use Anthropic
-          # ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
-          # Get list of changed code files
-          if [ "${{ github.event_name }}" == "pull_request" ]; then
-            CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -E '\.(py|js|ts|java|go|rs)$' || true)
-          else
-            CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD | grep -E '\.(py|js|ts|java|go|rs)$' || true)
-          fi
+          REVIEW_OUTPUT=$(opencode run "Review this pull request for bugs, security issues, and best practices. Provide actionable feedback." 2>&1 || echo "Review completed")
 
-          if [ -z "$CHANGED_FILES" ]; then
-            echo "No code files to review."
-            echo "review_output=No code files to review." >> $GITHUB_OUTPUT
-            echo "has_review=false" >> $GITHUB_OUTPUT
-          else
-            # Run review on changed files
-            REVIEW_OUTPUT=$(opencode --headless --prompt "Review these code changes for potential bugs, security vulnerabilities, and adherence to best practices. Provide actionable suggestions for improvement. Focus on: code quality, performance, security, and maintainability." --files $CHANGED_FILES 2>&1 || echo "Review completed")
-            
-            echo "review_output<<EOF" >> $GITHUB_OUTPUT
-            echo "$REVIEW_OUTPUT" >> $GITHUB_OUTPUT
-            echo "EOF" >> $GITHUB_OUTPUT
-            echo "has_review=true" >> $GITHUB_OUTPUT
-          fi
+          echo "review_output<<EOF" >> $GITHUB_OUTPUT
+          echo "$REVIEW_OUTPUT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Post Review Comment
-        if: github.event_name == 'pull_request' && steps.opencode_review.outputs.has_review == 'true'
+        if: github.event_name == 'pull_request'
         uses: actions/github-script@v7
         with:
           script: |
             const reviewOutput = `${{ steps.opencode_review.outputs.review_output }}`;
-            const prNumber = context.issue.number;
-            const owner = context.repo.owner;
-            const repo = context.repo.repo;
 
             if (reviewOutput && reviewOutput.trim() !== '' && reviewOutput !== 'Review completed') {
-              const body = `## 🤖 Automated Code Review by OpenCode\n\n${reviewOutput}\n\n---\n*Generated by OpenCode CLI in CI/CD*`;
-              
               await github.rest.issues.createComment({
-                issue_number: prNumber,
-                owner: owner,
-                repo: repo,
-                body: body
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: `## 🤖 Automated Code Review by OpenCode\n\n${reviewOutput}\n\n---\n*Generated by OpenCode CLI in CI/CD*`
               });
             }
 ```
@@ -388,25 +441,27 @@ opencode-review:
   before_script:
     - npm install -g open-code
   script:
-    - opencode --headless --prompt "Review code changes for issues" --directory .
+    - opencode run "Review code changes for issues and provide feedback"
   only:
     - merge_requests
 ```
 
 **Best Practices for CI/CD:**
-- Always use `--headless` flag for non-interactive execution
-- Set appropriate API keys as secrets
-- Use `--output` flag to save results as artifacts
+- Use `opencode run` for one-off command execution
+- Use `opencode serve` for persistent server-based workflows
+- Set up authentication with `opencode auth login` (required before CI/CD runs)
 - Handle exit codes properly (non-zero indicates failure)
 - Consider timeouts for long-running operations
-- Use specific file paths rather than directories when possible
+- Use `--model` flag to specify which model to use
+- Use `--continue` or `--session` for multi-step workflows
 
 ## Limitations
 
-- **API dependency:** Requires API key for LLM provider
-- **Git dependency:** Works best in Git repositories
-- **Context limits:** Depends on selected LLM provider
-- **File editing focus:** May require approval for changes
+- **Authentication Required:** Must authenticate with `opencode auth login` before use
+- **Provider Dependency:** Requires API key from supported providers (OpenCode Zen, Anthropic, OpenAI, etc.)
+- **Context Limits:** Depends on selected LLM provider and model
+- **TUI by Default:** Default mode is interactive TUI; use `opencode run` for headless execution
+- **Session-Based:** Works best with session management for multi-step workflows
 
 ## References
 
