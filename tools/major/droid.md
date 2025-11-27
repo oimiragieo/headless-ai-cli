@@ -5,7 +5,6 @@
 
 **When NOT to use Droid:**
 - ❌ You need delta streaming (Droid doesn't support incremental text updates)
-- ❌ You need interactive workflows (designed for non-interactive execution)
 - ❌ You need massive context windows (Gemini handles larger repos better)
 - ❌ You need UI/front-end generation (Codex is better for this)
 - ❌ You need complex multi-turn reasoning (Claude Opus is better)
@@ -27,14 +26,18 @@
 
 ## Overview
 
-Factory AI Droid is a non-interactive execution tool designed for CI/CD pipelines and automation scripts. It's secure by default (read-only mode) with explicit opt-in for mutations via autonomy levels, making it the safest choice for production CI/CD.
+Factory AI Droid is Factory's AI coding agent that works in both interactive and non-interactive modes. It's designed primarily for CI/CD pipelines and automation scripts with secure defaults (read-only mode) and explicit opt-in for mutations via autonomy levels.
 
 **Key Characteristics:**
-- Non-interactive execution for CI/CD
+- Interactive and non-interactive modes
 - Secure by default (read-only)
 - Structured output formats
 - Fail-fast behavior
 - Composable for shell scripting
+
+**Two Modes:**
+1. **Interactive Mode** (default): `droid` or `droid "initial prompt"`
+2. **Non-Interactive Mode** (for automation): `droid exec`
 
 ## Installation
 
@@ -58,11 +61,35 @@ export FACTORY_API_KEY=fk-...
 
 ## 🚀 Start Here
 
+**Interactive mode (default):**
+```bash
+droid "analyze this folder"
+```
+
+**Non-interactive mode (for automation):**
 ```bash
 droid exec "analyze this folder"
 ```
 
-## Headless Mode
+## Interactive Mode
+
+**Start interactive session:**
+```bash
+# Start interactive mode (default)
+droid
+
+# Start with initial prompt
+droid "review app.tsx"
+
+# Resume a session (defaults to last modified)
+droid -r
+droid -r [sessionId]
+droid --resume [sessionId]
+```
+
+Interactive mode provides a conversational interface where you can ask follow-up questions and refine tasks. Use this for exploratory work and iterative development.
+
+## Non-Interactive Mode (Headless)
 
 **Non-interactive execution for CI/CD pipelines and automation scripts:**
 
@@ -76,8 +103,9 @@ droid exec "fix the bug in src/main.js" --auto low
 # From file
 droid exec -f prompt.md
 
-# Pipe input
+# Pipe input (two methods)
 echo "summarize repo structure" | droid exec
+droid exec - < prompt.txt
 
 # Session continuation
 droid exec --session-id <session-id> "continue with next steps"
@@ -367,7 +395,7 @@ fi
 - No delta streaming support (only debug format for real-time visibility)
 - Model names can use short aliases (e.g., `sonnet`, `opus`, `haiku`) or full IDs
 - Configure default model in `settings.json` file for consistency
-- `droid exec` is designed for one-shot task execution, not interactive workflows
+- `droid exec` is designed for one-shot task execution; use `droid` for interactive workflows
 
 ## References
 
