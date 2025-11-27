@@ -260,10 +260,18 @@ warp-terminal mcp --help
 **Task Management:**
 ```bash
 # Manage tasks
-warp-terminal task
+warp-terminal task [OPTIONS] <COMMAND>
 
-# Create, list, manage tasks
-warp-terminal task --help
+# List ambient agent tasks
+warp-terminal task list
+
+# Get status of a specific ambient agent task
+warp-terminal task get
+
+# Task options:
+# --api-key <API_KEY>  API key for server authentication
+# --debug              Enable debug logging
+# -h, --help           Print help
 ```
 
 **Authentication:**
