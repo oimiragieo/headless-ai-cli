@@ -1,6 +1,9 @@
 #!/bin/bash
 # OpenCode CLI Script Patterns for Automation and CI/CD
 # This file contains reusable patterns for using OpenCode in automation workflows
+#
+# NOTE: OpenCode uses `opencode run "message"` for headless execution
+# It requires authentication via `opencode auth login` before use
 
 set -e
 
@@ -10,247 +13,222 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-# Pattern 1: Basic headless execution with error handling
+# Configuration
+OPENCODE_MODEL="${OPENCODE_MODEL:-}"
+
+# Function: Check if OpenCode CLI is installed
+check_opencode_installed() {
+    if ! command -v opencode &> /dev/null; then
+        echo -e "${RED}Error: OpenCode CLI not found. Install with: npm install -g open-code${NC}" >&2
+        exit 1
+    fi
+}
+
+# Function: Check authentication
+check_auth() {
+    if ! opencode auth list &> /dev/null; then
+        echo -e "${YELLOW}Warning: OpenCode may not be authenticated. Run 'opencode auth login' first.${NC}" >&2
+    fi
+}
+
+# Pattern 1: Basic headless execution with run command
 opencode_basic() {
     local prompt="$1"
-    local files="$2"
-    
+    local model="${2:-$OPENCODE_MODEL}"
+
     echo "Running OpenCode with prompt: $prompt"
-    
-    if opencode --headless --prompt "$prompt" --files $files; then
-        echo -e "${GREEN}✅ OpenCode completed successfully${NC}"
+
+    local cmd="opencode run \"$prompt\""
+
+    # Add model if specified
+    if [ -n "$model" ]; then
+        cmd="$cmd --model $model"
+    fi
+
+    if eval "$cmd"; then
+        echo -e "${GREEN}OpenCode completed successfully${NC}"
         return 0
     else
-        echo -e "${RED}❌ OpenCode failed${NC}"
+        echo -e "${RED}OpenCode failed${NC}"
         return 1
     fi
 }
 
-# Pattern 2: Headless execution with file context
-opencode_with_file() {
+# Pattern 2: Run with specific model
+opencode_with_model() {
     local prompt="$1"
-    local file="$2"
-    local output="${3:-}"
-    
-    echo "Running OpenCode with file: $file"
-    
-    if [ -n "$output" ]; then
-        opencode --headless --prompt "$prompt" --file "$file" --output "$output"
-    else
-        opencode --headless --prompt "$prompt" --file "$file"
-    fi
+    local model="${2:-opencode/big-pickle}"
+
+    echo "Running OpenCode with model: $model"
+
+    opencode run "$prompt" --model "$model"
 }
 
-# Pattern 3: Batch processing multiple files
-opencode_batch() {
+# Pattern 3: Continue last session
+opencode_continue() {
     local prompt="$1"
-    shift
-    local files=("$@")
-    
-    echo "Processing ${#files[@]} files with OpenCode"
-    
-    opencode --headless --prompt "$prompt" --files "${files[@]}"
+
+    echo "Continuing last OpenCode session"
+
+    opencode run "$prompt" --continue
 }
 
-# Pattern 4: CI/CD pattern with exit code validation
+# Pattern 4: Resume specific session
+opencode_resume() {
+    local prompt="$1"
+    local session_id="$2"
+
+    echo "Resuming OpenCode session: $session_id"
+
+    opencode run "$prompt" --session "$session_id"
+}
+
+# Pattern 5: CI/CD pattern with exit code validation
 opencode_cicd() {
     local prompt="$1"
-    local files="$2"
-    local output="${3:-}"
-    
+    local model="${2:-$OPENCODE_MODEL}"
+
     echo "Running OpenCode in CI/CD mode"
-    
-    if [ -n "$output" ]; then
-        if opencode --headless --prompt "$prompt" --files $files --output "$output"; then
-            echo "✅ OpenCode completed successfully"
-            return 0
-        else
-            echo "❌ OpenCode failed"
-            return 1
-        fi
-    else
-        if opencode --headless --prompt "$prompt" --files $files; then
-            echo "✅ OpenCode completed successfully"
-            return 0
-        else
-            echo "❌ OpenCode failed"
-            return 1
-        fi
+
+    local cmd="opencode run \"$prompt\""
+
+    if [ -n "$model" ]; then
+        cmd="$cmd --model $model"
     fi
-}
 
-# Pattern 5: Code review automation
-opencode_review() {
-    local files="$1"
-    local output="${2:-review-output.txt}"
-    
-    echo "Running code review with OpenCode"
-    
-    opencode --headless --prompt "Review these code changes for potential bugs, security vulnerabilities, and adherence to best practices. Provide actionable suggestions for improvement." \
-        --files $files \
-        --output "$output"
-}
-
-# Pattern 6: Code transformation
-opencode_transform() {
-    local files="$1"
-    local transformation_type="${2:-general}"
-    
-    echo "Transforming code with OpenCode"
-    
-    case "$transformation_type" in
-        "async")
-            opencode --headless --prompt "Refactor to use async/await patterns where appropriate." \
-                --files $files
-            ;;
-        "type_hints")
-            opencode --headless --prompt "Add comprehensive type hints to all functions and classes." \
-                --files $files
-            ;;
-        "error_handling")
-            opencode --headless --prompt "Add comprehensive error handling and input validation to all functions." \
-                --files $files
-            ;;
-        "modernize")
-            opencode --headless --prompt "Modernize legacy code: update to latest language features and best practices." \
-                --files $files
-            ;;
-        *)
-            opencode --headless --prompt "Refactor code to improve readability, maintainability, and performance." \
-                --files $files
-            ;;
-    esac
-}
-
-# Pattern 7: Documentation generation
-opencode_add_docs() {
-    local files="$1"
-    local style="${2:-google}"
-    
-    echo "Adding documentation with OpenCode"
-    
-    opencode --headless --prompt "Add comprehensive docstrings following $style style guide to all functions and classes." \
-        --files $files
-}
-
-# Pattern 8: Test generation
-opencode_generate_tests() {
-    local source_file="$1"
-    local test_file="$2"
-    local coverage="${3:-80}"
-    
-    echo "Generating tests with OpenCode"
-    
-    opencode --headless --prompt "Generate comprehensive unit tests with ${coverage}%+ coverage for $source_file. Write tests to $test_file." \
-        --files "$source_file" "$test_file"
-}
-
-# Pattern 9: Security audit
-opencode_security() {
-    local files="$1"
-    local output="${2:-security-audit.txt}"
-    
-    echo "Performing security audit with OpenCode"
-    
-    opencode --headless --prompt "Perform security audit: identify vulnerabilities, insecure patterns, and suggest fixes. Focus on: injection attacks, authentication issues, data exposure, and insecure configurations." \
-        --files $files \
-        --output "$output"
-}
-
-# Pattern 10: Process changed files from Git
-opencode_git_changes() {
-    local prompt="$1"
-    local base_branch="${2:-main}"
-    
-    echo "Processing changed files from Git"
-    
-    # Get changed code files
-    CHANGED_FILES=$(git diff --name-only origin/$base_branch...HEAD | grep -E '\.(py|js|ts|java|go|rs)$' || true)
-    
-    if [ -z "$CHANGED_FILES" ]; then
-        echo "No code files changed."
+    if eval "$cmd"; then
+        echo "OpenCode completed successfully"
         return 0
-    fi
-    
-    echo "Changed files: $CHANGED_FILES"
-    
-    opencode --headless --prompt "$prompt" --files $CHANGED_FILES
-}
-
-# Pattern 11: Directory-based analysis
-opencode_analyze_directory() {
-    local directory="$1"
-    local prompt="${2:-Analyze codebase structure and suggest improvements}"
-    local output="${3:-}"
-    
-    echo "Analyzing directory: $directory"
-    
-    if [ -n "$output" ]; then
-        opencode --headless --prompt "$prompt" --directory "$directory" --output "$output"
     else
-        opencode --headless --prompt "$prompt" --directory "$directory"
+        echo "OpenCode failed"
+        return 1
     fi
 }
 
-# Pattern 12: Timeout handling for long operations
+# Pattern 6: Code review automation (pipe git diff)
+opencode_review() {
+    local base_branch="${1:-main}"
+    local model="${2:-$OPENCODE_MODEL}"
+
+    echo "Running code review with OpenCode"
+
+    local prompt="Review these code changes for potential bugs, security vulnerabilities, and adherence to best practices. Provide actionable suggestions for improvement."
+
+    if [ -n "$model" ]; then
+        git diff "origin/$base_branch...HEAD" | opencode run "$prompt" --model "$model"
+    else
+        git diff "origin/$base_branch...HEAD" | opencode run "$prompt"
+    fi
+}
+
+# Pattern 7: Multi-message execution
+opencode_multi_message() {
+    local messages=("$@")
+
+    echo "Running OpenCode with multiple message arguments"
+
+    opencode run "${messages[@]}"
+}
+
+# Pattern 8: Security audit
+opencode_security() {
+    local model="${1:-$OPENCODE_MODEL}"
+
+    echo "Performing security audit with OpenCode"
+
+    local prompt="Perform security audit: identify vulnerabilities, insecure patterns, and suggest fixes. Focus on: injection attacks, authentication issues, data exposure, and insecure configurations."
+
+    if [ -n "$model" ]; then
+        opencode run "$prompt" --model "$model"
+    else
+        opencode run "$prompt"
+    fi
+}
+
+# Pattern 9: Run with retry logic
+opencode_with_retry() {
+    local prompt="$1"
+    local max_retries="${2:-3}"
+    local model="${3:-$OPENCODE_MODEL}"
+
+    local attempt=1
+    while [ $attempt -le $max_retries ]; do
+        echo "Attempt $attempt/$max_retries: Running OpenCode..."
+
+        local cmd="opencode run \"$prompt\""
+        [ -n "$model" ] && cmd="$cmd --model $model"
+
+        if eval "$cmd"; then
+            echo -e "${GREEN}OpenCode command succeeded${NC}"
+            return 0
+        else
+            echo -e "${YELLOW}OpenCode command failed${NC}"
+
+            if [ $attempt -lt $max_retries ]; then
+                echo "Retrying in 2 seconds..."
+                sleep 2
+            fi
+        fi
+
+        attempt=$((attempt + 1))
+    done
+
+    echo -e "${RED}OpenCode command failed after $max_retries attempts${NC}"
+    return 1
+}
+
+# Pattern 10: Timeout handling for long operations
 opencode_with_timeout() {
     local timeout_seconds="${1:-300}"
     local prompt="$2"
-    local files="$3"
-    
+    local model="${3:-$OPENCODE_MODEL}"
+
     echo "Running OpenCode with ${timeout_seconds}s timeout"
-    
+
+    local cmd="opencode run \"$prompt\""
+    [ -n "$model" ] && cmd="$cmd --model $model"
+
     if command -v timeout &> /dev/null; then
-        timeout "$timeout_seconds" opencode --headless --prompt "$prompt" --files $files
+        timeout "$timeout_seconds" bash -c "$cmd"
     else
         echo "Warning: timeout command not available, running without timeout"
-        opencode --headless --prompt "$prompt" --files $files
+        eval "$cmd"
     fi
 }
 
-# Pattern 13: Stdin input processing
-opencode_stdin() {
-    local file="${1:-}"
-    
-    echo "Processing stdin input with OpenCode"
-    
-    if [ -n "$file" ]; then
-        cat | opencode --headless --file "$file"
+# Pattern 11: View statistics
+opencode_stats() {
+    echo "Viewing OpenCode statistics"
+    opencode stats
+}
+
+# Pattern 12: List available models
+opencode_list_models() {
+    echo "Listing available OpenCode models"
+    opencode models
+}
+
+# Pattern 13: Export session data
+opencode_export_session() {
+    local session_id="${1:-}"
+    local output_file="${2:-session.json}"
+
+    echo "Exporting OpenCode session"
+
+    if [ -n "$session_id" ]; then
+        opencode export "$session_id" > "$output_file"
     else
-        cat | opencode --headless
+        opencode export > "$output_file"
     fi
 }
 
-# Pattern 14: Model-specific execution
-opencode_with_model() {
-    local model="$1"
-    local prompt="$2"
-    local files="$3"
-    
-    echo "Running OpenCode with model: $model"
-    
-    opencode --headless --model "$model" --prompt "$prompt" --files $files
-}
+# Pattern 14: Import session data
+opencode_import_session() {
+    local session_file="$1"
 
-# Example usage functions
-example_basic_usage() {
-    echo "=== Example: Basic Usage ==="
-    opencode_basic "Add docstrings to all functions" "src/main.py"
-}
+    echo "Importing OpenCode session from: $session_file"
 
-example_batch_processing() {
-    echo "=== Example: Batch Processing ==="
-    opencode_batch "Add type hints" src/main.py src/utils.py src/helpers.py
-}
-
-example_cicd_workflow() {
-    echo "=== Example: CI/CD Workflow ==="
-    opencode_cicd "Fix linting issues" "src/*.py" "lint-fixes.txt"
-}
-
-example_git_integration() {
-    echo "=== Example: Git Integration ==="
-    opencode_git_changes "Add comprehensive documentation" "main"
+    opencode import "$session_file"
 }
 
 # Main execution (if script is run directly)
@@ -262,20 +240,31 @@ if [ "${BASH_SOURCE[0]}" == "${0}" ]; then
     echo "Source this file to use the functions in your scripts:"
     echo "  source open-code-script-patterns.sh"
     echo ""
+    echo "Prerequisites:"
+    echo "  - Install: npm install -g open-code"
+    echo "  - Authenticate: opencode auth login"
+    echo ""
     echo "Available patterns:"
-    echo "  - opencode_basic: Basic headless execution"
-    echo "  - opencode_with_file: With file context"
-    echo "  - opencode_batch: Batch processing"
-    echo "  - opencode_cicd: CI/CD pattern"
-    echo "  - opencode_review: Code review"
-    echo "  - opencode_transform: Code transformation"
-    echo "  - opencode_add_docs: Add documentation"
-    echo "  - opencode_generate_tests: Generate tests"
+    echo "  - opencode_basic: Basic headless execution with 'opencode run'"
+    echo "  - opencode_with_model: Run with specific model"
+    echo "  - opencode_continue: Continue last session"
+    echo "  - opencode_resume: Resume specific session"
+    echo "  - opencode_cicd: CI/CD pattern with exit code validation"
+    echo "  - opencode_review: Code review from git diff"
+    echo "  - opencode_multi_message: Multiple message arguments"
     echo "  - opencode_security: Security audit"
-    echo "  - opencode_git_changes: Process Git changes"
-    echo "  - opencode_analyze_directory: Directory analysis"
-    echo "  - opencode_with_timeout: With timeout"
-    echo "  - opencode_stdin: Stdin input processing"
-    echo "  - opencode_with_model: Model-specific execution"
+    echo "  - opencode_with_retry: With retry logic"
+    echo "  - opencode_with_timeout: With timeout handling"
+    echo "  - opencode_stats: View usage statistics"
+    echo "  - opencode_list_models: List available models"
+    echo "  - opencode_export_session: Export session data"
+    echo "  - opencode_import_session: Import session data"
+    echo ""
+    echo "OpenCode CLI Commands:"
+    echo "  opencode run [message..]     - Run with a message (headless)"
+    echo "  opencode serve               - Start headless server"
+    echo "  opencode web                 - Start headless web server"
+    echo "  opencode auth login          - Authenticate"
+    echo "  opencode models              - List available models"
+    echo "  opencode stats               - View usage statistics"
 fi
-

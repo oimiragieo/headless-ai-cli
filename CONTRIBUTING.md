@@ -81,10 +81,9 @@ Use the template from `tools/TEMPLATE.md`:
 
 Update these files to include the new tool:
 
-- **README.md**: Add to tool list and comparison tables
-- **claude.md**: Add to executive summary and full section
-- **simple.md**: Add to quick reference tables
-- **gpt-5.1.md**: Add to executive summary (if applicable)
+- **README.md**: Add to tool list, comparison tables, and installation section
+- **CLAUDE.md**: Update tool counts and category lists
+- **QUICK_REFERENCE.md**: Add to quick reference tables
 
 ## Updating Existing Documentation
 

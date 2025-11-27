@@ -110,7 +110,7 @@ headless-ai-cli/
 ├── .gitignore                   # Standard exclusions (node_modules, IDEs, logs, etc.)
 ├── tools/
 │   ├── TEMPLATE.md              # Standardized template for adding new tools
-│   └── major/                   # Individual tool documentation (15 files)
+│   └── major/                   # Individual tool documentation (14 files)
 │       ├── gemini.md            # Google Gemini CLI
 │       ├── claude.md            # Anthropic Claude (Claude Code)
 │       ├── codex.md             # OpenAI Codex
@@ -153,7 +153,7 @@ headless-ai-cli/
 
 ### Individual Tool Documentation
 
-All 15 tools are comprehensively documented in `tools/major/` directory:
+All 14 tools are comprehensively documented in `tools/major/` directory:
 
 1. **[tools/major/gemini.md](tools/major/gemini.md)** - Google Gemini CLI (1M token context)
 2. **[tools/major/claude.md](tools/major/claude.md)** - Anthropic Claude (Claude Code)
@@ -195,7 +195,7 @@ All 15 tools are comprehensively documented in `tools/major/` directory:
 git diff | gemini -p "Review for bugs and security" --output-format json
 
 # Using Claude for deep analysis
-claude -p "Review this PR for architectural issues" --output-format json --no-interactive
+claude -p "Review this PR for architectural issues" --output-format json --permission-mode bypassPermissions
 
 # Using Droid for CI/CD
 droid exec "Review code for security issues" --output-format json
@@ -219,7 +219,7 @@ droid exec --auto low "Run security audit" --output-format json
 gemini -p "Analyze test failures" --output-format json
 
 # Using Claude with pre-approved tools
-claude -p "Fix linting issues" --allowedTools "Bash,Read,Edit" --no-interactive
+claude -p "Fix linting issues" --allowedTools "Bash,Read,Edit" --permission-mode bypassPermissions
 ```
 
 ### AI Pair Programming
@@ -256,8 +256,8 @@ q scan --auto-fix  # Security scan with auto-fix
 ### Multi-Language Support
 ```bash
 # OpenCode
-opencode generate "Create a REST API endpoint in Python"
-opencode review --language go
+opencode run "Create a REST API endpoint in Python"
+opencode run "Review the Go code for best practices"
 ```
 
 ## 📤 Output Formats Supported
@@ -283,7 +283,7 @@ opencode review --language go
 
 | Role | Best Tools | Example |
 |------|------------|---------|
-| **Backend Engineer** | Claude Sonnet, Cursor, Gemini | `claude -p "Review API endpoint" --no-interactive` |
+| **Backend Engineer** | Claude Sonnet, Cursor, Gemini | `claude -p "Review API endpoint" --permission-mode bypassPermissions` |
 | **Frontend Engineer** | Cursor, Codex, Copilot | `cursor-agent -p "Create React component" --force` |
 | **SRE/DevOps** | Droid, Claude, Amazon Q | `droid exec "Diagnose incident" --auto low` |
 | **AI/ML Engineer** | Claude Opus, Gemini | `claude -p "Design ML architecture" --model claude-opus-4-5` |
@@ -364,8 +364,8 @@ This repository is provided as-is for educational and reference purposes. Indivi
 
 ## 🎯 Repository Status
 
-- ✅ **15 Tools Documented** - All with individual comprehensive files
-- ✅ **15 Installation Commands** - Verified and tested
+- ✅ **14 Tools Documented** - All with individual comprehensive files
+- ✅ **14 Installation Commands** - Verified and tested
 - ✅ **60+ Test Scripts** - Headless, advanced, CI/CD, workflows
 - ✅ **40+ Examples** - CI/CD configs and automation scripts
 - ✅ **Documentation Template** - Standardized format for consistency
@@ -374,10 +374,10 @@ This repository is provided as-is for educational and reference purposes. Indivi
 
 ## 📊 Repository Statistics
 
-- **Total Tools:** 15 (all verified and production-ready)
-- **Documentation Files:** 19 markdown files total
+- **Total Tools:** 14 (all verified and production-ready)
+- **Documentation Files:** 18 markdown files total
   - 4 main docs (README, CLAUDE, CONTRIBUTING, QUICK_REFERENCE)
-  - 15 individual tool docs (tools/major/)
+  - 14 individual tool docs (tools/major/)
 - **Example Files:** 40+ (CI/CD and automation)
 - **Test Scripts:** 60+ (comprehensive test coverage)
 - **Lines of Documentation:** 30,000+ lines of verified content
@@ -388,7 +388,7 @@ November 2025
 
 ---
 
-**Quick Start:** Pick a tool from the installation section above (numbered 1-15), install it, then check its individual documentation file in `tools/major/` for comprehensive usage guides, examples, and CI/CD integration patterns.
+**Quick Start:** Pick a tool from the installation section above (numbered 1-14), install it, then check its individual documentation file in `tools/major/` for comprehensive usage guides, examples, and CI/CD integration patterns.
 
 **Icon Legend:**
 - 🚨 = Dangerous (requires caution)

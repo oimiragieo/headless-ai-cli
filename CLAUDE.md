@@ -19,7 +19,7 @@ headless-ai-cli/
 ├── .gitignore                   # Standard exclusions (node_modules, IDEs, logs, etc.)
 ├── tools/
 │   ├── TEMPLATE.md              # Standardized template for adding new tools
-│   └── major/                   # Individual tool documentation (15 files)
+│   └── major/                   # Individual tool documentation (14 files)
 │       ├── gemini.md            # Google Gemini CLI - 1M token context
 │       ├── claude.md            # Anthropic Claude (Claude Code) - Deep reasoning
 │       ├── codex.md             # OpenAI Codex - UI generation
@@ -60,7 +60,7 @@ headless-ai-cli/
    - `CLAUDE.md` - This file: AI agent guidance for working in this repository
    - `CONTRIBUTING.md` - Contribution guidelines and documentation standards
    - `QUICK_REFERENCE.md` - Ultra-condensed command cheat sheet for daily use
-   - Individual tool files in `tools/major/` (15 files) - Deep-dive documentation for each tool
+   - Individual tool files in `tools/major/` (14 files) - Deep-dive documentation for each tool
 
 2. **Documentation Hierarchy:**
    - README.md → Quick navigation and decision tree
@@ -270,7 +270,7 @@ Models change frequently. When updating:
 **Cloud Integration Tools (1 tool):**
 - Amazon Q
 
-**Multi-Language Tools (2 tools):**
+**Multi-Language Tools (1 tool):**
 - OpenCode
 
 **Total: 14 verified, production-ready tools**
@@ -279,10 +279,10 @@ Models change frequently. When updating:
 
 - **Repository Created:** November 2025
 - **Last Major Update:** November 2025
-- **Total Tools Documented:** 15 (all production-ready)
-- **Documentation Files:** 19 markdown files total
+- **Total Tools Documented:** 14 (all production-ready)
+- **Documentation Files:** 18 markdown files total
   - 4 main docs (README, CLAUDE, CONTRIBUTING, QUICK_REFERENCE)
-  - 15 individual tool docs (tools/major/)
+  - 14 individual tool docs (tools/major/)
 - **Example Files:** 40+ (CI/CD and automation scripts)
 - **Test Scripts:** 60+ (comprehensive test coverage)
 

@@ -197,15 +197,14 @@ tool --resume <id> "Continue"      # By ID
 
 ## 🔗 Quick Links
 
-- **Full Guide:** `claude.md`
-- **Comprehensive:** `COMPREHENSIVE.md`
+- **Full Guide:** `tools/major/claude.md`
 - **Tool Docs:** `tools/major/`
 - **Examples:** `examples/ci-cd/`, `examples/automation/`
 - **Contributing:** `CONTRIBUTING.md`
 
 ---
 
-**Last Updated:** November 2025  
-**Tools:** 12 major tools documented (100%)  
-**Status:** 14 non-existent tools verified and removed - see VERIFICATION_STATUS.md for details
+**Last Updated:** November 2025
+**Tools:** 14 major tools documented (100%)
+**Status:** All tools verified and production-ready
 

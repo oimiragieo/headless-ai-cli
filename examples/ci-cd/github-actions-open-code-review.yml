@@ -32,26 +32,26 @@ jobs:
 
       - name: Run OpenCode Code Review
         id: opencode_review
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          # Alternative: use Anthropic
-          # ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
-          # Get list of changed code files
+          # NOTE: OpenCode requires authentication before use
+          # Run `opencode auth login` and configure credentials in advance
+          # Or set up API keys for your preferred provider
+
+          # Get git diff for review
           if [ "${{ github.event_name }}" == "pull_request" ]; then
-            CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -E '\.(py|js|ts|java|go|rs)$' || true)
+            DIFF_CONTENT=$(git diff origin/${{ github.base_ref }}...HEAD)
           else
-            CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD | grep -E '\.(py|js|ts|java|go|rs)$' || true)
+            DIFF_CONTENT=$(git diff HEAD~1 HEAD)
           fi
 
-          if [ -z "$CHANGED_FILES" ]; then
-            echo "No code files to review."
-            echo "review_output=No code files to review." >> $GITHUB_OUTPUT
+          if [ -z "$DIFF_CONTENT" ]; then
+            echo "No changes to review."
+            echo "review_output=No changes to review." >> $GITHUB_OUTPUT
             echo "has_review=false" >> $GITHUB_OUTPUT
           else
-            # Run review on changed files
-            REVIEW_OUTPUT=$(opencode --headless --prompt "Review these code changes for potential bugs, security vulnerabilities, and adherence to best practices. Provide actionable suggestions for improvement. Focus on: code quality, performance, security, and maintainability." --files $CHANGED_FILES 2>&1 || echo "Review completed")
-            
+            # Run review using OpenCode's run command with piped input
+            REVIEW_OUTPUT=$(echo "$DIFF_CONTENT" | opencode run "Review these code changes for potential bugs, security vulnerabilities, and adherence to best practices. Provide actionable suggestions for improvement. Focus on: code quality, performance, security, and maintainability." 2>&1 || echo "Review completed")
+
             echo "review_output<<EOF" >> $GITHUB_OUTPUT
             echo "$REVIEW_OUTPUT" >> $GITHUB_OUTPUT
             echo "EOF" >> $GITHUB_OUTPUT

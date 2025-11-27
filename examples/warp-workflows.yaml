@@ -36,7 +36,7 @@
   command: |
     claude -p "Generate comprehensive documentation for this project" \
       --output-format json \
-      --no-interactive \
+      --permission-mode bypassPermissions \
       --allowedTools "Read,Write" \
       > docs-output.json
   description: Generate project documentation using Claude

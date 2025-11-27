@@ -85,9 +85,9 @@ test_case "Direct prompt with -y flag (shorthand)" \
 test_case "Direct prompt with --oneshot flag" \
     "cline 'Say hello' --oneshot 2>&1 || true" 0
 
-# Test 6: Direct prompt with --no-interactive flag
-test_case "Direct prompt with --no-interactive flag" \
-    "cline 'Say hello' --no-interactive 2>&1 || true" 0
+# Test 6: Direct prompt with --yolo flag (long form)
+test_case "Direct prompt with --yolo flag (long form)" \
+    "cline 'Say hello' --yolo 2>&1 || true" 0
 
 # Test 7: Direct prompt with --mode plan
 test_case "Direct prompt with --mode plan" \

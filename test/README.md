@@ -539,7 +539,7 @@ chmod +x test/*.test.sh
 #### Basic Functionality
 - ✅ Headless mode flags (`-p`, `--print`)
 - ✅ Output formats (`text`, `json`, `stream-json`)
-- ✅ Non-interactive mode (`--no-interactive`)
+- ✅ Permission bypass mode (`--permission-mode bypassPermissions`)
 - ✅ Exit code handling
 - ✅ Stdin input
 

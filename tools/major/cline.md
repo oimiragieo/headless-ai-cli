@@ -135,8 +135,8 @@ cline "Fix all linting issues" --oneshot
 # or shorthand
 cline "Fix all linting issues" -o
 
-# No interactive prompts
-cline "Refactor this module" --no-interactive
+# YOLO mode for autonomous execution
+cline "Refactor this module" --yolo
 
 # With file attachments
 cline "Review this code" -f src/main.py --yolo
@@ -155,7 +155,6 @@ cline "Analyze codebase" --output-format json --yolo
 **Key Flags for Headless Mode:**
 - `-y, --yolo`: YOLO mode - enables autonomous planning and execution
 - `-o, --oneshot`: Full autonomous mode - complete task without interaction
-- `--no-interactive`: Suppress all interactive prompts
 - `-F, --output-format`: Specify output format (`rich`, `json`, `plain`)
 
 **Exit codes:**
@@ -258,7 +257,6 @@ cline [command]
 -h, --help               Help for cline
 -i, --image strings      Attach image files
 -m, --mode string        Mode (act|plan) - defaults to plan (default "plan")
---no-interactive         Enable yolo mode (non-interactive)
 -o, --oneshot            Full autonomous mode
 -F, --output-format string   Output format (rich|json|plain) (default "rich")
 -s, --setting strings    Task settings (key=value format)
@@ -558,10 +556,8 @@ fi
 - Use `-y/--yolo` flag for autonomous execution (headless mode)
 - Use `--output-format json` for structured, parseable output
 - Store API keys as secrets, never hardcode
-- Use `--no-interactive` flag to suppress all prompts
 - Workflows stored in `.clinerules/workflows/` directory
 - Cline makes changes autonomously (review before committing)
-- Use `--non-interactive` flag for `cline auth` in CI/CD
 - For advanced workflows, use instance/task commands
 
 ## Examples
