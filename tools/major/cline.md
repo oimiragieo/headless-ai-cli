@@ -265,7 +265,7 @@ jobs:
           node-version: '20'
 
       - name: Install Cline CLI
-        run: npm install -g @cline/cli
+        run: npm install -g cline
 
       - name: Authenticate Cline
         env:
@@ -307,7 +307,7 @@ jobs:
 set -e
 
 # Install Cline CLI
-npm install -g @cline/cli
+npm install -g cline
 
 # Initialize instance
 cline instance new --default

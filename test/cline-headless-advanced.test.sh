@@ -64,7 +64,7 @@ echo ""
 
 # Check if Cline CLI is installed
 if ! command -v cline &> /dev/null; then
-    echo -e "${YELLOW}Warning: Cline CLI not found. Install with: npm install -g @cline/cli${NC}"
+    echo -e "${YELLOW}Warning: Cline CLI not found. Install with: npm install -g cline${NC}"
     echo ""
 fi
 

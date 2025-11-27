@@ -17,7 +17,7 @@ CLINE_INSTANCE="${CLINE_INSTANCE:-default}"
 # Function: Check if Cline CLI is installed
 check_cline_installed() {
     if ! command -v cline &> /dev/null; then
-        echo -e "${RED}Error: Cline CLI not found. Install with: npm install -g @cline/cli${NC}" >&2
+        echo -e "${RED}Error: Cline CLI not found. Install with: npm install -g cline${NC}" >&2
         exit 1
     fi
 }

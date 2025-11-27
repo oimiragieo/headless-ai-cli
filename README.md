@@ -86,7 +86,7 @@ pip install aider-chat
 npm install -g @continuedev/cli
 
 # 12. Cline - Task-based autonomous execution
-npm install -g @cline/cli
+npm install -g cline
 
 # 13. Amazon Q Developer - AWS AI coding assistant
 # macOS:
@@ -339,7 +339,7 @@ npm install -g @openai/codex@2.2.0
 npm install -g @google/gemini-cli@3.1.0
 npm install -g @github/copilot@0.0.329
 npm install -g @continuedev/cli@latest
-npm install -g @cline/cli@latest
+npm install -g cline@latest
 npm install -g opencode@latest
 
 # Python packages

@@ -27,7 +27,7 @@ jobs:
           node-version: '20'
 
       - name: Install Cline CLI
-        run: npm install -g @cline/cli
+        run: npm install -g cline
 
       - name: Authenticate Cline
         env:
