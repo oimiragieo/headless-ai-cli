@@ -49,16 +49,46 @@ brew install --cask warp
 winget install Warp.Warp
 ```
 
-**Linux:**
+**Windows (WSL - Windows Subsystem for Linux):**
+```bash
+# Install dependencies and add Warp repository
+sudo apt-get install wget gpg
+
+# Download and add Warp GPG key
+wget -qO- https://releases.warp.dev/linux/keys/warp.asc | gpg --dearmor > warpdotdev.gpg
+sudo install -D -o root -g root -m 644 warpdotdev.gpg /etc/apt/keyrings/warpdotdev.gpg
+
+# Add Warp repository to sources
+sudo sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/warpdotdev.gpg] https://releases.warp.dev/linux/deb stable main" > /etc/apt/sources.list.d/warpdotdev.list'
+
+# Clean up temporary GPG file
+rm warpdotdev.gpg
+
+# Update package list and install Warp
+sudo apt update && sudo apt install warp-terminal
+```
+
+**Linux (Debian/Ubuntu):**
+```bash
+# Same as WSL installation above
+sudo apt-get install wget gpg
+wget -qO- https://releases.warp.dev/linux/keys/warp.asc | gpg --dearmor > warpdotdev.gpg
+sudo install -D -o root -g root -m 644 warpdotdev.gpg /etc/apt/keyrings/warpdotdev.gpg
+sudo sh -c 'echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/warpdotdev.gpg] https://releases.warp.dev/linux/deb stable main" > /etc/apt/sources.list.d/warpdotdev.list'
+rm warpdotdev.gpg
+sudo apt update && sudo apt install warp-terminal
+```
+
+**Linux (Other distributions):**
 ```bash
 # Download from warp.dev
-# Or use package manager (varies by distribution)
+# Or use package manager specific to your distribution
 ```
 
 **System Requirements:**
 - macOS: macOS 10.14 or later
-- Windows: Windows 10 or later
-- Linux: Modern distributions (Ubuntu 18.04+, etc.)
+- Windows: Windows 10 or later (native) or WSL 2 (for Linux version)
+- Linux: Modern distributions (Ubuntu 18.04+, Debian 10+, etc.)
 - GPU acceleration recommended for best performance
 
 ## 🚀 Start Here
