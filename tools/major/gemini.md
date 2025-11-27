@@ -82,7 +82,8 @@ git diff | gemini -p "Review these changes"
 
 | Model | Context | Speed | Cost | Best For |
 |-------|---------|-------|------|----------|
-| **gemini-2.5-pro** | ~1M tokens | Medium | Medium-High | Massive repos, deep analysis, enhanced reasoning (default) |
+| **gemini-3.0-pro** | ~1M tokens | Medium | High | Most intelligent model, best for coding, agents, and complex reasoning (latest, Nov 2025) |
+| **gemini-2.5-pro** | ~1M tokens | Medium | Medium-High | Massive repos, deep analysis, enhanced reasoning |
 | **gemini-2.5-flash** | ~1M tokens | Fast | Low-Medium | Quick analysis, large context, general tasks |
 | **gemini-1.5-pro** | ~1M tokens | Medium | Medium | Balanced performance for most use cases |
 | **gemini-1.5-flash** | ~1M tokens | Fast | Low | Fast responses for simple tasks |
@@ -91,6 +92,7 @@ git diff | gemini -p "Review these changes"
 **Model Selection:**
 ```bash
 # Use specific model
+gemini -p "query" --model gemini-3.0-pro
 gemini -p "query" --model gemini-2.5-pro
 gemini -p "query" --model gemini-2.5-flash
 gemini -p "query" --model gemini-1.5-pro
@@ -100,7 +102,7 @@ gemini -p "query" --model gemini-1.5-flash
 gemini models list
 
 # Set default model via config
-gemini config set model gemini-2.5-pro
+gemini config set model gemini-3.0-pro
 
 # Get current model
 gemini config get model

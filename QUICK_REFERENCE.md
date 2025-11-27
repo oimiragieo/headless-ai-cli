@@ -49,7 +49,7 @@ kiro-cli login
 
 ### Gemini
 ```bash
-gemini -p "query" --output-format json --model gemini-2.5-pro
+gemini -p "query" --output-format json --model gemini-3.0-pro
 ```
 
 ### Claude
@@ -147,7 +147,7 @@ tool --resume <id> "Continue"      # By ID
 
 ### Model Selection
 ```bash
---model gemini-2.5-pro             # Gemini
+--model gemini-3.0-pro             # Gemini
 --model claude-opus-4-5            # Claude
 --model gpt-5-codex                # Codex
 ```
