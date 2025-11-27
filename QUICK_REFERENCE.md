@@ -110,6 +110,9 @@ npm install -g open-code                 # OpenCode
 
 # All npm tools at once
 npm install -g @google/gemini-cli @anthropic-ai/claude-code @openai/codex @github/copilot @continuedev/cli cline open-code
+
+# Update all npm tools
+npm upgrade -g @google/gemini-cli @anthropic-ai/claude-code @openai/codex @github/copilot @continuedev/cli cline open-code
 ```
 
 ### pip (Python)
