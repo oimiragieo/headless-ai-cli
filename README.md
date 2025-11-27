@@ -292,8 +292,8 @@ opencode review --language go
 
 | Role | Best Tools | Example |
 |------|------------|---------|
-| **Backend Engineer** | Claude Sonnet, Gemini, Droid | `claude -p "Review API endpoint" --no-interactive` |
-| **Frontend Engineer** | Codex, Copilot, OpenCode | `codex exec "Create React component"` |
+| **Backend Engineer** | Claude Sonnet, Cursor, Gemini | `claude -p "Review API endpoint" --no-interactive` |
+| **Frontend Engineer** | Cursor, Codex, Copilot | `cursor-agent -p "Create React component" --force` |
 | **SRE/DevOps** | Droid, Claude, Amazon Q | `droid exec "Diagnose incident" --auto low` |
 | **AI/ML Engineer** | Claude Opus, Gemini | `claude -p "Design ML architecture" --model claude-opus-4-1` |
 | **PM/Designer** | Codex, Copilot, Cursor | `codex exec "Create user flow mockup"` |
