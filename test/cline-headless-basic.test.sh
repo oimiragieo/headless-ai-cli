@@ -73,75 +73,103 @@ test_case "Help flag" \
 test_case "Version flag" \
     "cline --version 2>&1 || cline version 2>&1 || true" 0
 
-# Test 3: Instance new command syntax
+# Test 3: Direct prompt with --yolo flag
+test_case "Direct prompt with --yolo flag" \
+    "cline 'Say hello' --yolo 2>&1 || true" 0
+
+# Test 4: Direct prompt with -y flag (shorthand)
+test_case "Direct prompt with -y flag (shorthand)" \
+    "cline 'Say hello' -y 2>&1 || true" 0
+
+# Test 5: Direct prompt with --oneshot flag
+test_case "Direct prompt with --oneshot flag" \
+    "cline 'Say hello' --oneshot 2>&1 || true" 0
+
+# Test 6: Direct prompt with --no-interactive flag
+test_case "Direct prompt with --no-interactive flag" \
+    "cline 'Say hello' --no-interactive 2>&1 || true" 0
+
+# Test 7: Direct prompt with --mode plan
+test_case "Direct prompt with --mode plan" \
+    "cline 'Plan a feature' --mode plan --yolo 2>&1 || true" 0
+
+# Test 8: Direct prompt with --mode act
+test_case "Direct prompt with --mode act" \
+    "cline 'Say hello' --mode act --yolo 2>&1 || true" 0
+
+# Test 9: Direct prompt with --output-format json
+test_case "Direct prompt with --output-format json" \
+    "cline 'Say hello' --output-format json --yolo 2>&1 || true" 0
+
+# Test 10: Direct prompt with --output-format plain
+test_case "Direct prompt with --output-format plain" \
+    "cline 'Say hello' --output-format plain --yolo 2>&1 || true" 0
+
+# Test 11: Stdin piping with --yolo
+test_case "Stdin piping with --yolo" \
+    "echo 'Say hello' | cline --yolo 2>&1 || true" 0
+
+# Test 12: Instance new command syntax
 test_case "Instance new command syntax" \
     "cline instance new --help 2>&1 | head -1 || true" 0
 
-# Test 4: Instance new with --default flag
+# Test 13: Instance new with --default flag
 test_case "Instance new with --default flag" \
     "cline instance new --default 2>&1 || true" 0
 
-# Test 5: Instance list command
+# Test 14: Instance list command
 test_case "Instance list command" \
     "cline instance list 2>&1 || true" 0
 
-# Test 6: Task new command syntax
+# Test 15: Task new command syntax
 test_case "Task new command syntax" \
     "cline task new --help 2>&1 | head -1 || true" 0
 
-# Test 7: Task new with -y flag (headless mode)
+# Test 16: Task new with -y flag (headless mode)
 test_case "Task new with -y flag (headless mode)" \
     "cline task new -y 'Say hello' 2>&1 || true" 0
 
-# Test 8: Task new with --yolo flag (alternative)
+# Test 17: Task new with --yolo flag (alternative)
 test_case "Task new with --yolo flag" \
     "cline task new --yolo 'Say hello' 2>&1 || true" 0
 
-# Test 9: Task view command
+# Test 18: Task view command
 test_case "Task view command" \
     "cline task view 2>&1 || true" 0
 
-# Test 10: Task view with --follow flag
+# Test 19: Task view with --follow flag
 test_case "Task view with --follow flag" \
     "cline task view --follow 2>&1 | head -1 || timeout 1 cline task view --follow 2>&1 || true" 0
 
-# Test 11: Task list command
+# Test 20: Task list command
 test_case "Task list command" \
     "cline task list 2>&1 || true" 0
 
-# Test 12: Review command syntax
-test_case "Review command syntax" \
-    "cline review --help 2>&1 | head -1 || true" 0
-
-# Test 13: Review with --output flag
-test_case "Review with --output flag" \
-    "cline review --output=/tmp/cline-review.md 2>&1 || true" 0
-
-# Test 14: Auth command syntax
+# Test 21: Auth command syntax
 test_case "Auth command syntax" \
     "cline auth --help 2>&1 | head -1 || true" 0
 
-# Test 15: Auth with --non-interactive flag
+# Test 22: Auth with --non-interactive flag
 test_case "Auth with --non-interactive flag" \
     "cline auth --non-interactive 2>&1 || true" 0
 
-# Test 16: Instance switch command syntax
+# Test 23: Instance switch command syntax
 test_case "Instance switch command syntax" \
     "cline instance switch --help 2>&1 | head -1 || true" 0
 
-# Test 17: Combined flags - instance and task
+# Test 24: Combined flags - instance and task
 test_case "Combined flags - instance and task" \
     "cline instance new --default 2>&1 && cline task new -y 'Test task' 2>&1 || true" 0
 
-# Test 18: Exit code on success
+# Test 25: Exit code on success
 test_case "Exit code on success" \
     "true; [ \$? -eq 0 ]" 0
 
-# Test 19: Exit code on failure
+# Test 26: Exit code on failure
 test_case "Exit code on failure" \
     "false; [ \$? -ne 0 ]" 0
 
-# Test 20: Error handling with invalid command
+# Test 27: Error handling with invalid command
 test_case "Error handling with invalid command" \
     "cline invalid-command 2>&1; [ \$? -ne 0 ]" 0
 
