@@ -38,9 +38,9 @@ OpenCode is an AI coding assistant that can read files, write and modify code, e
 
 ## Installation
 
-**Using npm (if available):**
+**Using npm:**
 ```bash
-npm install -g opencode
+npm install -g open-code
 ```
 
 **Using pip (if available):**
