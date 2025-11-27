@@ -75,102 +75,91 @@ if ! command -v copilot &> /dev/null; then
     exit 1
 fi
 
-# Test Claude models
-test_case "Claude Sonnet 4.5 (default)" \
-    "copilot --model claude-sonnet-4.5 --help" 0
+# Test all available models (verified from CLI, November 2025)
+# Model 1: Claude Sonnet 4.5 (1x) - default
+test_case "Claude Sonnet 4.5 (default, 1x)" \
+    "copilot --model 'Claude Sonnet 4.5' --help" 0
 
-test_case "Claude Opus 4.5 (Preview)" \
-    "copilot --model claude-opus-4.5 --help" 0
+# Model 2: Claude Sonnet 4 (1x)
+test_case "Claude Sonnet 4 (1x)" \
+    "copilot --model 'Claude Sonnet 4' --help" 0
 
-test_case "Claude Haiku 4.5" \
-    "copilot --model claude-haiku-4.5 --help" 0
+# Model 3: GPT-5 (1x)
+test_case "GPT-5 (1x)" \
+    "copilot --model 'GPT-5' --help" 0
 
-test_case "Claude Sonnet 4" \
-    "copilot --model claude-sonnet-4 --help" 0
+# Model 4: GPT-5-Mini (0x) - Free tier
+test_case "GPT-5-Mini (0x, Free)" \
+    "copilot --model 'GPT-5-Mini' --help" 0
 
-# Test GPT models
-test_case "GPT-5.1" \
-    "copilot --model gpt-5.1 --help" 0
+# Model 5: GPT-4.1 (0x) - Free tier
+test_case "GPT-4.1 (0x, Free)" \
+    "copilot --model 'GPT-4.1' --help" 0
 
-test_case "GPT-5.1-Codex" \
-    "copilot --model gpt-5.1-codex --help" 0
-
-test_case "GPT-5.1-Codex-Mini" \
-    "copilot --model gpt-5.1-codex-mini --help" 0
-
-test_case "GPT-5" \
-    "copilot --model gpt-5 --help" 0
-
-test_case "GPT-5-Mini" \
-    "copilot --model gpt-5-mini --help" 0
-
-test_case "GPT-4.1" \
-    "copilot --model gpt-4.1 --help" 0
-
-# Test Gemini models
-test_case "Gemini 3 Pro (Preview)" \
-    "copilot --model gemini-3-pro --help" 0
+# Model 6: Gemini 3 Pro (Preview) (1x)
+test_case "Gemini 3 Pro (Preview) (1x)" \
+    "copilot --model 'Gemini 3 Pro (Preview)' --help" 0
 
 # Test model flag syntax variations
 test_case "Model flag with programmatic mode" \
-    "copilot --model claude-sonnet-4.5 -p 'test' --allow-all-tools" 0
+    "copilot --model 'Claude Sonnet 4.5' -p 'test' --allow-all-tools" 0
 
 test_case "Model flag with silent mode" \
-    "copilot --model claude-haiku-4.5 -p 'test' --silent --allow-all-tools" 0
+    "copilot --model 'Claude Sonnet 4' -p 'test' --silent --allow-all-tools" 0
 
 test_case "Model flag with no-color" \
-    "copilot --model gpt-5.1-codex -p 'test' --no-color --allow-all-tools" 0
+    "copilot --model 'GPT-5' -p 'test' --no-color --allow-all-tools" 0
 
 test_case "Model flag with stream off" \
-    "copilot --model claude-sonnet-4.5 -p 'test' --stream off --allow-all-tools" 0
+    "copilot --model 'Claude Sonnet 4.5' -p 'test' --stream off --allow-all-tools" 0
 
 # Test model with tool control
 test_case "Model with allow-all-tools" \
-    "copilot --model claude-sonnet-4.5 -p 'test' --allow-all-tools" 0
+    "copilot --model 'Claude Sonnet 4.5' -p 'test' --allow-all-tools" 0
 
 test_case "Model with specific allow-tool" \
-    "copilot --model claude-haiku-4.5 -p 'test' --allow-tool 'write'" 0
+    "copilot --model 'Gemini 3 Pro (Preview)' -p 'test' --allow-tool 'write'" 0
 
-# Test cost-effective model selection
-test_case "Cost-effective model (Haiku)" \
-    "copilot --model claude-haiku-4.5 -p 'Quick task' --allow-all-tools" 0
+# Test free tier models (0x multiplier - no cost)
+test_case "Free tier model (GPT-5-Mini, 0x)" \
+    "copilot --model 'GPT-5-Mini' -p 'Quick task' --allow-all-tools" 0
 
-test_case "Cost-effective model (GPT-5.1-Codex-Mini)" \
-    "copilot --model gpt-5.1-codex-mini -p 'Quick task' --allow-all-tools" 0
+test_case "Free tier model (GPT-4.1, 0x)" \
+    "copilot --model 'GPT-4.1' -p 'Quick task' --allow-all-tools" 0
 
-# Test free tier models
-test_case "Free tier model (GPT-5-Mini)" \
-    "copilot --model gpt-5-mini -p 'test' --allow-all-tools" 0
+# Test premium models (1x multiplier)
+test_case "Premium model (GPT-5, 1x)" \
+    "copilot --model 'GPT-5' -p 'test' --allow-all-tools" 0
 
-test_case "Free tier model (GPT-4.1)" \
-    "copilot --model gpt-4.1 -p 'test' --allow-all-tools" 0
+test_case "Premium model (Gemini 3 Pro, 1x)" \
+    "copilot --model 'Gemini 3 Pro (Preview)' -p 'test' --allow-all-tools" 0
 
 # Test model persistence (syntax check)
 test_case "Model persistence syntax" \
-    "copilot --model claude-sonnet-4.5 -p 'test' --allow-all-tools && copilot -p 'test' --allow-all-tools" 0
+    "copilot --model 'Claude Sonnet 4.5' -p 'test' --allow-all-tools && copilot -p 'test' --allow-all-tools" 0
 
 # Test invalid model handling
 test_case "Invalid model handling" \
-    "copilot --model invalid-model-name --help 2>&1; [ \$? -ne 0 ] || true" 0
+    "copilot --model 'invalid-model-name' --help 2>&1; [ \$? -ne 0 ] || true" 0
 
 # Test model with session management
 test_case "Model with --continue" \
-    "copilot --model claude-sonnet-4.5 --continue --help" 0
+    "copilot --model 'Claude Sonnet 4.5' --continue --help" 0
 
 test_case "Model with --resume" \
-    "copilot --model claude-sonnet-4.5 --resume test-session --help" 0
+    "copilot --model 'Claude Sonnet 4.5' --resume test-session --help" 0
 
 # Test model with MCP
 test_case "Model with MCP integration" \
-    "copilot --model claude-sonnet-4.5 --enable-all-github-mcp-tools --help" 0
+    "copilot --model 'Claude Sonnet 4.5' --enable-all-github-mcp-tools --help" 0
 
 # Test model with logging
 test_case "Model with log level" \
-    "copilot --model claude-sonnet-4.5 --log-level debug --help" 0
+    "copilot --model 'Claude Sonnet 4.5' --log-level debug --help" 0
 
 # Test multiple model switches in sequence (syntax)
 test_case "Multiple model switches syntax" \
-    "copilot --model claude-sonnet-4.5 --help && copilot --model gpt-5.1 --help && copilot --model gemini-3-pro --help" 0
+    "copilot --model 'Claude Sonnet 4.5' --help && copilot --model 'GPT-5' --help && copilot --model 'Gemini 3 Pro (Preview)' --help" 0
 
 echo ""
 echo "=========================================="

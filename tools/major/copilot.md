@@ -171,23 +171,22 @@ git diff | copilot -p "Review these changes"
 - **Claude Sonnet 4.5** (1x premium request multiplier) - default
 - GitHub reserves the right to change the default model
 
-**Available models (as of November 2025):**
-- Claude Sonnet 4.5 (1x) - default
-- Claude Opus 4.5 (Preview) (1x)
-- Claude Haiku 4.5 (0.33x)
-- Claude Sonnet 4 (1x)
-- GPT-5.1 (1x) - Latest OpenAI model
-- GPT-5.1-Codex (1x) - Latest Codex model for code generation
-- GPT-5.1-Codex-Mini (0.33x) - Cost-effective Codex variant
-- GPT-5 (1x)
-- GPT-5-Mini (0x) - Free tier option
-- GPT-4.1 (0x) - Free tier option
-- Gemini 3 Pro (Preview) (1x) - Latest Google model
+**Available models (verified from CLI, November 2025):**
+
+| # | Model | Cost Multiplier | Description |
+|---|-------|-----------------|-------------|
+| 1 | **Claude Sonnet 4.5** | 1x | Default, balanced performance |
+| 2 | **Claude Sonnet 4** | 1x | Previous Claude version |
+| 3 | **GPT-5** | 1x | Latest OpenAI model |
+| 4 | **GPT-5-Mini** | 0x | Free tier OpenAI model |
+| 5 | **GPT-4.1** | 0x | Free tier OpenAI model |
+| 6 | **Gemini 3 Pro (Preview)** | 1x | Latest Google model |
 
 **Premium request multipliers:**
 - `0x` = Free (does not consume premium requests)
-- `0.33x` = 1/3 of a premium request
 - `1x` = Full premium request
+
+**Note:** Model availability may vary based on configured organizational policies. Some models may not be available due to policy restrictions.
 
 **Model selection:**
 - Use `/model` slash command in interactive mode to select a different model
@@ -197,14 +196,19 @@ git diff | copilot -p "Review these changes"
 
 **Change model examples:**
 ```bash
-# In programmatic mode
-copilot --model claude-sonnet-4.5 -p "Your prompt"
-copilot --model gpt-5.1-codex -p "Your prompt"
+# In programmatic mode (use exact model name as shown in CLI)
+copilot --model "Claude Sonnet 4.5" -p "Your prompt"
+copilot --model "GPT-5" -p "Your prompt"
+copilot --model "Gemini 3 Pro (Preview)" -p "Your prompt"
+
+# Free tier models
+copilot --model "GPT-5-Mini" -p "Your prompt"
+copilot --model "GPT-4.1" -p "Your prompt"
 
 # In interactive mode
 copilot
 # Then type: /model
-# Select from the list
+# Select from the list using number keys (1-6)
 ```
 
 ## CLI Syntax

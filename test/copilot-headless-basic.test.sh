@@ -144,7 +144,7 @@ test_case "Version flag" \
 
 # Test 15: Model flag syntax
 test_case "Model flag syntax" \
-    "copilot --model claude-sonnet-4.5 --help" 0
+    "copilot --model 'Claude Sonnet 4.5' --help" 0
 
 # Test 16: Continue flag syntax
 test_case "Continue flag syntax" \
