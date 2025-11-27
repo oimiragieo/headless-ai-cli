@@ -82,7 +82,7 @@ git diff | gemini -p "Review these changes"
 
 | Model | Context | Speed | Cost | Best For |
 |-------|---------|-------|------|----------|
-| **gemini-3.0-pro** | ~1M tokens | Medium | High | Most intelligent model, best for coding, agents, and complex reasoning (latest, Nov 2025) |
+| **gemini-3-pro-preview** | ~1M tokens | Medium | High | Most intelligent model, best for coding, agents, and complex reasoning (latest, Nov 2025) |
 | **gemini-2.5-pro** | ~1M tokens | Medium | Medium-High | Massive repos, deep analysis, enhanced reasoning |
 | **gemini-2.5-flash** | ~1M tokens | Fast | Low-Medium | Quick analysis, large context, general tasks |
 | **gemini-1.5-pro** | ~1M tokens | Medium | Medium | Balanced performance for most use cases |
@@ -92,7 +92,7 @@ git diff | gemini -p "Review these changes"
 **Model Selection:**
 ```bash
 # Use specific model
-gemini -p "query" --model gemini-3.0-pro
+gemini -p "query" --model gemini-3-pro-preview
 gemini -p "query" --model gemini-2.5-pro
 gemini -p "query" --model gemini-2.5-flash
 gemini -p "query" --model gemini-1.5-pro
@@ -102,7 +102,7 @@ gemini -p "query" --model gemini-1.5-flash
 gemini models list
 
 # Set default model via config
-gemini config set model gemini-3.0-pro
+gemini config set model gemini-3-pro-preview
 
 # Get current model
 gemini config get model
@@ -119,7 +119,7 @@ gemini [options] -p "Your prompt"
 
 **Common options:**
 - `-p, --prompt TEXT`: Provide prompt directly (enables headless mode)
-- `--model MODEL`: Specify model (latest: gemini-3.0-pro, previous: gemini-2.5-pro)
+- `--model MODEL`: Specify model (latest: gemini-3-pro-preview, previous: gemini-2.5-pro)
 - `--output-format FORMAT`: Output format (`text`, `json`, `stream-json`)
 - `--yolo`: Auto-approve all actions (use with caution)
 - `--include-directories DIRS`: Include additional directories (comma-separated)
@@ -261,7 +261,7 @@ jobs:
           git diff origin/${{ github.base_ref }}...HEAD | \
             gemini -p "Review these code changes for bugs, security issues, and best practices. Provide actionable feedback." \
             --output-format json \
-            --model gemini-3.0-pro \
+            --model gemini-3-pro-preview \
             > gemini_review.json || exit 1
           
           if command -v jq &> /dev/null; then

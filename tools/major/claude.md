@@ -86,15 +86,15 @@ claude -p "Stage my changes and write a set of commits for them" \
 |-------|---------------|---------|-------|------|----------|
 | **claude-haiku-4.5** | `claude-haiku-4-5-20251001` | ~200K | Fast | Low | Quick tasks, budget-conscious |
 | **claude-sonnet-4.5** | `claude-sonnet-4-5-20250929` | ~200K | Medium | Medium | Daily coding, balanced (default) |
-| **claude-opus-4.1** | `claude-opus-4-1-20250805` | ~200K | Slow | High | Deep reasoning, architecture |
+| **claude-opus-4.5** | `claude-opus-4-5-20251101` | ~200K | Medium | Medium-High | Best for coding, agents, computer use |
 
 **Model Selection:**
 ```bash
 # Use full model ID
-claude -p "query" --model claude-opus-4-1-20250805
+claude -p "query" --model claude-opus-4-5-20251101
 
 # Use model alias (if supported)
-claude -p "query" --model claude-opus-4.1
+claude -p "query" --model claude-opus-4.5
 
 # Set default via environment variable
 export ANTHROPIC_MODEL="claude-haiku-4-5-20251001"
