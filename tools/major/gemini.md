@@ -50,28 +50,68 @@ npm install -g @google/gemini-cli
 
 ## 🚀 Start Here
 
+**Interactive mode (default):**
 ```bash
-gemini -p "Summarize this repo"
+gemini
 ```
 
-## Headless Mode
+**One-shot mode (non-interactive):**
+```bash
+gemini "Summarize this repo"
+```
 
-**Non-interactive execution for automation, scripting, and CI/CD pipelines:**
+**Interactive mode with initial prompt:**
+```bash
+gemini -i "Review this codebase"
+# or
+gemini --prompt-interactive "Review this codebase"
+```
+
+## Interactive Mode
+
+**Start interactive session:**
+```bash
+# Start interactive mode (default)
+gemini
+
+# Start with initial prompt and continue interactively
+gemini -i "Analyze the architecture"
+gemini --prompt-interactive "Analyze the architecture"
+
+# Resume session (latest or by index)
+gemini -r latest
+gemini -r 5
+gemini --resume latest
+
+# List available sessions
+gemini --list-sessions
+
+# Delete a session
+gemini --delete-session 5
+```
+
+Interactive mode provides a conversational interface for exploratory work and iterative development.
+
+## Non-Interactive Mode (Headless)
+
+**One-shot execution for automation, scripting, and CI/CD pipelines:**
 
 ```bash
-# Direct prompt
-gemini --prompt "Your prompt here"
-# or shorthand
+# Direct prompt (positional - one-shot by default)
+gemini "Your prompt here"
+
+# DEPRECATED (but still works): -p/--prompt flag
+# Note: This flag will be removed in a future version
 gemini -p "Your prompt here"
 
 # Stdin input
 echo "Explain this code" | gemini
 
 # Combine with file input
-cat README.md | gemini -p "Summarize this documentation"
+cat README.md | gemini "Summarize this documentation"
 
 # Combine with pipes
-git diff | gemini -p "Review these changes"
+git diff | gemini "Review these changes"
 ```
 
 **Exit codes:**
@@ -91,12 +131,15 @@ git diff | gemini -p "Review these changes"
 
 **Model Selection:**
 ```bash
-# Use specific model
-gemini -p "query" --model gemini-3-pro-preview
-gemini -p "query" --model gemini-2.5-pro
-gemini -p "query" --model gemini-2.5-flash
-gemini -p "query" --model gemini-1.5-pro
-gemini -p "query" --model gemini-1.5-flash
+# Use specific model (positional syntax)
+gemini "query" --model gemini-3-pro-preview
+gemini "query" --model gemini-2.5-pro
+gemini "query" --model gemini-2.5-flash
+gemini "query" --model gemini-1.5-pro
+gemini "query" --model gemini-1.5-flash
+
+# Use with interactive mode
+gemini -i "query" --model gemini-3-pro-preview
 
 # List available models
 gemini models list
@@ -114,31 +157,78 @@ gemini config get model
 
 **Basic usage:**
 ```bash
-gemini [options] -p "Your prompt"
+# One-shot (non-interactive)
+gemini [options] "Your prompt"
+
+# Interactive mode
+gemini [options]
+
+# Interactive with initial prompt
+gemini [options] -i "Your prompt"
 ```
 
 **Common options:**
-- `-p, --prompt TEXT`: Provide prompt directly (enables headless mode)
-- `--model MODEL`: Specify model (latest: gemini-3-pro-preview, previous: gemini-2.5-pro)
-- `--output-format FORMAT`: Output format (`text`, `json`, `stream-json`)
-- `--yolo`: Auto-approve all actions (use with caution)
-- `--include-directories DIRS`: Include additional directories (comma-separated)
-- `--debug`: Enable debug mode
-- `gemini models list`: List all available models
-- `gemini config set model MODEL`: Set default model
-- `gemini config get model`: Get current default model
-- `gemini config init`: Initialize configuration file
+- `query..`: Positional prompt (one-shot by default)
+- `-i, --prompt-interactive TEXT`: Execute prompt and continue in interactive mode
+- `-p, --prompt TEXT`: **DEPRECATED** - Use positional prompt instead
+- `-m, --model MODEL`: Specify model (latest: gemini-3-pro-preview)
+- `-o, --output-format FORMAT`: Output format (`text`, `json`, `stream-json`)
+- `-r, --resume [sessionId]`: Resume session (use "latest" or index number)
+- `--list-sessions`: List available sessions for current project
+- `--delete-session INDEX`: Delete a session by index number
+- `-y, --yolo`: Auto-approve all actions (use with caution)
+- `--approval-mode MODE`: Set approval mode (`default`, `auto_edit`, `yolo`)
+- `--allowed-tools TOOLS`: Tools that run without confirmation (array)
+- `--allowed-mcp-server-names NAMES`: Allowed MCP server names (array)
+- `-e, --extensions EXTENSIONS`: Extensions to use (array)
+- `-l, --list-extensions`: List all available extensions
+- `--include-directories DIRS`: Additional directories to include (array)
+- `-s, --sandbox`: Run in sandbox mode
+- `-d, --debug`: Enable debug mode
+- `--screen-reader`: Enable screen reader mode for accessibility
+- `--experimental-acp`: Start agent in ACP mode
+
+**Commands:**
+- `gemini mcp`: Manage MCP servers
+- `gemini extensions <command>`: Manage Gemini CLI extensions
+
+## Approval Modes
+
+**Default (prompt for approval):**
+```bash
+gemini "Review this code"
+# Will prompt for approval before executing tools
+```
+
+**Auto-edit (auto-approve edit tools):**
+```bash
+gemini "Fix linting issues" --approval-mode auto_edit
+```
+
+**YOLO mode (auto-approve all tools):**
+```bash
+gemini "Fix bugs and commit" --yolo
+# or
+gemini "Fix bugs and commit" --approval-mode yolo
+```
+
+**Allow specific tools without confirmation:**
+```bash
+gemini "Analyze codebase" --allowed-tools grep,read,glob
+```
 
 ## Output Formats
 
 **Text (default):**
 ```bash
-gemini -p "What is the capital of France?"
+gemini "What is the capital of France?"
 ```
 
 **JSON (for automation):**
 ```bash
-gemini -p "What is the capital of France?" --output-format json
+gemini "What is the capital of France?" --output-format json
+# or shorthand
+gemini "What is the capital of France?" -o json
 ```
 
 Returns structured data:
@@ -166,7 +256,9 @@ Returns structured data:
 
 **Streaming JSON (real-time events):**
 ```bash
-gemini --output-format stream-json --prompt "Analyze this code"
+gemini "Analyze this code" --output-format stream-json
+# or shorthand
+gemini "Analyze this code" -o stream-json
 ```
 
 Emits real-time events (init, message, tool_use, tool_result, error, result) as newline-delimited JSON.
@@ -180,48 +272,50 @@ export GEMINI_API_KEY=your_api_key
 
 **Auto-approve actions:**
 ```bash
-gemini -p "query" --yolo
+gemini "query" --yolo
+# or
+gemini "query" --approval-mode yolo
 ```
 
 **Include additional directories:**
 ```bash
-gemini -p "query" --include-directories src,docs
+gemini "query" --include-directories src,docs
 ```
 
 **Debug mode:**
 ```bash
-gemini -p "query" --debug
+gemini "query" --debug
 ```
 
 ## Examples
 
 **Code review:**
 ```bash
-cat src/auth.py | gemini -p "Review this authentication code for security issues" > security-review.txt
+cat src/auth.py | gemini "Review this authentication code for security issues" > security-review.txt
 ```
 
 **Generate commit messages:**
 ```bash
-result=$(git diff --cached | gemini -p "Write a concise commit message for these changes" --output-format json)
+result=$(git diff --cached | gemini "Write a concise commit message for these changes" --output-format json)
 echo "$result" | jq -r '.response'
 ```
 
 **Batch code analysis:**
 ```bash
 for file in src/*.py; do
-    result=$(cat "$file" | gemini -p "Find potential bugs and suggest improvements" --output-format json)
+    result=$(cat "$file" | gemini "Find potential bugs and suggest improvements" --output-format json)
     echo "$result" | jq -r '.response' > "reports/$(basename "$file").analysis"
 done
 ```
 
 **Log analysis:**
 ```bash
-grep "ERROR" /var/log/app.log | tail -20 | gemini -p "Analyze these errors and suggest root cause and fixes" > error-analysis.txt
+grep "ERROR" /var/log/app.log | tail -20 | gemini "Analyze these errors and suggest root cause and fixes" > error-analysis.txt
 ```
 
 **Release notes generation:**
 ```bash
-result=$(git log --oneline v1.0.0..HEAD | gemini -p "Generate release notes from these commits" --output-format json)
+result=$(git log --oneline v1.0.0..HEAD | gemini "Generate release notes from these commits" --output-format json)
 echo "$result" | jq -r '.response' >> CHANGELOG.md
 ```
 
@@ -259,7 +353,7 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           git diff origin/${{ github.base_ref }}...HEAD | \
-            gemini -p "Review these code changes for bugs, security issues, and best practices. Provide actionable feedback." \
+            gemini "Review these code changes for bugs, security issues, and best practices. Provide actionable feedback." \
             --output-format json \
             --model gemini-3-pro-preview \
             > gemini_review.json || exit 1
@@ -297,7 +391,7 @@ npm install -g @google/gemini-cli
 
 # Run with structured output
 git diff origin/main...HEAD | \
-  gemini -p "Review these changes" \
+  gemini "Review these changes" \
   --output-format json \
   --model gemini-2.5-pro \
   > review.json
