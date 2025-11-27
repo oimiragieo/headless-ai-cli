@@ -49,91 +49,72 @@ Multi-language support?                → OpenCode
 
 ## 🚀 Installation - All 15 Tools
 
-### Core CLI Tools (9 tools)
-
 ```bash
-# Gemini - Massive context (1M tokens)
+# 1. Gemini - Massive context (1M tokens)
 npm install -g @google/gemini-cli
 
-# Claude - Deep reasoning and balanced performance
+# 2. Claude - Deep reasoning and balanced performance
 npm install -g @anthropic-ai/claude-code
 
-# Codex - UI generation and rapid prototyping
+# 3. Codex - UI generation and rapid prototyping
 npm install -g @openai/codex
 
-# Cursor - Workflow automation
+# 4. Cursor - Workflow automation
 curl https://cursor.com/install -fsS | bash
 
-# Copilot - GitHub integration
+# 5. Copilot - GitHub integration
 npm install -g @github/copilot
 
-# Droid - CI/CD-safe, read-only by default
+# 6. Droid - CI/CD-safe, read-only by default
 curl -fsSL https://app.factory.ai/cli | sh
 
-# Aider - AI pair programming
-pip install aider-chat
-
-# Continue Dev - VS Code integration with CLI
-npm install -g @continuedev/cli
-
-# Cline - Task-based autonomous execution
-npm install -g @cline/cli
-```
-
-### IDE-Based Tools (3 tools)
-
-```bash
-# Kiro - AI-powered IDE with CLI support
-# CLI installation:
+# 7. Kiro - AI-powered IDE with CLI support
 curl -fsSL https://cli.kiro.dev/install | bash
 # IDE download: https://kiro.help/docs
 
-# Warp - Modern terminal with AI features
-# macOS:
+# 8. Warp - Modern terminal with AI features (macOS)
 brew install --cask warp
 # Windows/Linux: https://warp.dev
 
-# Windsurf - IDE with Cascade AI agent
+# 9. Windsurf - IDE with Cascade AI agent
 # Download from: https://windsurf.com
 # Headless mode via Docker: https://github.com/pfcoperez/windsurfinabox
-```
 
-### AWS & Cloud Tools (1 tool)
+# 10. Aider - AI pair programming
+pip install aider-chat
 
-```bash
-# Amazon Q Developer - AWS AI coding assistant
+# 11. Continue Dev - VS Code integration with CLI
+npm install -g @continuedev/cli
+
+# 12. Cline - Task-based autonomous execution
+npm install -g @cline/cli
+
+# 13. Amazon Q Developer - AWS AI coding assistant
 # macOS:
 brew install amazon-q-developer-cli
 # Other platforms: https://github.com/aws/amazon-q-developer-cli/releases
-```
 
-### Multi-Language Tools (1 tool)
-
-```bash
-# OpenCode - Multi-language AI coding tool
+# 14. OpenCode - Multi-language AI coding tool
 npm install -g opencode
 # or
 pip install opencode
-```
 
-### VS Code Extensions (1 tool)
-
-```
-RooCode - VS Code extension for AI coding
-Installation: Search "RooCode" in VS Code Extensions marketplace
-Supports MCP (Model Context Protocol) integration
+# 15. RooCode - VS Code extension for AI coding
+# Installation: Search "RooCode" in VS Code Extensions marketplace
+# Supports MCP (Model Context Protocol) integration
 ```
 
 ## 📚 Documentation Structure
 
 ```
 headless-ai-cli/
-├── README.md                    # This file - quick reference and installation
+├── README.md                    # This file - quick reference and all installation commands
 ├── CLAUDE.md                    # AI agent guidance for working in this repository
 ├── CONTRIBUTING.md              # Contribution guidelines and standards
-├── QUICK_REFERENCE.md           # Ultra-condensed command cheat sheet
+├── QUICK_REFERENCE.md           # Ultra-condensed command cheat sheet for daily use
+├── .gitignore                   # Standard exclusions (node_modules, IDEs, logs, etc.)
 ├── tools/
-│   ├── TEMPLATE.md              # Standardized template for new tool docs
+│   ├── TEMPLATE.md              # Standardized template for adding new tools
 │   └── major/                   # Individual tool documentation (15 files)
 │       ├── gemini.md            # Google Gemini CLI
 │       ├── claude.md            # Anthropic Claude (Claude Code)
@@ -151,17 +132,17 @@ headless-ai-cli/
 │       ├── open-code.md         # OpenCode
 │       └── roocode.md           # RooCode
 ├── examples/
-│   ├── ci-cd/                   # CI/CD integration examples
+│   ├── ci-cd/                   # CI/CD integration examples (40+ files)
 │   │   ├── github-actions-*.yml # GitHub Actions workflows
-│   │   ├── gitlab-ci-*.yml      # GitLab CI configs
-│   │   └── circleci-*.yml       # CircleCI configs
+│   │   ├── gitlab-ci-*.yml      # GitLab CI configurations
+│   │   └── circleci-*.yml       # CircleCI configurations
 │   ├── automation/              # Automation scripts
 │   │   ├── *-headless-workflows.sh
 │   │   ├── *-batch-processing.sh
 │   │   └── code-review-automation.sh
 │   └── workflows/               # Common workflow patterns
-└── test/
-    ├── *-headless-basic.test.sh      # Basic headless tests
+└── test/                        # Test scripts (60+ files)
+    ├── *-headless-basic.test.sh      # Basic headless mode tests
     ├── *-headless-advanced.test.sh   # Advanced headless scenarios
     ├── *-cicd-integration.test.sh    # CI/CD integration tests
     └── *-workflows.test.sh           # Workflow automation tests
@@ -196,9 +177,7 @@ All 15 tools are comprehensively documented in `tools/major/` directory:
 14. **[tools/major/open-code.md](tools/major/open-code.md)** - OpenCode
 15. **[tools/major/roocode.md](tools/major/roocode.md)** - RooCode
 
-## 🎯 Tools by Category
-
-### 🏆 Production CLI Tools (9 tools)
+## 🎯 All 15 Tools Listed
 
 1. ✅ **Google Gemini CLI** - Massive context (1M tokens), repo-wide analysis
 2. ✅ **Anthropic Claude (Claude Code)** - Deep reasoning, balanced performance
@@ -206,22 +185,13 @@ All 15 tools are comprehensively documented in `tools/major/` directory:
 4. ✅ **Cursor Agent** - Workflow automation, chained tasks
 5. ✅ **GitHub Copilot CLI** - GitHub integration, PR management
 6. ✅ **Factory AI Droid** - CI/CD-safe, read-only by default
-7. ✅ **Aider** - AI pair programming, Git-based editing
-8. ✅ **Continue Dev** - VS Code extension with CLI support
-9. ✅ **Cline** - Task-based autonomous execution
-
-### 🖥️ IDE-Based Tools (3 tools)
-
-10. ✅ **Kiro** - AI-powered IDE with CLI, spec-driven development
-11. ✅ **Warp** - Modern terminal with AI-powered assistance
-12. ✅ **Windsurf** - AI-powered IDE with Cascade agent
-
-### ☁️ Cloud Integration Tools (1 tool)
-
+7. ✅ **Kiro** - AI-powered IDE with CLI, spec-driven development
+8. ✅ **Warp** - Modern terminal with AI-powered assistance
+9. ✅ **Windsurf** - AI-powered IDE with Cascade agent
+10. ✅ **Aider** - AI pair programming, Git-based editing
+11. ✅ **Continue Dev** - VS Code extension with CLI support
+12. ✅ **Cline** - Task-based autonomous execution
 13. ✅ **Amazon Q Developer** - AWS AI coding assistant, GitHub integration
-
-### 🌐 Multi-Language Tools (2 tools)
-
 14. ✅ **OpenCode** - Multi-language AI coding support
 15. ✅ **RooCode** - VS Code extension with MCP integration
 
@@ -290,6 +260,13 @@ docker run --rm -e WINDSURF_TOKEN=$WINDSURF_TOKEN \
 # Amazon Q Developer
 q chat "Explain this Lambda function"
 q scan --auto-fix  # Security scan with auto-fix
+```
+
+### Multi-Language Support
+```bash
+# OpenCode
+opencode generate "Create a REST API endpoint in Python"
+opencode review --language go
 ```
 
 ## 🛡️ Security & Risk Levels
@@ -416,7 +393,7 @@ This repository is provided as-is for educational and reference purposes. Indivi
 
 ## 📊 Repository Statistics
 
-- **Total Tools:** 15 (9 CLI, 3 IDE, 1 Cloud, 2 Multi-language)
+- **Total Tools:** 15 (all verified and production-ready)
 - **Documentation Files:** 19 markdown files total
   - 4 main docs (README, CLAUDE, CONTRIBUTING, QUICK_REFERENCE)
   - 15 individual tool docs (tools/major/)
@@ -430,7 +407,7 @@ November 2025
 
 ---
 
-**Quick Start:** Pick a tool from the installation section above, install it, then check its individual documentation file in `tools/major/` for comprehensive usage guides, examples, and CI/CD integration patterns.
+**Quick Start:** Pick a tool from the installation section above (numbered 1-15), install it, then check its individual documentation file in `tools/major/` for comprehensive usage guides, examples, and CI/CD integration patterns.
 
 **Icon Legend:**
 - 🚨 = Dangerous (requires caution)
