@@ -4,6 +4,8 @@
 [![Tools Documented](https://img.shields.io/badge/Tools%20Documented-14-green)](https://github.com/oimiragieo/headless-ai-cli/tree/main/tools/major)
 [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
+**[Quick Reference Guide](QUICK_REFERENCE.md)** | Copy-paste commands for all 14 tools
+
 A comprehensive **documentation and reference repository** for AI CLI agents, focusing on **headless/non-interactive execution** for automation, CI/CD pipelines, and scripting environments.
 
 ## 📋 What This Repository Is
