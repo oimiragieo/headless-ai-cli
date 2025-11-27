@@ -30,17 +30,22 @@
 
 ## Overview
 
-OpenAI Codex is a command-line coding agent designed for UI generation, rapid prototyping, and planning tasks. It converts natural language into working code and provides structured output with JSON Schema support for automation.
+OpenAI Codex is a command-line coding agent designed for UI generation, rapid prototyping, and planning tasks. It converts natural language into working code and provides both interactive and non-interactive modes for different workflows.
 
 **Key Characteristics:**
+- Interactive and non-interactive modes
 - Strong for UI generation and prototyping
-- Non-interactive execution for CI/CD (headless mode by default)
 - Structured output with JSON Schema support
+- Sandbox modes for safety (read-only, workspace-write, danger-full-access)
 - TypeScript SDK available for programmatic control
 - GitHub Actions integration with `openai/codex-action@v1`
 - Autofix CI: Automatically fix CI failures and open PRs
 - MCP (Model Context Protocol) integration support
 - Experimental plan tracking for complex multi-step tasks
+
+**Two Modes:**
+1. **Interactive Mode** (default): `codex [OPTIONS] [PROMPT]`
+2. **Non-Interactive Mode** (for automation): `codex exec [OPTIONS] [PROMPT]`
 
 ## Installation
 
@@ -75,11 +80,61 @@ CODEX_API_KEY=your-api-key codex exec --json "triage open bug reports"
 
 ## 🚀 Start Here
 
+**Interactive mode (default):**
+```bash
+codex
+```
+
+**Interactive mode with initial prompt:**
+```bash
+codex "generate a unit test"
+```
+
+**Non-interactive mode (for automation):**
 ```bash
 codex exec "generate a unit test"
 ```
 
-## Headless Mode
+## Interactive Mode
+
+**Start interactive session:**
+```bash
+# Start interactive mode (default)
+codex
+
+# Start with initial prompt
+codex "Build a React component for user profile"
+
+# Resume previous session (picker by default)
+codex resume
+
+# Resume most recent session
+codex resume --last
+
+# Use specific model
+codex --model gpt-5.1-codex-high "Create a dashboard"
+
+# With image attachments
+codex -i screenshot.png "Recreate this UI"
+
+# Full-auto mode (low-friction sandboxed automatic execution)
+codex --full-auto "Refactor this module"
+
+# With web search enabled
+codex --search "Find best practices for React hooks"
+```
+
+**Interactive mode options:**
+- `[PROMPT]` - Optional initial prompt to start the session
+- `-m, --model <MODEL>` - Model to use (e.g., `gpt-5.1-codex-high`)
+- `-i, --image <FILE>...` - Attach image(s) to initial prompt
+- `--full-auto` - Low-friction sandboxed automatic execution
+- `--search` - Enable web search
+- `-C, --cd <DIR>` - Set working directory
+- `-s, --sandbox <MODE>` - Sandbox policy (read-only, workspace-write, danger-full-access)
+- `-a, --ask-for-approval <POLICY>` - Approval policy (untrusted, on-failure, on-request, never)
+
+## Non-Interactive Mode (Headless)
 
 **Non-interactive execution for CI/CD pipelines and automation:**
 
@@ -174,22 +229,55 @@ codex exec "Your prompt here"
 
 **Basic usage:**
 ```bash
-codex exec [options] "Your prompt"
+# Interactive mode
+codex [OPTIONS] [PROMPT]
+
+# Non-interactive mode
+codex exec [OPTIONS] [PROMPT]
 ```
 
-**Complete CLI options:**
-- `--json`: Output events as JSONL instead of human-readable text
-- `--model, -m MODEL`: Override model selection (e.g., `gpt-5-codex`)
-- `--sandbox, -s MODE`: Set sandbox policy (`read-only`, `workspace-write`, `danger-full-access`)
-- `--full-auto`: Enable automatic execution with workspace-write sandbox
-- `--cd, -C DIR`: Set the working directory
-- `--output-last-message, -o FILE`: Write the final agent message to a file
-- `--output-schema FILE`: Provide a JSON schema for structured final response
-- `--include-plan-tool`: Enable experimental plan tracking
-- `--skip-git-repo-check`: Allow execution outside git repositories
-- `--color MODE`: Control color output (`always`, `never`, `auto`)
-- `resume --last`: Resume the most recent session
-- `resume SESSION_ID`: Resume a specific session by ID
+**Commands:**
+- `exec` (alias: `e`) - Run Codex non-interactively
+- `login` - Manage login
+- `logout` - Remove stored authentication credentials
+- `mcp` - [experimental] Run Codex as MCP server and manage MCP servers
+- `mcp-server` - [experimental] Run Codex MCP server (stdio transport)
+- `app-server` - [experimental] Run app server or related tooling
+- `completion` - Generate shell completion scripts
+- `sandbox` (alias: `debug`) - Run commands within Codex-provided sandbox
+- `apply` (alias: `a`) - Apply latest diff as `git apply` to local working tree
+- `resume` - Resume previous interactive session (picker by default; use `--last` for most recent)
+- `cloud` - [EXPERIMENTAL] Browse tasks from Codex Cloud and apply changes locally
+- `features` - Inspect feature flags
+
+**Common options:**
+- `[PROMPT]` - Optional user prompt to start the session
+- `-m, --model <MODEL>` - Model the agent should use
+- `-i, --image <FILE>...` - Optional image(s) to attach to initial prompt
+- `-s, --sandbox <MODE>` - Sandbox policy (read-only, workspace-write, danger-full-access)
+- `-a, --ask-for-approval <POLICY>` - When model requires human approval (untrusted, on-failure, on-request, never)
+- `-C, --cd <DIR>` - Tell agent to use specified directory as working root
+- `-c, --config <key=value>` - Override configuration value from `~/.codex/config.toml`
+- `-p, --profile <CONFIG_PROFILE>` - Configuration profile from config.toml
+- `--enable <FEATURE>` - Enable a feature (repeatable)
+- `--disable <FEATURE>` - Disable a feature (repeatable)
+- `--full-auto` - Low-friction sandboxed automatic execution (-a on-request, --sandbox workspace-write)
+- `--dangerously-bypass-approvals-and-sandbox` - Skip all confirmations (EXTREMELY DANGEROUS)
+- `--search` - Enable web search (off by default)
+- `--add-dir <DIR>` - Additional directories that should be writable
+- `--oss` - Use local open source model provider (verifies LM Studio or Ollama server)
+- `--local-provider <OSS_PROVIDER>` - Specify local provider (lmstudio or ollama)
+
+**Approval policies (`-a, --ask-for-approval`):**
+- `untrusted` - Only run "trusted" commands without approval (ls, cat, sed, etc.)
+- `on-failure` - Run all commands without approval; only ask if command fails
+- `on-request` - Model decides when to ask for approval
+- `never` - Never ask for approval; execution failures returned to model
+
+**Sandbox modes (`-s, --sandbox`):**
+- `read-only` - Read-only sandbox (default), no file modifications
+- `workspace-write` - Allow file creation/editing within workspace
+- `danger-full-access` - Full file system access (DANGEROUS)
 
 ## Permission Modes (Sandbox Policies)
 
