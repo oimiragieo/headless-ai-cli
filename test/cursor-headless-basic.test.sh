@@ -99,47 +99,43 @@ test_case "Stream partial output (--stream-partial-output)" \
 test_case "Force flag (--force)" \
     "cursor-agent -p --force 'Say test'" 0
 
-# Test 10: List models
-test_case "List models (--list-models)" \
-    "cursor-agent --list-models | head -1" 0
-
-# Test 11: Model selection
+# Test 10: Model selection
 test_case "Model selection (--model)" \
     "cursor-agent -p --model auto 'Say test'" 0
 
-# Test 12: Combined flags - force and json
+# Test 11: Combined flags - force and json
 test_case "Combined flags - force and json" \
     "cursor-agent -p --force --output-format json 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
 
-# Test 13: Combined flags - force, json, stream-partial-output
+# Test 12: Combined flags - force, json, stream-partial-output
 test_case "Combined flags - force, json, stream-partial-output" \
     "cursor-agent -p --force --output-format stream-json --stream-partial-output 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
 
-# Test 14: Help flag (should work without API key)
+# Test 13: Help flag (should work without API key)
 test_case "Help flag" \
     "cursor-agent --help | head -1" 0
 
-# Test 15: Version flag (should work without API key)
+# Test 14: Version flag (should work without API key)
 test_case "Version flag" \
     "cursor-agent --version" 0
 
-# Test 16: Empty prompt handling (should fail gracefully)
+# Test 15: Empty prompt handling (should fail gracefully)
 test_case "Empty prompt handling" \
     "cursor-agent -p ''" 1
 
-# Test 17: Invalid output format (should fail)
+# Test 16: Invalid output format (should fail)
 test_case "Invalid output format" \
     "cursor-agent -p --output-format invalid 'test'" 1
 
-# Test 18: Model with force flag
+# Test 17: Model with force flag
 test_case "Model with force flag" \
     "cursor-agent -p --force --model auto 'Say test'" 0
 
-# Test 19: Timeout handling (known issue: process may not release terminal)
+# Test 18: Timeout handling (known issue: process may not release terminal)
 test_case "Timeout handling" \
     "timeout 10 cursor-agent -p 'Say quick test' 2>&1 || [ \$? -eq 124 ] || [ \$? -eq 0 ]" 0
 
-# Test 20: Stdin input
+# Test 19: Stdin input
 test_case "Stdin input" \
     "echo 'Say test' | cursor-agent -p" 0
 

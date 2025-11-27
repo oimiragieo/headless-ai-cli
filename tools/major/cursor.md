@@ -74,10 +74,14 @@ wsl bash -lc "cursor-agent -p 'Your prompt here'"
 
 ## Available Models
 
-**List available models:**
+**View available models:**
+- Use interactive mode and type `/model` to see all available models
+- No CLI flag exists for listing models; use the interactive mode
+
 ```bash
-cursor-agent --list-models
-# Or use interactive mode and type: /model
+# Interactive mode to see models
+cursor-agent
+# Then type: /model
 ```
 
 **Available models (verified from CLI, November 2025):**

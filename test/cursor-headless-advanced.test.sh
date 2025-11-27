@@ -78,47 +78,43 @@ fi
 TEST_DIR=$(mktemp -d)
 trap "rm -rf $TEST_DIR" EXIT
 
-# Test 1: List models command
-test_case "List models command" \
-    "cursor-agent --list-models | head -1" 0
-
-# Test 2: Model selection with auto
+# Test 1: Model selection with auto
 test_case "Model selection with auto" \
     "cursor-agent -p --model auto 'Say test'" 0
 
-# Test 3: Model selection with gpt-5.1 (latest GPT)
+# Test 2: Model selection with gpt-5.1 (latest GPT)
 test_case "Model selection with gpt-5.1" \
     "cursor-agent -p --model gpt-5.1 'Say test'" 0
 
-# Test 4: Model selection with force
+# Test 3: Model selection with force
 test_case "Model selection with force" \
     "cursor-agent -p --force --model auto 'Say test'" 0
 
-# Test 5: JSON output with model selection
+# Test 4: JSON output with model selection
 test_case "JSON output with model selection" \
     "cursor-agent -p --model auto --output-format json 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
 
-# Test 6: Stream JSON with model selection
+# Test 5: Stream JSON with model selection
 test_case "Stream JSON with model selection" \
     "cursor-agent -p --model auto --output-format stream-json 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
 
-# Test 7: Stream partial output with model
+# Test 6: Stream partial output with model
 test_case "Stream partial output with model" \
     "cursor-agent -p --model auto --output-format stream-json --stream-partial-output 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
 
-# Test 8: Force with JSON output
+# Test 7: Force with JSON output
 test_case "Force with JSON output" \
     "cursor-agent -p --force --output-format json 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
 
-# Test 9: Force with stream JSON
+# Test 8: Force with stream JSON
 test_case "Force with stream JSON" \
     "cursor-agent -p --force --output-format stream-json 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
 
-# Test 10: Force with stream partial output
+# Test 9: Force with stream partial output
 test_case "Force with stream partial output" \
     "cursor-agent -p --force --output-format stream-json --stream-partial-output 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
 
-# Test 11: Extract result from JSON
+# Test 10: Extract result from JSON
 if command -v jq &> /dev/null && [ -n "$CURSOR_API_KEY" ]; then
     test_count=$((test_count + 1))
     echo -n "Test $test_count: Extract result from JSON ... "
@@ -134,12 +130,12 @@ if command -v jq &> /dev/null && [ -n "$CURSOR_API_KEY" ]; then
     fi
 fi
 
-# Test 12: Extract system.init from stream JSON
+# Test 11: Extract system.init from stream JSON
 if command -v jq &> /dev/null && [ -n "$CURSOR_API_KEY" ]; then
     test_count=$((test_count + 1))
     echo -n "Test $test_count: Extract system.init from stream JSON ... "
     JSON_OUTPUT=$(cursor-agent -p --output-format stream-json 'Say test' 2>&1 | grep -m 1 'system.init' || echo '{"type":"system","subtype":"init"}')
-    
+
     if echo "$JSON_OUTPUT" | jq -e '.type == "system" and .subtype == "init"' > /dev/null 2>&1; then
         echo -e "${GREEN}PASS${NC}"
         PASSED=$((PASSED + 1))
@@ -149,12 +145,12 @@ if command -v jq &> /dev/null && [ -n "$CURSOR_API_KEY" ]; then
     fi
 fi
 
-# Test 13: Extract tool_call from stream JSON
+# Test 12: Extract tool_call from stream JSON
 if command -v jq &> /dev/null && [ -n "$CURSOR_API_KEY" ]; then
     test_count=$((test_count + 1))
     echo -n "Test $test_count: Extract tool_call from stream JSON ... "
     JSON_OUTPUT=$(cursor-agent -p --force --output-format stream-json 'Say test' 2>&1 | grep 'tool_call' | head -1 || echo '{"type":"tool_call","subtype":"started"}')
-    
+
     if echo "$JSON_OUTPUT" | jq -e '.type == "tool_call"' > /dev/null 2>&1; then
         echo -e "${GREEN}PASS${NC}"
         PASSED=$((PASSED + 1))
@@ -164,51 +160,51 @@ if command -v jq &> /dev/null && [ -n "$CURSOR_API_KEY" ]; then
     fi
 fi
 
-# Test 14: Complex command with all flags
+# Test 13: Complex command with all flags
 test_case "Complex command with all flags" \
     "cursor-agent -p --force --model auto --output-format stream-json --stream-partial-output 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
 
-# Test 15: Error handling - invalid model
+# Test 14: Error handling - invalid model
 test_case "Error handling - invalid model" \
     "cursor-agent -p --model invalid-model-xyz 'test' 2>&1; [ \$? -ne 0 ] || true" 0
 
-# Test 16: Batch processing pattern
+# Test 15: Batch processing pattern
 test_case "Batch processing pattern" \
     "for prompt in 'Say hello' 'Say world'; do cursor-agent -p \"\$prompt\" > /dev/null 2>&1; done" 0
 
-# Test 17: Batch processing with force
+# Test 16: Batch processing with force
 test_case "Batch processing with force" \
     "for prompt in 'Say hello' 'Say world'; do cursor-agent -p --force \"\$prompt\" > /dev/null 2>&1; done" 0
 
-# Test 18: Output redirection to file
+# Test 17: Output redirection to file
 test_case "Output redirection to file" \
     "cursor-agent -p 'Say test' > $TEST_DIR/output.txt 2>&1 && test -f $TEST_DIR/output.txt" 0
 
-# Test 19: JSON output to file
+# Test 18: JSON output to file
 test_case "JSON output to file" \
     "cursor-agent -p --output-format json 'Say test' > $TEST_DIR/output.json 2>&1 && test -f $TEST_DIR/output.json" 0
 
-# Test 20: Stream JSON output to file
+# Test 19: Stream JSON output to file
 test_case "Stream JSON output to file" \
     "cursor-agent -p --output-format stream-json 'Say test' > $TEST_DIR/stream.json 2>&1 && test -f $TEST_DIR/stream.json" 0
 
-# Test 21: Environment variable usage
+# Test 20: Environment variable usage
 test_case "Environment variable usage" \
     "CURSOR_API_KEY=\${CURSOR_API_KEY:-test} cursor-agent -p 'Say test' > /dev/null 2>&1" 0
 
-# Test 22: Exit code propagation
+# Test 21: Exit code propagation
 test_case "Exit code propagation" \
     "(cursor-agent -p 'Say test'; EXIT=\$?; exit \$EXIT) && echo 'propagated'" 0
 
-# Test 23: Conditional execution
+# Test 22: Conditional execution
 test_case "Conditional execution" \
     "cursor-agent -p 'Say test' && echo 'success' || echo 'failure'" 0
 
-# Test 24: Error handling with || operator
+# Test 23: Error handling with || operator
 test_case "Error handling with || operator" \
     "cursor-agent -p 'Say test' || echo 'handled error'" 0
 
-# Test 25: Timeout handling for known issue
+# Test 24: Timeout handling for known issue
 test_case "Timeout handling (known issue: process may not release terminal)" \
     "timeout 10 cursor-agent -p 'Say quick test' 2>&1 || [ \$? -eq 124 ] || [ \$? -eq 0 ]" 0
 
