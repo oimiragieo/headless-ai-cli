@@ -446,7 +446,7 @@ fi
 ```
 
 **Best practices for CI/CD:**
-- Use `warp agent run` for headless automation
+- Use `warp-terminal agent run` for headless automation
 - Configure agent profiles for different tasks
 - Store API keys as secrets, never hardcode
 - Warp agents can integrate with GitHub, databases, and other tools via MCP
