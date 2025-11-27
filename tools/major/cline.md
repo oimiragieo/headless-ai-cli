@@ -293,9 +293,57 @@ cline completion <SHELL>      # bash, zsh, fish, powershell, etc.
 
 **Configuration:**
 ```bash
-# Manage Cline configuration
-cline config [options]
+# Set and manage global Cline configuration variables
+cline config [command]
+
+# Aliases: config, c
+
+# Available Commands:
+#   get         Get a specific configuration value
+#   list        List all configuration settings
+#   set         Set configuration variables
+
+# Get a specific configuration value
+cline config get <key>
+
+# List all configuration settings
+cline config list
+
+# Set configuration variables
+cline config set <key> <value>
+
+# Flags:
+# -h, --help   Help for config
+
+# Global Flags (available to all config subcommands):
+# --address string         Cline Core gRPC address (default "localhost:50052")
+# -F, --output-format string   Output format (rich|json|plain) (default "rich")
+# -v, --verbose                Verbose output
 ```
+
+**Key Configuration Settings** (from `cline config list`):
+- `api-configuration.*` - API provider settings (OpenAI headers, model IDs, thinking budgets)
+- `plan-mode-api-provider` - API provider for plan mode (default: cline)
+- `act-mode-api-provider` - API provider for act mode (default: cline)
+- `mode` - Default mode (act or plan)
+- `telemetry-setting` - Telemetry preference
+- `plan-act-separate-models-setting` - Use separate models for plan/act modes
+- `enable-checkpoints-setting` - Enable checkpoints
+- `mcp-marketplace-enabled` - MCP marketplace enabled
+- `shell-integration-timeout` - Shell integration timeout (ms)
+- `terminal-reuse-enabled` - Terminal reuse setting
+- `terminal-output-line-limit` - Terminal output line limit
+- `preferred-language` - Preferred language
+- `openai-reasoning-effort` - OpenAI reasoning effort (low, medium, high)
+- `strict-plan-mode-enabled` - Strict plan mode
+- `focus-chain-settings.*` - Focus chain configuration
+- `use-auto-condense` - Auto condense setting
+- `browser-settings.*` - Browser automation settings
+- `default-terminal-profile` - Default terminal profile
+- `yolo-mode-toggled` - YOLO mode toggle state
+- `dictation-settings.*` - Dictation feature settings
+- `auto-condense-threshold` - Auto condense threshold
+- `auto-approval-settings.*` - Auto approval configuration
 
 **Instance Management:**
 ```bash
