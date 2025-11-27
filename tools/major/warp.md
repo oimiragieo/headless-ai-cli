@@ -15,7 +15,9 @@
 - [Best Use Cases](#-best-use-cases)
 - [Installation](#-installation)
 - [AI Features](#-ai-features)
+- [Available Models](#available-models)
 - [CLI Tool Integration](#-cli-tool-integration)
+- [CLI Syntax](#-cli-syntax)
 - [Configuration](#-configuration)
 - [Examples](#-examples)
 - [Limitations](#-limitations)
@@ -124,6 +126,34 @@ warp-terminal agent run --prompt "Warp anything"
 - Unified panel for managing agent interactions
 - Full terminal use: can run interactive commands, work inside CLI apps
 - Supports MCP (Model Context Protocol) and codebase embeddings
+
+## Available Models
+
+Warp lets you choose from a curated set of Large Language Models (LLMs) to power your Agentic Development Environment.
+
+**Supported Models:**
+
+| Provider | Models | Description |
+|----------|--------|-------------|
+| **OpenAI** | GPT-5, GPT-5.1 | Select between low, medium, and high reasoning modes |
+| **Anthropic** | Claude Sonnet 4.5, Claude Opus 4.1, Claude Haiku 4.5, Claude Sonnet 4 | Strong reasoning and coding capabilities |
+| **Google** | Gemini 3 Pro, Gemini 2.5 Pro | Large context support |
+| **z.ai** | GLM 4.6 | Hosted in the US by Fireworks AI |
+
+**Auto Models:**
+
+Warp also offers two Auto modes that intelligently select the best model for your task based on the context and request type:
+
+- **Auto (Cost-efficient):** Optimizes for lower credit consumption while maintaining strong output quality, helping extend your available usage.
+
+- **Auto (Responsiveness):** Prioritizes the highest-quality results using the fastest available model, though it may consume credits more quickly.
+
+Both Auto models perform well across all agent workflows and are ideal if you prefer Warp to manage model selection dynamically.
+
+**Model Selection:**
+- Models can be configured in Warp settings (GUI)
+- Auto modes are recommended for most use cases
+- Choose specific models for specialized tasks requiring particular model capabilities
 
 ## CLI Tool Integration
 
