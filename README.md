@@ -93,8 +93,6 @@ brew install amazon-q-developer-cli
 
 # 14. OpenCode - Multi-language AI coding tool
 npm install -g open-code
-# or
-pip install opencode
 
 # Supports MCP (Model Context Protocol) integration
 ```
@@ -333,7 +331,6 @@ npm install -g open-code@latest
 
 # Python packages
 pip install aider-chat==0.47.1
-pip install opencode==latest
 
 # Shell installations (specify versions in scripts)
 curl -fsSL https://app.factory.ai/cli | sh  # Droid

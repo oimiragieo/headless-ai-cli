@@ -43,18 +43,10 @@ OpenCode is an AI coding assistant that can read files, write and modify code, e
 npm install -g open-code
 ```
 
-**Using pip (if available):**
-```bash
-pip install opencode
-```
 
-**Using Homebrew (macOS, if available):**
-```bash
-brew install opencode
-```
 
 **System Requirements:**
-- Node.js or Python (depending on installation method)
+- Node.js (for npm installation)
 - Git repository (for best experience)
 - API key for LLM provider (OpenAI, Anthropic, etc.)
 

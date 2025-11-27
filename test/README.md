@@ -328,7 +328,7 @@ export ANTHROPIC_API_KEY=${{ secrets.ANTHROPIC_API_KEY }}
 # Install dependencies
 npm install -g open-code
 # or
-pip install opencode
+npm install -g open-code
 
 # Run OpenCode tests
 set -e
@@ -489,10 +489,11 @@ Install CLI from: https://github.com/aws/amazon-q-developer-cli
 **For OpenCode tests:**
 OpenCode CLI uses API keys for LLM providers. For headless mode:
 1. Set API key: `export OPENAI_API_KEY=your_key` or `export ANTHROPIC_API_KEY=your_key`
-2. Install OpenCode: `npm install -g open-code` or `pip install opencode`
-3. Use `--headless` flag for non-interactive execution
+2. Install OpenCode: `npm install -g open-code`
+3. Authenticate: `opencode auth login`
+4. Use `opencode run "message"` for headless execution
 
-Install CLI from: npm install -g open-code or pip install opencode
+Install CLI from: npm install -g open-code
 
 **For Continue Dev tests:**
 Continue Dev CLI uses API keys for LLM providers. For headless mode:
