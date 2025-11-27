@@ -28,24 +28,23 @@ Multi-language support?                → OpenCode
 
 ## 📊 Tool Comparison
 
-| Tool | Context | Speed | Reasoning | Risk | Best For |
-|------|---------|-------|-----------|------|----------|
-| **Gemini** | 1M tokens | ★★★ | ★★ | 🟠 Medium | Massive repos |
-| **Claude Opus** | 200K | ★★ | ★★★★★ | 🟢 Low | Deep reasoning |
-| **Claude Sonnet** | 200K | ★★★ | ★★★★ | 🟢 Low | Daily coding |
-| **Codex** | Medium | ★★★★ | ★★★ | 🟠 Medium | UI generation |
-| **Cursor** | Medium | ★★★ | ★★★ | ⚠️ High | Workflows |
-| **Droid** | Medium | ★★ | ★★ | 🟢 Low | CI/CD safe |
-| **Copilot** | Medium | ★★★ | ★★★ | ⚡ High | GitHub PRs |
-| **Kiro** | Medium | ★★★ | ★★★★ | 🟠 Medium | IDE-based, spec-driven |
-| **Warp** | N/A | ★★★★ | ★★ | 🟢 Low | Terminal enhancement |
-| **Aider** | Medium | ★★★ | ★★★ | 🟠 Medium | AI pair programming |
-| **Continue Dev** | Medium | ★★★ | ★★★ | 🟢 Low | VS Code integration |
-| **Windsurf** | Medium | ★★★ | ★★★ | 🟠 Medium | IDE with Cascade AI |
-| **Amazon Q** | Medium | ★★★ | ★★★ | 🟢 Low | AWS integration |
-| **Cline** | Medium | ★★★ | ★★★ | 🟠 Medium | Task-based workflows |
-| **OpenCode** | Medium | ★★★ | ★★ | 🟠 Medium | Multi-language support |
-| **RooCode** | Medium | ★★★ | ★★★ | 🟢 Low | VS Code extension |
+| Tool | Headless | Multi-Model | JSON Output | Risk | Best For |
+|------|----------|-------------|-------------|------|----------|
+| **Gemini CLI** | ✅ Full | ✅ Gemini family | ✅ Yes + Streaming | 🟠 Medium | Massive repos (1M token models) |
+| **Claude Code** | ✅ Full | ✅ Opus/Sonnet/Haiku | ✅ Yes + Streaming | 🟢 Low | Deep reasoning, daily coding |
+| **Codex** | ✅ Full | ✅ GPT family | ✅ Yes + Schemas | 🟠 Medium | UI generation, prototyping |
+| **Cursor** | ✅ Full | ✅ Multiple providers | ✅ Yes + Streaming | ⚠️ High | Workflow automation |
+| **Droid** | ✅ Full | ✅ Multiple providers | ✅ Yes + Debug | 🟢 Low | CI/CD-safe automation |
+| **Copilot** | ✅ Full | ✅ Claude/GPT/Gemini | ⚠️ Limited | ⚡ High | GitHub integration |
+| **Kiro** | ⚠️ Agents | ✅ Claude via Bedrock | ⚠️ Limited | 🟠 Medium | IDE-based, spec-driven |
+| **Warp** | ❌ Terminal | ✅ Multiple via agents | N/A | 🟢 Low | Enhanced terminal UX |
+| **Windsurf** | ⚠️ Docker | ✅ OpenAI/Anthropic | ⚠️ Limited | 🟠 Medium | IDE with Cascade AI |
+| **Aider** | ✅ Full | ✅ Multiple providers | ⚠️ Limited | 🟠 Medium | AI pair programming |
+| **Continue Dev** | ✅ Full | ✅ Multiple providers | ⚠️ Limited | 🟢 Low | VS Code + CLI |
+| **Cline** | ✅ Full | ✅ Multiple providers | ⚠️ Limited | 🟠 Medium | Task-based workflows |
+| **Amazon Q** | ✅ Full | ❌ AWS models only | ✅ Yes | 🟢 Low | AWS integration |
+| **OpenCode** | ✅ Full | ✅ Multiple providers | ⚠️ Limited | 🟠 Medium | Multi-language support |
+| **RooCode** | ❌ VS Code | ✅ Multiple via MCP | ⚠️ Limited | 🟢 Low | VS Code extension |
 
 ## 🚀 Installation - All 15 Tools
 
