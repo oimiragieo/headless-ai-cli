@@ -44,8 +44,8 @@ Cline is a command-line interface for interacting with Cline AI coding assistant
 3. **Interactive mode**: `cline` (no arguments)
 
 **Modes:**
-- **Act mode** (default): Execute changes immediately
-- **Plan mode**: Create a plan before execution
+- **Plan mode** (default): Create a plan before execution
+- **Act mode**: Execute changes immediately
 
 ## Installation
 
@@ -222,58 +222,78 @@ cline auth
 
 ## CLI Syntax
 
-**Basic usage:**
+**A command-line interface for interacting with Cline AI coding assistant.**
+
+Start a new task by providing a prompt:
 ```bash
-# Start with a prompt
-cline "Your prompt here" [options]
+cline "Create a new Python script that prints hello world"
+```
 
-# Pipe via stdin
-echo "Your prompt" | cline [options]
+Or pipe a prompt via stdin:
+```bash
+echo "Create a todo app" | cline
+cat prompt.txt | cline --yolo
+```
 
-# Interactive mode
-cline [options]
+Or run with no arguments to enter interactive mode:
+```bash
+cline
+```
 
-# Run commands
-cline <command> [options]
+This CLI also provides task management, configuration, and monitoring capabilities.
+
+For detailed documentation including all commands, options, and examples, see the manual page: `man cline`
+
+**Usage:**
+```bash
+cline [prompt] [flags]
+cline [command]
 ```
 
 **Core Options:**
 
 ```bash
---address <ADDRESS>           Cline Core gRPC address [env: CLINE_CORE_ADDRESS=]
--f, --file <FILE>...          Attach files to the initial prompt
--i, --image <IMAGE>...        Attach images to the initial prompt
--m, --mode <MODE>             Mode: act (default) or plan [possible values: act, plan]
---no-interactive              Disable interactive mode
--y, --yolo                    YOLO mode - auto-approve all actions
--o, --oneshot                 One-shot mode - full autonomous execution
--F, --output-format <FORMAT>  Output format [default: rich] [possible values: rich, json, plain]
--s, --setting <SETTING>...    Task settings in KEY=VALUE format
--v, --verbose                 Enable verbose logging
--h, --help                    Print help
--V, --version                 Print version
+--address string         Cline Core gRPC address (default "localhost:50052")
+-f, --file strings       Attach files
+-h, --help               Help for cline
+-i, --image strings      Attach image files
+-m, --mode string        Mode (act|plan) - defaults to plan (default "plan")
+--no-interactive         Enable yolo mode (non-interactive)
+-o, --oneshot            Full autonomous mode
+-F, --output-format string   Output format (rich|json|plain) (default "rich")
+-s, --setting strings    Task settings (key=value format)
+-v, --verbose            Verbose output
+-y, --yolo               Enable yolo mode (non-interactive)
 ```
 
-**Commands:**
+**Available Commands:**
+
+```bash
+auth        Authenticate a provider and configure what model is used
+completion  Generate the autocompletion script for the specified shell
+config      Manage Cline configuration
+help        Help about any command
+instance    Manage Cline instances
+logs        Manage Cline log files
+task        Manage Cline tasks
+version     Show version information
+```
 
 **Authentication:**
 ```bash
-# Authenticate and configure providers
+# Authenticate and configure what model is used
 cline auth
-
-# Non-interactive auth (for CI/CD)
-cline auth --non-interactive
 ```
 
 **Shell Completion:**
 ```bash
-# Generate shell completion scripts
-cline completion <SHELL>      # bash, zsh, fish, powershell, elvish
+# Generate the autocompletion script for the specified shell
+cline completion <SHELL>      # bash, zsh, fish, powershell, etc.
 ```
 
 **Configuration:**
 ```bash
-# View and manage Cline configuration
+# Manage Cline configuration
 cline config [options]
 ```
 
@@ -312,14 +332,22 @@ cline task delete <task-id>
 
 **Logs:**
 ```bash
-# View Cline logs
+# Manage Cline log files
 cline logs [options]
+```
+
+**Version:**
+```bash
+# Show version information
+cline version
 ```
 
 **Help:**
 ```bash
-# Print help information
+# Help about any command
 cline help [command]
+
+# Use "cline [command] --help" for more information about a command
 ```
 
 ## Output Formats
