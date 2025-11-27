@@ -101,6 +101,20 @@ export ANTHROPIC_MODEL="claude-haiku-4-5-20251001"
 claude -p "query"
 ```
 
+## Effort Parameter (Beta)
+
+**New in Claude Opus 4.5:** The effort parameter allows you to control how much "thinking budget" Claude spends on a request, giving you more control over cost versus performance tradeoffs.
+
+**Usage:**
+The effort parameter is available via the Anthropic API for Claude Opus 4.5. Check the latest [Claude API documentation](https://docs.anthropic.com/) for command-line flag support in Claude Code CLI.
+
+**Benefits:**
+- **Cost Control**: Adjust computational effort based on task complexity
+- **Performance Tuning**: More effort for complex tasks, less for simple ones
+- **Flexibility**: Fine-tune the cost/quality tradeoff per request
+
+**Note:** This is a beta feature available for Claude Opus 4.5. Refer to official Anthropic documentation for the latest API parameters and CLI flag support.
+
 ## CLI Syntax
 
 **Basic usage:**

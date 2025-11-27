@@ -134,6 +134,42 @@ codex exec --model gpt-5.1-codex-max --json --color never "query"
 
 **Note:** `gpt-5.1-codex-max` is the current default and recommended for most coding tasks. Use `-m <model_name>` to access legacy models or specific model versions.
 
+## Reasoning Level (Effort Parameter)
+
+Codex supports configurable reasoning depth for models like `gpt-5.1-codex-max`. This controls how much computational effort the model spends on reasoning.
+
+| Level | Description | Speed | Best For |
+|-------|-------------|-------|----------|
+| **Low** | Fast responses with lighter reasoning | Very Fast | Simple tasks, quick iterations |
+| **Medium** | Balances speed and reasoning depth (default) | Fast | Everyday coding tasks |
+| **High** | Maximizes reasoning depth | Slower | Complex problems, deep analysis |
+| **Extra high** | Extra high reasoning depth | Slowest | Most complex architectural decisions |
+
+**Setting Reasoning Level:**
+
+The reasoning level is typically set interactively during model selection in the Codex CLI. For programmatic use, reasoning levels may be configured via:
+- Interactive CLI prompts when selecting models
+- Configuration files (`config.toml`)
+- Command-line flags (if supported - check `codex --help` for latest options)
+
+**Example usage:**
+```bash
+# Interactive: CLI will prompt for reasoning level after model selection
+codex exec "Your prompt here"
+
+# The CLI presents options:
+# 1. Low - Fast responses with lighter reasoning
+# 2. Medium (default) - Balances speed and reasoning depth
+# 3. High - Maximizes reasoning depth for complex problems
+# 4. Extra high - Extra high reasoning depth
+```
+
+**When to adjust reasoning level:**
+- **Low**: Rapid prototyping, simple code generation
+- **Medium**: Standard development tasks, most use cases
+- **High**: Complex refactoring, architectural decisions, debugging hard problems
+- **Extra high**: Critical systems, deep optimization, complex algorithms
+
 ## CLI Syntax
 
 **Basic usage:**
