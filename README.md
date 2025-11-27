@@ -28,23 +28,23 @@ Multi-language support?                → OpenCode
 
 ## 📊 Tool Comparison
 
-| Tool | Headless | Multi-Model | JSON Output | Risk | Best For |
-|------|----------|-------------|-------------|------|----------|
-| **Gemini CLI** | ✅ Full | ✅ Gemini family | ✅ Yes + Streaming | 🟠 Medium | Massive repos (1M token models) |
-| **Claude Code** | ✅ Full | ✅ Opus/Sonnet/Haiku | ✅ Yes + Streaming | 🟢 Low | Deep reasoning, daily coding |
-| **Codex** | ✅ Full | ✅ GPT family | ✅ Yes + Schemas | 🟠 Medium | UI generation, prototyping |
-| **Cursor** | ✅ Full | ✅ Multiple providers | ✅ Yes + Streaming | ⚠️ High | Workflow automation |
-| **Droid** | ✅ Full | ✅ Multiple providers | ✅ Yes + Debug | 🟢 Low | CI/CD-safe automation |
-| **Copilot** | ✅ Full | ✅ Claude/GPT/Gemini | ⚠️ Limited | ⚡ High | GitHub integration |
-| **Kiro** | ⚠️ Agents | ✅ Claude via Bedrock | ⚠️ Limited | 🟠 Medium | IDE-based, spec-driven |
-| **Warp** | ❌ Terminal | ✅ Multiple via agents | N/A | 🟢 Low | Enhanced terminal UX |
-| **Windsurf** | ⚠️ Docker | ✅ OpenAI/Anthropic | ⚠️ Limited | 🟠 Medium | IDE with Cascade AI |
-| **Aider** | ✅ Full | ✅ Multiple providers | ⚠️ Limited | 🟠 Medium | AI pair programming |
-| **Continue Dev** | ✅ Full | ✅ Multiple providers | ⚠️ Limited | 🟢 Low | VS Code + CLI |
-| **Cline** | ✅ Full | ✅ Multiple providers | ⚠️ Limited | 🟠 Medium | Task-based workflows |
-| **Amazon Q** | ✅ Full | ❌ AWS models only | ✅ Yes | 🟢 Low | AWS integration |
-| **OpenCode** | ✅ Full | ✅ Multiple providers | ⚠️ Limited | 🟠 Medium | Multi-language support |
-| **RooCode** | ❌ VS Code | ✅ Multiple via MCP | ⚠️ Limited | 🟢 Low | VS Code extension |
+| Tool | Install Method | API Key Required | Pure CLI | Headless Mode | JSON Output |
+|------|----------------|------------------|----------|---------------|-------------|
+| **Gemini CLI** | npm | ✅ Google AI | ✅ Yes | ✅ Full | ✅ Text/JSON/Stream |
+| **Claude Code** | npm | ✅ Anthropic | ✅ Yes | ✅ Full | ✅ Text/JSON/Stream |
+| **Codex** | npm | ✅ OpenAI | ✅ Yes | ✅ Full | ✅ Text/JSON/Stream/Schema |
+| **Cursor** | curl script | ✅ Cursor | ✅ Yes | ✅ Full | ✅ Text/JSON/Stream |
+| **Droid** | curl script | ✅ Factory AI | ✅ Yes | ✅ Full | ✅ Text/JSON/Debug |
+| **Copilot** | npm | ✅ GitHub | ✅ Yes | ✅ Full | ⚠️ Limited |
+| **Kiro** | curl script | ✅ AWS Bedrock | ❌ IDE + CLI | ⚠️ Agents only | ⚠️ Limited |
+| **Warp** | brew/download | ❌ Optional | ❌ Terminal app | ❌ No | N/A |
+| **Windsurf** | Download IDE | ✅ Various | ❌ IDE only | ⚠️ Docker only | ⚠️ Limited |
+| **Aider** | pip | ✅ Various | ✅ Yes | ✅ Full | ⚠️ Limited |
+| **Continue Dev** | npm | ✅ Various | ✅ Yes | ✅ Full | ⚠️ Limited |
+| **Cline** | npm | ✅ Various | ✅ Yes | ✅ Full | ⚠️ Limited |
+| **Amazon Q** | brew/download | ✅ AWS | ✅ Yes | ✅ Full | ✅ Text/JSON |
+| **OpenCode** | npm/pip | ✅ Various | ✅ Yes | ✅ Full | ⚠️ Limited |
+| **RooCode** | VS Code ext | ✅ Various | ❌ VS Code only | ❌ No | ⚠️ Limited |
 
 ## 🚀 Installation - All 15 Tools
 
@@ -267,13 +267,6 @@ q scan --auto-fix  # Security scan with auto-fix
 opencode generate "Create a REST API endpoint in Python"
 opencode review --language go
 ```
-
-## 🛡️ Security & Risk Levels
-
-- 🟢 **Low Risk:** Droid (read-only default), Claude (approval required), Warp (terminal), Continue Dev, Amazon Q, RooCode
-- 🟠 **Medium Risk:** Gemini, Codex (sandbox), Kiro (IDE with agents), Aider, Windsurf, Cline, OpenCode
-- ⚠️ **High Risk:** Cursor (`--force` required for writes)
-- ⚡ **Very High Risk:** Copilot (can run shell/git commands)
 
 ## 📤 Output Formats Supported
 
