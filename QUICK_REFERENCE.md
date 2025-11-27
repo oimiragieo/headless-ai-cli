@@ -45,24 +45,30 @@ Code review automation       → All tools with --output-format json
 
 ## Feature Matrix (All 14 Tools)
 
-| Tool | Headless | JSON | Stream | Context | Risk | Platform |
-|------|:--------:|:----:|:------:|---------|:----:|----------|
-| **Gemini** | ✅ | ✅ | ✅ | 1M+ | 🟠 | Win/Mac/Linux |
-| **Claude** | ✅ | ✅ | ✅ | 200K | 🟢 | Win/Mac/Linux |
-| **Codex** | ✅ | ✅ | ✅ | 128K | 🟠 | Win/Mac/Linux |
-| **Cursor** | ✅ | ✅ | ✅ | Med | ⚠️ | Win/Mac/Linux |
-| **Droid** | ✅ | ✅ | ✅ | Med | 🟢 | Win/Mac/Linux |
-| **Copilot** | ✅ | ⚠️ | ⚠️ | Med | ⚡ | Win/Mac/Linux |
-| **Kiro** | ⚠️ | ⚠️ | ❌ | Med | 🟠 | Win/Mac/Linux |
-| **Warp** | ❌ | N/A | N/A | N/A | 🟢 | macOS only |
-| **Windsurf** | ⚠️ | ⚠️ | ❌ | Med | 🟠 | Docker only |
-| **Aider** | ✅ | ⚠️ | ❌ | Med | 🟠 | Win/Mac/Linux |
-| **Continue** | ✅ | ⚠️ | ❌ | Med | 🟢 | Win/Mac/Linux |
-| **Cline** | ✅ | ⚠️ | ❌ | Med | 🟠 | Win/Mac/Linux |
-| **Amazon Q** | ✅ | ✅ | ❌ | Med | 🟠 | Win/Mac/Linux |
-| **OpenCode** | ✅ | ⚠️ | ❌ | Med | 🟠 | Win/Mac/Linux |
+| Tool | Headless | JSON | Stream | Write Risk | Platform |
+|------|:--------:|:----:|:------:|:----------:|----------|
+| **Gemini** | ✅ | ✅ | ✅ | 🟠 | Win/Mac/Linux |
+| **Claude** | ✅ | ✅ | ✅ | 🟢 | Win/Mac/Linux |
+| **Codex** | ✅ | ✅ | ✅ | 🟠 | Win/Mac/Linux |
+| **Cursor** | ✅ | ✅ | ✅ | ⚠️ | Win/Mac/Linux |
+| **Droid** | ✅ | ✅ | ✅ | 🟢 | Win/Mac/Linux |
+| **Copilot** | ✅ | ⚠️ | ⚠️ | ⚡ | Win/Mac/Linux |
+| **Kiro** | ⚠️ | ⚠️ | ❌ | 🟠 | Win/Mac/Linux |
+| **Warp** | ❌ | N/A | N/A | 🟢 | macOS only |
+| **Windsurf** | ⚠️ | ⚠️ | ❌ | 🟠 | Docker only |
+| **Aider** | ✅ | ⚠️ | ❌ | 🟠 | Win/Mac/Linux |
+| **Continue** | ✅ | ⚠️ | ❌ | 🟢 | Win/Mac/Linux |
+| **Cline** | ✅ | ⚠️ | ❌ | 🟠 | Win/Mac/Linux |
+| **Amazon Q** | ✅ | ✅ | ❌ | 🟠 | Win/Mac/Linux |
+| **OpenCode** | ✅ | ⚠️ | ❌ | 🟠 | Win/Mac/Linux |
 
-**Legend:** ✅ Full | ⚠️ Limited | ❌ No | 🟢 Low Risk | 🟠 Medium | ⚠️ High | ⚡ Very High
+**Legend:** ✅ Full | ⚠️ Limited | ❌ No
+
+**Write Risk** = likelihood of unintended file modifications in automation:
+- 🟢 **Low** — Read-only by default, requires explicit flags to write
+- 🟠 **Medium** — Safe by default, but can write with explicit flags
+- ⚠️ **High** — Writes by default with some safeguards
+- ⚡ **Very High** — Minimal safeguards, executes with little confirmation
 
 ---
 
