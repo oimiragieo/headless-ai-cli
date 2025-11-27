@@ -1,14 +1,28 @@
 # 🧠 AI CLI Reference Repository
 
-A comprehensive quick reference guide repository for all AI CLI agents, featuring headless syntax, features, and available models for **14 verified tools**.
+[![Last Updated](https://img.shields.io/badge/Last%20Updated-November%202025-blue)](https://github.com/oimiragieo/headless-ai-cli)
+[![Tools Documented](https://img.shields.io/badge/Tools%20Documented-14-green)](https://github.com/oimiragieo/headless-ai-cli/tree/main/tools/major)
+[![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
-## 📋 Overview
+A comprehensive **documentation and reference repository** for AI CLI agents, focusing on **headless/non-interactive execution** for automation, CI/CD pipelines, and scripting environments.
 
-This repository serves as the definitive source of truth for developers integrating AI capabilities into automated workflows, CI/CD pipelines, and scripting environments. It documents every major AI CLI agent available, with comprehensive headless usage instructions.
+## 📋 What This Repository Is
+
+**This is a documentation aggregator and reference guide** — not a tool installer or wrapper. It provides:
+
+- 📚 **Curated documentation** for 14 verified AI CLI tools
+- 🔧 **Headless/automation syntax** that's often buried in official docs
+- 📦 **CI/CD integration examples** ready to copy into your pipelines
+- 🧪 **Test scripts** to verify tools work in your environment
+- 📊 **Comparison tables** to help you choose the right tool
+
+**Who this is for:**
+- DevOps engineers integrating AI into CI/CD pipelines
+- Developers automating code review, testing, or documentation
+- Teams evaluating which AI CLI tool fits their workflow
+- Anyone wanting a "cheat sheet" for headless AI tool usage
 
 ## 🎯 Quick Decision Tree
-
-**10-second guide to choosing the right tool:**
 
 ```text
 Huge context (1M+ tokens)?           → Gemini
@@ -17,381 +31,215 @@ UI/front-end generation?              → Codex
 Workflow automation?                  → Cursor
 CI/CD-safe deterministic runs?        → Droid
 GitHub integration?                   → Copilot
-Daily coding?                          → Claude Sonnet
-Enhanced terminal experience?          → Warp
-AI pair programming?                   → Aider, Continue Dev
-AWS integration?                       → Amazon Q
-Task-based workflows?                  → Cline
-Multi-language support?                → OpenCode
+Daily coding?                         → Claude Sonnet
+AI pair programming?                  → Aider, Continue Dev, Cline
+AWS integration?                      → Amazon Q
+Multi-language support?               → OpenCode
 ```
 
-## 📊 Tool Comparison
+## 📊 Tool Comparison Matrix
 
-| Tool | Install Method | API Key Required | Pure CLI | Headless Mode | JSON Output |
-|------|----------------|------------------|----------|---------------|-------------|
-| **Gemini CLI** | npm | ✅ Google AI | ✅ Yes | ✅ Full | ✅ Text/JSON/Stream |
-| **Claude Code** | npm | ✅ Anthropic | ✅ Yes | ✅ Full | ✅ Text/JSON/Stream |
-| **Codex** | npm | ✅ OpenAI | ✅ Yes | ✅ Full | ✅ Text/JSON/Stream/Schema |
-| **Cursor** | curl script | ✅ Cursor | ✅ Yes | ✅ Full | ✅ Text/JSON/Stream |
-| **Droid** | curl script | ✅ Factory AI | ✅ Yes | ✅ Full | ✅ Text/JSON/Debug |
-| **Copilot** | npm | ✅ GitHub | ✅ Yes | ✅ Full | ⚠️ Limited |
-| **Kiro** | curl script | ✅ AWS Bedrock | ❌ IDE + CLI | ⚠️ Agents only | ⚠️ Limited |
-| **Warp** | brew/download | ❌ Optional | ❌ Terminal app | ❌ No | N/A |
-| **Windsurf** | Download IDE | ✅ Various | ❌ IDE only | ⚠️ Docker only | ⚠️ Limited |
-| **Aider** | pip | ✅ Various | ✅ Yes | ✅ Full | ⚠️ Limited |
-| **Continue Dev** | npm | ✅ Various | ✅ Yes | ✅ Full | ⚠️ Limited |
-| **Cline** | npm | ✅ Various | ✅ Yes | ✅ Full | ⚠️ Limited |
-| **Amazon Q** | brew/download | ✅ AWS | ✅ Yes | ✅ Full | ✅ Text/JSON |
-| **OpenCode** | npm/pip | ✅ Various | ✅ Yes | ✅ Full | ⚠️ Limited |
+| Tool | Install | Headless | JSON Output | Risk Level | Last Verified |
+|------|---------|----------|-------------|------------|---------------|
+| **[Gemini CLI](tools/major/gemini.md)** | `npm i -g @google/gemini-cli` | ✅ Full | ✅ Text/JSON/Stream | 🟠 Medium | Nov 2025 |
+| **[Claude Code](tools/major/claude.md)** | `npm i -g @anthropic-ai/claude-code` | ✅ Full | ✅ Text/JSON/Stream | 🟢 Low | Nov 2025 |
+| **[Codex](tools/major/codex.md)** | `npm i -g @openai/codex` | ✅ Full | ✅ Text/JSON/Schema | 🟠 Medium | Nov 2025 |
+| **[Cursor](tools/major/cursor.md)** | `curl script` | ✅ Full | ✅ Text/JSON/Stream | ⚠️ High | Nov 2025 |
+| **[Droid](tools/major/droid.md)** | `curl script` | ✅ Full | ✅ Text/JSON | 🟢 Low | Nov 2025 |
+| **[Copilot](tools/major/copilot.md)** | `npm i -g @github/copilot` | ✅ Full | ⚠️ Limited | ⚡ Very High | Nov 2025 |
+| **[Kiro](tools/major/kiro.md)** | `curl script` | ⚠️ Agents only | ⚠️ Limited | 🟠 Medium | Nov 2025 |
+| **[Warp](tools/major/warp.md)** | `brew install --cask warp` | ❌ No | N/A | 🟢 Low | Nov 2025 |
+| **[Windsurf](tools/major/windsurf.md)** | Download IDE | ⚠️ Docker only | ⚠️ Limited | 🟠 Medium | Nov 2025 |
+| **[Aider](tools/major/aider.md)** | `pip install aider-chat` | ✅ Full | ⚠️ Limited | 🟠 Medium | Nov 2025 |
+| **[Continue Dev](tools/major/continue-dev.md)** | `npm i -g @continuedev/cli` | ✅ Full | ⚠️ Limited | 🟢 Low | Nov 2025 |
+| **[Cline](tools/major/cline.md)** | `npm i -g cline` | ✅ Full | ⚠️ Limited | 🟠 Medium | Nov 2025 |
+| **[Amazon Q](tools/major/amazon-q.md)** | `brew install amazon-q-developer-cli` | ✅ Full | ✅ Text/JSON | 🟠 Medium | Nov 2025 |
+| **[OpenCode](tools/major/open-code.md)** | `npm i -g open-code` | ✅ Full | ⚠️ Limited | 🟠 Medium | Nov 2025 |
 
-## 🚀 Installation - All 14 Tools
+**Risk Levels:** 🟢 Low (read-only default) | 🟠 Medium (writes with flags) | ⚠️ High (writes by default) | ⚡ Very High (minimal safeguards)
+
+## ⚡ Quick Start Example: GitHub Actions PR Review
+
+Here's a real CI/CD example showing how to use these tools in automation:
+
+```yaml
+# .github/workflows/ai-code-review.yml
+name: AI Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Claude CLI
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Run AI Code Review
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          git diff origin/${{ github.base_ref }}...HEAD | \
+            claude -p "Review these changes for bugs and security issues" \
+            --output-format json \
+            --permission-mode bypassPermissions \
+            --allowedTools "Read,Grep" \
+            > review.json
+
+      - name: Post Review Comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const review = JSON.parse(fs.readFileSync('review.json', 'utf8'));
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## 🤖 AI Code Review\n\n${review.result}`
+            });
+```
+
+**More examples:** See [`examples/ci-cd/`](examples/ci-cd/) for 40+ ready-to-use workflows.
+
+## 🚀 Installation Commands
 
 ```bash
-# 1. Gemini - Massive context (1M tokens)
-npm install -g @google/gemini-cli
+# Core Tools (npm)
+npm install -g @google/gemini-cli        # Gemini - 1M token context
+npm install -g @anthropic-ai/claude-code # Claude - Deep reasoning
+npm install -g @openai/codex             # Codex - UI generation
+npm install -g @github/copilot           # Copilot - GitHub integration
+npm install -g @continuedev/cli          # Continue Dev - VS Code CLI
+npm install -g cline                     # Cline - Task automation
+npm install -g open-code                 # OpenCode - Multi-language
 
-# 2. Claude - Deep reasoning and balanced performance
-npm install -g @anthropic-ai/claude-code
+# Shell Script Installs
+curl https://cursor.com/install -fsS | bash          # Cursor
+curl -fsSL https://app.factory.ai/cli | sh           # Droid
+curl -fsSL https://cli.kiro.dev/install | bash       # Kiro
 
-# 3. Codex - UI generation and rapid prototyping
-npm install -g @openai/codex
+# Python
+pip install aider-chat                   # Aider - AI pair programming
 
-# 4. Cursor - Workflow automation
-curl https://cursor.com/install -fsS | bash
-
-# 5. Copilot - GitHub integration
-npm install -g @github/copilot
-
-# 6. Droid - CI/CD-safe, read-only by default
-curl -fsSL https://app.factory.ai/cli | sh
-
-# 7. Kiro - AI-powered IDE with CLI support
-curl -fsSL https://cli.kiro.dev/install | bash
-# IDE download: https://kiro.help/docs
-
-# 8. Warp - Modern terminal with AI features (macOS)
-brew install --cask warp
-# Windows/Linux: https://warp.dev
-
-# 9. Windsurf - IDE with Cascade AI agent
-# Download from: https://windsurf.com
-# Headless mode via Docker: https://github.com/pfcoperez/windsurfinabox
-
-# 10. Aider - AI pair programming
-pip install aider-chat
-
-# 11. Continue Dev - VS Code integration with CLI
-npm install -g @continuedev/cli
-
-# 12. Cline - Task-based autonomous execution
-npm install -g cline
-
-# 13. Amazon Q Developer - AWS AI coding assistant
-# macOS:
-brew install amazon-q-developer-cli
-# Other platforms: https://github.com/aws/amazon-q-developer-cli/releases
-
-# 14. OpenCode - Multi-language AI coding tool
-npm install -g open-code
-
-# Supports MCP (Model Context Protocol) integration
+# Platform-specific
+brew install --cask warp                 # Warp (macOS)
+brew install amazon-q-developer-cli      # Amazon Q (macOS)
 ```
 
 ## 📚 Documentation Structure
 
 ```
 headless-ai-cli/
-├── README.md                    # This file - quick reference and all installation commands
-├── CLAUDE.md                    # AI agent guidance for working in this repository
-├── CONTRIBUTING.md              # Contribution guidelines and standards
-├── QUICK_REFERENCE.md           # Ultra-condensed command cheat sheet for daily use
-├── .gitignore                   # Standard exclusions (node_modules, IDEs, logs, etc.)
-├── tools/
-│   ├── TEMPLATE.md              # Standardized template for adding new tools
-│   └── major/                   # Individual tool documentation (14 files)
-│       ├── gemini.md            # Google Gemini CLI
-│       ├── claude.md            # Anthropic Claude (Claude Code)
-│       ├── codex.md             # OpenAI Codex
-│       ├── cursor.md            # Cursor Agent
-│       ├── copilot.md           # GitHub Copilot CLI
-│       ├── droid.md             # Factory AI Droid
-│       ├── kiro.md              # Kiro (AI-Powered IDE)
-│       ├── warp.md              # Warp Terminal
-│       ├── windsurf.md          # Windsurf IDE
-│       ├── aider.md             # Aider (AI pair programming)
-│       ├── continue-dev.md      # Continue Dev
-│       ├── cline.md             # Cline
-│       ├── amazon-q.md          # Amazon Q Developer
-│       ├── open-code.md         # OpenCode
+├── README.md                    # This file - overview and quick reference
+├── CONTRIBUTING.md              # How to contribute and maintain docs
+├── QUICK_REFERENCE.md           # Ultra-condensed command cheat sheet
+├── tools/major/                 # Individual tool documentation (14 files)
+│   ├── gemini.md, claude.md, codex.md, cursor.md, copilot.md
+│   ├── droid.md, kiro.md, warp.md, windsurf.md
+│   ├── aider.md, continue-dev.md, cline.md, amazon-q.md, open-code.md
 ├── examples/
-│   ├── ci-cd/                   # CI/CD integration examples (40+ files)
-│   │   ├── github-actions-*.yml # GitHub Actions workflows
-│   │   ├── gitlab-ci-*.yml      # GitLab CI configurations
-│   │   └── circleci-*.yml       # CircleCI configurations
-│   ├── automation/              # Automation scripts
-│   │   ├── *-headless-workflows.sh
-│   │   ├── *-batch-processing.sh
-│   │   └── code-review-automation.sh
-│   └── workflows/               # Common workflow patterns
-└── test/                        # Test scripts (60+ files)
-    ├── *-headless-basic.test.sh      # Basic headless mode tests
-    ├── *-headless-advanced.test.sh   # Advanced headless scenarios
-    ├── *-cicd-integration.test.sh    # CI/CD integration tests
-    └── *-workflows.test.sh           # Workflow automation tests
+│   ├── ci-cd/                   # 40+ GitHub Actions, GitLab CI, CircleCI examples
+│   ├── automation/              # Shell script patterns for batch processing
+│   └── workflows/               # Multi-tool orchestration examples
+└── test/                        # 60+ test scripts for verification
 ```
 
-## 📖 Documentation Files
-
-### Main Documentation
-
-- **[README.md](README.md)** - This file: Quick reference, installation, overview
-- **[CLAUDE.md](CLAUDE.md)** - Guidance for AI agents working in this repository
-- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Contribution guidelines and standards
-- **[QUICK_REFERENCE.md](QUICK_REFERENCE.md)** - Ultra-condensed command cheat sheet
-
-### Individual Tool Documentation
-
-All 14 tools are comprehensively documented in `tools/major/` directory:
-
-1. **[tools/major/gemini.md](tools/major/gemini.md)** - Google Gemini CLI (1M token context)
-2. **[tools/major/claude.md](tools/major/claude.md)** - Anthropic Claude (Claude Code)
-3. **[tools/major/codex.md](tools/major/codex.md)** - OpenAI Codex
-4. **[tools/major/cursor.md](tools/major/cursor.md)** - Cursor Agent
-5. **[tools/major/copilot.md](tools/major/copilot.md)** - GitHub Copilot CLI
-6. **[tools/major/droid.md](tools/major/droid.md)** - Factory AI Droid
-7. **[tools/major/kiro.md](tools/major/kiro.md)** - Kiro (AI-Powered IDE)
-8. **[tools/major/warp.md](tools/major/warp.md)** - Warp Terminal
-9. **[tools/major/windsurf.md](tools/major/windsurf.md)** - Windsurf IDE
-10. **[tools/major/aider.md](tools/major/aider.md)** - Aider (AI pair programming)
-11. **[tools/major/continue-dev.md](tools/major/continue-dev.md)** - Continue Dev
-12. **[tools/major/cline.md](tools/major/cline.md)** - Cline
-13. **[tools/major/amazon-q.md](tools/major/amazon-q.md)** - Amazon Q Developer
-14. **[tools/major/open-code.md](tools/major/open-code.md)** - OpenCode
-
-## 🎯 All 14 Tools Listed
-
-1. ✅ **Google Gemini CLI** - Massive context (1M tokens), repo-wide analysis
-2. ✅ **Anthropic Claude (Claude Code)** - Deep reasoning, balanced performance
-3. ✅ **OpenAI Codex** - UI generation, rapid prototyping
-4. ✅ **Cursor Agent** - Workflow automation, chained tasks
-5. ✅ **GitHub Copilot CLI** - GitHub integration, PR management
-6. ✅ **Factory AI Droid** - CI/CD-safe, read-only by default
-7. ✅ **Kiro** - AI-powered IDE with CLI, spec-driven development
-8. ✅ **Warp** - Modern terminal with AI-powered assistance
-9. ✅ **Windsurf** - AI-powered IDE with Cascade agent
-10. ✅ **Aider** - AI pair programming, Git-based editing
-11. ✅ **Continue Dev** - VS Code extension with CLI support
-12. ✅ **Cline** - Task-based autonomous execution
-13. ✅ **Amazon Q Developer** - AWS AI coding assistant, GitHub integration
-14. ✅ **OpenCode** - Multi-language AI coding support
-
-## 🔧 Quick Examples
+## 🔧 Common Headless Patterns
 
 ### Code Review
 ```bash
-# Using Gemini for large repos
-git diff | gemini -p "Review for bugs and security" --output-format json
+# Gemini (large repos)
+git diff | gemini -p "Review for bugs" --output-format json
 
-# Using Claude for deep analysis
-claude -p "Review this PR for architectural issues" --output-format json --permission-mode bypassPermissions
+# Claude (deep analysis)
+claude -p "Review PR" --output-format json --permission-mode bypassPermissions
 
-# Using Droid for CI/CD
-droid exec "Review code for security issues" --output-format json
+# Droid (CI/CD safe)
+droid exec "Security audit" --auto low --output-format json
 ```
 
-### UI Generation
+### Code Generation
 ```bash
-# Using Codex
-codex exec "Create React + Tailwind button component"
+# Codex (UI generation)
+codex exec "Create React button component" --full-auto
 
-# Using Copilot
-copilot -p "Generate a responsive navigation component" --allow-all-tools
+# Cline (task automation)
+cline "Generate unit tests" --yolo --output-format json
 ```
 
-### CI/CD Automation
+### Batch Processing
 ```bash
-# Using Droid (safest for CI/CD)
-droid exec --auto low "Run security audit" --output-format json
-
-# Using Gemini with structured output
-gemini -p "Analyze test failures" --output-format json
-
-# Using Claude with pre-approved tools
-claude -p "Fix linting issues" --allowedTools "Bash,Read,Edit" --permission-mode bypassPermissions
+# Process multiple files with Claude
+for file in src/*.py; do
+  claude -p "Add type hints to $file" --permission-mode bypassPermissions
+done
 ```
-
-### AI Pair Programming
-```bash
-# Using Aider
-aider --model claude-sonnet-4-5 --yes
-
-# Using Continue Dev
-cn -p "Add type hints to all functions" --file src/main.py
-
-# Using Cline
-cline task new -y "Generate unit tests for all Go files"
-```
-
-### IDE Development
-```bash
-# Kiro CLI (must use agents)
-kiro-cli chat --agent frontend-specialist
-
-# Windsurf (Docker headless mode)
-docker run --rm -e WINDSURF_TOKEN=$WINDSURF_TOKEN \
-  -v ./workspace:/home/ubuntu/workspace windsurf
-
-# Use through VS Code interface with MCP integration
-```
-
-### AWS Integration
-```bash
-# Amazon Q Developer
-q chat "Explain this Lambda function"
-q scan --auto-fix  # Security scan with auto-fix
-```
-
-### Multi-Language Support
-```bash
-# OpenCode
-opencode run "Create a REST API endpoint in Python"
-opencode run "Review the Go code for best practices"
-```
-
-## 📤 Output Formats Supported
-
-| Tool | Text | JSON | Stream JSON | Delta Stream | Notes |
-|------|------|------|-------------|--------------|-------|
-| **Gemini** | ✔ | ✔ | ✔ | ❌ | Comprehensive stats |
-| **Claude** | ✔ | ✔ | ✔ | ❌ | Session management |
-| **Codex** | ✔ | ✔ | ✔ | ✔ | Structured schemas |
-| **Cursor** | ✔ | ✔ | ✔ | ✔ | Partial output streaming |
-| **Droid** | ✔ | ✔ | ✔ (debug) | ❌ | Read-only default |
-| **Copilot** | ✔ | ⚠️ | ⚠️ | ❌ | Limited JSON support |
-| **Kiro** | ✔ | ⚠️ | ⚠️ | ❌ | Primarily IDE-based |
-| **Warp** | N/A | N/A | N/A | N/A | Terminal emulator |
-| **Aider** | ✔ | ⚠️ | ❌ | ❌ | Git-based workflow |
-| **Continue Dev** | ✔ | ⚠️ | ⚠️ | ❌ | TUI and headless |
-| **Windsurf** | ✔ | ⚠️ | ❌ | ❌ | Docker headless |
-| **Amazon Q** | ✔ | ✔ | ⚠️ | ❌ | AWS integration |
-| **Cline** | ✔ | ⚠️ | ❌ | ❌ | Instance-based |
-| **OpenCode** | ✔ | ⚠️ | ⚠️ | ❌ | Multi-language |
 
 ## 👥 Tools by Role
 
-| Role | Best Tools | Example |
-|------|------------|---------|
-| **Backend Engineer** | Claude Sonnet, Cursor, Gemini | `claude -p "Review API endpoint" --permission-mode bypassPermissions` |
-| **Frontend Engineer** | Cursor, Codex, Copilot | `cursor-agent -p "Create React component" --force` |
-| **SRE/DevOps** | Droid, Claude, Amazon Q | `droid exec "Diagnose incident" --auto low` |
-| **AI/ML Engineer** | Claude Opus, Gemini | `claude -p "Design ML architecture" --model claude-opus-4-5` |
-| **PM/Designer** | Codex, Copilot, Cursor | `codex exec "Create user flow mockup"` |
-| **Data Engineer** | Gemini, Claude Sonnet | `gemini -p "Review ETL pipeline" --output-format json` |
-| **Security Engineer** | Claude, Droid, Amazon Q | `droid exec "Security audit" --output-format json` |
-| **Pair Programmer** | Aider, Continue Dev, Cline | `aider --model claude-sonnet-4-5` |
-| **Terminal Power User** | Warp, Cursor | Enhanced CLI experience with AI |
+| Role | Recommended Tools | Why |
+|------|-------------------|-----|
+| **SRE/DevOps** | Droid, Claude, Amazon Q | Read-only defaults, CI/CD integration |
+| **Backend Engineer** | Claude Sonnet, Gemini | Deep reasoning, large context |
+| **Frontend Engineer** | Codex, Cursor, Copilot | UI generation, workflow automation |
+| **Security Engineer** | Droid, Claude | Audit capabilities, structured output |
+| **Pair Programmer** | Aider, Continue Dev, Cline | Interactive coding, Git integration |
 
-## 🔗 Official Documentation Links
+## 🔗 Official Documentation
 
-### Core Tools
-- [Gemini CLI](https://developers.google.com/gemini-code-assist/docs/gemini-cli) - Google Developers
-- [Claude Code](https://code.claude.com/docs/en/headless.md) - Anthropic
-- [Codex SDK](https://developers.openai.com/codex/sdk) - OpenAI
-- [Cursor CLI](https://cursor.com/docs/cli/headless) - Cursor
-- [Copilot CLI](https://docs.github.com/en/copilot/cli) - GitHub
-- [Droid Exec](https://docs.factory.ai/cli/droid-exec/overview.md) - Factory AI
-
-### IDE Tools
-- [Kiro AI](https://kiroai.ai) | [Docs](https://kiro.help/docs) - Kiro
-- [Warp Terminal](https://www.warp.dev) | [Docs](https://docs.warp.dev) - Warp
-- [Windsurf](https://windsurf.com) - Windsurf IDE
-
-### AI Pair Programming
-- [Aider](https://aider.chat) | [Docs](https://aider.chat/docs) - Aider
-- [Continue Dev](https://continue.dev) | [CLI Docs](https://docs.continue.dev/cli/overview) - Continue
-- [Cline](https://docs.cline.bot) | [CLI](https://docs.cline.bot/cline-cli/overview) - Cline
-
-### Cloud & Extensions
-- [Amazon Q](https://aws.amazon.com/q/developer/) | [CLI](https://github.com/aws/amazon-q-developer-cli) - AWS
-- [OpenCode](https://opencode.ai) - OpenCode
-
-## 📌 Version Pinning for CI/CD
-
-For production CI/CD, pin specific versions to ensure reproducibility:
-
-```bash
-# Core npm packages
-npm install -g @anthropic-ai/claude-code@1.9.3
-npm install -g @openai/codex@2.2.0
-npm install -g @google/gemini-cli@3.1.0
-npm install -g @github/copilot@0.0.329
-npm install -g @continuedev/cli@latest
-npm install -g cline@latest
-npm install -g open-code@latest
-
-# Python packages
-pip install aider-chat==0.47.1
-
-# Shell installations (specify versions in scripts)
-curl -fsSL https://app.factory.ai/cli | sh  # Droid
-curl https://cursor.com/install -fsS | bash  # Cursor
-```
-
-**Note:** Version numbers shown are examples. Always check each tool's repository for current stable versions before pinning.
+| Tool | Docs | Release Date |
+|------|------|--------------|
+| Gemini CLI | [developers.google.com](https://developers.google.com/gemini-code-assist/docs/gemini-cli) | Nov 2025 |
+| Claude Code | [code.claude.com](https://code.claude.com/docs/en/headless.md) | Nov 2025 |
+| Codex | [developers.openai.com](https://developers.openai.com/codex/cli) | Nov 2025 |
+| Droid | [docs.factory.ai](https://docs.factory.ai/cli/droid-exec/overview.md) | 2024 |
+| Aider | [aider.chat](https://aider.chat/docs) | 2023 |
+| Cline | [docs.cline.bot](https://docs.cline.bot/cline-cli/overview) | 2024 |
+| Amazon Q | [aws.amazon.com](https://aws.amazon.com/q/developer/) | 2024 |
 
 ## 🤝 Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for comprehensive guidelines on:
-- Adding new tools to the repository
-- Updating existing documentation
-- Using the standardized TEMPLATE.md
-- Testing and verification procedures
-- Reporting issues and submitting improvements
+We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-**Key Requirements:**
-- All tools must be verified as actually existing
-- Installation commands must be tested
-- Follow TEMPLATE.md structure exactly
-- Update README.md with new tools
-- Add CI/CD examples where applicable
+**Quick ways to help:**
+- 🐛 Report outdated commands or broken examples
+- 📝 Add missing tools or improve documentation
+- 🧪 Submit test results from your environment
+- 💡 Suggest new CI/CD integration patterns
 
-## 📝 License
+## ⚠️ Maintenance Notice
 
-This repository is provided as-is for educational and reference purposes. Individual tools have their own licenses - please refer to each tool's official documentation.
+These tools are actively developed and change frequently. We aim to verify documentation monthly, but CLI flags and features may drift between updates.
 
-## 🎯 Repository Status
+**Last full verification:** November 2025
 
-- ✅ **14 Tools Documented** - All with individual comprehensive files
-- ✅ **14 Installation Commands** - Verified and tested
-- ✅ **60+ Test Scripts** - Headless, advanced, CI/CD, workflows
-- ✅ **40+ Examples** - CI/CD configs and automation scripts
-- ✅ **Documentation Template** - Standardized format for consistency
-- ✅ **Contributing Guide** - Clear process for additions
-- ✅ **Repository Cleaned** - All AI slop removed, only essentials remain
+If you find outdated information, please [open an issue](https://github.com/oimiragieo/headless-ai-cli/issues).
 
 ## 📊 Repository Statistics
 
-- **Total Tools:** 14 (all verified and production-ready)
-- **Documentation Files:** 18 markdown files total
-  - 4 main docs (README, CLAUDE, CONTRIBUTING, QUICK_REFERENCE)
-  - 14 individual tool docs (tools/major/)
-- **Example Files:** 40+ (CI/CD and automation)
-- **Test Scripts:** 60+ (comprehensive test coverage)
-- **Lines of Documentation:** 30,000+ lines of verified content
+- **Tools Documented:** 14 (all verified)
+- **CI/CD Examples:** 40+ workflows
+- **Test Scripts:** 60+ verification scripts
+- **Documentation:** 18 markdown files, 30,000+ lines
 
-## 📅 Last Updated
+## 📝 License
 
-November 2025
+MIT License - see [LICENSE](LICENSE) for details.
+
+Individual tools have their own licenses - refer to each tool's official documentation.
 
 ---
 
-**Quick Start:** Pick a tool from the installation section above (numbered 1-14), install it, then check its individual documentation file in `tools/major/` for comprehensive usage guides, examples, and CI/CD integration patterns.
-
-**Icon Legend:**
-- 🚨 = Dangerous (requires caution)
-- 🛟 = Safe-by-default (read-only)
-- ⚙️ = Required configuration
-- ⭐ = Proven approach
-- ✅ = Verified and tested
-- ⚠️ = Limited support or conditional
-- ❌ = Not supported
+**Quick Start:** Pick a tool from the comparison table, install it, then check its [individual documentation](tools/major/) for comprehensive headless usage guides and examples.
