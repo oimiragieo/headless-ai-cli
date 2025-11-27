@@ -91,8 +91,8 @@ test_case "Model selection with Haiku (claude-haiku-4-5-20251001)" \
     "claude -p 'Say test' --model claude-haiku-4-5-20251001 --no-interactive" 0
 
 # Test 4: Model selection with Opus
-test_case "Model selection with Opus (claude-opus-4-1-20250805)" \
-    "claude -p 'Say test' --model claude-opus-4-1-20250805 --no-interactive" 0
+test_case "Model selection with Opus (claude-opus-4-5-20251101)" \
+    "claude -p 'Say test' --model claude-opus-4-5-20251101 --no-interactive" 0
 
 # Test 5: Environment variable model selection
 test_case "Environment variable model selection" \

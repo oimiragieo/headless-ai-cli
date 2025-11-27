@@ -295,7 +295,7 @@ opencode review --language go
 | **Backend Engineer** | Claude Sonnet, Cursor, Gemini | `claude -p "Review API endpoint" --no-interactive` |
 | **Frontend Engineer** | Cursor, Codex, Copilot | `cursor-agent -p "Create React component" --force` |
 | **SRE/DevOps** | Droid, Claude, Amazon Q | `droid exec "Diagnose incident" --auto low` |
-| **AI/ML Engineer** | Claude Opus, Gemini | `claude -p "Design ML architecture" --model claude-opus-4-1` |
+| **AI/ML Engineer** | Claude Opus, Gemini | `claude -p "Design ML architecture" --model claude-opus-4-5` |
 | **PM/Designer** | Codex, Copilot, Cursor | `codex exec "Create user flow mockup"` |
 | **Data Engineer** | Gemini, Claude Sonnet | `gemini -p "Review ETL pipeline" --output-format json` |
 | **Security Engineer** | Claude, Droid, Amazon Q | `droid exec "Security audit" --output-format json` |

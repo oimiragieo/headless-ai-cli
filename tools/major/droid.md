@@ -91,7 +91,7 @@ droid exec --session-id <session-id> "continue with next steps"
 | **gpt-5** | `gpt-5` | Latest OpenAI GPT-5 (default across all droids) | Exceptional intelligence and reasoning |
 | **gpt-5-2025-08-07** | `gpt-5-2025-08-07` | Specific version | Version pinning |
 | **claude-sonnet-4-20250514** | `sonnet` | Claude Sonnet 4.5 | Recommended for general tasks, balanced reasoning |
-| **claude-opus-4-1-20250805** | `opus` | Claude Opus 4.1 | Suitable for complex tasks, deep reasoning |
+| **claude-opus-4-5-20251101** | `opus` | Claude Opus 4.5 | Best for coding, agents, computer use |
 | **claude-haiku-4-5-20251001** | `haiku` | Claude Haiku 4.5 | Fast and cost-effective |
 | **droid-core** | `droid-core` or `glm-4.6` | GLM-4.6 open-source model | Open-source alternative |
 | **custom-model** | `custom-model` | User-configured via BYOK | Custom model integration |

@@ -54,7 +54,7 @@ gemini -p "query" --output-format json --model gemini-2.5-pro
 
 ### Claude
 ```bash
-claude -p "query" --output-format json --model claude-opus-4-1 --allowedTools "Bash,Read"
+claude -p "query" --output-format json --model claude-opus-4-5 --allowedTools "Bash,Read"
 ```
 
 ### Codex
@@ -148,7 +148,7 @@ tool --resume <id> "Continue"      # By ID
 ### Model Selection
 ```bash
 --model gemini-2.5-pro             # Gemini
---model claude-opus-4-1            # Claude
+--model claude-opus-4-5            # Claude
 --model gpt-5-codex                # Codex
 ```
 
@@ -173,7 +173,7 @@ tool --resume <id> "Continue"      # By ID
 |------|------|---------|
 | **Code review** | Gemini/Droid | `gemini -p "Review"` or `droid exec "Review"` |
 | **UI gen** | Codex | `codex exec "Create component"` |
-| **Architecture** | Claude Opus | `claude -p "Design" --model claude-opus-4-1` |
+| **Architecture** | Claude Opus | `claude -p "Design" --model claude-opus-4-5` |
 | **CI/CD** | Droid | `droid exec --auto low "Audit"` |
 | **Workflows** | Cursor | `cursor-agent -p --force "Plan, code, test"` |
 | **GitHub PRs** | Copilot | `copilot -p "Review PR #123"` |

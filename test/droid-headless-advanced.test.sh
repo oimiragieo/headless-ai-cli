@@ -108,7 +108,7 @@ test_case "Model selection with full Claude Sonnet ID" \
 
 # Test 8: Model selection with full Claude Opus ID
 test_case "Model selection with full Claude Opus ID" \
-    "droid exec -m claude-opus-4-1-20250805 'Say test'" 0
+    "droid exec -m claude-opus-4-5-20251101 'Say test'" 0
 
 # Test 9: Model selection with full Claude Haiku ID
 test_case "Model selection with full Claude Haiku ID" \
