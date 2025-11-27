@@ -199,15 +199,22 @@ done
 
 ## 🔗 Official Documentation
 
-| Tool | Docs | Release Date |
-|------|------|--------------|
-| Gemini CLI | [developers.google.com](https://developers.google.com/gemini-code-assist/docs/gemini-cli) | Nov 2025 |
-| Claude Code | [code.claude.com](https://code.claude.com/docs/en/headless.md) | Nov 2025 |
-| Codex | [developers.openai.com](https://developers.openai.com/codex/cli) | Nov 2025 |
-| Droid | [docs.factory.ai](https://docs.factory.ai/cli/droid-exec/overview.md) | 2024 |
-| Aider | [aider.chat](https://aider.chat/docs) | 2023 |
-| Cline | [docs.cline.bot](https://docs.cline.bot/cline-cli/overview) | 2024 |
-| Amazon Q | [aws.amazon.com](https://aws.amazon.com/q/developer/) | 2024 |
+| Tool | Primary Docs | CLI Reference | GitHub |
+|------|--------------|---------------|--------|
+| **Gemini CLI** | [geminicli.com/docs](https://geminicli.com/docs/) | [Google Developers](https://developers.google.com/gemini-code-assist/docs/gemini-cli) | [google-gemini/gemini-cli](https://github.com/google-gemini/gemini-cli) |
+| **Claude Code** | [docs.anthropic.com](https://docs.anthropic.com/en/docs/claude-code/overview) | [CLI Reference](https://docs.claude.com/en/docs/claude-code/cli-reference) | [anthropics/claude-code](https://github.com/anthropics/claude-code) |
+| **Codex** | [developers.openai.com](https://developers.openai.com/codex/) | [CLI Reference](https://developers.openai.com/codex/cli/reference/) | [openai/codex](https://github.com/openai/codex) |
+| **Cursor** | [docs.cursor.com](https://docs.cursor.com/en/cli/overview) | [Agent Mode](https://docs.cursor.com/chat/agent) | — |
+| **Copilot CLI** | [GitHub Docs](https://docs.github.com/en/copilot/concepts/agents/about-copilot-cli) | [Usage Guide](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/use-copilot-cli) | [github/copilot-cli](https://github.com/github/copilot-cli) |
+| **Droid** | [docs.factory.ai](https://docs.factory.ai/cli/getting-started/quickstart) | [Product Page](https://factory.ai/product/cli) | [Factory-AI/factory](https://github.com/Factory-AI/factory) |
+| **Kiro** | [kiro.dev/docs](https://kiro.dev/docs/) | [CLI Docs](https://kiro.dev/docs/cli/) | [kirodotdev/Kiro](https://github.com/kirodotdev/Kiro) |
+| **Warp** | [docs.warp.dev](https://docs.warp.dev) | [AI Features](https://docs.warp.dev/features/warp-ai) | [warpdotdev/Warp](https://github.com/warpdotdev/Warp) |
+| **Windsurf** | [docs.windsurf.com](https://docs.windsurf.com/) | [Editor](https://windsurf.com/editor) | — |
+| **Aider** | [aider.chat/docs](https://aider.chat/docs/) | [Main Site](https://aider.chat/) | [Aider-AI/aider](https://github.com/Aider-AI/aider) |
+| **Continue Dev** | [docs.continue.dev](https://docs.continue.dev/quickstart) | [CLI Guide](https://docs.continue.dev/guides/cli) | [continuedev/continue](https://github.com/continuedev/continue) |
+| **Cline** | [docs.cline.bot](https://docs.cline.bot/cline-cli/overview) | [Main Site](https://cline.bot/) | [cline/cline](https://github.com/cline/cline) |
+| **Amazon Q** | [AWS Docs](https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/command-line.html) | [CLI Reference](https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/command-line-reference.html) | [aws/amazon-q-developer-cli](https://github.com/aws/amazon-q-developer-cli) |
+| **OpenCode** | [opencode.ai/docs](https://opencode.ai/docs/) | [CLI Docs](https://opencode.ai/docs/cli/) | [sst/opencode](https://github.com/sst/opencode) |
 
 ## 🤝 Contributing
 
