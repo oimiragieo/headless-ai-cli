@@ -130,9 +130,29 @@ opencode serve --port 3000 --hostname 0.0.0.0
 opencode models
 ```
 
-**Default OpenCode Models:**
+**OpenCode Models:**
+- `opencode/gpt-5-nano`
 - `opencode/big-pickle`
 - `opencode/grok-code`
+
+**GitHub Copilot Models** (available after authenticating with GitHub Copilot):
+- `github-copilot/grok-code-fast-1`
+- `github-copilot/gpt-5.1-codex`
+- `github-copilot/claude-haiku-4.5`
+- `github-copilot/gemini-3-pro-preview`
+- `github-copilot/oswe-vscode-prime`
+- `github-copilot/gpt-5.1-codex-mini`
+- `github-copilot/gpt-5.1`
+- `github-copilot/gpt-5-codex`
+- `github-copilot/gpt-4o`
+- `github-copilot/gpt-4.1`
+- `github-copilot/claude-opus-41`
+- `github-copilot/gpt-5-mini`
+- `github-copilot/gemini-2.5-pro`
+- `github-copilot/claude-sonnet-4`
+- `github-copilot/gpt-5`
+- `github-copilot/claude-opus-4.5`
+- `github-copilot/claude-sonnet-4.5`
 
 **Supported Providers** (from `opencode auth login`):
 
@@ -149,16 +169,22 @@ opencode models
 **Model Selection:**
 ```bash
 # Use specific model (format: provider/model)
-opencode run "Your task" --model anthropic/claude-3.5-sonnet
+opencode run "Your task" --model github-copilot/gpt-5.1-codex
 
-# Use OpenAI model
-opencode run "Generate tests" --model openai/gpt-4
+# Use Claude via GitHub Copilot
+opencode run "Generate tests" --model github-copilot/claude-sonnet-4.5
 
-# Use Google Gemini
-opencode run "Review code" --model google/gemini-pro
+# Use Gemini via GitHub Copilot
+opencode run "Review code" --model github-copilot/gemini-3-pro-preview
 
 # Use default OpenCode models
 opencode run "Analyze code" --model opencode/big-pickle
+
+# Use fast model for quick tasks
+opencode run "Fix typo" --model github-copilot/grok-code-fast-1
+
+# Use GPT-5 for advanced reasoning
+opencode run "Design architecture" --model github-copilot/gpt-5.1
 ```
 
 **Authentication:**
