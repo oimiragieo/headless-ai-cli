@@ -573,33 +573,137 @@ Kiro utilizes **Claude models** via AWS Bedrock to power its AI capabilities:
 
 **⚠️ CRITICAL: Kiro CLI REQUIRES AGENTS - Direct command execution does NOT work**
 
-**Basic Syntax:**
+**Basic usage:**
 ```bash
-# Interactive chat mode (REQUIRED - you cannot pass commands directly)
+kiro-cli [OPTIONS] [SUBCOMMAND]
+```
+
+**Core Options:**
+- `-v, --verbose...`: Increase logging verbosity
+- `--help-all`: Print help for all subcommands
+- `--agent <AGENT>`: Launch chat with specified agent
+- `-h, --help`: Print help
+- `-V, --version`: Print version
+
+**Commands:**
+
+**AI & Chat:**
+```bash
+# AI assistant in your terminal (interactive)
 kiro-cli chat
 
-# Chat with specific agent (REQUIRED for most tasks)
+# Chat with specific agent
 kiro-cli chat --agent <agent-name>
 # OR
 kiro-cli --agent <agent-name> chat
 
+# Natural Language to Shell translation
+kiro-cli translate "list all files in current directory"
+
+# Inline shell completions
+kiro-cli inline
+```
+
+**Agent Management:**
+```bash
+# Agent root commands
+kiro-cli agent
+
 # List available agents
 kiro-cli agent list
 
-# Update Kiro CLI
-kiro-cli update
+# Create or configure agents
+kiro-cli agent --help
+```
 
-# Login/authentication
+**MCP (Model Context Protocol):**
+```bash
+# Manage MCP servers
+kiro-cli mcp
+
+# Add MCP server
+kiro-cli mcp add <server-name> --url <url>
+
+# List MCP servers
+kiro-cli mcp list
+
+# Remove MCP server
+kiro-cli mcp remove <server-name>
+```
+
+**Authentication:**
+```bash
+# Login
 kiro-cli login
 
-# Check version
-kiro-cli --version
+# Logout
+kiro-cli logout
+
+# Check current user
+kiro-cli whoami
+
+# Show profile
+kiro-cli profile
+
+# Manage your account
+kiro-cli user
+```
+
+**Desktop App Control:**
+```bash
+# Launch the desktop app
+kiro-cli launch
+
+# Quit the desktop app
+kiro-cli quit
+
+# Restart the desktop app
+kiro-cli restart
+
+# Open the dashboard
+kiro-cli dashboard
+```
+
+**Configuration & Management:**
+```bash
+# Customize appearance & behavior
+kiro-cli settings
+
+# Setup cli components
+kiro-cli setup
+
+# Update the Kiro application
+kiro-cli update
+
+# Run diagnostic tests
+kiro-cli diagnostic
+
+# Fix and diagnose common issues
+kiro-cli doctor
+
+# Generate dotfiles for the given shell
+kiro-cli init
+
+# Get or set theme
+kiro-cli theme
+
+# Manage system integrations
+kiro-cli integrations
+```
+
+**Debugging & Support:**
+```bash
+# Debug the app
+kiro-cli debug
+
+# Create a new Github issue
+kiro-cli issue
 ```
 
 **❌ WRONG - This does NOT work:**
 ```bash
 # This will FAIL - Kiro CLI does not support direct command execution
-kiro-cli "Install the project dependencies"  # ❌ ERROR
+kiro-cli "Install the project dependencies"  # ❌ ERROR: unrecognized subcommand
 ```
 
 **✅ CORRECT - Use agents:**
@@ -617,18 +721,6 @@ kiro-cli --agent <agent-name> chat
 # > Review src/auth.js for security vulnerabilities
 # > Create a React component for user profile
 # > Run the test suite and fix any failures
-```
-
-**Managing Agents:**
-```bash
-# List all available agents
-kiro-cli agent list
-
-# Create or configure agents
-kiro-cli agent --help
-
-# Use a specific agent for a task
-kiro-cli --agent frontend-specialist chat
 ```
 
 ### IDE Terminal Integration
