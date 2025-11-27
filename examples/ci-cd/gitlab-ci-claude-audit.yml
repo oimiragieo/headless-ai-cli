@@ -1,0 +1,88 @@
+# GitLab CI Pipeline: Claude Security Audit
+# This example shows how to use Claude CLI for automated security audits
+
+stages:
+  - audit
+  - report
+
+variables:
+  ANTHROPIC_API_KEY: $ANTHROPIC_API_KEY
+
+claude-audit:
+  stage: audit
+  image: node:20
+  before_script:
+    - npm install -g @anthropic-ai/claude-code
+    - export ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY
+  script:
+    - |
+      claude -p \
+        "Run a comprehensive security audit of this codebase. Check for:
+        - SQL injection vulnerabilities
+        - XSS vulnerabilities
+        - Insecure authentication patterns
+        - Hardcoded secrets
+        - Insecure dependencies
+        - Missing input validation
+        - Insecure file operations
+        
+        Write findings to security-audit.json in JSON format with severity levels." \
+        --output-format json \
+        --no-interactive \
+        --append-system-prompt "You are a security engineer. Provide detailed findings with severity levels (critical, high, medium, low) and remediation steps." \
+        --allowedTools "Read,Grep,WebSearch" \
+        > audit-result.json || echo '{"type":"result","subtype":"error","result":"Audit failed"}' > audit-result.json
+  artifacts:
+    paths:
+      - audit-result.json
+      - security-audit.json
+    expire_in: 1 week
+  only:
+    - main
+    - develop
+    - merge_requests
+
+generate-report:
+  stage: report
+  image: node:20
+  dependencies:
+    - claude-audit
+  before_script:
+    - apt-get update && apt-get install -y jq || apk add --no-cache jq || true
+  script:
+    - |
+      if [ -f audit-result.json ]; then
+        echo "# Security Audit Report (Claude)" > audit-report.md
+        echo "" >> audit-report.md
+        echo "Generated: $(date)" >> audit-report.md
+        echo "" >> audit-report.md
+        
+        # Extract audit results
+        AUDIT_TEXT=$(jq -r '.result // .response // "No results found"' audit-result.json 2>/dev/null || echo "No results found")
+        COST=$(jq -r '.total_cost_usd // "N/A"' audit-result.json 2>/dev/null || echo "N/A")
+        
+        echo "## Audit Results" >> audit-report.md
+        echo "" >> audit-report.md
+        echo "$AUDIT_TEXT" >> audit-report.md
+        echo "" >> audit-report.md
+        echo "---" >> audit-report.md
+        echo "*Cost: ${COST} USD*" >> audit-report.md
+        
+        # Check for critical issues
+        if echo "$AUDIT_TEXT" | grep -qi "critical\|high severity"; then
+          echo "## ⚠️ Critical Issues Found" >> audit-report.md
+          exit 1
+        fi
+      else
+        echo "No audit result file found" > audit-report.md
+        exit 1
+      fi
+  artifacts:
+    paths:
+      - audit-report.md
+    expire_in: 1 week
+  only:
+    - main
+    - develop
+    - merge_requests
+

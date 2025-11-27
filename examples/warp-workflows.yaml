@@ -1,0 +1,89 @@
+# Warp Terminal Workflows
+# Example workflows for Warp terminal that can be shared via Warp Drive
+
+# Workflow: Run Tests
+- name: Run Tests
+  command: npm test
+  description: Run the test suite
+  tags: ["test", "npm"]
+
+# Workflow: Build Project
+- name: Build Project
+  command: npm run build
+  description: Build the project for production
+  tags: ["build", "npm", "production"]
+
+# Workflow: Code Review
+- name: Code Review
+  command: |
+    git diff origin/main...HEAD | \
+      gemini -p "Review these changes for bugs and security issues" \
+      --output-format json > review.json
+  description: Review code changes using Gemini CLI
+  tags: ["review", "gemini", "code-quality"]
+
+# Workflow: Security Audit
+- name: Security Audit
+  command: |
+    droid exec --auto low \
+      "Run security audit of this codebase" \
+      --output-format json > security-audit.json
+  description: Run security audit using Factory AI Droid
+  tags: ["security", "droid", "audit"]
+
+# Workflow: Generate Documentation
+- name: Generate Documentation
+  command: |
+    claude -p "Generate comprehensive documentation for this project" \
+      --output-format json \
+      --no-interactive \
+      --allowedTools "Read,Write" \
+      > docs-output.json
+  description: Generate project documentation using Claude
+  tags: ["docs", "claude", "documentation"]
+
+# Workflow: Format Code
+- name: Format Code
+  command: |
+    npm run format || \
+    prettier --write "**/*.{js,ts,jsx,tsx}" || \
+    echo "No formatter configured"
+  description: Format code using project formatter
+  tags: ["format", "code-quality"]
+
+# Workflow: Lint Code
+- name: Lint Code
+  command: npm run lint
+  description: Lint code for style and errors
+  tags: ["lint", "code-quality"]
+
+# Workflow: Install Dependencies
+- name: Install Dependencies
+  command: npm install
+  description: Install project dependencies
+  tags: ["dependencies", "npm", "setup"]
+
+# Workflow: Run All Checks
+- name: Run All Checks
+  command: |
+    npm run lint && \
+    npm test && \
+    npm run build
+  description: Run lint, tests, and build
+  tags: ["ci", "test", "build", "lint"]
+
+# Workflow: Clean Build
+- name: Clean Build
+  command: |
+    rm -rf node_modules dist build .next
+    npm install
+    npm run build
+  description: Clean and rebuild project
+  tags: ["clean", "build", "fresh"]
+
+# Workflow: Update Dependencies
+- name: Update Dependencies
+  command: npm update
+  description: Update project dependencies to latest versions
+  tags: ["dependencies", "update", "npm"]
+

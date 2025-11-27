@@ -1,0 +1,105 @@
+# GitHub Actions Workflow: Aider Auto-Fix
+# This example shows how to use Aider CLI for automated code fixes in pull requests
+
+name: Aider Auto-Fix
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  auto_fix:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Aider CLI
+        run: |
+          pip install aider-chat
+
+      - name: Run Aider Auto-Fix
+        id: aider_fix
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # Alternative: use Anthropic
+          # ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          # Get list of changed Python files
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep '\.py$' || true)
+          else
+            CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD | grep '\.py$' || true)
+          fi
+
+          if [ -z "$CHANGED_FILES" ]; then
+            echo "No Python files to fix."
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            # Run aider to fix linting issues
+            echo "$CHANGED_FILES" | xargs aider --yes \
+              --model gpt-4o \
+              --message "Fix all linting issues, add missing type hints, and ensure code follows PEP 8 style guide. Do not change functionality, only fix style and type issues." \
+              > aider_fix_output.txt 2>&1 || true
+            
+            # Check if there are changes
+            if git diff --quiet; then
+              echo "has_changes=false" >> $GITHUB_OUTPUT
+              echo "No changes made by Aider." >> aider_fix_output.txt
+            else
+              echo "has_changes=true" >> $GITHUB_OUTPUT
+              echo "Changes made by Aider." >> aider_fix_output.txt
+            fi
+          fi
+
+      - name: Commit and Push Changes
+        if: steps.aider_fix.outputs.has_changes == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Auto-fix: Apply Aider code improvements" || exit 0
+          git push || exit 0
+
+      - name: Post Fix Summary
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const hasChanges = `${{ steps.aider_fix.outputs.has_changes }}` === 'true';
+            const prNumber = context.issue.number;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            if (hasChanges) {
+              const body = `## 🤖 Aider Auto-Fix Applied\n\nCode improvements have been automatically applied by Aider CLI.\n\nPlease review the changes and ensure they meet your requirements.`;
+              
+              await github.rest.issues.createComment({
+                issue_number: prNumber,
+                owner: owner,
+                repo: repo,
+                body: body
+              });
+            }
+
+      - name: Upload Fix Output
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: aider-fix-${{ github.run_id }}
+          path: aider_fix_output.txt
+          retention-days: 7
+

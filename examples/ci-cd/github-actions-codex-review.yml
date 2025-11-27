@@ -1,0 +1,87 @@
+# GitHub Actions Workflow: Codex Code Review
+# This example shows how to use Codex CLI for automated code reviews
+
+name: Codex Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Codex CLI
+        run: npm install -g @openai/codex
+
+      - name: Configure Codex API Key
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          # API key is automatically used from environment variable
+          export OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
+
+      - name: Run Code Review
+        id: review
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          git diff origin/${{ github.base_ref }}...HEAD | \
+            codex exec --json --color never \
+            "Review these changes for bugs, security issues, and code quality. Provide specific suggestions." \
+            > review.jsonl 2>&1 || true
+
+      - name: Extract Review Comments
+        id: extract
+        run: |
+          if [ -f review.jsonl ]; then
+            # Extract agent messages from JSONL
+            jq -r 'select(.type=="item.completed" and .item.type=="agent_message") | .item.text' review.jsonl > review-comments.txt || echo "Review completed" > review-comments.txt
+          else
+            echo "Review completed" > review-comments.txt
+          fi
+
+      - name: Post Review Comment
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let reviewText = '## 🤖 AI Code Review (Codex)\n\n';
+            
+            try {
+              const comments = fs.readFileSync('review-comments.txt', 'utf8');
+              reviewText += comments;
+            } catch (error) {
+              reviewText += 'Review completed. Check artifacts for detailed output.';
+            }
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: reviewText
+            });
+
+      - name: Upload Review Artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codex-review
+          path: |
+            review.jsonl
+            review-comments.txt
+          retention-days: 7
+

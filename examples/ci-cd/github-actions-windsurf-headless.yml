@@ -1,0 +1,68 @@
+# GitHub Actions Workflow: Windsurf Headless Automation
+# This example shows how to use Windsurf in headless mode via Docker for automated tasks
+
+name: Windsurf Headless Automation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  windsurf_task:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # Fetch all history for Git operations
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Clone Windsurf in a Box
+        run: |
+          git clone https://github.com/pfcoperez/windsurfinabox.git windsurfinabox
+
+      - name: Build Windsurf Docker image
+        run: |
+          cd windsurfinabox
+          docker build . -t windsurf
+
+      - name: Prepare workspace
+        run: |
+          mkdir -p workspace
+          # Create instructions file with task prompt
+          cat > workspace/windsurf-instructions.txt <<EOF
+          Review the pull request changes for:
+          - Potential bugs and security vulnerabilities
+          - Code quality and best practices
+          - Performance issues
+          - Documentation needs
+          
+          Provide actionable feedback in markdown format.
+          EOF
+          # Set correct permissions (UID:GID=1000:1000)
+          sudo chown -R 1000:1000 workspace
+
+      - name: Run Windsurf in headless mode
+        env:
+          WINDSURF_TOKEN: ${{ secrets.WINDSURF_TOKEN }}
+        run: |
+          docker run --rm \
+            -e WINDSURF_TOKEN=$WINDSURF_TOKEN \
+            -v ${{ github.workspace }}/workspace:/home/ubuntu/workspace \
+            windsurf
+
+      - name: Upload Windsurf output
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: windsurf-output-${{ github.run_id }}
+          path: workspace/
+          retention-days: 7
+

@@ -1,0 +1,55 @@
+# CircleCI Workflow: Gemini Code Review
+# This example shows how to use Gemini CLI for automated code reviews in CircleCI
+
+version: 2.1
+
+jobs:
+  gemini-review:
+    docker:
+      - image: cimg/node:20.0
+    steps:
+      - checkout
+      
+      - run:
+          name: Install Gemini CLI
+          command: |
+            npm install -g @google/gemini-cli
+            
+      - run:
+          name: Configure Gemini API Key
+          command: |
+            export GEMINI_API_KEY=$GEMINI_API_KEY
+            
+      - run:
+          name: Run Code Review
+          command: |
+            git diff origin/main...HEAD | \
+              gemini -p "Review these changes for bugs, security issues, and code quality. Provide specific suggestions." \
+              --output-format json > review.json
+              
+      - run:
+          name: Parse Review Results
+          command: |
+            if [ -f review.json ]; then
+              cat review.json | jq -r '.response' > review-text.txt
+              echo "Review completed successfully"
+            else
+              echo "Review file not found"
+              exit 1
+            fi
+            
+      - store_artifacts:
+          path: review.json
+          
+      - store_artifacts:
+          path: review-text.txt
+
+workflows:
+  version: 2
+  review-on-pr:
+    jobs:
+      - gemini-review:
+          filters:
+            branches:
+              ignore: main
+

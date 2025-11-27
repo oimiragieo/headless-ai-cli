@@ -1,0 +1,45 @@
+# GitHub Actions Workflow: Warp Agent Automation
+# This example shows how to use Warp Agent CLI for automated tasks in pull requests
+
+name: Warp Agent Automation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  warp_task:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # Fetch all history for Git operations
+
+      - name: Run Warp Agent
+        uses: warp.dev/warp-agent-action@v1
+        with:
+          api_key: ${{ secrets.WARP_API_KEY }}
+          prompt: |
+            Review the latest pull request changes for:
+            - Potential bugs and security vulnerabilities
+            - Code quality and best practices
+            - Performance issues
+            - Documentation needs
+            
+            Provide actionable feedback in markdown format.
+          profile: "code-review-profile"
+
+      - name: Upload Agent Output
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: warp-agent-output-${{ github.run_id }}
+          path: warp-agent-output.txt
+          retention-days: 7
+

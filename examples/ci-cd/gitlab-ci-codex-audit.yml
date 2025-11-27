@@ -1,0 +1,91 @@
+# GitLab CI Pipeline: Codex Security Audit
+# This example shows how to use Codex CLI for automated security audits
+
+stages:
+  - audit
+  - report
+
+variables:
+  OPENAI_API_KEY: $OPENAI_API_KEY
+
+codex-audit:
+  stage: audit
+  image: node:20
+  before_script:
+    - npm install -g @openai/codex
+    - export OPENAI_API_KEY=$OPENAI_API_KEY
+  script:
+    - |
+      codex exec --json --color never --sandbox read-only \
+        "Run a comprehensive security audit of this codebase. Check for:
+        - SQL injection vulnerabilities
+        - XSS vulnerabilities
+        - Insecure authentication patterns
+        - Hardcoded secrets
+        - Insecure dependencies
+        - Missing input validation
+        - Insecure file operations
+        
+        Write findings to security-audit.json in JSON format with severity levels." \
+        > audit-result.jsonl 2>&1 || echo '{"type":"error","message":"Audit failed"}' > audit-result.jsonl
+  artifacts:
+    paths:
+      - audit-result.jsonl
+      - security-audit.json
+    expire_in: 1 week
+  only:
+    - main
+    - develop
+    - merge_requests
+
+generate-report:
+  stage: report
+  image: node:20
+  dependencies:
+    - codex-audit
+  before_script:
+    - apt-get update && apt-get install -y jq || apk add --no-cache jq || true
+  script:
+    - |
+      if [ -f audit-result.jsonl ]; then
+        echo "# Security Audit Report (Codex)" > audit-report.md
+        echo "" >> audit-report.md
+        echo "Generated: $(date)" >> audit-report.md
+        echo "" >> audit-report.md
+        
+        # Extract agent messages from JSONL
+        AUDIT_TEXT=$(jq -r 'select(.type=="item.completed" and .item.type=="agent_message") | .item.text' audit-result.jsonl 2>/dev/null | head -1 || echo "No results found")
+        
+        # Extract usage information if available
+        USAGE=$(jq -r 'select(.type=="turn.completed") | .usage' audit-result.jsonl 2>/dev/null | head -1 || echo "")
+        
+        echo "## Audit Results" >> audit-report.md
+        echo "" >> audit-report.md
+        echo "$AUDIT_TEXT" >> audit-report.md
+        echo "" >> audit-report.md
+        echo "---" >> audit-report.md
+        
+        if [ -n "$USAGE" ] && [ "$USAGE" != "null" ]; then
+          INPUT_TOKENS=$(echo "$USAGE" | jq -r '.input_tokens // "N/A"' 2>/dev/null || echo "N/A")
+          OUTPUT_TOKENS=$(echo "$USAGE" | jq -r '.output_tokens // "N/A"' 2>/dev/null || echo "N/A")
+          echo "*Input tokens: ${INPUT_TOKENS}, Output tokens: ${OUTPUT_TOKENS}*" >> audit-report.md
+        fi
+        
+        # Check for critical issues
+        if echo "$AUDIT_TEXT" | grep -qi "critical\|high severity"; then
+          echo "## ⚠️ Critical Issues Found" >> audit-report.md
+          exit 1
+        fi
+      else
+        echo "No audit result file found" > audit-report.md
+        exit 1
+      fi
+  artifacts:
+    paths:
+      - audit-report.md
+    expire_in: 1 week
+  only:
+    - main
+    - develop
+    - merge_requests
+

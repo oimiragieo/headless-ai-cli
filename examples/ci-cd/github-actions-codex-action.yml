@@ -1,0 +1,82 @@
+# GitHub Actions Workflow: Codex using official action
+# This example shows how to use the official openai/codex-action@v1
+
+name: Codex Pull Request Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  codex:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Run Codex
+        id: run_codex
+        uses: openai/codex-action@v1
+        with:
+          openai-api-key: ${{ secrets.OPENAI_API_KEY }}
+          prompt-file: .github/codex/prompts/review.md
+          output-file: codex-output.md
+          safety-strategy: drop-sudo
+          sandbox: workspace-write
+          codex-args: '["--json", "--color", "never"]'
+          model: gpt-5-codex-latest
+
+      - name: Post Review Comment
+        uses: actions/github-script@v7
+        if: steps.run_codex.outputs.final_message != ''
+        with:
+          script: |
+            const fs = require('fs');
+            let reviewText = '## 🤖 AI Code Review (Codex Action)\n\n';
+            
+            // Use final_message output if available, otherwise read from file
+            const finalMessage = process.env.CODEX_FINAL_MESSAGE || '';
+            if (finalMessage) {
+              reviewText += finalMessage;
+            } else {
+              try {
+                const output = fs.readFileSync('codex-output.md', 'utf8');
+                reviewText += output;
+              } catch (error) {
+                reviewText += 'Review completed. Check the workflow output for details.';
+              }
+            }
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: reviewText
+            });
+          env:
+            CODEX_FINAL_MESSAGE: ${{ steps.run_codex.outputs.final_message }}
+
+      - name: Upload Codex Output
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: codex-review-output
+          path: codex-output.md
+          retention-days: 7
+
+---
+# Example prompt file: .github/codex/prompts/review.md
+# Create this file in your repository with the following content:
+#
+# Review the code changes in this pull request for:
+# - Bugs and potential issues
+# - Security vulnerabilities
+# - Code quality and best practices
+# - Performance concerns
+# - Documentation needs
+#
+# Provide specific, actionable feedback with code examples where relevant.
+

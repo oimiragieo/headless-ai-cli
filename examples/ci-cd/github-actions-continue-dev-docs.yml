@@ -1,0 +1,73 @@
+# GitHub Actions Workflow: Continue Dev Documentation Update
+# This example shows how to use Continue Dev CLI for automated documentation updates
+
+name: Continue Dev Documentation Update
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  update-docs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # Fetch all history for Git operations
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Continue CLI
+        run: |
+          npm install -g @continuedev/cli
+
+      - name: Set API Key
+        env:
+          CONTINUE_API_KEY: ${{ secrets.CONTINUE_API_KEY }}
+          # Alternative: use OpenAI or Anthropic directly
+          # OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          echo "CONTINUE_API_KEY=$CONTINUE_API_KEY" >> $GITHUB_ENV
+
+      - name: Run Continue CLI in Headless Mode
+        run: |
+          cn -p "Analyze recent code changes and update the documentation accordingly."
+
+      - name: Check for changes
+        id: verify-changed-files
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and Push Changes
+        if: steps.verify-changed-files.outputs.changed == 'true'
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add .
+          git commit -m "Automated documentation update via Continue Dev"
+          git push
+
+      - name: Upload Documentation Changes
+        if: steps.verify-changed-files.outputs.changed == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: documentation-updates-${{ github.run_id }}
+          path: |
+            *.md
+            docs/
+          retention-days: 7
+

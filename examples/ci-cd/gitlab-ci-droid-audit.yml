@@ -1,0 +1,53 @@
+# GitLab CI Pipeline: Droid Security Audit
+# This example shows how to use Droid Exec for automated security audits
+
+stages:
+  - audit
+  - report
+
+variables:
+  FACTORY_API_KEY: $FACTORY_API_KEY
+
+droid-audit:
+  stage: audit
+  image: node:20
+  before_script:
+    - curl -fsSL https://app.factory.ai/cli | sh
+    - export FACTORY_API_KEY=$FACTORY_API_KEY
+  script:
+    - |
+      droid exec --auto low \
+        "Run a comprehensive security audit of this codebase. Check for:
+        - SQL injection vulnerabilities
+        - XSS vulnerabilities
+        - Insecure authentication patterns
+        - Hardcoded secrets
+        - Insecure dependencies
+        
+        Write findings to security-audit.json in JSON format." \
+        --output-format json > audit-result.json
+  artifacts:
+    paths:
+      - audit-result.json
+      - security-audit.json
+    expire_in: 1 week
+
+generate-report:
+  stage: report
+  image: node:20
+  dependencies:
+    - droid-audit
+  script:
+    - |
+      if [ -f security-audit.json ]; then
+        echo "## Security Audit Report" > audit-report.md
+        echo "" >> audit-report.md
+        cat security-audit.json | jq -r '.result' >> audit-report.md
+      else
+        echo "No security audit file found"
+      fi
+  artifacts:
+    paths:
+      - audit-report.md
+    expire_in: 1 week
+
