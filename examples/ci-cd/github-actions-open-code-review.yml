@@ -28,7 +28,7 @@ jobs:
 
       - name: Install OpenCode CLI
         run: |
-          npm install -g opencode
+          npm install -g open-code
 
       - name: Run OpenCode Code Review
         id: opencode_review

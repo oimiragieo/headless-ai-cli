@@ -339,7 +339,7 @@ export OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
 export ANTHROPIC_API_KEY=${{ secrets.ANTHROPIC_API_KEY }}
 
 # Install dependencies
-npm install -g opencode
+npm install -g open-code
 # or
 pip install opencode
 
@@ -508,10 +508,10 @@ Workspace template: https://github.com/enescingoz/roocode-workspace
 **For OpenCode tests:**
 OpenCode CLI uses API keys for LLM providers. For headless mode:
 1. Set API key: `export OPENAI_API_KEY=your_key` or `export ANTHROPIC_API_KEY=your_key`
-2. Install OpenCode: `npm install -g opencode` or `pip install opencode`
+2. Install OpenCode: `npm install -g open-code` or `pip install opencode`
 3. Use `--headless` flag for non-interactive execution
 
-Install CLI from: npm install -g opencode or pip install opencode
+Install CLI from: npm install -g open-code or pip install opencode
 
 **For Continue Dev tests:**
 Continue Dev CLI uses API keys for LLM providers. For headless mode:

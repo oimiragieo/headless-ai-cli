@@ -53,7 +53,7 @@ echo ""
 # Check if OpenCode CLI is installed
 if ! command -v opencode &> /dev/null; then
     echo -e "${RED}Error: OpenCode CLI not found.${NC}"
-    echo "Install from: npm install -g opencode or pip install opencode"
+    echo "Install from: npm install -g open-code or pip install opencode"
     exit 1
 fi
 

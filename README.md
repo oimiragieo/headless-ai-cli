@@ -94,7 +94,7 @@ brew install amazon-q-developer-cli
 # Other platforms: https://github.com/aws/amazon-q-developer-cli/releases
 
 # 14. OpenCode - Multi-language AI coding tool
-npm install -g opencode
+npm install -g open-code
 # or
 pip install opencode
 
@@ -340,7 +340,7 @@ npm install -g @google/gemini-cli@3.1.0
 npm install -g @github/copilot@0.0.329
 npm install -g @continuedev/cli@latest
 npm install -g cline@latest
-npm install -g opencode@latest
+npm install -g open-code@latest
 
 # Python packages
 pip install aider-chat==0.47.1

@@ -62,7 +62,7 @@ brew install opencode
 
 ```bash
 # Install OpenCode
-npm install -g opencode
+npm install -g open-code
 # or
 pip install opencode
 
@@ -325,7 +325,7 @@ jobs:
 
       - name: Install OpenCode CLI
         run: |
-          npm install -g opencode
+          npm install -g open-code
 
       - name: Run OpenCode Code Review
         id: opencode_review
@@ -386,7 +386,7 @@ opencode-review:
   stage: review
   image: node:20
   before_script:
-    - npm install -g opencode
+    - npm install -g open-code
   script:
     - opencode --headless --prompt "Review code changes for issues" --directory .
   only:
