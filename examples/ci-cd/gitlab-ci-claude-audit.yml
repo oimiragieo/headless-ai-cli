@@ -28,7 +28,7 @@ claude-audit:
         
         Write findings to security-audit.json in JSON format with severity levels." \
         --output-format json \
-        --no-interactive \
+        --permission-mode bypassPermissions \
         --append-system-prompt "You are a security engineer. Provide detailed findings with severity levels (critical, high, medium, low) and remediation steps." \
         --allowedTools "Read,Grep,WebSearch" \
         > audit-result.json || echo '{"type":"result","subtype":"error","result":"Audit failed"}' > audit-result.json
