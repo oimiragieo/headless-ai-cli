@@ -50,7 +50,7 @@ jobs:
             # Run in read-only mode (safest for CI/CD)
             echo "$DIFF_CONTENT" | \
               droid exec --output-format json \
-              --model sonnet \
+              --model "Sonnet 4.5" \
               "Review these code changes for potential bugs, security vulnerabilities, and adherence to best practices. Provide actionable suggestions for improvement. Format your response as a markdown list." \
               > droid_review_output.json 2>&1 || {
                 echo "Droid review failed." > droid_review_output.json

@@ -85,36 +85,49 @@ droid exec --session-id <session-id> "continue with next steps"
 
 ## Available Models
 
-| Model | Short Name | Description | Best For |
-|-------|------------|-------------|----------|
-| **gpt-5-codex** | `gpt-5-codex` | Default model | General purpose |
-| **gpt-5** | `gpt-5` | Latest OpenAI GPT-5 (default across all droids) | Exceptional intelligence and reasoning |
-| **gpt-5-2025-08-07** | `gpt-5-2025-08-07` | Specific version | Version pinning |
-| **claude-sonnet-4-20250514** | `sonnet` | Claude Sonnet 4.5 | Recommended for general tasks, balanced reasoning |
-| **claude-opus-4-5-20251101** | `opus` | Claude Opus 4.5 | Best for coding, agents, computer use |
-| **claude-haiku-4-5-20251001** | `haiku` | Claude Haiku 4.5 | Fast and cost-effective |
-| **droid-core** | `droid-core` or `glm-4.6` | GLM-4.6 open-source model | Open-source alternative |
-| **custom-model** | `custom-model` | User-configured via BYOK | Custom model integration |
+**Factory Provided Models** (multipliers represent cost in Standard Tokens):
+
+| Model | Cost Multiplier | Description | Best For |
+|-------|-----------------|-------------|----------|
+| **GPT-5.1-Codex** | 0.5x | Latest OpenAI Codex model | Code generation, UI prototyping |
+| **GPT-5.1** | 0.5x | Latest OpenAI GPT model | General intelligence and reasoning |
+| **Sonnet 4.5** | 1.2x | Claude Sonnet 4.5 | Balanced reasoning and coding |
+| **Opus 4.5** | 1.2x | Claude Opus 4.5 | Deep reasoning, complex architecture |
+| **Opus 4.1** | 6x | Claude Opus 4.1 (legacy) | Legacy model, higher cost |
+| **Haiku 4.5** | 0.4x | Claude Haiku 4.5 | Fast and cost-effective |
+| **Gemini 3 Pro (High)** | 0.8x | Google Gemini 3 Pro with high reasoning | Large context, complex analysis |
+| **Droid Core (GLM-4.6)** | 0.25x | GLM-4.6 open-source model | Most cost-effective option |
+
+**Additional Options:**
+- **Custom Model** - User-configured via BYOK (Bring Your Own Key)
+- **Spec Mode Model** - Can be configured separately from main model
 
 **Model Selection:**
 ```bash
-# Use short model name (recommended)
-droid exec -m sonnet "analyze code"
+# Use model name
+droid exec -m "Sonnet 4.5" "analyze code"
 
-# Use full model ID
-droid exec -m claude-sonnet-4-20250514 "analyze code"
+# Cost-effective option
+droid exec -m "Haiku 4.5" "quick task"
+
+# Most cost-effective (open-source)
+droid exec -m "Droid Core" "analyze logs"
+
+# Best for code generation
+droid exec -m "GPT-5.1-Codex" "generate component"
 
 # With autonomy level
-droid exec -m sonnet -r medium "install deps and run tests"
+droid exec -m "Sonnet 4.5" -r medium "install deps and run tests"
 
-# From file
-droid exec -m gpt-5 -r low -f plan.md
-
-# Configure default model in settings.json
-# {"model": "sonnet"} or {"model": "gpt-5"}
+# Large context analysis
+droid exec -m "Gemini 3 Pro (High)" -r low -f plan.md
 ```
 
-**Note:** Model names can use short aliases (e.g., `sonnet`, `opus`, `haiku`) or full IDs. Configure default model in `settings.json` for consistency across executions.
+**Cost Considerations:**
+- Most cost-effective: Droid Core (0.25x)
+- Budget-friendly: Haiku 4.5 (0.4x), GPT-5.1 series (0.5x)
+- Balanced: Gemini 3 Pro (0.8x), Sonnet/Opus 4.5 (1.2x)
+- Legacy (expensive): Opus 4.1 (6x) - avoid unless necessary
 
 ## CLI Syntax
 

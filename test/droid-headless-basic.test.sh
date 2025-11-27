@@ -99,25 +99,25 @@ test_case "Autonomy level high (--auto high)" \
 test_case "Short autonomy flag (-r)" \
     "droid exec -r low 'Say test'" 0
 
-# Test 10: Model selection with short name
-test_case "Model selection with short name (-m sonnet)" \
-    "droid exec -m sonnet 'Say test'" 0
+# Test 10: Model selection with Sonnet 4.5
+test_case "Model selection with Sonnet 4.5" \
+    "droid exec -m 'Sonnet 4.5' 'Say test'" 0
 
-# Test 11: Model selection with full ID
-test_case "Model selection with full ID" \
-    "droid exec -m claude-sonnet-4-20250514 'Say test'" 0
+# Test 11: Model selection with Haiku (cost-effective)
+test_case "Model selection with Haiku 4.5" \
+    "droid exec -m 'Haiku 4.5' 'Say test'" 0
 
-# Test 12: Model selection with GPT-5
-test_case "Model selection with GPT-5" \
-    "droid exec -m gpt-5 'Say test'" 0
+# Test 12: Model selection with GPT-5.1
+test_case "Model selection with GPT-5.1" \
+    "droid exec -m 'GPT-5.1' 'Say test'" 0
 
 # Test 13: Combined flags - model and autonomy
 test_case "Combined flags - model and autonomy" \
-    "droid exec -m sonnet -r low 'Say test'" 0
+    "droid exec -m 'Sonnet 4.5' -r low 'Say test'" 0
 
 # Test 14: Combined flags - model, autonomy, json
 test_case "Combined flags - model, autonomy, json" \
-    "droid exec -m sonnet -r low --output-format json 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
+    "droid exec -m 'Sonnet 4.5' -r low --output-format json 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
 
 # Test 15: Working directory
 test_case "Working directory (--cwd)" \
@@ -161,7 +161,7 @@ test_case "Read-only mode (default)" \
 
 # Test 25: Complex command with all flags
 test_case "Complex command with all flags" \
-    "droid exec -m sonnet -r low --output-format json --cwd . 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
+    "droid exec -m 'Sonnet 4.5' -r low --output-format json --cwd . 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
 
 echo ""
 echo "=========================================="

@@ -78,61 +78,61 @@ fi
 TEST_DIR=$(mktemp -d)
 trap "rm -rf $TEST_DIR" EXIT
 
-# Test 1: Model selection with sonnet (short name)
-test_case "Model selection with sonnet (short name)" \
-    "droid exec -m sonnet 'Say test'" 0
+# Test 1: Model selection with Sonnet 4.5
+test_case "Model selection with Sonnet 4.5" \
+    "droid exec -m 'Sonnet 4.5' 'Say test'" 0
 
-# Test 2: Model selection with opus (short name)
-test_case "Model selection with opus (short name)" \
-    "droid exec -m opus 'Say test'" 0
+# Test 2: Model selection with Opus 4.5
+test_case "Model selection with Opus 4.5" \
+    "droid exec -m 'Opus 4.5' 'Say test'" 0
 
-# Test 3: Model selection with haiku (short name)
-test_case "Model selection with haiku (short name)" \
-    "droid exec -m haiku 'Say test'" 0
+# Test 3: Model selection with Haiku 4.5 (cost-effective)
+test_case "Model selection with Haiku 4.5" \
+    "droid exec -m 'Haiku 4.5' 'Say test'" 0
 
-# Test 4: Model selection with gpt-5-codex
-test_case "Model selection with gpt-5-codex" \
-    "droid exec -m gpt-5-codex 'Say test'" 0
+# Test 4: Model selection with GPT-5.1-Codex
+test_case "Model selection with GPT-5.1-Codex" \
+    "droid exec -m 'GPT-5.1-Codex' 'Say test'" 0
 
-# Test 5: Model selection with gpt-5
-test_case "Model selection with gpt-5" \
-    "droid exec -m gpt-5 'Say test'" 0
+# Test 5: Model selection with GPT-5.1
+test_case "Model selection with GPT-5.1" \
+    "droid exec -m 'GPT-5.1' 'Say test'" 0
 
-# Test 6: Model selection with droid-core
-test_case "Model selection with droid-core" \
-    "droid exec -m droid-core 'Say test'" 0
+# Test 6: Model selection with Droid Core (most cost-effective)
+test_case "Model selection with Droid Core" \
+    "droid exec -m 'Droid Core' 'Say test'" 0
 
-# Test 7: Model selection with full Claude Sonnet ID
-test_case "Model selection with full Claude Sonnet ID" \
-    "droid exec -m claude-sonnet-4-20250514 'Say test'" 0
+# Test 7: Model selection with Gemini 3 Pro (High)
+test_case "Model selection with Gemini 3 Pro (High)" \
+    "droid exec -m 'Gemini 3 Pro (High)' 'Say test'" 0
 
-# Test 8: Model selection with full Claude Opus ID
-test_case "Model selection with full Claude Opus ID" \
-    "droid exec -m claude-opus-4-5-20251101 'Say test'" 0
+# Test 8: Model selection with Opus 4.1 (legacy, expensive)
+test_case "Model selection with Opus 4.1 (legacy)" \
+    "droid exec -m 'Opus 4.1' 'Say test'" 0
 
-# Test 9: Model selection with full Claude Haiku ID
-test_case "Model selection with full Claude Haiku ID" \
-    "droid exec -m claude-haiku-4-5-20251001 'Say test'" 0
+# Test 9: Cost comparison test (Droid Core vs Haiku)
+test_case "Cost-effective model comparison" \
+    "droid exec -m 'Droid Core' 'Say test' && droid exec -m 'Haiku 4.5' 'Say test'" 0
 
 # Test 10: Autonomy levels with model selection
 test_case "Autonomy low with model selection" \
-    "droid exec -m sonnet -r low 'Say test'" 0
+    "droid exec -m 'Sonnet 4.5' -r low 'Say test'" 0
 
 # Test 11: Autonomy medium with model selection
 test_case "Autonomy medium with model selection" \
-    "droid exec -m sonnet -r medium 'Say test'" 0
+    "droid exec -m 'Sonnet 4.5' -r medium 'Say test'" 0
 
 # Test 12: Autonomy high with model selection
 test_case "Autonomy high with model selection" \
-    "droid exec -m sonnet -r high 'Say test'" 0
+    "droid exec -m 'Sonnet 4.5' -r high 'Say test'" 0
 
 # Test 13: JSON output with model selection
 test_case "JSON output with model selection" \
-    "droid exec -m sonnet --output-format json 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
+    "droid exec -m 'Sonnet 4.5' --output-format json 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
 
 # Test 14: Debug output with model selection
 test_case "Debug output with model selection" \
-    "droid exec -m sonnet --output-format debug 'Say test' 2>&1 | head -1" 0
+    "droid exec -m 'Sonnet 4.5' --output-format debug 'Say test' 2>&1 | head -1" 0
 
 # Test 15: Extract result from JSON
 if command -v jq &> /dev/null && [ -n "$FACTORY_API_KEY" ]; then
@@ -152,23 +152,23 @@ fi
 
 # Test 16: Complex command with all flags
 test_case "Complex command with all flags" \
-    "droid exec -m sonnet -r low --output-format json --cwd . 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
+    "droid exec -m 'Sonnet 4.5' -r low --output-format json --cwd . 'Say test' 2>&1 | head -1 | grep -q '{' || echo '{}' | grep -q '{'" 0
 
 # Test 17: Prompt from file with model and autonomy
 test_case "Prompt from file with model and autonomy" \
-    "echo 'Say test' > $TEST_DIR/prompt.txt && droid exec -f $TEST_DIR/prompt.txt -m sonnet -r low && rm $TEST_DIR/prompt.txt" 0
+    "echo 'Say test' > $TEST_DIR/prompt.txt && droid exec -f $TEST_DIR/prompt.txt -m 'Sonnet 4.5' -r low && rm $TEST_DIR/prompt.txt" 0
 
 # Test 18: Stdin input with model selection
 test_case "Stdin input with model selection" \
-    "echo 'Say test' | droid exec -m sonnet" 0
+    "echo 'Say test' | droid exec -m 'Sonnet 4.5'" 0
 
 # Test 19: Session ID with model selection
 test_case "Session ID with model selection" \
-    "droid exec --session-id test-session -m sonnet 'Say test'" 0
+    "droid exec --session-id test-session -m 'Sonnet 4.5' 'Say test'" 0
 
 # Test 20: Working directory with model and autonomy
 test_case "Working directory with model and autonomy" \
-    "droid exec --cwd . -m sonnet -r low 'Say test'" 0
+    "droid exec --cwd . -m 'Sonnet 4.5' -r low 'Say test'" 0
 
 # Test 21: Error handling - invalid model
 test_case "Error handling - invalid model" \
@@ -180,7 +180,7 @@ test_case "Batch processing pattern" \
 
 # Test 23: Batch processing with model selection
 test_case "Batch processing with model selection" \
-    "for prompt in 'Say hello' 'Say world'; do droid exec -m sonnet \"\$prompt\" > /dev/null 2>&1; done" 0
+    "for prompt in 'Say hello' 'Say world'; do droid exec -m 'Sonnet 4.5' \"\$prompt\" > /dev/null 2>&1; done" 0
 
 # Test 24: Output redirection to file
 test_case "Output redirection to file" \

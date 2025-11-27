@@ -144,7 +144,7 @@ test_case "Conditional execution based on exit code" \
 
 # Test 17: Multiple flags for automation
 test_case "Multiple flags for automation" \
-    "droid exec -m sonnet -r low --output-format json 'Say test' > $TEST_DIR/auto.json 2>&1" 0
+    "droid exec -m 'Sonnet 4.5' -r low --output-format json 'Say test' > $TEST_DIR/auto.json 2>&1" 0
 
 # Test 18: Artifact generation pattern
 test_case "Artifact generation pattern" \
