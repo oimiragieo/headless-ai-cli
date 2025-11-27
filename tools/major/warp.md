@@ -99,7 +99,7 @@ sudo apt update && sudo apt install warp-terminal
 # Warp AI will provide suggestions and assistance
 
 # Or use Warp CLI for automation
-warp agent run --prompt "Your task here" --profile your-profile-id
+warp-terminal agent run --prompt "Warp anything"
 ```
 
 ## AI Features
@@ -171,21 +171,133 @@ copilot -p "Review PR #123"
 # Warp AI can help interpret Copilot suggestions
 ```
 
+## CLI Syntax
+
+**Warp, the Agentic Development Environment.**
+
+The Warp CLI is a tool for programming agents. You can use it to:
+* Create autonomous, asynchronous agents that respond to event triggers, run on schedules, or respond to queries in third-party services.
+* Run one-off agents on remote machines.
+* Check Warp configuration in order to set up new agents.
+
+**Basic usage:**
+```bash
+warp-terminal [OPTIONS]
+warp-terminal <COMMAND>
+```
+
+**Core Options:**
+- `--api-key <API_KEY>` - API key for server authentication (available to all subcommands)
+- `--debug` - Enable debug logging
+- `--crash-recovery-mechanism <CRASH_RECOVERY_MECHANISM>` - Crash recovery mechanism to use if parent process terminated
+  - Possible values: `force-x11`, `force-dedicated-gpu`, `disable-opengl`, `force-vulkan`
+- `-h, --help` - Print help
+
+**Commands:**
+
+**Agent Management:**
+```bash
+# Interact with Warp's agent
+warp-terminal agent
+
+# Run agent with prompt
+warp-terminal agent run --prompt "Warp anything"
+
+# Manage agent profiles, settings, etc.
+warp-terminal agent --help
+```
+
+**Environment Management:**
+```bash
+# Manage cloud environments
+warp-terminal environment
+# or alias
+warp-terminal e
+```
+
+**MCP (Model Context Protocol):**
+```bash
+# Manage MCP servers
+warp-terminal mcp
+
+# List MCP servers
+warp-terminal mcp list
+
+# Add, remove, configure MCP servers
+warp-terminal mcp --help
+```
+
+**Task Management:**
+```bash
+# Manage tasks
+warp-terminal task
+
+# Create, list, manage tasks
+warp-terminal task --help
+```
+
+**Authentication:**
+```bash
+# Log in to Warp
+warp-terminal login
+```
+
+**Integration Management:**
+```bash
+# Manage integrations
+warp-terminal integration
+# or alias
+warp-terminal i
+```
+
+**Shell Completions:**
+```bash
+# Generate shell completions for your shell to stdout
+warp-terminal completions
+
+# Example: Generate completions for bash
+warp-terminal completions bash > ~/.local/share/bash-completion/completions/warp-terminal
+
+# Example: Generate completions for zsh
+warp-terminal completions zsh > ~/.zfunc/_warp-terminal
+```
+
+**Debugging:**
+```bash
+# Print debugging information and exit
+warp-terminal dump-debug-info
+# or
+warp-terminal --dump-debug-info
+```
+
+**Help:**
+```bash
+# Print help message or help for specific subcommand
+warp-terminal help
+warp-terminal help <COMMAND>
+```
+
 ## Automation & Headless Mode
 
 **Warp CLI for Automation:**
 ```bash
 # Run agent in headless mode (without GUI)
-warp agent run --prompt "Your task here" --profile your-profile-id
+warp-terminal agent run --prompt "Your task here"
 
-# List available agent profiles
-warp agent profile list
+# With API key authentication
+warp-terminal --api-key your-api-key agent run --prompt "Review code"
 
-# Create agent profile
-warp agent profile create --name my-profile
+# With debug logging
+warp-terminal --debug agent run --prompt "Analyze security"
 
-# Use specific profile
-warp agent run --prompt "Review code" --profile my-profile-id
+# List MCP servers
+warp-terminal mcp list
+
+# Manage tasks
+warp-terminal task list
+
+# Log in to Warp
+warp-terminal login
 ```
 
 **Note:** Warp CLI allows automation without the GUI, but Warp is primarily a terminal emulator. For pure headless automation, consider using the AI CLI tools directly (Gemini, Claude, Codex, etc.) within Warp or in traditional terminals.
@@ -276,10 +388,15 @@ jobs:
 #!/bin/bash
 set -e
 
-# Run agent with profile
-warp agent run \
-  --prompt "Review code changes for security issues" \
-  --profile code-review-profile
+# Run agent with API key
+warp-terminal --api-key "$WARP_API_KEY" \
+  agent run \
+  --prompt "Review code changes for security issues"
+
+# With debug logging
+warp-terminal --api-key "$WARP_API_KEY" --debug \
+  agent run \
+  --prompt "Analyze for vulnerabilities"
 
 # Error handling
 if [ $? -eq 0 ]; then
@@ -323,10 +440,16 @@ Error: EACCES: permission denied
 ### Headless Agent Execution
 ```bash
 # Run agent without GUI
-warp agent run --prompt "Review PR changes" --profile review-profile
+warp-terminal agent run --prompt "Review PR changes"
+
+# With API key authentication
+warp-terminal --api-key your-api-key agent run --prompt "Generate report"
 
 # With output redirection
-warp agent run --prompt "Generate report" --profile report-profile > report.txt
+warp-terminal agent run --prompt "Generate report" > report.txt
+
+# With debug logging
+warp-terminal --debug agent run --prompt "Analyze security"
 ```
 
 ### Block-Based Navigation
@@ -348,13 +471,13 @@ warp agent run --prompt "Generate report" --profile report-profile > report.txt
 ## Limitations
 
 - **GUI Required for Full Features:** Terminal emulator requires GUI for full functionality
-- **CLI Automation Available:** `warp agent run` allows headless automation but limited compared to pure CLI tools
+- **CLI Automation Available:** `warp-terminal agent run` allows headless automation but limited compared to pure CLI tools
 - **Platform Specific:** Different installation methods per platform
 - **Learning Curve:** Modern interface may differ from traditional terminals
 - **Resource Usage:** GPU acceleration requires compatible hardware
 - **Privacy:** AI features may send data to external services (check privacy policy)
 - **Not a Pure CLI Tool:** Warp is a terminal emulator, not a standalone CLI tool like Gemini or Claude
-- **Agent Profiles Required:** Need to configure profiles for automation workflows
+- **API Key Required for CLI:** Need API key authentication for headless CLI automation
 
 ## Integration with AI CLI Tools
 
