@@ -77,21 +77,62 @@ wsl bash -lc "cursor-agent -p 'Your prompt here'"
 **List available models:**
 ```bash
 cursor-agent --list-models
+# Or use interactive mode and type: /model
 ```
 
-**Model selection:**
+**Available models (verified from CLI, November 2025):**
+
+| Model Command | Full Name | Category | Description |
+|---------------|-----------|----------|-------------|
+| `composer-1` | Composer 1 | Cursor Native | Cursor's proprietary model |
+| `auto` | Auto | Smart Selection | Free tier - automatically selects best model |
+| `sonnet-4.5` | Claude 4.5 Sonnet | Claude | Balanced reasoning and speed |
+| `sonnet-4.5-thinking` | Claude 4.5 Sonnet (Thinking) | Claude | Extended reasoning mode |
+| `opus-4.5` | Claude 4.5 Opus | Claude | Best for complex tasks |
+| `opus-4.5-thinking` | Claude 4.5 Opus (Thinking) | Claude | Extended reasoning mode |
+| `opus-4.1` | Claude 4.1 Opus | Claude | Legacy Claude model |
+| `gemini-3-pro` | Gemini 3 Pro | Google | Large context, latest Gemini |
+| `gpt-5` | GPT-5 | OpenAI | Standard GPT-5 |
+| `gpt-5.1` | GPT-5.1 | OpenAI | Latest GPT model |
+| `gpt-5-high` | GPT-5 High | OpenAI | Extended reasoning |
+| `gpt-5.1-high` | GPT-5.1 High | OpenAI | Latest with extended reasoning |
+| `gpt-5-codex` | GPT-5 Codex | OpenAI Codex | Code generation focused |
+| `gpt-5-codex-high` | GPT-5 Codex High | OpenAI Codex | Code generation + extended reasoning |
+| `gpt-5.1-codex` | GPT-5.1 Codex | OpenAI Codex | Latest code generation |
+| `gpt-5.1-codex-high` | GPT-5.1 Codex High | OpenAI Codex | Latest code + extended reasoning |
+| `grok` | Grok | xAI | Grok AI model |
+
+**Model selection examples:**
 ```bash
-# Use specific model (e.g., gpt-5)
-cursor-agent -p --model gpt-5 "Your prompt here"
+# Use specific model
+cursor-agent -p --model gpt-5.1-high "Your prompt here"
 
 # Use auto model (free tier - automatically selects best model)
 cursor-agent -p --model auto "Your prompt here"
 
+# Use Claude with extended reasoning
+cursor-agent -p --model opus-4.5-thinking "Complex architectural decision"
+
+# Use latest Codex for code generation
+cursor-agent -p --model gpt-5.1-codex-high "Generate React component"
+
+# Use Gemini for large context
+cursor-agent -p --model gemini-3-pro "Analyze entire codebase"
+
 # With file modifications
-cursor-agent -p --force --model gpt-5 "Refactor this code"
+cursor-agent -p --force --model gpt-5.1 "Refactor this code"
+
+# Interactive model selection
+cursor-agent
+# Then type: /model
+# Select from list
 ```
 
-**Note:** Cursor supports models from Anthropic (Claude), OpenAI (GPT), Google (Gemini), and more. The `auto` model is available in the free tier and automatically selects the best model for your task. Check `--list-models` for the latest available models based on your subscription tier.
+**Notes:**
+- **Auto model** is available in the free tier and automatically selects the best model for your task
+- **Thinking/High models** provide extended reasoning at potentially higher cost
+- Model availability may vary based on your Cursor subscription tier
+- Use `/model` slash command in interactive mode to switch models dynamically
 
 ## CLI Syntax
 

@@ -86,9 +86,9 @@ test_case "List models command" \
 test_case "Model selection with auto" \
     "cursor-agent -p --model auto 'Say test'" 0
 
-# Test 3: Model selection with gpt-5
-test_case "Model selection with gpt-5" \
-    "cursor-agent -p --model gpt-5 'Say test'" 0
+# Test 3: Model selection with gpt-5.1 (latest GPT)
+test_case "Model selection with gpt-5.1" \
+    "cursor-agent -p --model gpt-5.1 'Say test'" 0
 
 # Test 4: Model selection with force
 test_case "Model selection with force" \
