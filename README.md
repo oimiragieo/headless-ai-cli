@@ -1,6 +1,6 @@
 # 🧠 AI CLI Reference Repository
 
-A comprehensive quick reference guide repository for all AI CLI agents, featuring headless syntax, features, and available models for **15 verified tools**.
+A comprehensive quick reference guide repository for all AI CLI agents, featuring headless syntax, features, and available models for **14 verified tools**.
 
 ## 📋 Overview
 
@@ -18,7 +18,6 @@ Workflow automation?                  → Cursor
 CI/CD-safe deterministic runs?        → Droid
 GitHub integration?                   → Copilot
 Daily coding?                          → Claude Sonnet
-IDE-based development?                 → Kiro, Windsurf, RooCode
 Enhanced terminal experience?          → Warp
 AI pair programming?                   → Aider, Continue Dev
 AWS integration?                       → Amazon Q
@@ -44,9 +43,8 @@ Multi-language support?                → OpenCode
 | **Cline** | npm | ✅ Various | ✅ Yes | ✅ Full | ⚠️ Limited |
 | **Amazon Q** | brew/download | ✅ AWS | ✅ Yes | ✅ Full | ✅ Text/JSON |
 | **OpenCode** | npm/pip | ✅ Various | ✅ Yes | ✅ Full | ⚠️ Limited |
-| **RooCode** | VS Code ext | ✅ Various | ❌ VS Code only | ❌ No | ⚠️ Limited |
 
-## 🚀 Installation - All 15 Tools
+## 🚀 Installation - All 14 Tools
 
 ```bash
 # 1. Gemini - Massive context (1M tokens)
@@ -98,8 +96,6 @@ npm install -g open-code
 # or
 pip install opencode
 
-# 15. RooCode - VS Code extension for AI coding
-# Installation: Search "RooCode" in VS Code Extensions marketplace
 # Supports MCP (Model Context Protocol) integration
 ```
 
@@ -129,7 +125,6 @@ headless-ai-cli/
 │       ├── cline.md             # Cline
 │       ├── amazon-q.md          # Amazon Q Developer
 │       ├── open-code.md         # OpenCode
-│       └── roocode.md           # RooCode
 ├── examples/
 │   ├── ci-cd/                   # CI/CD integration examples (40+ files)
 │   │   ├── github-actions-*.yml # GitHub Actions workflows
@@ -174,9 +169,8 @@ All 15 tools are comprehensively documented in `tools/major/` directory:
 12. **[tools/major/cline.md](tools/major/cline.md)** - Cline
 13. **[tools/major/amazon-q.md](tools/major/amazon-q.md)** - Amazon Q Developer
 14. **[tools/major/open-code.md](tools/major/open-code.md)** - OpenCode
-15. **[tools/major/roocode.md](tools/major/roocode.md)** - RooCode
 
-## 🎯 All 15 Tools Listed
+## 🎯 All 14 Tools Listed
 
 1. ✅ **Google Gemini CLI** - Massive context (1M tokens), repo-wide analysis
 2. ✅ **Anthropic Claude (Claude Code)** - Deep reasoning, balanced performance
@@ -192,7 +186,6 @@ All 15 tools are comprehensively documented in `tools/major/` directory:
 12. ✅ **Cline** - Task-based autonomous execution
 13. ✅ **Amazon Q Developer** - AWS AI coding assistant, GitHub integration
 14. ✅ **OpenCode** - Multi-language AI coding support
-15. ✅ **RooCode** - VS Code extension with MCP integration
 
 ## 🔧 Quick Examples
 
@@ -250,7 +243,6 @@ kiro-cli chat --agent frontend-specialist
 docker run --rm -e WINDSURF_TOKEN=$WINDSURF_TOKEN \
   -v ./workspace:/home/ubuntu/workspace windsurf
 
-# RooCode (VS Code extension)
 # Use through VS Code interface with MCP integration
 ```
 
@@ -286,7 +278,6 @@ opencode review --language go
 | **Amazon Q** | ✔ | ✔ | ⚠️ | ❌ | AWS integration |
 | **Cline** | ✔ | ⚠️ | ❌ | ❌ | Instance-based |
 | **OpenCode** | ✔ | ⚠️ | ⚠️ | ❌ | Multi-language |
-| **RooCode** | ✔ | ⚠️ | ❌ | ❌ | VS Code extension |
 
 ## 👥 Tools by Role
 
@@ -300,7 +291,6 @@ opencode review --language go
 | **Data Engineer** | Gemini, Claude Sonnet | `gemini -p "Review ETL pipeline" --output-format json` |
 | **Security Engineer** | Claude, Droid, Amazon Q | `droid exec "Security audit" --output-format json` |
 | **Pair Programmer** | Aider, Continue Dev, Cline | `aider --model claude-sonnet-4-5` |
-| **IDE Power User** | Kiro, Windsurf, RooCode | Use IDE interface with AI agents |
 | **Terminal Power User** | Warp, Cursor | Enhanced CLI experience with AI |
 
 ## 🔗 Official Documentation Links
@@ -326,7 +316,6 @@ opencode review --language go
 ### Cloud & Extensions
 - [Amazon Q](https://aws.amazon.com/q/developer/) | [CLI](https://github.com/aws/amazon-q-developer-cli) - AWS
 - [OpenCode](https://opencode.ai) - OpenCode
-- RooCode - VS Code Marketplace
 
 ## 📌 Version Pinning for CI/CD
 

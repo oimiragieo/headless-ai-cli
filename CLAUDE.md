@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a comprehensive reference repository documenting AI CLI tools that support headless/non-interactive execution. The repository serves as a quick reference guide for developers integrating AI capabilities into automated workflows, CI/CD pipelines, and scripting environments.
 
-**Key Focus:** Headless syntax, features, available models, and automation patterns for 15 verified AI CLI tools.
+**Key Focus:** Headless syntax, features, available models, and automation patterns for 14 verified AI CLI tools.
 
 ## Repository Structure
 
@@ -34,7 +34,6 @@ headless-ai-cli/
 │       ├── cline.md             # Cline - Task-based autonomous execution
 │       ├── amazon-q.md          # Amazon Q Developer - AWS integration
 │       ├── open-code.md         # OpenCode - Multi-language support
-│       └── roocode.md           # RooCode - VS Code extension with MCP
 ├── examples/
 │   ├── ci-cd/                   # CI/CD integration examples (40+ files)
 │   │   ├── github-actions-*.yml # GitHub Actions workflows
@@ -175,7 +174,7 @@ bash test/gemini-workflows.test.sh
 ### When Reviewing/Understanding the Repository
 
 1. **README.md** - Repository statistics, tool counts, and status
-2. **tools/major/** - Individual tool documentation files (15 tools)
+2. **tools/major/** - Individual tool documentation files (14 tools)
 3. **examples/** - Real-world CI/CD and automation examples
 4. **test/** - Test scripts for verification
 
@@ -272,9 +271,9 @@ Models change frequently. When updating:
 - Amazon Q
 
 **Multi-Language Tools (2 tools):**
-- OpenCode, RooCode
+- OpenCode
 
-**Total: 15 verified, production-ready tools**
+**Total: 14 verified, production-ready tools**
 
 ## Version Information
 

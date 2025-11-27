@@ -105,17 +105,11 @@ GitHub Copilot CLI uses GitHub authentication (not an API key). You need:
 - **`amazon-q-workflows.test.sh`**: Workflow automation patterns (code review, transformation, testing, documentation)
 - **`amazon-q-cicd-integration.test.sh`**: CI/CD integration patterns, error handling, and exit code validation
 
-### RooCode CLI Tests
-
 #### Basic Tests
 
-- **`roocode-headless-basic.test.sh`**: Basic headless mode execution, exit codes, and flags (`--prompt`, `--file`, `--headless`)
 
 #### Advanced Tests
 
-- **`roocode-headless-advanced.test.sh`**: Advanced features (MCP server, Memory Bank, file processing, error handling)
-- **`roocode-workflows.test.sh`**: Workflow automation patterns (code generation, refactoring, testing, documentation)
-- **`roocode-cicd-integration.test.sh`**: CI/CD integration patterns, error handling, and exit code validation
 
 ### OpenCode CLI Tests
 
@@ -308,7 +302,6 @@ for test in test/amazon-q-*.test.sh; do
 done
 ```
 
-**For RooCode tests:**
 ```bash
 # Set API key from secret
 export OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
@@ -316,17 +309,11 @@ export OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
 export ANTHROPIC_API_KEY=${{ secrets.ANTHROPIC_API_KEY }}
 
 # Install dependencies
-npm install -g roocode @modelcontextprotocol/server
 # or
-pip install roocode mcp-server
 
 # Setup MCP server
-roocode mcp setup
-roocode mcp start --daemon
 
-# Run RooCode tests
 set -e
-for test in test/roocode-*.test.sh; do
     bash "$test" || exit 1
 done
 ```
@@ -496,14 +483,8 @@ Amazon Q Developer CLI uses authentication via `q login`. For headless mode:
 
 Install CLI from: https://github.com/aws/amazon-q-developer-cli
 
-**For RooCode tests:**
-RooCode CLI uses API keys for LLM providers. For headless mode:
 1. Set API key: `export OPENAI_API_KEY=your_key` or `export ANTHROPIC_API_KEY=your_key`
-2. Install RooCode: `npm install -g roocode` or `pip install roocode`
-3. Setup MCP server: `roocode mcp setup && roocode mcp start --daemon`
 
-Install CLI from: npm install -g roocode or pip install roocode
-Workspace template: https://github.com/enescingoz/roocode-workspace
 
 **For OpenCode tests:**
 OpenCode CLI uses API keys for LLM providers. For headless mode:
@@ -742,8 +723,6 @@ chmod +x test/*.test.sh
 - ✅ Timeout handling
 - ✅ Batch processing in CI
 - ✅ Git integration for changed files
-
-### RooCode CLI Coverage
 
 #### Basic Functionality
 - ✅ Headless mode flags (`--prompt`, `-p`, `--headless`)
