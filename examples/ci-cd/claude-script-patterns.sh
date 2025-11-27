@@ -45,7 +45,7 @@ run_claude() {
     [ -n "$model" ] && cmd="$cmd --model $model"
     
     # Add CI/CD flags
-    cmd="$cmd --no-interactive"
+    cmd="$cmd --permission-mode bypassPermissions"
     
     # Add output format
     if [ "$use_json" = "true" ]; then
@@ -218,7 +218,7 @@ investigate_incident() {
     claude -p "$prompt" \
         --append-system-prompt "$system_prompt" \
         --output-format json \
-        --no-interactive \
+        --permission-mode bypassPermissions \
         --allowedTools "Bash,Read,WebSearch" \
         --model "$model" \
         > "$output_file" 2>&1
