@@ -3,22 +3,22 @@
 **Version tested:** Latest (check with `cline --version`)  
 **Risk level:** 🟠 Medium (CLI tool with autonomous task execution)
 
-**Note:** Cline CLI supports headless mode for automation and CI/CD integration. It uses instances and tasks for organizing work, with the `-y` flag enabling autonomous execution.
+**Note:** Cline CLI provides both interactive and non-interactive modes. Use direct prompts with `--yolo` flag for autonomous execution in CI/CD pipelines, or leverage advanced instance/task management for complex workflows.
 
 **When NOT to use Cline:**
 - ❌ You need massive context windows (Gemini CLI handles larger repos better)
-- ❌ You need read-only analysis by default (Cline executes tasks autonomously)
+- ❌ You need read-only analysis by default (Cline executes tasks autonomously with YOLO mode)
 - ❌ You need deterministic, production-safe runs (Cline makes changes autonomously)
 - ❌ You're working with very small codebases (overkill for simple tasks)
 
 ### Quick Nav
 - [Start Here](#-start-here)
-- [Why Use Cline](#-why-use-cline)
-- [Best Use Cases](#-best-use-cases)
 - [Installation](#-installation)
-- [Headless Mode](#-headless-mode)
+- [Interactive Mode](#interactive-mode)
+- [Non-Interactive Mode](#non-interactive-mode-headless)
 - [Available Models](#-available-models)
 - [CLI Syntax](#-cli-syntax)
+- [Output Formats](#output-formats)
 - [Workflows](#-workflows)
 - [CI/CD Integration](#-cicd-integration)
 - [Examples](#-examples)
@@ -27,15 +27,25 @@
 
 ## Overview
 
-Cline is an AI-powered CLI tool designed for autonomous task execution and code generation. It uses an instance-based architecture for organizing work and supports headless mode for automation and CI/CD integration.
+Cline is a command-line interface for interacting with Cline AI coding assistant. It provides both interactive and non-interactive modes for task execution, with support for autonomous execution, task management, and CI/CD integration.
 
 **Key Characteristics:**
-- Headless mode for automation
-- Instance-based organization
-- Autonomous task execution with `-y` flag
-- Multiple model provider support
-- Workflow automation via markdown files
-- Integrated code review capabilities
+- Interactive and non-interactive modes
+- Autonomous task execution with `-y/--yolo` flag
+- Multiple model provider support (Anthropic, OpenAI, Google Gemini, etc.)
+- Task and instance management
+- File and image attachments
+- Multiple output formats (rich, json, plain)
+- Two modes: act and plan
+
+**Three Ways to Start:**
+1. **With a prompt**: `cline "Create a new Python script"`
+2. **Via stdin**: `echo "Create a todo app" | cline`
+3. **Interactive mode**: `cline` (no arguments)
+
+**Modes:**
+- **Act mode** (default): Execute changes immediately
+- **Plan mode**: Create a plan before execution
 
 ## Installation
 
@@ -61,50 +71,120 @@ cline auth
 
 ## 🚀 Start Here
 
+**Interactive mode (default):**
 ```bash
-# Initialize a new instance
-cline instance new --default
-
-# Create and execute a task in headless mode
-cline task new -y "Your task here"
+cline
 ```
 
-## Headless Mode
+**Start with a prompt (one-shot):**
+```bash
+cline "Create a new Python script that prints hello world"
+```
+
+**Autonomous mode (YOLO):**
+```bash
+cline "Create a todo app" --yolo
+# or shorthand
+cline "Create a todo app" -y
+```
+
+## Interactive Mode
+
+**Start interactive session:**
+```bash
+# Start interactive mode (no arguments)
+cline
+
+# Start with initial prompt
+cline "Create a new Python script"
+
+# With file attachments
+cline "Review this code" -f src/main.py
+
+# With image attachments
+cline "Recreate this UI" -i screenshot.png
+
+# With multiple files and images
+cline "Analyze these files" -f file1.py -f file2.py -i diagram.png
+
+# In plan mode (default)
+cline "Design the architecture" --mode plan
+
+# In act mode (execute immediately)
+cline "Fix the bug" --mode act
+```
+
+Interactive mode allows you to have a conversational session with Cline for exploratory work and iterative development.
+
+## Non-Interactive Mode (Headless)
 
 **Non-interactive execution for automation, scripting, and CI/CD pipelines:**
 
 ```bash
-# Step 1: Initialize a new instance (required first step)
-cline instance new --default
+# Direct prompt with YOLO mode (fully autonomous)
+cline "Generate unit tests for all Go files" --yolo
+# or shorthand
+cline "Create a todo app" -y
 
-# Step 2: Create and execute a task autonomously (headless mode)
-cline task new -y "Generate unit tests for all Go files"
+# Pipe via stdin with YOLO mode
+echo "Create a todo app" | cline --yolo
+cat prompt.txt | cline --yolo
 
-# View task status
-cline task view --follow
+# One-shot mode (full autonomous execution)
+cline "Fix all linting issues" --oneshot
+# or shorthand
+cline "Fix all linting issues" -o
 
-# List all instances
-cline instance list
+# No interactive prompts
+cline "Refactor this module" --no-interactive
 
-# Switch between instances
-cline instance switch <instance-id>
+# With file attachments
+cline "Review this code" -f src/main.py --yolo
+
+# With image attachments
+cline "Recreate this UI" -i screenshot.png --yolo
+
+# With specific mode
+cline "Design the architecture" --mode plan --yolo
+cline "Fix the bug" --mode act --yolo
+
+# With JSON output
+cline "Analyze codebase" --output-format json --yolo
 ```
 
-**The `-y` flag (YOLO mode):**
-- Enables autonomous planning and execution
-- No user interaction required
-- Ideal for CI/CD and automation
-- Cline plans and executes tasks automatically
+**Key Flags for Headless Mode:**
+- `-y, --yolo`: YOLO mode - enables autonomous planning and execution
+- `-o, --oneshot`: Full autonomous mode - complete task without interaction
+- `--no-interactive`: Suppress all interactive prompts
+- `-F, --output-format`: Specify output format (`rich`, `json`, `plain`)
 
 **Exit codes:**
 - `0` = Success
 - Non-zero = Error
 
-**Instance Management:**
-- Instances organize work into separate contexts
-- Use `--default` flag to set as default instance
-- Switch between instances for different projects
-- Each instance maintains its own task history
+**Advanced: Task and Instance Management**
+
+For advanced workflows with multiple contexts:
+
+```bash
+# Create new instance
+cline instance new [--default]
+
+# List all instances
+cline instance list
+
+# Switch to instance
+cline instance switch <instance-id>
+
+# Create new task (headless)
+cline task new -y "Your prompt here"
+
+# View task status
+cline task view [--follow]
+
+# List all tasks
+cline task list
+```
 
 ## Available Models
 
@@ -144,10 +224,58 @@ cline auth
 
 **Basic usage:**
 ```bash
-cline [command] [options] [arguments]
+# Start with a prompt
+cline "Your prompt here" [options]
+
+# Pipe via stdin
+echo "Your prompt" | cline [options]
+
+# Interactive mode
+cline [options]
+
+# Run commands
+cline <command> [options]
 ```
 
-**Core Commands:**
+**Core Options:**
+
+```bash
+--address <ADDRESS>           Cline Core gRPC address [env: CLINE_CORE_ADDRESS=]
+-f, --file <FILE>...          Attach files to the initial prompt
+-i, --image <IMAGE>...        Attach images to the initial prompt
+-m, --mode <MODE>             Mode: act (default) or plan [possible values: act, plan]
+--no-interactive              Disable interactive mode
+-y, --yolo                    YOLO mode - auto-approve all actions
+-o, --oneshot                 One-shot mode - full autonomous execution
+-F, --output-format <FORMAT>  Output format [default: rich] [possible values: rich, json, plain]
+-s, --setting <SETTING>...    Task settings in KEY=VALUE format
+-v, --verbose                 Enable verbose logging
+-h, --help                    Print help
+-V, --version                 Print version
+```
+
+**Commands:**
+
+**Authentication:**
+```bash
+# Authenticate and configure providers
+cline auth
+
+# Non-interactive auth (for CI/CD)
+cline auth --non-interactive
+```
+
+**Shell Completion:**
+```bash
+# Generate shell completion scripts
+cline completion <SHELL>      # bash, zsh, fish, powershell, elvish
+```
+
+**Configuration:**
+```bash
+# View and manage Cline configuration
+cline config [options]
+```
 
 **Instance Management:**
 ```bash
@@ -182,29 +310,54 @@ cline task list
 cline task delete <task-id>
 ```
 
-**Code Review:**
+**Logs:**
 ```bash
-# Run code review
-cline review
-
-# Run code review with output file
-cline review --output=review.md
+# View Cline logs
+cline logs [options]
 ```
 
-**Authentication:**
+**Help:**
 ```bash
-# Authenticate and configure providers
-cline auth
-
-# Non-interactive auth (for CI/CD)
-cline auth --non-interactive
+# Print help information
+cline help [command]
 ```
 
-**Common Options:**
-- `-y, --yolo`: Autonomous execution (headless mode)
-- `--default`: Set as default instance
-- `--follow`: Follow task progress in real-time
-- `--output`: Specify output file for reviews
+## Output Formats
+
+Cline supports three output formats for different use cases:
+
+**Rich (default):**
+```bash
+cline "Explain this code"
+# or explicitly
+cline "Explain this code" --output-format rich
+```
+
+Rich format provides formatted, colorized output for human readability. Best for interactive use and terminal displays.
+
+**JSON (for automation):**
+```bash
+cline "Analyze codebase" --output-format json
+```
+
+JSON format provides structured, machine-parseable output ideal for CI/CD pipelines and automation scripts. Parse with `jq` or other JSON tools.
+
+**Plain (simple text):**
+```bash
+cline "Generate documentation" --output-format plain
+```
+
+Plain format provides simple text output without formatting or colors. Useful for logging, piping to files, or environments without terminal formatting support.
+
+**Example with JSON parsing:**
+```bash
+result=$(cline "Generate code" --output-format json --yolo)
+if command -v jq &> /dev/null; then
+  echo "$result" | jq -r '.result // "Task completed"'
+else
+  echo "$result"
+fi
+```
 
 ## Workflows
 
@@ -309,15 +462,16 @@ set -e
 # Install Cline CLI
 npm install -g cline
 
-# Initialize instance
-cline instance new --default
-
-# Run task in headless mode
-cline task new -y "Review code changes for bugs and security issues"
+# Run task in headless mode with YOLO flag
+cline "Review code changes for bugs and security issues" --yolo --output-format json > review.json
 
 # Error handling
 if [ $? -eq 0 ]; then
   echo "✅ Task completed"
+  # Parse JSON results
+  if command -v jq &> /dev/null; then
+    jq -r '.result // "Review completed"' review.json
+  fi
 else
   echo "❌ Task failed"
   exit 1
@@ -325,43 +479,60 @@ fi
 ```
 
 **Best practices for CI/CD:**
-- Use `-y` flag for autonomous execution (headless mode)
-- Initialize instance with `cline instance new --default` before tasks
+- Use `-y/--yolo` flag for autonomous execution (headless mode)
+- Use `--output-format json` for structured, parseable output
 - Store API keys as secrets, never hardcode
-- Use `cline review` for automated code reviews
+- Use `--no-interactive` flag to suppress all prompts
 - Workflows stored in `.clinerules/workflows/` directory
 - Cline makes changes autonomously (review before committing)
 - Use `--non-interactive` flag for `cline auth` in CI/CD
+- For advanced workflows, use instance/task commands
 
 ## Examples
 
 **Generate unit tests:**
 ```bash
-cline instance new --default
-cline task new -y "Generate unit tests for all Go files"
+cline "Generate unit tests for all Go files" --yolo
 ```
 
-**Code review:**
+**Code review with file attachment:**
 ```bash
-cline instance new --default
-cline review --output=review.md
+cline "Review this code for bugs and security issues" -f src/auth.py --yolo
 ```
 
 **Refactoring task:**
 ```bash
-cline instance new --default
-cline task new -y "Refactor authentication module to use modern patterns"
+cline "Refactor authentication module to use modern patterns" --yolo
 ```
 
 **Batch processing:**
 ```bash
-cline instance new --default
 for file in src/*.js; do
-  cline task new -y "Review and improve: $file"
+  cline "Review and improve: $file" -f "$file" --yolo
 done
 ```
 
-**Multi-instance workflow:**
+**With JSON output:**
+```bash
+cline "Analyze the codebase structure" --output-format json --yolo > analysis.json
+```
+
+**Pipe from stdin:**
+```bash
+git diff | cline "Review these changes and suggest improvements" --yolo
+```
+
+**Image-based UI recreation:**
+```bash
+cline "Recreate this UI in React" -i screenshot.png --yolo
+```
+
+**Plan mode (architecture design):**
+```bash
+cline "Design a microservices architecture for this monolith" --mode plan --yolo
+```
+
+**Advanced: Multi-instance workflow:**
 ```bash
 # Create instance for frontend
 cline instance new --name frontend --default
@@ -375,11 +546,11 @@ cline task new -y "Review backend code"
 
 ## Limitations
 
-- **Instance required:** Must initialize instance before tasks
-- **Autonomous execution:** Cline makes changes autonomously (review before committing)
+- **Autonomous execution:** Cline makes changes autonomously with `-y/--yolo` flag (review before committing)
 - **Context limits:** Depends on selected model provider (not as large as Gemini's 1M tokens)
 - **Model provider dependency:** Requires API keys for selected providers
 - **Workflow complexity:** Workflows are markdown-based, may require IDE for complex editing
+- **Instance management:** Advanced task/instance features require additional setup
 
 ## References
 
