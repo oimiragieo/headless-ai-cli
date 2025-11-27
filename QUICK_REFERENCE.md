@@ -147,9 +147,9 @@ tool --resume <id> "Continue"      # By ID
 
 ### Model Selection
 ```bash
---model gemini-3-pro-preview             # Gemini
+--model gemini-3-pro-preview       # Gemini
 --model claude-opus-4-5            # Claude
---model gpt-5-codex                # Codex
+--model gpt-5.1-codex-max          # Codex
 ```
 
 ---

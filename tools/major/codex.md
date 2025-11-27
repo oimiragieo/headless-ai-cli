@@ -107,27 +107,32 @@ codex exec --json --color never "review code changes" > review.jsonl
 
 ## Available Models
 
-| Model | Description | Context | Best For |
-|-------|-------------|---------|----------|
-| **gpt-5-codex** | Latest Codex model | Medium | UI generation, prototyping |
-| **gpt-5-codex-latest** | Auto-aliases to latest stable Codex model | Medium | Production use (recommended) |
+| Model | Description | Speed | Cost | Best For |
+|-------|-------------|-------|------|----------|
+| **gpt-5.1-codex-max** | Latest Codex-optimized flagship for deep and fast reasoning (current) | Fast | High | Complex code generation, deep reasoning |
+| **gpt-5.1-codex** | Standard Codex model | Medium | Medium | UI generation, prototyping, general coding |
+| **gpt-5.1-codex-mini** | Cheaper, faster, less capable | Very Fast | Low | Simple tasks, quick prototypes |
+| **gpt-5.1** | Broad world knowledge with strong general reasoning | Medium | Medium-High | Non-coding tasks, general reasoning |
 
 **Model Selection:**
 ```bash
-# Use specific model
-codex exec "query" --model gpt-5-codex
+# Use latest flagship (recommended)
+codex exec "query" --model gpt-5.1-codex-max
 
-# Use latest stable (recommended for production)
-codex exec "query" --model gpt-5-codex-latest
+# Use standard Codex
+codex exec "query" --model gpt-5.1-codex
+
+# Use mini for faster/cheaper
+codex exec "query" --model gpt-5.1-codex-mini
 
 # Short form
-codex exec -m gpt-5-codex-latest "query"
+codex exec -m gpt-5.1-codex-max "query"
 
 # Model with other flags
-codex exec --model gpt-5-codex-latest --json --color never "query"
+codex exec --model gpt-5.1-codex-max --json --color never "query"
 ```
 
-**Note:** The `gpt-5-codex-latest` model automatically aliases to the most recent stable Codex model, ensuring you always use the latest version without manual updates. This is the recommended model for production use.
+**Note:** `gpt-5.1-codex-max` is the current default and recommended for most coding tasks. Use `-m <model_name>` to access legacy models or specific model versions.
 
 ## CLI Syntax
 
