@@ -45,30 +45,24 @@ Code review automation       → All tools with --output-format json
 
 ## Feature Matrix (All 14 Tools)
 
-| Tool | Headless | JSON | Stream | Write Risk | Platform |
-|------|:--------:|:----:|:------:|:----------:|----------|
-| **Gemini** | ✅ | ✅ | ✅ | 🟠 | Win/Mac/Linux |
-| **Claude** | ✅ | ✅ | ✅ | 🟢 | Win/Mac/Linux |
-| **Codex** | ✅ | ✅ | ✅ | 🟠 | Win/Mac/Linux |
-| **Cursor** | ✅ | ✅ | ✅ | ⚠️ | Win/Mac/Linux |
-| **Droid** | ✅ | ✅ | ✅ | 🟢 | Win/Mac/Linux |
-| **Copilot** | ✅ | ⚠️ | ⚠️ | ⚡ | Win/Mac/Linux |
-| **Kiro** ⚠️ | ❌ | ⚠️ | ❌ | 🟠 | Win/Mac/Linux (IDE only) |
-| **Warp** ⚠️ | ❌ | N/A | N/A | 🟢 | macOS only (terminal) |
-| **Windsurf** ⚠️ | ⚠️ | ⚠️ | ❌ | 🟠 | Docker only |
-| **Aider** | ✅ | ⚠️ | ❌ | 🟠 | Win/Mac/Linux |
-| **Continue** | ✅ | ⚠️ | ❌ | 🟢 | Win/Mac/Linux |
-| **Cline** | ✅ | ⚠️ | ❌ | 🟠 | Win/Mac/Linux |
-| **Amazon Q** ⚠️ | ✅ | ✅ | ❌ | 🟠 | DEPRECATED (Nov 2025) |
-| **OpenCode** | ✅ | ⚠️ | ❌ | 🟠 | Win/Mac/Linux |
+| Tool | Headless | JSON | Stream | Writes | Platform |
+|------|:--------:|:----:|:------:|:------:|----------|
+| Gemini | ✅ | ✅ | ✅ | flag | Win/Mac/Linux |
+| Claude | ✅ | ✅ | ✅ | approval | Win/Mac/Linux |
+| Codex | ✅ | ✅ | ✅ | flag | Win/Mac/Linux |
+| Cursor | ✅ | ✅ | ✅ | default | Win/Mac/Linux |
+| Droid | ✅ | ✅ | ✅ | flag | Win/Mac/Linux |
+| Copilot | ✅ | ❌ | ❌ | flag | Win/Mac/Linux |
+| Aider | ✅ | ❌ | ❌ | flag | Win/Mac/Linux |
+| Continue | ✅ | ❌ | ❌ | approval | Win/Mac/Linux |
+| Cline | ✅ | ✅ | ❌ | flag | Win/Mac/Linux |
+| OpenCode | ✅ | ❌ | ❌ | flag | Win/Mac/Linux |
+| Kiro | ❌ | — | — | — | IDE only |
+| Warp | ❌ | — | — | — | macOS terminal |
+| Windsurf | ⚠️ | ❌ | ❌ | default | Docker required |
+| Amazon Q | ✅ | ✅ | ❌ | flag | DEPRECATED |
 
-**Legend:** ✅ Full | ⚠️ Limited | ❌ No
-
-**Write Risk** = likelihood of unintended file modifications in automation:
-- 🟢 **Low** — Read-only by default, requires explicit flags to write
-- 🟠 **Medium** — Safe by default, but can write with explicit flags
-- ⚠️ **High** — Writes by default with some safeguards
-- ⚡ **Very High** — Minimal safeguards, executes with little confirmation
+**Writes:** approval = user must approve | flag = opt-in via flag | default = writes without prompting
 
 ---
 
