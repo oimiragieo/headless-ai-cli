@@ -16,7 +16,13 @@ headless-ai-cli/
 ├── CLAUDE.md                    # This file - AI agent guidance for working in this repository
 ├── CONTRIBUTING.md              # Contribution guidelines and documentation standards
 ├── QUICK_REFERENCE.md           # Ultra-condensed command cheat sheet for daily use
+├── LICENSE                      # MIT License
 ├── .gitignore                   # Standard exclusions (node_modules, IDEs, logs, etc.)
+├── .github/
+│   └── ISSUE_TEMPLATE/          # GitHub issue templates (3 files)
+│       ├── bug_report.md
+│       ├── feature_request.md
+│       └── verification_report.md
 ├── tools/
 │   ├── TEMPLATE.md              # Standardized template for adding new tools
 │   └── major/                   # Individual tool documentation (14 files)
@@ -26,29 +32,34 @@ headless-ai-cli/
 │       ├── cursor.md            # Cursor Agent - Workflow automation
 │       ├── copilot.md           # GitHub Copilot CLI - GitHub integration
 │       ├── droid.md             # Factory AI Droid - CI/CD-safe
-│       ├── kiro.md              # Kiro AI IDE - Spec-driven development
-│       ├── warp.md              # Warp Terminal - Enhanced CLI experience
-│       ├── windsurf.md          # Windsurf IDE - Cascade AI agent
+│       ├── kiro.md              # Kiro AI IDE - Spec-driven development (⚠️ NO headless)
+│       ├── warp.md              # Warp Terminal - Enhanced CLI experience (⚠️ terminal only)
+│       ├── windsurf.md          # Windsurf IDE - Cascade AI agent (⚠️ Docker required)
 │       ├── aider.md             # Aider - AI pair programming
 │       ├── continue-dev.md      # Continue Dev - VS Code integration
 │       ├── cline.md             # Cline - Task-based autonomous execution
-│       ├── amazon-q.md          # Amazon Q Developer - AWS integration
+│       ├── amazon-q.md          # Amazon Q Developer - AWS integration (⚠️ DEPRECATED)
 │       ├── open-code.md         # OpenCode - Multi-language support
-├── examples/
-│   ├── ci-cd/                   # CI/CD integration examples (40+ files)
-│   │   ├── github-actions-*.yml # GitHub Actions workflows
-│   │   ├── gitlab-ci-*.yml      # GitLab CI configurations
-│   │   └── circleci-*.yml       # CircleCI configurations
-│   ├── automation/              # Automation scripts
+├── examples/                    # 50 total example files
+│   ├── ci-cd/                   # CI/CD integration examples (31 files)
+│   │   ├── github-actions-*.yml # GitHub Actions workflows (14 files)
+│   │   ├── gitlab-ci-*.yml      # GitLab CI configurations (3 files)
+│   │   ├── circleci-*.yml       # CircleCI configurations (1 file)
+│   │   └── *-script-patterns.sh # Tool-specific script patterns (13 files)
+│   ├── automation/              # Automation scripts (7 files)
 │   │   ├── *-headless-workflows.sh
 │   │   ├── *-batch-processing.sh
 │   │   └── code-review-automation.sh
-│   └── workflows/               # Common workflow patterns
-└── test/                        # Test scripts (60+ files)
-    ├── *-headless-basic.test.sh      # Basic headless mode tests
-    ├── *-headless-advanced.test.sh   # Advanced headless scenarios
-    ├── *-cicd-integration.test.sh    # CI/CD integration tests
-    └── *-workflows.test.sh           # Workflow automation tests
+│   ├── workflows/               # Multi-tool orchestration (2 files)
+│   ├── cline-workflows/         # Cline-specific workflows (3 markdown files)
+│   └── windsurf-workflows/      # Windsurf-specific workflows (3 markdown files)
+└── test/                        # Test scripts (56 files)
+    ├── README.md                # Test documentation
+    ├── *-headless-basic.test.sh      # Basic headless mode tests (12 files)
+    ├── *-headless-advanced.test.sh   # Advanced headless scenarios (11 files)
+    ├── *-cicd-integration.test.sh    # CI/CD integration tests (7 files)
+    ├── *-workflows.test.sh           # Workflow automation tests (13 files)
+    └── *-specialized.test.sh         # Specialized tests (13 files: JSON, stream, session, etc.)
 ```
 
 ## Documentation Standards
@@ -216,6 +227,21 @@ Models change frequently. When updating:
 3. Update comparison tables in README.md if needed
 4. Note any deprecated models in the "Limitations" section
 
+### Installation Method Updates (January 2026)
+
+Several tools have updated their recommended installation methods:
+
+| Tool | Current Recommended | Notes |
+|------|---------------------|-------|
+| **Claude Code** | Native: `curl -fsSL https://claude.ai/install.sh \| bash` | Preferred over npm |
+| **Codex** | npm or Homebrew: `brew install --cask codex` | Windows via WSL |
+| **Aider** | Install script: `curl -LsSf https://aider.chat/install.sh \| sh` | Python 3.10+ required |
+| **OpenCode** | Quick install: `curl -fsSL https://opencode.ai/install \| bash` | v0.1.x incompatible with older |
+
+**Deprecated/Changed:**
+- Amazon Q Developer CLI → Migrated to Kiro CLI (Nov 2025)
+- GitHub Copilot CLI default model → Now Claude Sonnet 4.5
+
 ## Writing Style Guidelines
 
 1. **Be precise:** Use exact command syntax
@@ -261,30 +287,77 @@ Models change frequently. When updating:
 
 ## Quick Reference: Tool Categories
 
-**Production CLI Tools (9 tools):**
+**Production CLI Tools with Full Headless Support (9 tools):**
 - Gemini, Claude, Codex, Cursor, Copilot, Droid, Aider, Continue Dev, Cline
 
-**IDE-Based Tools (3 tools):**
-- Kiro, Warp, Windsurf
-
-**Cloud Integration Tools (1 tool):**
-- Amazon Q
+**IDE/Terminal-Based Tools with Limited Headless Support (4 tools):**
+- Kiro (⚠️ NO native headless mode - spec-driven IDE only)
+- Warp (⚠️ Terminal emulator - enhances other CLI tools, not standalone headless)
+- Windsurf (⚠️ Requires Docker container "windsurfinabox" for headless)
+- Amazon Q (⚠️ DEPRECATED Nov 2025 - migrated to Kiro CLI)
 
 **Multi-Language Tools (1 tool):**
 - OpenCode
 
-**Total: 14 verified, production-ready tools**
+**Total: 14 documented tools (9 with full headless, 4 with limited/no headless, 1 deprecated)**
+
+## ⚠️ Known Issues and Tech Debt
+
+### Critical Documentation Gaps
+
+1. **Kiro**: Documented but lacks actual headless mode capability (contradicts repo purpose)
+   - Tool documentation states: "Kiro CLI does NOT currently have a headless mode"
+   - Zero examples in `examples/` directory
+   - Zero test scripts in `test/` directory
+   - **Action needed**: Add examples or reclassify as IDE-only tool
+
+2. **Amazon Q Developer CLI**: **DEPRECATED** as of November 17, 2025
+   - Migrated to Kiro CLI (closed-source)
+   - Will only receive critical security fixes
+   - Documentation retained for legacy reference
+
+3. **Warp**: Terminal emulator, not a standalone CLI tool
+   - Enhances experience of using OTHER AI CLI tools
+   - No native headless automation capability
+
+4. **Windsurf**: IDE-based, requires Docker for headless
+   - Missing CLI Syntax section in documentation
+   - Headless mode via community Docker project only
+
+### Test Coverage Gaps
+
+| Tool | Missing Tests |
+|------|---------------|
+| Kiro | ALL (basic, advanced, cicd, workflows) |
+| Cline | cicd-integration |
+| Cursor | cicd-integration |
+| Droid | cicd-integration |
+| Gemini | cicd-integration |
+| Warp | advanced, cicd-integration |
+| Windsurf | advanced, cicd-integration |
+
+### Documentation Section Gaps
+
+- **Security sections**: Missing from 9 of 14 tool docs
+- **Output Formats sections**: Missing from 10 of 14 tool docs
+- **CLI Syntax section**: Missing from windsurf.md
 
 ## Version Information
 
 - **Repository Created:** November 2025
-- **Last Major Update:** November 2025
-- **Total Tools Documented:** 14 (all production-ready)
-- **Documentation Files:** 18 markdown files total
+- **Last Major Update:** January 2026
+- **Last Audit:** January 2026
+- **Total Tools Documented:** 14 (9 with full headless support, 4 limited, 1 deprecated)
+- **Documentation Files:** 29 markdown files total
   - 4 main docs (README, CLAUDE, CONTRIBUTING, QUICK_REFERENCE)
   - 14 individual tool docs (tools/major/)
-- **Example Files:** 40+ (CI/CD and automation scripts)
-- **Test Scripts:** 60+ (comprehensive test coverage)
+  - 1 template (tools/TEMPLATE.md)
+  - 1 test README (test/README.md)
+  - 6 workflow docs (examples/*-workflows/*.md)
+  - 3 issue templates (.github/ISSUE_TEMPLATE/)
+- **Example Files:** 50 (CI/CD, automation, and workflow scripts)
+- **Test Scripts:** 56 (comprehensive test coverage for 13 of 14 tools)
+- **Total Lines of Documentation:** ~8,764 (main docs and tool files)
 
 ## Getting Help
 
