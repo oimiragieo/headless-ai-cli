@@ -175,12 +175,24 @@ git diff | copilot -p "Review these changes"
 
 | # | Model | Cost Multiplier | Description |
 |---|-------|-----------------|-------------|
-| 1 | **Claude Sonnet 4.5** | 1x | Default, balanced performance |
-| 2 | **Claude Sonnet 4** | 1x | Previous Claude version |
-| 3 | **GPT-5** | 1x | Latest OpenAI model |
-| 4 | **GPT-5-Mini** | 0x | Free tier OpenAI model |
-| 5 | **GPT-4.1** | 0x | Free tier OpenAI model |
-| 6 | **Gemini 3 Pro (Preview)** | 1x | Latest Google model |
+| 1 | **Auto** | 0.9x (10% Off) | Automatically selects the best model for the task |
+| 2 | **Claude Sonnet 4.5** | 1x | Default, balanced performance |
+| 3 | **Claude Sonnet 4** | 1x | Previous Claude version |
+| 4 | **GPT-5** | 1x | Latest OpenAI model |
+| 5 | **GPT-5-Mini** | 0x | Free tier OpenAI model |
+| 6 | **GPT-4.1** | 0x | Free tier OpenAI model |
+| 7 | **GPT-4o** | 0x | Previous flagship, now free tier |
+| 8 | **Gemini 3 Pro (Preview)** | 1x | Latest Google model |
+| 9 | **Gemini 2.5 Pro** | 1x | Previous Google flagship |
+| 10 | **Claude Opus 4.5 (Preview)** | - | New Infinite Context model |
+| 11 | **Claude Opus 4.1** | 10x | High-cost reasoning model |
+| 12 | **Claude Haiku 4.5** | 0.33x | Low-latency efficient model |
+| 13 | **GPT-5-Codex (Preview)** | 1x | Specialized full-stack generation |
+| 14 | **GPT-5.1 (Preview)** | 1x | Iterative update with improved reasoning |
+| 15 | **GPT-5.1-Codex (Preview)** | 1x | Latest coding-specific fine-tune |
+| 16 | **GPT-5.1-Codex-Mini (Preview)**| 0.33x | Lightweight coding model |
+| 17 | **Grok Code Fast 1** | 0x | xAI high-speed coding model |
+| 18 | **Raptor mini (Preview)** | 0x | Ultra-low latency experimental model |
 
 **Premium request multipliers:**
 - `0x` = Free (does not consume premium requests)
