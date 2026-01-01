@@ -41,24 +41,32 @@ Multi-language support?               → OpenCode
 
 ## 📊 Tool Comparison Matrix
 
-| Tool | Install | Headless | JSON Output | Risk Level | Last Verified |
-|------|---------|----------|-------------|------------|---------------|
-| **[Gemini CLI](tools/major/gemini.md)** | `npm i -g @google/gemini-cli` | ✅ Full | ✅ Text/JSON/Stream | 🟠 Medium | Nov 2025 |
-| **[Claude Code](tools/major/claude.md)** | `npm i -g @anthropic-ai/claude-code` | ✅ Full | ✅ Text/JSON/Stream | 🟢 Low | Nov 2025 |
-| **[Codex](tools/major/codex.md)** | `npm i -g @openai/codex` | ✅ Full | ✅ Text/JSON/Schema | 🟠 Medium | Nov 2025 |
-| **[Cursor](tools/major/cursor.md)** | `curl script` | ✅ Full | ✅ Text/JSON/Stream | ⚠️ High | Nov 2025 |
-| **[Droid](tools/major/droid.md)** | `curl script` | ✅ Full | ✅ Text/JSON | 🟢 Low | Nov 2025 |
-| **[Copilot](tools/major/copilot.md)** | `npm i -g @github/copilot` | ✅ Full | ⚠️ Limited | ⚡ Very High | Nov 2025 |
-| **[Kiro](tools/major/kiro.md)** ⚠️ | `curl script` | ❌ No headless | ⚠️ Limited | 🟠 Medium | Jan 2026 |
-| **[Warp](tools/major/warp.md)** ⚠️ | `brew install --cask warp` | ❌ Terminal only | N/A | 🟢 Low | Jan 2026 |
-| **[Windsurf](tools/major/windsurf.md)** | Download IDE | ⚠️ Docker only | ⚠️ Limited | 🟠 Medium | Nov 2025 |
-| **[Aider](tools/major/aider.md)** | `pip install aider-chat` | ✅ Full | ⚠️ Limited | 🟠 Medium | Nov 2025 |
-| **[Continue Dev](tools/major/continue-dev.md)** | `npm i -g @continuedev/cli` | ✅ Full | ⚠️ Limited | 🟢 Low | Nov 2025 |
-| **[Cline](tools/major/cline.md)** | `npm i -g cline` | ✅ Full | ⚠️ Limited | 🟠 Medium | Nov 2025 |
-| **[Amazon Q](tools/major/amazon-q.md)** ⚠️ | `brew install amazon-q-developer-cli` | ✅ Full | ✅ Text/JSON | 🟠 Medium | ⚠️ DEPRECATED |
-| **[OpenCode](tools/major/open-code.md)** | `npm i -g open-code` | ✅ Full | ⚠️ Limited | 🟠 Medium | Nov 2025 |
+| Tool | Install | Headless | Output | Writes | Verified |
+|------|---------|:--------:|:------:|:------:|----------|
+| [Gemini CLI](tools/major/gemini.md) | `npm i -g @google/gemini-cli` | ✅ | JSON | flag | Nov 2025 |
+| [Claude Code](tools/major/claude.md) | `npm i -g @anthropic-ai/claude-code` | ✅ | JSON | approval | Nov 2025 |
+| [Codex](tools/major/codex.md) | `npm i -g @openai/codex` | ✅ | JSON | flag | Nov 2025 |
+| [Cursor](tools/major/cursor.md) | `curl script` | ✅ | JSON | default | Nov 2025 |
+| [Droid](tools/major/droid.md) | `curl script` | ✅ | JSON | flag | Nov 2025 |
+| [Copilot](tools/major/copilot.md) | `npm i -g @github/copilot` | ✅ | text | flag | Nov 2025 |
+| [Aider](tools/major/aider.md) | `pip install aider-chat` | ✅ | text | flag | Nov 2025 |
+| [Continue Dev](tools/major/continue-dev.md) | `npm i -g @continuedev/cli` | ✅ | text | approval | Nov 2025 |
+| [Cline](tools/major/cline.md) | `npm i -g cline` | ✅ | JSON | flag | Nov 2025 |
+| [OpenCode](tools/major/open-code.md) | `npm i -g open-code` | ✅ | text | flag | Nov 2025 |
+| [Kiro](tools/major/kiro.md) | `curl script` | ❌ | — | — | Jan 2026 |
+| [Warp](tools/major/warp.md) | `brew install --cask warp` | ❌ | — | — | Jan 2026 |
+| [Windsurf](tools/major/windsurf.md) | Docker | ⚠️ | text | default | Nov 2025 |
+| [Amazon Q](tools/major/amazon-q.md) | `brew install amazon-q` | ✅ | JSON | flag | DEPRECATED |
 
-**Risk Levels:** 🟢 Low (read-only default) | 🟠 Medium (writes with flags) | ⚠️ High (writes by default) | ⚡ Very High (minimal safeguards)
+**Headless:** ✅ native | ⚠️ workaround required | ❌ not supported
+**Output:** JSON = structured output flag available | text = plain text only
+**Writes:** approval = requires user approval | flag = opt-in via CLI flag | default = writes without prompting
+
+**Notes:**
+- Kiro is an IDE; no headless CLI mode exists
+- Warp is a terminal emulator, not a standalone CLI tool
+- Windsurf requires Docker container for headless; see [windsurfinabox](https://github.com/pfcoperez/windsurfinabox)
+- Amazon Q CLI deprecated Nov 2025; migrated to Kiro
 
 ## ⚡ Quick Start Example: GitHub Actions PR Review
 
@@ -113,7 +121,7 @@ jobs:
             });
 ```
 
-**More examples:** See [`examples/ci-cd/`](examples/ci-cd/) for 40+ ready-to-use workflows.
+**More examples:** See [`examples/`](examples/) for CI/CD workflows and automation scripts.
 
 ## 🚀 Installation Commands
 
@@ -230,15 +238,9 @@ We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ## ⚠️ Maintenance Notice
 
-These tools are actively developed and change frequently. We aim to verify documentation monthly, but CLI flags and features may drift between updates.
+These tools change frequently. CLI flags and features may drift between updates.
 
-**Last full verification:** January 2026
-
-**Known deprecations:**
-- ⚠️ **Amazon Q Developer CLI** - Deprecated Nov 2025, migrated to Kiro CLI
-- ⚠️ **Kiro** - IDE only, no native headless mode
-- ⚠️ **Warp** - Terminal emulator, not standalone CLI
-- ⚠️ **Windsurf** - Requires Docker for headless mode
+**Last verification:** January 2026
 
 If you find outdated information, please [open an issue](https://github.com/oimiragieo/headless-ai-cli/issues).
 
