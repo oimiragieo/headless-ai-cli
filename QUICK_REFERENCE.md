@@ -1,7 +1,7 @@
 # AI CLI Quick Reference
 
 > **Single-source reference for headless AI CLI tools**
-> *Last Updated: November 2025 | 14 Tools Documented*
+> *Last Updated: January 2026 | 14 Tools Documented (9 full headless, 4 limited, 1 deprecated)*
 
 ---
 
@@ -14,15 +14,15 @@
 | **UI/front-end generation** | Codex | Fast HTML/CSS/React prototyping |
 | **CI/CD automation** | Droid | Safe, deterministic, read-only default |
 | **GitHub integration** | Copilot | Native PR & issue understanding |
-| **AWS integration** | Amazon Q | AWS services, IAM, CloudFormation |
+| **AWS integration** | Amazon Q ⚠️ | AWS services (DEPRECATED - use Kiro) |
 | **Workflow automation** | Cursor | Multi-step agent workflows |
 | **Pair programming** | Aider | Git-integrated AI pair coding |
 | **VS Code integration** | Continue Dev | IDE-first development |
 | **Task automation** | Cline | Autonomous task execution |
 | **Multi-language** | OpenCode | Polyglot support |
-| **Spec-driven development** | Kiro | Agents-only headless mode |
-| **Enhanced terminal** | Warp | macOS terminal UX (no headless) |
-| **IDE development** | Windsurf | Docker-only headless |
+| **Spec-driven development** | Kiro ⚠️ | IDE only - NO headless mode |
+| **Enhanced terminal** | Warp ⚠️ | macOS terminal UX (no headless) |
+| **IDE development** | Windsurf ⚠️ | Docker-only headless |
 
 ---
 
@@ -53,13 +53,13 @@ Code review automation       → All tools with --output-format json
 | **Cursor** | ✅ | ✅ | ✅ | ⚠️ | Win/Mac/Linux |
 | **Droid** | ✅ | ✅ | ✅ | 🟢 | Win/Mac/Linux |
 | **Copilot** | ✅ | ⚠️ | ⚠️ | ⚡ | Win/Mac/Linux |
-| **Kiro** | ⚠️ | ⚠️ | ❌ | 🟠 | Win/Mac/Linux |
-| **Warp** | ❌ | N/A | N/A | 🟢 | macOS only |
-| **Windsurf** | ⚠️ | ⚠️ | ❌ | 🟠 | Docker only |
+| **Kiro** ⚠️ | ❌ | ⚠️ | ❌ | 🟠 | Win/Mac/Linux (IDE only) |
+| **Warp** ⚠️ | ❌ | N/A | N/A | 🟢 | macOS only (terminal) |
+| **Windsurf** ⚠️ | ⚠️ | ⚠️ | ❌ | 🟠 | Docker only |
 | **Aider** | ✅ | ⚠️ | ❌ | 🟠 | Win/Mac/Linux |
 | **Continue** | ✅ | ⚠️ | ❌ | 🟢 | Win/Mac/Linux |
 | **Cline** | ✅ | ⚠️ | ❌ | 🟠 | Win/Mac/Linux |
-| **Amazon Q** | ✅ | ✅ | ❌ | 🟠 | Win/Mac/Linux |
+| **Amazon Q** ⚠️ | ✅ | ✅ | ❌ | 🟠 | DEPRECATED (Nov 2025) |
 | **OpenCode** | ✅ | ⚠️ | ❌ | 🟠 | Win/Mac/Linux |
 
 **Legend:** ✅ Full | ⚠️ Limited | ❌ No

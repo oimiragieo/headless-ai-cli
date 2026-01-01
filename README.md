@@ -49,13 +49,13 @@ Multi-language support?               → OpenCode
 | **[Cursor](tools/major/cursor.md)** | `curl script` | ✅ Full | ✅ Text/JSON/Stream | ⚠️ High | Nov 2025 |
 | **[Droid](tools/major/droid.md)** | `curl script` | ✅ Full | ✅ Text/JSON | 🟢 Low | Nov 2025 |
 | **[Copilot](tools/major/copilot.md)** | `npm i -g @github/copilot` | ✅ Full | ⚠️ Limited | ⚡ Very High | Nov 2025 |
-| **[Kiro](tools/major/kiro.md)** | `curl script` | ⚠️ Agents only | ⚠️ Limited | 🟠 Medium | Nov 2025 |
-| **[Warp](tools/major/warp.md)** | `brew install --cask warp` | ❌ No | N/A | 🟢 Low | Nov 2025 |
+| **[Kiro](tools/major/kiro.md)** ⚠️ | `curl script` | ❌ No headless | ⚠️ Limited | 🟠 Medium | Jan 2026 |
+| **[Warp](tools/major/warp.md)** ⚠️ | `brew install --cask warp` | ❌ Terminal only | N/A | 🟢 Low | Jan 2026 |
 | **[Windsurf](tools/major/windsurf.md)** | Download IDE | ⚠️ Docker only | ⚠️ Limited | 🟠 Medium | Nov 2025 |
 | **[Aider](tools/major/aider.md)** | `pip install aider-chat` | ✅ Full | ⚠️ Limited | 🟠 Medium | Nov 2025 |
 | **[Continue Dev](tools/major/continue-dev.md)** | `npm i -g @continuedev/cli` | ✅ Full | ⚠️ Limited | 🟢 Low | Nov 2025 |
 | **[Cline](tools/major/cline.md)** | `npm i -g cline` | ✅ Full | ⚠️ Limited | 🟠 Medium | Nov 2025 |
-| **[Amazon Q](tools/major/amazon-q.md)** | `brew install amazon-q-developer-cli` | ✅ Full | ✅ Text/JSON | 🟠 Medium | Nov 2025 |
+| **[Amazon Q](tools/major/amazon-q.md)** ⚠️ | `brew install amazon-q-developer-cli` | ✅ Full | ✅ Text/JSON | 🟠 Medium | ⚠️ DEPRECATED |
 | **[OpenCode](tools/major/open-code.md)** | `npm i -g open-code` | ✅ Full | ⚠️ Limited | 🟠 Medium | Nov 2025 |
 
 **Risk Levels:** 🟢 Low (read-only default) | 🟠 Medium (writes with flags) | ⚠️ High (writes by default) | ⚡ Very High (minimal safeguards)
@@ -232,16 +232,22 @@ We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 These tools are actively developed and change frequently. We aim to verify documentation monthly, but CLI flags and features may drift between updates.
 
-**Last full verification:** November 2025
+**Last full verification:** January 2026
+
+**Known deprecations:**
+- ⚠️ **Amazon Q Developer CLI** - Deprecated Nov 2025, migrated to Kiro CLI
+- ⚠️ **Kiro** - IDE only, no native headless mode
+- ⚠️ **Warp** - Terminal emulator, not standalone CLI
+- ⚠️ **Windsurf** - Requires Docker for headless mode
 
 If you find outdated information, please [open an issue](https://github.com/oimiragieo/headless-ai-cli/issues).
 
 ## 📊 Repository Statistics
 
-- **Tools Documented:** 14 (all verified)
-- **CI/CD Examples:** 40+ workflows
-- **Test Scripts:** 60+ verification scripts
-- **Documentation:** 18 markdown files, 30,000+ lines
+- **Tools Documented:** 14 (9 with full headless support, 4 limited, 1 deprecated)
+- **CI/CD Examples:** 50 workflows and scripts
+- **Test Scripts:** 56 verification scripts
+- **Documentation:** 29 markdown files, ~8,764 lines
 
 ## 📝 License
 
