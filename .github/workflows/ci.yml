@@ -1,0 +1,64 @@
+name: Documentation CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Monthly on the 1st at 09:00 UTC to catch staleness
+    - cron: "0 9 1 * *"
+  workflow_dispatch:
+    inputs:
+      staleness_days:
+        description: "Freshness threshold in days"
+        required: false
+        default: "90"
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Markdown Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+      - run: npm ci
+      - name: Run markdownlint
+        run: npm run lint
+
+  format:
+    name: Prettier Format Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+      - run: npm ci
+      - name: Check formatting
+        run: npm run format
+
+  freshness:
+    name: Documentation Freshness
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check documentation freshness
+        env:
+          STALENESS_DAYS: ${{ github.event.inputs.staleness_days || '90' }}
+        run: bash scripts/check-freshness.sh
+
+  sync:
+    name: README Sync
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check README synchronization
+        run: bash scripts/check-readme-sync.sh

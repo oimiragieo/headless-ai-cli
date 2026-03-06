@@ -4,12 +4,14 @@
 **Risk level:** 🟠 Medium (autonomous coding agent, can modify files and execute commands)
 
 **When NOT to use OpenCode:**
+
 - ❌ You need massive context windows (Gemini handles larger repos better)
 - ❌ You need pure local/offline workflows (may require API access)
 - ❌ You're working in a non-Git repository (OpenCode works best with Git)
 - ❌ You need deterministic, production-safe CI/CD runs (Droid is safer)
 
 ### Quick Nav
+
 - [Start Here](#-start-here)
 - [Why Use OpenCode](#-why-use-opencode)
 - [Best Use Cases](#-best-use-cases)
@@ -28,6 +30,7 @@
 OpenCode is an AI coding assistant that can read files, write and modify code, execute terminal commands, and interact with development environments using natural language. It supports headless mode for automation and CI/CD integration.
 
 **Key Characteristics:**
+
 - Autonomous coding agent
 - Headless mode for automation
 - Natural language interaction
@@ -39,13 +42,13 @@ OpenCode is an AI coding assistant that can read files, write and modify code, e
 ## Installation
 
 **Using npm:**
+
 ```bash
 npm install -g open-code
 ```
 
-
-
 **System Requirements:**
+
 - Node.js (for npm installation)
 - Git repository (for best experience)
 - API key for LLM provider (OpenAI, Anthropic, etc.)
@@ -71,6 +74,7 @@ opencode run "Review this code for bugs"
 **Non-interactive execution for automation, scripting, and CI/CD pipelines:**
 
 **Basic Headless Usage:**
+
 ```bash
 # Run with a message (single command execution)
 opencode run "Review this code for bugs"
@@ -101,12 +105,14 @@ opencode serve --port 3000 --hostname 0.0.0.0
 ```
 
 **Key Commands for Headless Mode:**
+
 - `opencode run [message..]` - Run opencode with a message
 - `opencode serve` - Start headless opencode server
 - `opencode web` - Start headless opencode web server
 - `opencode attach <url>` - Attach to a running opencode server
 
 **Key Options:**
+
 - `-m, --model` - Model to use in format provider/model
 - `-c, --continue` - Continue the last session
 - `-s, --session` - Session ID to continue
@@ -118,16 +124,19 @@ opencode serve --port 3000 --hostname 0.0.0.0
 ## Available Models
 
 **List all available models:**
+
 ```bash
 opencode models
 ```
 
 **OpenCode Models:**
+
 - `opencode/gpt-5-nano`
 - `opencode/big-pickle`
 - `opencode/grok-code`
 
 **GitHub Copilot Models** (available after authenticating with GitHub Copilot):
+
 - `github-copilot/claude-opus-4.6`
 - `github-copilot/claude-sonnet-4.6`
 - `github-copilot/claude-sonnet-4.5`
@@ -148,17 +157,18 @@ opencode models
 
 **Supported Providers** (from `opencode auth login`):
 
-| Provider | Description |
-|----------|-------------|
-| **OpenCode Zen** | Recommended default provider |
-| **Anthropic** | Claude models (Sonnet, Opus, Haiku) |
-| **GitHub Copilot** | GitHub's AI assistant models |
-| **OpenAI** | GPT models (GPT-4, GPT-3.5-turbo, etc.) |
-| **Google** | Gemini models |
-| **OpenRouter** | Access to multiple models via OpenRouter |
-| **Vercel AI Gateway** | Vercel's AI model gateway |
+| Provider              | Description                              |
+| --------------------- | ---------------------------------------- |
+| **OpenCode Zen**      | Recommended default provider             |
+| **Anthropic**         | Claude models (Sonnet, Opus, Haiku)      |
+| **GitHub Copilot**    | GitHub's AI assistant models             |
+| **OpenAI**            | GPT models (GPT-4, GPT-3.5-turbo, etc.)  |
+| **Google**            | Gemini models                            |
+| **OpenRouter**        | Access to multiple models via OpenRouter |
+| **Vercel AI Gateway** | Vercel's AI model gateway                |
 
 **Model Selection:**
+
 ```bash
 # Use specific model (format: provider/model)
 opencode run "Your task" --model github-copilot/gpt-5.1-codex
@@ -180,6 +190,7 @@ opencode run "Design architecture" --model github-copilot/gpt-5.1
 ```
 
 **Authentication:**
+
 ```bash
 # Log in to a provider
 opencode auth login
@@ -196,6 +207,7 @@ opencode auth logout
 ## CLI Syntax
 
 **Commands:**
+
 ```bash
 opencode acp                 # Start ACP (Agent Client Protocol) server
 opencode [project]           # Start opencode TUI (default)
@@ -214,11 +226,13 @@ opencode github              # Manage GitHub agent
 ```
 
 **Positionals:**
+
 ```bash
 project  # Path to start opencode in [string]
 ```
 
 **Options:**
+
 ```bash
 -h, --help        # Show help [boolean]
 -v, --version     # Show version number [boolean]
@@ -234,6 +248,7 @@ project  # Path to start opencode in [string]
 ```
 
 **Auth Commands:**
+
 ```bash
 opencode auth login [url]  # Log in to a provider
 opencode auth logout       # Log out from a configured provider
@@ -241,6 +256,7 @@ opencode auth list         # List providers [aliases: ls]
 ```
 
 **Interactive Mode:**
+
 ```bash
 # Start interactive TUI (default)
 opencode
@@ -252,6 +268,7 @@ opencode /path/to/project
 ## Configuration
 
 **Authentication:**
+
 ```bash
 # Log in to a provider (interactive)
 opencode auth login
@@ -273,6 +290,7 @@ opencode auth logout
 ```
 
 **Session Management:**
+
 ```bash
 # Export session data as JSON
 opencode export [sessionID]
@@ -285,6 +303,7 @@ opencode stats
 ```
 
 **Agent Management:**
+
 ```bash
 # Manage agents
 opencode agent
@@ -296,6 +315,7 @@ opencode run "Review code" --agent code-reviewer
 ## Examples
 
 **Code Review:**
+
 ```bash
 # Run code review with message
 opencode run "Review this code for bugs, security issues, and best practices"
@@ -308,6 +328,7 @@ opencode run "Apply the suggested fixes" --continue
 ```
 
 **Code Transformation:**
+
 ```bash
 # Refactor code
 opencode run "Refactor to apply SOLID principles and improve maintainability"
@@ -320,6 +341,7 @@ opencode run "Add comprehensive error handling and input validation"
 ```
 
 **Code Generation:**
+
 ```bash
 # Generate unit tests
 opencode run "Generate comprehensive unit tests with 80%+ coverage"
@@ -332,6 +354,7 @@ opencode run "Add type hints to all functions and classes"
 ```
 
 **Headless Server:**
+
 ```bash
 # Start headless server
 opencode serve
@@ -347,6 +370,7 @@ opencode attach http://localhost:3000
 ```
 
 **Session Management:**
+
 ```bash
 # Continue last session
 opencode run "Continue the refactoring task" --continue
@@ -369,6 +393,7 @@ opencode stats
 **Headless automation for CI/CD pipelines:**
 
 **Basic CI/CD Pattern:**
+
 ```bash
 #!/bin/bash
 set -e
@@ -389,6 +414,7 @@ fi
 ```
 
 **GitHub Actions Example:**
+
 ```yaml
 name: OpenCode Code Review
 
@@ -411,7 +437,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install OpenCode CLI
         run: npm install -g open-code
@@ -449,6 +475,7 @@ jobs:
 ```
 
 **GitLab CI/CD:**
+
 ```yaml
 stages:
   - review
@@ -465,6 +492,7 @@ opencode-review:
 ```
 
 **Best Practices for CI/CD:**
+
 - Use `opencode run` for one-off command execution
 - Use `opencode serve` for persistent server-based workflows
 - Set up authentication with `opencode auth login` (required before CI/CD runs)
@@ -488,4 +516,3 @@ opencode-review:
 - **Community Forums:** Engage with OpenCode community for support and updates
 
 **Note:** OpenCode is actively developed. Check the official documentation and GitHub repositories for the latest features, CLI commands, and integration options. CLI commands and syntax may vary based on the specific implementation.
-

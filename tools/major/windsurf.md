@@ -6,12 +6,14 @@
 **Note:** Windsurf is primarily an IDE-based tool. Headless mode is available via Docker using the `windsurfinabox` project, which enables CI/CD integration.
 
 **When NOT to use Windsurf:**
+
 - ❌ You need pure CLI-only workflows (Windsurf is an IDE)
 - ❌ You need headless automation without Docker (requires Docker for headless mode)
 - ❌ You're working in a server environment without Docker support
 - ❌ You need massive context windows (Gemini CLI handles larger repos better)
 
 ### Quick Nav
+
 - [Start Here](#-start-here)
 - [Why Use Windsurf](#-why-use-windsurf)
 - [Best Use Cases](#-best-use-cases)
@@ -29,7 +31,10 @@
 
 Windsurf is an AI-powered IDE with CLI capabilities, designed to enhance software development through AI assistance. It combines IDE features with AI-powered code generation, suggestions, and workflow automation.
 
+**Ownership (March 2026):** Cognition (Devin AI) acquired Windsurf's remaining assets and team in July 2025. Google separately hired Windsurf's CEO/co-founder in a ~$2.4B talent deal but did NOT acquire the product. Windsurf continues as an active product under Cognition ownership, still shipping updates (Phoenix Alpha, Mar 2026). Google's separate IDE is [Antigravity](antigravity.md).
+
 **Key Characteristics:**
+
 - AI-powered IDE
 - CLI integration for automation
 - Multiple LLM provider support
@@ -39,6 +44,7 @@ Windsurf is an AI-powered IDE with CLI capabilities, designed to enhance softwar
 ## Installation
 
 **Download and Install:**
+
 1. Visit Windsurf website (check for official site)
 2. Download installer for your platform:
    - Windows
@@ -46,6 +52,7 @@ Windsurf is an AI-powered IDE with CLI capabilities, designed to enhance softwar
    - Linux
 
 **System Requirements:**
+
 - Modern operating system
 - Sufficient RAM (8GB+ recommended)
 - API keys for LLM providers
@@ -67,6 +74,7 @@ Windsurf can operate in headless mode using Docker, allowing integration into au
 **Setup Steps:**
 
 1. **Build the Docker Image:**
+
 ```bash
 git clone https://github.com/pfcoperez/windsurfinabox.git
 cd windsurfinabox
@@ -74,6 +82,7 @@ docker build . -t windsurf
 ```
 
 2. **Prepare the Workspace:**
+
 ```bash
 # Ensure workspace directory has read and write permissions
 # User must have UID:GID=1000:1000
@@ -82,18 +91,21 @@ chown -R 1000:1000 /path/to/workspace
 ```
 
 3. **Create an Instructions File:**
+
 ```bash
 # Create file with your task prompt
 echo "Your task prompt here" > /path/to/workspace/windsurf-instructions.txt
 ```
 
 4. **Obtain Windsurf Auth Token:**
+
 - Open Windsurf IDE
 - Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on macOS)
 - Run the command `Provide auth token`
 - Copy the token
 
 5. **Run the Docker Container:**
+
 ```bash
 export WINDSURF_TOKEN=your_auth_token
 docker run --rm -it --name windsurf \
@@ -104,6 +116,7 @@ docker run --rm -it --name windsurf \
 ```
 
 **How it works:**
+
 - Uses Xvfb to create a virtual X11 screen
 - Launches Windsurf editor in the virtual display
 - Uses `xdotool` to automate interactions
@@ -111,6 +124,7 @@ docker run --rm -it --name windsurf \
 - Enables headless operation without physical display
 
 **IDE Integration:**
+
 - Use Windsurf IDE for development
 - Integrated terminal for CLI operations
 - AI-powered code suggestions via Cascade agent
@@ -120,15 +134,16 @@ docker run --rm -it --name windsurf \
 
 Windsurf supports multiple LLM providers:
 
-| Provider | Models | Description |
-|----------|--------|-------------|
+| Provider      | Models                                                     | Description                       |
+| ------------- | ---------------------------------------------------------- | --------------------------------- |
 | **Anthropic** | Claude Opus 4.6, Claude Opus 4.6 (fast), Claude Sonnet 4.6 | Latest flagship models (Feb 2026) |
-| **OpenAI** | GPT-5.3-Codex, GPT-5.1, GPT-4o | Code generation, general tasks |
-| **Google** | Gemini 3.1 Pro, Gemini 2.5 Pro | Large context support |
-| **Zhipu AI** | GLM-5 | Open-source alternative |
-| **Minimax** | Minimax M2.5 | Cost-effective option |
+| **OpenAI**    | GPT-5.3-Codex, GPT-5.1, GPT-4o                             | Code generation, general tasks    |
+| **Google**    | Gemini 3.1 Pro, Gemini 2.5 Pro                             | Large context support             |
+| **Zhipu AI**  | GLM-5                                                      | Open-source alternative           |
+| **Minimax**   | Minimax M2.5                                               | Cost-effective option             |
 
 **Model Configuration:**
+
 - Configure in Windsurf IDE settings
 - Select models per project or globally
 - **Arena Mode** (Wave 14): side-by-side model comparison with hidden identities, personal + global leaderboards
@@ -138,6 +153,7 @@ Windsurf supports multiple LLM providers:
 > **Note (March 2026):** Windsurf now owned by Cognition (after OpenAI acquisition bid fell through). Phoenix Alpha in Next channel (Mar 3, 2026). Linux ARM64 binaries now available. Cascade hooks configuration added. MCP improvements include OAuth auto-login and Windows fixes.
 
 **Cascade Agent:**
+
 - AI-driven assistant that autonomously executes complex, multi-step tasks
 - Manages package installations, implements libraries, performs refactoring
 - Flow awareness: learns project structure and recent edits
@@ -146,6 +162,7 @@ Windsurf supports multiple LLM providers:
 ## Cascade Agent
 
 **Cascade Agent Features:**
+
 - **Autonomous Task Execution**: Manages package installations, implements libraries, performs refactoring
 - **Flow Awareness**: Continuously learns project structure and recent edits for precise, context-aware suggestions
 - **Autonomous Editing**: Applies edits across multiple files automatically, preserving repository rules
@@ -153,6 +170,7 @@ Windsurf supports multiple LLM providers:
 - **Adaptive Meta-Learning**: Learns team preferences, coding standards, and project-specific guidelines over time
 
 **Using Cascade:**
+
 - Access through Windsurf IDE interface
 - Provide natural language prompts
 - Cascade executes multi-step tasks autonomously
@@ -165,14 +183,17 @@ Windsurf supports multiple LLM providers:
 Workflows are markdown files stored in `.windsurf/workflows/` directory. They define reusable sequences of steps for repetitive tasks.
 
 **Creating a Workflow:**
+
 1. Navigate to the `Customizations` icon in the Cascade panel
 2. Select the `Workflows` panel
 3. Click on `+ Workflow` to create a new workflow
 4. Workflows are saved as markdown files in `.windsurf/workflows/`
 
 **Example Workflow:**
+
 ```markdown
 # Deploy Workflow
+
 1. Run tests: npm test
 2. Build project: npm run build
 3. Deploy to staging: npm run deploy:staging
@@ -180,6 +201,7 @@ Workflows are markdown files stored in `.windsurf/workflows/` directory. They de
 ```
 
 **Invoke Workflows:**
+
 - Use `/[workflow-name]` command in Cascade
 - Workflows can be parameterized
 - Can be shared across team members
@@ -188,18 +210,21 @@ Workflows are markdown files stored in `.windsurf/workflows/` directory. They de
 ## Features
 
 **AI-Powered Development:**
+
 - Code generation from natural language
 - Real-time code suggestions
 - Automated refactoring
 - Code explanation and documentation
 
 **IDE Features:**
+
 - Full-featured code editor
 - Integrated terminal
 - Git integration
 - Extension support
 
 **Workflow Automation:**
+
 - Automated code generation
 - Test generation
 - Documentation updates
@@ -208,25 +233,29 @@ Workflows are markdown files stored in `.windsurf/workflows/` directory. They de
 ## Configuration
 
 **IDE Settings:**
+
 - Configure in Windsurf settings
 - API key management
 - Model selection
 - Feature toggles
 
 **Environment Variables:**
+
 ```bash
 export OPENAI_API_KEY=your_key
 export ANTHROPIC_API_KEY=your_key
 ```
 
 **Config file:**
+
 - Location: Windsurf config directory
 - Format: JSON or YAML
 
 ## Examples
 
 **In Windsurf IDE:**
-```
+
+```text
 1. Open project in Windsurf
 2. Use AI chat: "Create a REST API endpoint"
 3. Generate code with AI assistance
@@ -234,6 +263,7 @@ export ANTHROPIC_API_KEY=your_key
 ```
 
 **CLI (if available):**
+
 ```bash
 # Analyze project
 windsurf analyze src/
@@ -245,6 +275,7 @@ windsurf generate --file src/api.py --prompt "Add authentication"
 ## CI/CD Integration
 
 **GitHub Actions workflow example:**
+
 ```yaml
 name: Windsurf Headless Automation
 
@@ -288,6 +319,7 @@ jobs:
 ```
 
 **Direct Docker usage in CI/CD:**
+
 ```bash
 #!/bin/bash
 set -e
@@ -308,6 +340,7 @@ docker run --rm \
 ```
 
 **Best practices for CI/CD:**
+
 - Use `windsurfinabox` Docker image for headless automation
 - Store Windsurf auth token as secret
 - Ensure workspace has correct permissions (UID:GID=1000:1000)
@@ -333,4 +366,3 @@ docker run --rm \
 - Workflows Guide: See Windsurf IDE workflows panel
 
 **Note:** Windsurf is actively developed. Check the official website and GitHub for the latest features, Cascade agent capabilities, and workflow documentation.
-

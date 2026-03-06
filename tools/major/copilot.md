@@ -6,6 +6,7 @@
 **Note:** GitHub Copilot CLI is in public preview with data protection and subject to change.
 
 **When NOT to use Copilot:**
+
 - ❌ You're in an untrusted repository (can execute shell/git commands)
 - ❌ You can't risk shell commands being run (high risk level)
 - ❌ You need deterministic runs (tool approval can vary)
@@ -13,6 +14,7 @@
 - ❌ You're working in production CI/CD without careful sandboxing
 
 ### Quick Nav
+
 - [Start Here](#-start-here)
 - [Why Use Copilot](#-why-use-copilot)
 - [Best Use Cases](#-best-use-cases)
@@ -36,6 +38,7 @@
 GitHub Copilot CLI is the command-line version of GitHub Copilot, designed for programmatic access to GitHub's AI capabilities. It provides native GitHub integration for managing PRs, issues, workflows, and Actions directly from the CLI.
 
 **Key Characteristics:**
+
 - CLI version of GitHub Copilot
 - Interactive and programmatic modes
 - Native GitHub integration
@@ -49,11 +52,13 @@ GitHub Copilot CLI is the command-line version of GitHub Copilot, designed for p
 ## Installation
 
 **Using npm:**
+
 ```bash
 npm install -g @github/copilot
 ```
 
 **System Requirements:**
+
 - Node.js 18 or later
 - GitHub account with Copilot access
 - Network connection
@@ -61,6 +66,7 @@ npm install -g @github/copilot
 ## Availability
 
 **Who can use this feature:**
+
 - GitHub Copilot CLI is available with the following plans:
   - GitHub Copilot Pro
   - GitHub Copilot Pro+
@@ -68,13 +74,14 @@ npm install -g @github/copilot
   - GitHub Copilot Enterprise
 
 **Organization requirements:**
+
 - If you receive Copilot from an organization, the Copilot CLI policy must be enabled in the organization's settings.
 
 ## Supported Operating Systems
 
 - **Linux**: Full support
 - **macOS**: Full support
-- **Windows**: 
+- **Windows**:
   - Windows Subsystem for Linux (WSL) - Full support
   - Native Windows PowerShell - Experimental support
 
@@ -89,12 +96,14 @@ copilot -p "Review this code for bugs"
 GitHub Copilot CLI can be used in two modes:
 
 **Interactive mode:**
+
 - Start an interactive session by using the `copilot` command (default mode)
 - In this mode, you can prompt Copilot to answer a question or perform a task
 - You can react to Copilot's responses in the same session
 - Use slash commands like `/model` to change models or `/feedback` to provide feedback
 
 **Programmatic mode:**
+
 - Pass the CLI a single prompt directly on the command line using `-p` or `--prompt`
 - To allow Copilot to modify and execute files, use one of the approval options (see [Tool Approval](#-tool-approval))
 - Example: `copilot -p "Show me this week's commits and summarize them" --allow-tool 'shell(git)'`
@@ -103,6 +112,7 @@ GitHub Copilot CLI can be used in two modes:
 ## Programmatic Mode
 
 **Basic usage:**
+
 ```bash
 # Direct prompt
 copilot -p "Your prompt here"
@@ -114,6 +124,7 @@ copilot -p "Revert the last commit" --allow-all-tools
 ```
 
 **Silent mode (scripting):**
+
 ```bash
 # Output only the agent response (no stats)
 copilot -p "Your prompt" --silent
@@ -122,11 +133,13 @@ copilot -p "Your prompt" -s
 ```
 
 **No color output (CI/CD friendly):**
+
 ```bash
 copilot -p "Your prompt" --no-color
 ```
 
 **Streaming control:**
+
 ```bash
 # Enable streaming (default)
 copilot -p "Your prompt" --stream on
@@ -136,6 +149,7 @@ copilot -p "Your prompt" --stream off
 ```
 
 **Session management with programmatic mode:**
+
 ```bash
 # Resume most recent session in programmatic mode
 copilot --continue -p "Continue from previous session"
@@ -145,6 +159,7 @@ copilot --resume [sessionId] -p "Continue from session"
 ```
 
 **Session management:**
+
 ```bash
 # Resume the most recent session
 copilot --continue
@@ -157,6 +172,7 @@ copilot --allow-all-tools --resume
 ```
 
 **Piping input:**
+
 ```bash
 # Pipe from script
 echo ./script-outputting-options.sh | copilot
@@ -168,45 +184,49 @@ git diff | copilot -p "Review these changes"
 ## Available Models
 
 **Default model:**
+
 - **Claude Sonnet 4.5** (1x premium request multiplier) - default
 - GitHub reserves the right to change the default model
 
 **Available models (updated March 2026 — GA release Feb 25, 2026):**
 
-| # | Model | Cost Multiplier | Description |
-|---|-------|-----------------|-------------|
-| 1 | **Auto** | 0.9x (10% Off) | Automatically selects the best model for the task |
-| 2 | **Claude Opus 4.6** | - | Latest Anthropic flagship (Feb 2026) |
-| 3 | **Claude Sonnet 4.6** | 1x | Latest balanced Claude model (Feb 2026) |
-| 4 | **Claude Sonnet 4.5** | 1x | Previous default, balanced performance |
-| 5 | **Claude Haiku 4.5** | 0.33x | Low-latency efficient model |
-| 6 | **GPT-5.3-Codex** | 1x | Latest combined Codex + GPT-5 model (Feb 2026) |
-| 7 | **GPT-5.1-Codex** | 1x | Proven coding-specific fine-tune |
-| 8 | **GPT-5.1-Codex-Mini** | 0.33x | Lightweight coding model |
-| 9 | **GPT-5.1** | 1x | Latest GPT with improved reasoning |
-| 10 | **GPT-5** | 1x | Standard GPT-5 |
-| 11 | **GPT-5-Mini** | 0x | Free tier OpenAI model |
-| 12 | **GPT-4.1** | 0x | Free tier OpenAI model |
-| 13 | **Gemini 3 Pro** | 1x | Latest Google model |
-| 14 | **Gemini 2.5 Pro** | 1x | Previous Google flagship |
-| 15 | **Grok Code Fast 1** | 0x | xAI high-speed coding model |
-| 16 | **Raptor mini (Preview)** | 0x | Ultra-low latency experimental model |
+| #   | Model                     | Cost Multiplier | Description                                       |
+| --- | ------------------------- | --------------- | ------------------------------------------------- |
+| 1   | **Auto**                  | 0.9x (10% Off)  | Automatically selects the best model for the task |
+| 2   | **Claude Opus 4.6**       | -               | Latest Anthropic flagship (Feb 2026)              |
+| 3   | **Claude Sonnet 4.6**     | 1x              | Latest balanced Claude model (Feb 2026)           |
+| 4   | **Claude Sonnet 4.5**     | 1x              | Previous default, balanced performance            |
+| 5   | **Claude Haiku 4.5**      | 0.33x           | Low-latency efficient model                       |
+| 6   | **GPT-5.3-Codex**         | 1x              | Latest combined Codex + GPT-5 model (Feb 2026)    |
+| 7   | **GPT-5.1-Codex**         | 1x              | Proven coding-specific fine-tune                  |
+| 8   | **GPT-5.1-Codex-Mini**    | 0.33x           | Lightweight coding model                          |
+| 9   | **GPT-5.1**               | 1x              | Latest GPT with improved reasoning                |
+| 10  | **GPT-5**                 | 1x              | Standard GPT-5                                    |
+| 11  | **GPT-5-Mini**            | 0x              | Free tier OpenAI model                            |
+| 12  | **GPT-4.1**               | 0x              | Free tier OpenAI model                            |
+| 13  | **Gemini 3 Pro**          | 1x              | Latest Google model                               |
+| 14  | **Gemini 2.5 Pro**        | 1x              | Previous Google flagship                          |
+| 15  | **Grok Code Fast 1**      | 0x              | xAI high-speed coding model                       |
+| 16  | **Raptor mini (Preview)** | 0x              | Ultra-low latency experimental model              |
 
 > **Note (March 2026):** Copilot CLI reached General Availability on Feb 25, 2026. New features include: background delegation (`&` prefix), Fleet mode (`/fleet` for parallel subagents), Autopilot mode (fully autonomous), and multi-model support. Install: `brew install copilot-cli`, `npm install -g @github/copilot`, or `winget install GitHub.Copilot`. Requires Node.js 22+.
 
 **Premium request multipliers:**
+
 - `0x` = Free (does not consume premium requests)
 - `1x` = Full premium request
 
 **Note:** Model availability may vary based on configured organizational policies. Some models may not be available due to policy restrictions.
 
 **Model selection:**
+
 - Use `/model` slash command in interactive mode to select a different model
 - Use `--model <model>` flag in programmatic mode
 - Selected model persists across sessions
 - Each prompt submission uses one premium request from your monthly quota, multiplied by the model's multiplier
 
 **Change model examples:**
+
 ```bash
 # In programmatic mode (use exact model name as shown in CLI)
 copilot --model "Claude Sonnet 4.5" -p "Your prompt"
@@ -226,11 +246,13 @@ copilot
 ## CLI Syntax
 
 **Basic usage:**
+
 ```bash
 copilot [options] -p "Your prompt"
 ```
 
 **Common options:**
+
 - `-p, --prompt TEXT`: Provide prompt directly
 - `-s, --silent`: Output only the agent response (no stats), useful for scripting
 - `--no-color`: Disable all color output (CI/CD friendly)
@@ -252,6 +274,7 @@ copilot [options] -p "Your prompt"
 - `-h, --help`: Display help for command
 
 **Environment variables:**
+
 - `COPILOT_ALLOW_ALL`: Equivalent to `--allow-all-tools` flag
 
 ## Tool Approval
@@ -259,6 +282,7 @@ copilot [options] -p "Your prompt"
 **Important:** When you use automatic approval options such as `--allow-all-tools`, Copilot has the same access as you do to files on your computer, and can run any shell commands that you can run, without getting your prior approval. See [Security](#-security) for more details.
 
 **Allow all tools (use with caution):**
+
 ```bash
 copilot -p "Revert the last commit" --allow-all-tools
 
@@ -267,6 +291,7 @@ COPILOT_ALLOW_ALL=1 copilot -p "Revert the last commit"
 ```
 
 **Deny specific tools:**
+
 ```bash
 # Prevent using rm command
 copilot --deny-tool 'shell(rm)' -p "Clean up temporary files"
@@ -279,6 +304,7 @@ copilot --deny-tool 'My-MCP-Server(tool_name)' -p "Use MCP tools"
 ```
 
 **Allow specific tools:**
+
 ```bash
 # Allow all shell commands
 copilot --allow-tool 'shell' -p "Run build script"
@@ -297,6 +323,7 @@ copilot --allow-tool 'My-MCP-Server' -p "Use MCP tools"
 ```
 
 **Tool specification syntax:**
+
 - `'shell(COMMAND)'`: For specific shell commands (e.g., `'shell(rm)'`, `'shell(git push)'`)
 - `'shell'`: For all shell commands
 - `'shell(git:*)'`: For wildcard patterns (all git commands)
@@ -305,6 +332,7 @@ copilot --allow-tool 'My-MCP-Server' -p "Use MCP tools"
 - `'MCP_SERVER_NAME(tool_name)'`: For a specific tool from an MCP server
 
 **Combining options:**
+
 ```bash
 # Allow all tools except rm and git push
 copilot --allow-all-tools --deny-tool 'shell(rm)' --deny-tool 'shell(git push)' \
@@ -324,6 +352,7 @@ copilot --allow-tool 'shell(git:*)' --deny-tool 'shell(git push)' \
 ## MCP Integration
 
 **Additional MCP configuration:**
+
 ```bash
 # Add MCP config from JSON string
 copilot --additional-mcp-config '{"servers": {...}}' -p "Your prompt"
@@ -336,6 +365,7 @@ copilot --additional-mcp-config @config1.json --additional-mcp-config @config2.j
 ```
 
 **Disable built-in MCP servers:**
+
 ```bash
 # Disable all built-in MCP servers (currently: github-mcp-server)
 copilot --disable-builtin-mcps -p "Your prompt"
@@ -345,16 +375,19 @@ copilot --disable-mcp-server github-mcp-server -p "Your prompt"
 ```
 
 **Enable all GitHub MCP tools:**
+
 ```bash
 # Enable all GitHub MCP server tools instead of the default CLI subset
 copilot --enable-all-github-mcp-tools -p "Your prompt"
 ```
 
 **Finding MCP server names:**
+
 - Enter `/mcp` in interactive mode to see a list of configured MCP servers
 - Select a server from the list to see its tools
 
 **MCP examples:**
+
 ```bash
 # Use GitHub MCP server explicitly
 copilot -p "Use the GitHub MCP server to find good first issues from octo-org/octo-repo"
@@ -368,6 +401,7 @@ copilot -p "Use My-MCP-Server to fetch data from the API"
 **Warning:** You should only launch Copilot CLI from directories that you trust. You should not use Copilot CLI in directories that may contain executable files you can't be sure you trust. Similarly, if you launch the CLI from a directory that contains sensitive or confidential data, or files that you don't want to be changed, you could inadvertently expose those files to risk. Typically, you should not launch Copilot CLI from your home directory.
 
 **Trusted directories:**
+
 - When starting a session, you'll be asked to confirm trust for the current directory
 - Choose to trust for current session only, or for future sessions
 - If you choose to trust for future sessions, the trusted directory prompt will not be displayed again
@@ -375,21 +409,22 @@ copilot -p "Use My-MCP-Server to fetch data from the API"
 - Config file location can be changed by setting the `XDG_CONFIG_HOME` environment variable
 
 **Config file structure:**
+
 ```json
 {
-  "trusted_folders": [
-    "/path/to/trusted/directory"
-  ]
+  "trusted_folders": ["/path/to/trusted/directory"]
 }
 ```
 
 **Path verification:**
+
 - By default, Copilot verifies file paths before accessing them
 - Use `--allow-all-paths` to disable file path verification (use with caution)
 - Use `--disallow-temp-dir` to prevent automatic access to the system temporary directory
 - Use `--add-dir <directory>` to add specific directories to the allowed list (can be used multiple times)
 
 **Tool approval:**
+
 - First time using a tool (e.g., `touch`, `chmod`, `node`, `sed`), Copilot asks for approval
 - Options:
   1. Yes (this time only) - allows this particular command this time only
@@ -397,10 +432,12 @@ copilot -p "Use My-MCP-Server to fetch data from the API"
   3. No, and tell Copilot what to do differently (Esc) - cancels the proposed command
 
 **Security implications of automatic tool approval:**
+
 - Using `--allow-all-tools` or other approval options allows Copilot to execute commands without giving you the opportunity to review and approve those commands before they are run
 - While this streamlines workflows and allows headless operation, it increases the risk of unintended actions that might result in data loss or corruption, or other security issues
 
 **Risk mitigation:**
+
 - Use in restricted environments (VM, container, dedicated system) without internet access
 - Review suggested commands carefully when Copilot CLI requests your approval
 - Don't launch from home directory or untrusted locations
@@ -412,6 +449,7 @@ copilot -p "Use My-MCP-Server to fetch data from the API"
 ### Local Tasks
 
 **Code changes:**
+
 ```bash
 # Change CSS styling
 copilot -p "Change the background-color of H1 headings to dark blue" --allow-tool 'write'
@@ -427,6 +465,7 @@ copilot -p "Rewrite the readme in this project to make it more accessible to new
 ```
 
 **Git operations:**
+
 ```bash
 # Commit changes
 copilot -p "Commit the changes to this repo" --allow-tool 'shell(git)'
@@ -436,12 +475,14 @@ copilot -p "Revert the last commit, leaving the changes unstaged" --allow-tool '
 ```
 
 **Create applications:**
+
 ```bash
 # Create Next.js app with GitHub API integration
 copilot -p "Use the create-next-app kit and tailwind CSS to create a next.js app. The app should be a dashboard built with data from the GitHub API. It should track this project's build success rate, average build duration, number of failed builds, and automated test pass rate. After creating the app, give me easy to follow instructions on how to build, run, and view the app in my browser." --allow-all-tools
 ```
 
 **Debugging:**
+
 ```bash
 # Fix issues
 copilot -p "You said: 'The application is now running on http://localhost:3002 and is fully functional!' but when I browse to that URL I get 'This site can't be reached'" --allow-all-tools
@@ -450,6 +491,7 @@ copilot -p "You said: 'The application is now running on http://localhost:3002 a
 ### Tasks Involving GitHub.com
 
 **List work:**
+
 ```bash
 # List open PRs
 copilot -p "List my open PRs"
@@ -459,12 +501,14 @@ copilot -p "List all open issues assigned to me in OWNER/REPO"
 ```
 
 **Work on issues:**
+
 ```bash
 # Start working on an issue
 copilot -p "I've been assigned this issue: https://github.com/octo-org/octo-repo/issues/1234. Start working on this for me in a suitably named branch." --allow-all-tools
 ```
 
 **Create pull requests:**
+
 ```bash
 # Create PR with file changes
 copilot -p "In the root of this repo, add a Node script called user-info.js that outputs information about the user who ran the script. Create a pull request to add this file to the repo on GitHub." --allow-all-tools
@@ -474,18 +518,21 @@ copilot -p "Create a PR that updates the README at https://github.com/octo-org/o
 ```
 
 **Create issues:**
+
 ```bash
 # Raise improvement issue
 copilot -p "Raise an improvement issue in octo-org/octo-repo. In src/someapp/somefile.py the \`file = open('data.txt', 'r')\` block opens a file but never closes it." --allow-all-tools
 ```
 
 **Review pull requests:**
+
 ```bash
 # Check PR changes
 copilot -p "Check the changes made in PR https://github.com/octo-org/octo-repo/pull/57575. Report any serious errors you find in these changes."
 ```
 
 **Manage pull requests:**
+
 ```bash
 # Merge PRs
 copilot -p "Merge all of the open PRs that I've created in octo-org/octo-repo" --allow-all-tools
@@ -495,12 +542,14 @@ copilot -p "Close PR #11 on octo-org/octo-repo" --allow-all-tools
 ```
 
 **Find issues:**
+
 ```bash
 # Find good first issues
 copilot -p "Use the GitHub MCP server to find good first issues for a new team member to work on from octo-org/octo-repo"
 ```
 
 **GitHub Actions:**
+
 ```bash
 # List workflows
 copilot -p "List any Actions workflows in this repo that add comments to PRs"
@@ -546,6 +595,7 @@ copilot --log-dir /path/to/logs --log-level info -p "Your prompt"
 **Note:** Copilot CLI supports headless/programmatic mode for CI/CD automation. The `-p` flag exits with nonzero codes on permission or communication errors, making it suitable for automated workflows.
 
 **Best practices for CI/CD:**
+
 - Use `--allow-all-tools` with extreme caution in CI/CD environments
 - Use `--no-color` for clean log output
 - Use `--silent` for script-friendly output (outputs only agent response, no stats)
@@ -554,6 +604,7 @@ copilot --log-dir /path/to/logs --log-level info -p "Your prompt"
 - Redirect output to files for artifacts
 
 **CI/CD-friendly execution:**
+
 ```bash
 # Silent mode with no color (ideal for CI/CD)
 copilot -p "Review code changes" --silent --no-color --allow-all-tools
@@ -569,6 +620,7 @@ copilot -p "Generate report" --silent --no-color --allow-all-tools > report.txt 
 ```
 
 **GitHub Actions workflow example:**
+
 ```yaml
 name: Copilot Code Review
 
@@ -586,13 +638,13 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      
+
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
-      
+          node-version: "20"
+
       - run: npm install -g @github/copilot
-      
+
       - name: Run Code Review
         env:
           COPILOT_ALLOW_ALL: 1
@@ -603,7 +655,7 @@ jobs:
             --silent \
             --allow-all-tools \
             > review.txt || echo "Review failed" > review.txt
-      
+
       - name: Post Review Comment
         uses: actions/github-script@v7
         if: always()
@@ -613,7 +665,7 @@ jobs:
             const reviewText = fs.existsSync('review.txt') 
               ? fs.readFileSync('review.txt', 'utf8')
               : 'Review file not found';
-            
+
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
@@ -623,6 +675,7 @@ jobs:
 ```
 
 **Automation patterns:**
+
 ```bash
 # Batch processing
 for file in src/*.js; do
@@ -656,6 +709,7 @@ copilot --model claude-haiku-4.5 -p "Quick analysis" --silent --no-color --allow
 ## Feedback
 
 If you have any feedback about GitHub Copilot CLI, use the `/feedback` slash command in an interactive session and choose one of the options:
+
 - Complete a private feedback survey
 - Submit a bug report
 - Suggest a new feature

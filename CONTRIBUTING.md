@@ -16,11 +16,14 @@ Thank you for your interest in contributing to the AI CLI Reference Repository! 
 
 1. **Fork the repository**
 2. **Clone your fork:**
+
    ```bash
    git clone https://github.com/your-username/headless-ai-cli.git
    cd headless-ai-cli
    ```
+
 3. **Create a branch:**
+
    ```bash
    git checkout -b add-new-tool-name
    ```
@@ -30,6 +33,7 @@ Thank you for your interest in contributing to the AI CLI Reference Repository! 
 ### Step 1: Research the Tool
 
 Before adding a new tool, verify:
+
 - ✅ Tool exists and is actively maintained
 - ✅ Tool has CLI/headless capabilities
 - ✅ Official documentation is available
@@ -39,18 +43,21 @@ Before adding a new tool, verify:
 ### Step 2: Choose the Right Category
 
 **Major Tools** (`tools/major/`):
+
 - Production-ready tools
 - Widely adopted
 - Comprehensive documentation
 - Active development
 
 **Emerging Tools** (`tools/emerging/`):
+
 - Newer tools
 - Growing adoption
 - Promising features
 - Active development
 
 **Specialized Tools** (`tools/specialized/`):
+
 - Niche use cases
 - Specialized functionality
 - Limited but focused scope
@@ -60,6 +67,7 @@ Before adding a new tool, verify:
 Use the template from `tools/TEMPLATE.md`:
 
 1. Copy the template:
+
    ```bash
    cp tools/TEMPLATE.md tools/[category]/tool-name.md
    ```
@@ -123,10 +131,12 @@ Each tool documentation file should include:
 **Risk level:** [🟢 Low / 🟠 Medium / ⚠️ High / ⚡ Very High]
 
 **When NOT to use [Tool]:**
+
 - ❌ Reason 1
 - ❌ Reason 2
 
 ### Quick Nav
+
 - [Start Here](#-start-here)
 - [Why Use Tool](#-why-use-tool)
 - [Best Use Cases](#-best-use-cases)
@@ -140,33 +150,43 @@ Each tool documentation file should include:
 - [References](#-references)
 
 ## Overview
+
 [Description]
 
 ## Installation
+
 [Instructions]
 
 ## 🚀 Start Here
+
 [Quick start example]
 
 ## Headless Mode
+
 [Headless usage details]
 
 ## Available Models
+
 [Model table]
 
 ## CLI Syntax
+
 [Command structure]
 
 ## Configuration
+
 [Config options]
 
 ## Examples
+
 [Usage examples]
 
 ## Limitations
+
 [Known limitations]
 
 ## References
+
 [Official links]
 ```
 
@@ -305,7 +325,6 @@ If you have questions about contributing:
 3. Open an issue for discussion
 4. Ask in PR comments
 
-## Thank You!
+## Thank You
 
 Your contributions help make this repository a valuable resource for developers working with AI CLI tools. We appreciate your time and effort!
-

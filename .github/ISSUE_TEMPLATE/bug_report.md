@@ -1,9 +1,9 @@
 ---
 name: Bug Report / Outdated Documentation
 about: Report incorrect CLI syntax, broken examples, or outdated information
-title: '[BUG] '
-labels: 'bug, documentation'
-assignees: ''
+title: "[BUG] "
+labels: "bug, documentation"
+assignees: ""
 ---
 
 ## What's Wrong
@@ -29,7 +29,7 @@ assignees: ''
 - [ ] Command failed when I ran it
 - [ ] Official docs show different syntax
 - [ ] Tool version changed
-- [ ] Other: ___
+- [ ] Other: \_\_\_
 
 ## Environment
 

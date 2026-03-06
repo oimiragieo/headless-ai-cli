@@ -1,9 +1,9 @@
 ---
 name: Feature Request / New Tool
 about: Suggest a new AI CLI tool to document or improvement to existing docs
-title: '[REQUEST] '
-labels: 'enhancement'
-assignees: ''
+title: "[REQUEST] "
+labels: "enhancement"
+assignees: ""
 ---
 
 ## Request Type

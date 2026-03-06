@@ -3,6 +3,7 @@
 > ⚠️ **DEPRECATION NOTICE (November 2025)**
 >
 > Amazon Q Developer CLI has been **deprecated** and migrated to **Kiro CLI** as of November 17, 2025.
+>
 > - The CLI will only receive critical security fixes going forward
 > - New users should use [Kiro CLI](kiro.md) instead
 > - Existing installations can upgrade with `q update` (auto-upgraded Nov 24, 2025)
@@ -16,12 +17,14 @@
 **Risk level:** 🟢 Low (AWS service integration, controlled access)
 
 **When NOT to use Amazon Q:**
+
 - ❌ You're not using AWS services
 - ❌ You need massive context windows (Gemini handles larger repos better)
 - ❌ You need pure local/offline workflows
 - ❌ You don't have AWS account access
 
 ### Quick Nav
+
 - [Start Here](#-start-here)
 - [Why Use Amazon Q](#-why-use-amazon-q)
 - [Best Use Cases](#-best-use-cases)
@@ -39,6 +42,7 @@
 Amazon Q Developer is an AI coding assistant developed by AWS, designed to assist developers with code reviews, transformations, and development tasks. It integrates with AWS services and GitHub, providing AI-powered assistance for modernizing legacy systems and enhancing development workflows.
 
 **Key Characteristics:**
+
 - AWS service integration
 - GitHub integration for code reviews
 - Legacy system modernization
@@ -50,6 +54,7 @@ Amazon Q Developer is an AI coding assistant developed by AWS, designed to assis
 **Install Amazon Q Developer CLI:**
 
 **macOS:**
+
 ```bash
 # Using Homebrew
 brew install amazon-q-developer-cli
@@ -59,6 +64,7 @@ brew install amazon-q-developer-cli
 ```
 
 **Linux:**
+
 ```bash
 # Download and install from GitHub releases
 # Visit: https://github.com/aws/amazon-q-developer-cli/releases
@@ -71,17 +77,20 @@ cd amazon-q-developer-cli-linux
 ```
 
 **Windows:**
+
 ```bash
 # Download installer from GitHub releases
 # Visit: https://github.com/aws/amazon-q-developer-cli/releases
 ```
 
 **Verify Installation:**
+
 ```bash
 q --version
 ```
 
 **Authenticate:**
+
 ```bash
 # Login to Amazon Q Developer
 q login
@@ -110,6 +119,7 @@ q chat
 **Non-interactive execution for automation, scripting, and CI/CD pipelines:**
 
 **Basic Headless Usage:**
+
 ```bash
 # Chat in headless mode (non-interactive)
 q chat --prompt "Review this code for security issues"
@@ -125,6 +135,7 @@ q chat --prompt "Refactor to use async/await" --files src/*.py
 ```
 
 **Headless Authentication:**
+
 ```bash
 # For CI/CD, pre-authenticate and store credentials
 # Copy authentication files into Docker/CI environment
@@ -132,6 +143,7 @@ q chat --prompt "Refactor to use async/await" --files src/*.py
 ```
 
 **Docker/Container Headless Setup:**
+
 ```bash
 # Build Docker image with pre-authenticated CLI
 # 1. Authenticate locally: q login
@@ -147,12 +159,14 @@ q chat --prompt "Refactor to use async/await" --files src/*.py
 ```
 
 **GitHub Integration (Headless):**
+
 - Automated code reviews on PRs via GitHub Actions
 - Code suggestions and improvements
 - Legacy system modernization suggestions
 - Use GitHub Marketplace integration for automated workflows
 
 **API Integration:**
+
 - Use AWS SDK for programmatic access
 - Integrate with CI/CD pipelines
 - Automated code analysis via AWS Bedrock APIs
@@ -161,16 +175,17 @@ q chat --prompt "Refactor to use async/await" --files src/*.py
 
 Amazon Q Developer uses AWS Bedrock models:
 
-| Model | Description | Provider | Context |
-|-------|-------------|----------|---------|
+| Model                 | Description                                | Provider    | Context      |
+| --------------------- | ------------------------------------------ | ----------- | ------------ |
 | **Claude 3.7 Sonnet** | Latest Claude Sonnet, balanced performance | AWS Bedrock | ~200K tokens |
-| **Claude 3.5 Sonnet** | Strong reasoning, good for refactoring | AWS Bedrock | ~200K tokens |
-| **Claude 3 Opus** | Deep reasoning, complex tasks | AWS Bedrock | ~200K tokens |
-| **Claude 3 Haiku** | Fast, cost-effective | AWS Bedrock | ~200K tokens |
-| **Titan Text** | AWS native models | AWS Bedrock | Varies |
-| **Titan Text G1** | Latest Titan model | AWS Bedrock | Varies |
+| **Claude 3.5 Sonnet** | Strong reasoning, good for refactoring     | AWS Bedrock | ~200K tokens |
+| **Claude 3 Opus**     | Deep reasoning, complex tasks              | AWS Bedrock | ~200K tokens |
+| **Claude 3 Haiku**    | Fast, cost-effective                       | AWS Bedrock | ~200K tokens |
+| **Titan Text**        | AWS native models                          | AWS Bedrock | Varies       |
+| **Titan Text G1**     | Latest Titan model                         | AWS Bedrock | Varies       |
 
 **Model Selection:**
+
 - Models are configured through AWS Bedrock
 - Region-specific availability (check AWS Bedrock availability)
 - Enterprise model options available
@@ -182,11 +197,13 @@ Amazon Q Developer uses AWS Bedrock models:
 ## CLI Syntax
 
 **Basic usage:**
+
 ```bash
 q [command] [options]
 ```
 
 **Main commands:**
+
 - `q login`: Authenticate with Amazon Q Developer
 - `q chat`: Start interactive chat or headless chat session
 - `q chat --prompt "text"`: Non-interactive chat with prompt
@@ -195,6 +212,7 @@ q [command] [options]
 - `q --help`: Show help
 
 **Chat command options:**
+
 - `--prompt, -p TEXT`: Provide prompt directly (headless mode)
 - `--file, -f FILE`: Include file in context
 - `--files, -F FILES`: Include multiple files (space-separated)
@@ -202,6 +220,7 @@ q [command] [options]
 - `--output, -o FILE`: Save output to file
 
 **Headless Mode Examples:**
+
 ```bash
 # Basic headless chat
 q chat --prompt "Review this code for bugs"
@@ -220,14 +239,16 @@ q chat --prompt "Generate documentation" --file src/api.py --output docs/api.md
 ```
 
 **GitHub Integration:**
+
 - Automated PR reviews via GitHub Actions
 - Code suggestions in comments
 - Transformation recommendations
-- Use GitHub Marketplace: https://github.com/marketplace/amazon-q-developer
+- Use GitHub Marketplace: <https://github.com/marketplace/amazon-q-developer>
 
 ## Configuration
 
 **Authentication:**
+
 ```bash
 # Interactive login (opens browser)
 q login
@@ -238,6 +259,7 @@ q login
 ```
 
 **AWS Credentials (if using AWS SDK integration):**
+
 ```bash
 # Configure AWS credentials
 aws configure
@@ -249,6 +271,7 @@ export AWS_DEFAULT_REGION=us-east-1
 ```
 
 **Environment Variables:**
+
 ```bash
 # Amazon Q Developer CLI
 export AMAZONQ_REGION=us-east-1
@@ -261,16 +284,19 @@ export AWS_DEFAULT_REGION=us-east-1
 ```
 
 **Config File Location:**
+
 - Authentication: `~/.amazonq/`
 - Config: `~/.amazonq/config.json` (if applicable)
 
 **GitHub Integration:**
+
 - Configure in AWS Console
 - Link GitHub repositories
 - Set up webhooks for PR reviews
-- Use GitHub Marketplace integration: https://github.com/marketplace/amazon-q-developer
+- Use GitHub Marketplace integration: <https://github.com/marketplace/amazon-q-developer>
 
 **IAM Permissions:**
+
 - Require appropriate IAM roles
 - AWS Bedrock access permissions
 - Code review permissions
@@ -279,6 +305,7 @@ export AWS_DEFAULT_REGION=us-east-1
 ## Examples
 
 **Code Review (Headless):**
+
 ```bash
 # Review code file
 q chat --prompt "Review this code for bugs, security issues, and best practices" --file src/main.py
@@ -291,6 +318,7 @@ q chat --prompt "Analyze codebase for security vulnerabilities" --directory src/
 ```
 
 **Code Transformation (Headless):**
+
 ```bash
 # Modernize legacy code
 q chat --prompt "Convert this code to use async/await patterns" --file legacy.py
@@ -303,6 +331,7 @@ q chat --prompt "Add comprehensive error handling and input validation" --file s
 ```
 
 **Code Generation (Headless):**
+
 ```bash
 # Generate unit tests
 q chat --prompt "Generate comprehensive unit tests with 80%+ coverage" --file src/calculator.py --output tests/test_calculator.py
@@ -315,6 +344,7 @@ q chat --prompt "Add type hints to all functions and classes" --file src/main.py
 ```
 
 **Codebase Analysis (Headless):**
+
 ```bash
 # Analyze entire codebase
 q chat --prompt "Analyze codebase structure, identify technical debt, and suggest improvements" --directory . --output analysis.md
@@ -324,6 +354,7 @@ q chat --prompt "Perform security audit: identify vulnerabilities, insecure patt
 ```
 
 **Interactive Chat:**
+
 ```bash
 # Start interactive chat session
 q chat
@@ -338,6 +369,7 @@ q chat
 ## CI/CD Integration
 
 **GitHub Actions Workflow:**
+
 ```yaml
 name: Amazon Q Code Review
 
@@ -384,7 +416,7 @@ jobs:
         run: |
           # Get changed files
           CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -E '\.(py|js|ts|java)$' || true)
-          
+
           if [ -z "$CHANGED_FILES" ]; then
             echo "No code files to review."
             echo "review_output=No code files to review." >> $GITHUB_OUTPUT
@@ -422,6 +454,7 @@ jobs:
 ```
 
 **GitLab CI/CD:**
+
 ```yaml
 stages:
   - review
@@ -443,6 +476,7 @@ amazon-q-review:
 ```
 
 **Docker Headless Setup:**
+
 ```dockerfile
 FROM ubuntu:latest
 
@@ -465,6 +499,7 @@ ENTRYPOINT ["q"]
 ```
 
 **Best Practices for CI/CD:**
+
 - Pre-authenticate and store credentials securely
 - Use secrets management for authentication files
 - Handle authentication errors gracefully
@@ -491,4 +526,3 @@ ENTRYPOINT ["q"]
 - **Docker Guide:** [Putting Amazon Q Developer in a Docker Container](https://community.aws/content/2uZYCp6BNJJgBaRnw3Nie6i8r0l/putting-amazon-q-developer-in-a-docker-container)
 
 **Note:** Amazon Q Developer is an AWS service. Check AWS documentation and the GitHub repository for the latest features, CLI commands, and integration options. The CLI is actively developed and commands may change.
-

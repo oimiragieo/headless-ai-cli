@@ -1,34 +1,35 @@
 # AI CLI Quick Reference
 
 > **Single-source reference for headless AI CLI tools**
-> *Last Updated: March 2026 | 14 Tools Documented (10 full headless, 3 limited, 1 deprecated)*
+> _Last Updated: March 2026 | 15 Tools Documented (10 full headless, 4 limited/no headless, 1 deprecated)_
 
 ---
 
 ## 10-Second Tool Selector
 
-| Need | Tool | Why |
-|------|------|-----|
-| **Huge context (1M+ tokens)** | Gemini | Best for repo-wide analysis |
-| **Deep reasoning** | Claude Opus | Architecture & complex logic |
-| **UI/front-end generation** | Codex | Fast HTML/CSS/React prototyping |
-| **CI/CD automation** | Droid | Safe, deterministic, read-only default |
-| **GitHub integration** | Copilot | Native PR & issue understanding |
-| **AWS integration** | Amazon Q ⚠️ | AWS services (DEPRECATED - use Kiro) |
-| **Workflow automation** | Cursor | Multi-step agent workflows |
-| **Pair programming** | Aider | Git-integrated AI pair coding |
-| **VS Code integration** | Continue Dev | IDE-first development |
-| **Task automation** | Cline | Autonomous task execution |
-| **Multi-language** | OpenCode | Polyglot support |
-| **Spec-driven development** | Kiro | Full CLI agent (v1.27) with skills, agents, tool trust |
-| **Enhanced terminal** | Warp ⚠️ | macOS terminal UX (no headless) |
-| **IDE development** | Windsurf ⚠️ | Docker-only headless |
+| Need                           | Tool           | Why                                                    |
+| ------------------------------ | -------------- | ------------------------------------------------------ |
+| **Huge context (1M+ tokens)**  | Gemini         | Best for repo-wide analysis                            |
+| **Deep reasoning**             | Claude Opus    | Architecture & complex logic                           |
+| **UI/front-end generation**    | Codex          | Fast HTML/CSS/React prototyping                        |
+| **CI/CD automation**           | Droid          | Safe, deterministic, read-only default                 |
+| **GitHub integration**         | Copilot        | Native PR & issue understanding                        |
+| **AWS integration**            | Amazon Q ⚠️    | AWS services (DEPRECATED - use Kiro)                   |
+| **Workflow automation**        | Cursor         | Multi-step agent workflows                             |
+| **Pair programming**           | Aider          | Git-integrated AI pair coding                          |
+| **VS Code integration**        | Continue Dev   | IDE-first development                                  |
+| **Task automation**            | Cline          | Autonomous task execution                              |
+| **Multi-language**             | OpenCode       | Polyglot support                                       |
+| **Spec-driven development**    | Kiro           | Full CLI agent (v1.27) with skills, agents, tool trust |
+| **Enhanced terminal**          | Warp ⚠️        | macOS terminal UX (no headless)                        |
+| **Google Cloud + multi-agent** | Antigravity ⚠️ | Desktop IDE only (no headless)                         |
+| **IDE development**            | Windsurf ⚠️    | Docker-only headless (Cognition)                       |
 
 ---
 
 ## What to Use When
 
-```
+```text
 Fast local inference         → Aider (with local models)
 Best structured JSON output  → Gemini, Claude, Codex, Droid
 CI/CD headless execution     → Droid, Claude, Gemini
@@ -43,24 +44,25 @@ Code review automation       → All tools with --output-format json
 
 ---
 
-## Feature Matrix (All 14 Tools)
+## Feature Matrix (All 15 Tools)
 
-| Tool | Headless | JSON | Stream | Writes | Platform |
-|------|:--------:|:----:|:------:|:------:|----------|
-| Gemini | ✅ | ✅ | ✅ | flag | Win/Mac/Linux |
-| Claude | ✅ | ✅ | ✅ | approval | Win/Mac/Linux |
-| Codex | ✅ | ✅ | ✅ | flag | Win/Mac/Linux |
-| Cursor | ✅ | ✅ | ✅ | default | Win/Mac/Linux |
-| Droid | ✅ | ✅ | ✅ | flag | Win/Mac/Linux |
-| Copilot | ✅ | ❌ | ❌ | flag | Win/Mac/Linux |
-| Aider | ✅ | ❌ | ❌ | flag | Win/Mac/Linux |
-| Continue | ✅ | ❌ | ❌ | approval | Win/Mac/Linux |
-| Cline | ✅ | ✅ | ❌ | flag | Win/Mac/Linux |
-| OpenCode | ✅ | ❌ | ❌ | flag | Win/Mac/Linux |
-| Kiro | ✅ | ❌ | ❌ | approval | Win/Mac/Linux |
-| Warp | ❌ | — | — | — | macOS terminal |
-| Windsurf | ⚠️ | ❌ | ❌ | default | Docker required |
-| Amazon Q | ✅ | ✅ | ❌ | flag | DEPRECATED |
+| Tool        | Headless | JSON | Stream |  Writes  | Platform        |
+| ----------- | :------: | :--: | :----: | :------: | --------------- |
+| Gemini      |    ✅    |  ✅  |   ✅   |   flag   | Win/Mac/Linux   |
+| Claude      |    ✅    |  ✅  |   ✅   | approval | Win/Mac/Linux   |
+| Codex       |    ✅    |  ✅  |   ✅   |   flag   | Win/Mac/Linux   |
+| Cursor      |    ✅    |  ✅  |   ✅   | default  | Win/Mac/Linux   |
+| Droid       |    ✅    |  ✅  |   ✅   |   flag   | Win/Mac/Linux   |
+| Copilot     |    ✅    |  ❌  |   ❌   |   flag   | Win/Mac/Linux   |
+| Aider       |    ✅    |  ❌  |   ❌   |   flag   | Win/Mac/Linux   |
+| Continue    |    ✅    |  ❌  |   ❌   | approval | Win/Mac/Linux   |
+| Cline       |    ✅    |  ✅  |   ❌   |   flag   | Win/Mac/Linux   |
+| OpenCode    |    ✅    |  ❌  |   ❌   |   flag   | Win/Mac/Linux   |
+| Kiro        |    ✅    |  ❌  |   ❌   | approval | Win/Mac/Linux   |
+| Antigravity |    ❌    |  —   |   —    | default  | Desktop IDE     |
+| Warp        |    ❌    |  —   |   —    |    —     | macOS terminal  |
+| Windsurf    |    ⚠️    |  ❌  |   ❌   | default  | Docker required |
+| Amazon Q    |    ✅    |  ✅  |   ❌   |   flag   | DEPRECATED      |
 
 **Writes:** approval = user must approve | flag = opt-in via flag | default = writes without prompting
 
@@ -70,28 +72,29 @@ Code review automation       → All tools with --output-format json
 
 Map standard actions across all tools:
 
-| Action | Gemini | Claude | Codex | Droid |
-|--------|--------|--------|-------|-------|
-| **Headless prompt** | `gemini -p "cmd"` | `claude -p "cmd"` | `codex exec "cmd"` | `droid exec "cmd"` |
-| **JSON output** | `--output-format json` | `--output-format json` | `--json` | `--output-format json` |
-| **Skip confirmations** | (default) | `--permission-mode bypassPermissions` | `--full-auto` | `--auto high` |
-| **Read-only mode** | N/A | `--allowedTools "Read"` | (default) | `--auto low` |
-| **Set model** | `--model gemini-3.1-pro` | `--model opus` | `--model gpt-5.3-codex` | N/A |
-| **Pipe input** | `cat file \| gemini -p` | `cat file \| claude -p` | `cat file \| codex exec` | `cat file \| droid exec` |
+| Action                 | Gemini                   | Claude                                | Codex                    | Droid                    |
+| ---------------------- | ------------------------ | ------------------------------------- | ------------------------ | ------------------------ |
+| **Headless prompt**    | `gemini -p "cmd"`        | `claude -p "cmd"`                     | `codex exec "cmd"`       | `droid exec "cmd"`       |
+| **JSON output**        | `--output-format json`   | `--output-format json`                | `--json`                 | `--output-format json`   |
+| **Skip confirmations** | (default)                | `--permission-mode bypassPermissions` | `--full-auto`            | `--auto high`            |
+| **Read-only mode**     | N/A                      | `--allowedTools "Read"`               | (default)                | `--auto low`             |
+| **Set model**          | `--model gemini-3.1-pro` | `--model opus`                        | `--model gpt-5.3-codex`  | N/A                      |
+| **Pipe input**         | `cat file \| gemini -p`  | `cat file \| claude -p`               | `cat file \| codex exec` | `cat file \| droid exec` |
 
-| Action | Cursor | Copilot | Cline | Amazon Q |
-|--------|--------|---------|-------|----------|
-| **Headless prompt** | `cursor-agent -p "cmd"` | `copilot -p "cmd"` | `cline "cmd"` | `q chat "cmd"` |
-| **JSON output** | `--output-format json` | (limited) | `--output-format json` | `--output json` |
-| **Skip confirmations** | `--force` | `--allow-all-tools` | `--yolo` | `--trust-workspace` |
-| **Read-only mode** | N/A | N/A | N/A | N/A |
-| **Set model** | N/A | N/A | N/A | N/A |
+| Action                 | Cursor                  | Copilot             | Cline                  | Amazon Q            |
+| ---------------------- | ----------------------- | ------------------- | ---------------------- | ------------------- |
+| **Headless prompt**    | `cursor-agent -p "cmd"` | `copilot -p "cmd"`  | `cline "cmd"`          | `q chat "cmd"`      |
+| **JSON output**        | `--output-format json`  | (limited)           | `--output-format json` | `--output json`     |
+| **Skip confirmations** | `--force`               | `--allow-all-tools` | `--yolo`               | `--trust-workspace` |
+| **Read-only mode**     | N/A                     | N/A                 | N/A                    | N/A                 |
+| **Set model**          | N/A                     | N/A                 | N/A                    | N/A                 |
 
 ---
 
 ## Installation by Package Manager
 
 ### npm (Node.js)
+
 ```bash
 # Core tools
 npm install -g @google/gemini-cli        # Gemini CLI
@@ -110,11 +113,13 @@ npm upgrade -g @google/gemini-cli @anthropic-ai/claude-code @openai/codex @githu
 ```
 
 ### pip (Python)
+
 ```bash
 pip install aider-chat                   # Aider
 ```
 
 ### curl (Shell Scripts)
+
 ```bash
 curl https://cursor.com/install -fsS | bash           # Cursor
 curl -fsSL https://app.factory.ai/cli | sh            # Droid
@@ -122,13 +127,15 @@ curl -fsSL https://cli.kiro.dev/install | bash        # Kiro
 ```
 
 ### brew (macOS)
+
 ```bash
 brew install --cask warp                 # Warp Terminal
 brew install amazon-q-developer-cli      # Amazon Q
 ```
 
 ### Manual Download
-```
+
+```text
 Windsurf IDE: https://windsurf.com/editor
 Kiro IDE:     https://kiro.dev/
 ```
@@ -138,6 +145,7 @@ Kiro IDE:     https://kiro.dev/
 ## Tool Reference (All 14 Tools)
 
 ### Gemini CLI
+
 > Google's AI CLI with 1M+ token context — best for large codebase analysis
 
 ```bash
@@ -162,6 +170,7 @@ gemini -p "Generate documentation" --output-format streaming
 ---
 
 ### Claude Code
+
 > Anthropic's CLI for deep reasoning — best for architecture and complex logic
 
 ```bash
@@ -189,6 +198,7 @@ claude -p --resume abc123 "Continue the refactoring"
 ---
 
 ### Codex (OpenAI)
+
 > OpenAI's CLI for UI generation — best for front-end and prototyping
 
 ```bash
@@ -213,6 +223,7 @@ codex exec "Complex refactor" --reasoning high --full-auto
 ---
 
 ### Cursor
+
 > IDE agent for workflow automation — best for multi-step tasks
 
 ```bash
@@ -234,6 +245,7 @@ cursor-agent -p "Complex migration" --model opus-4.6 --force
 ---
 
 ### Droid (Factory AI)
+
 > CI/CD-safe agent — best for deterministic, auditable automation
 
 ```bash
@@ -258,6 +270,7 @@ droid exec "Generate tests" --auto low --seed 12345 --output-format json
 ---
 
 ### Copilot (GitHub)
+
 > GitHub-native AI — best for PR reviews and issue understanding
 
 ```bash
@@ -282,6 +295,7 @@ copilot explain "git rebase -i HEAD~5"
 ---
 
 ### Kiro
+
 > Full terminal coding agent (v1.27) — custom agents, skills, granular tool trust
 
 ```bash
@@ -311,6 +325,7 @@ kiro-cli agent create my-agent
 ---
 
 ### Warp
+
 > Enhanced terminal — no headless mode (GUI only)
 
 ```bash
@@ -329,6 +344,7 @@ open -a Warp
 ---
 
 ### Windsurf
+
 > Cascade AI agent — Docker-only headless mode
 
 ```bash
@@ -349,6 +365,7 @@ docker run -v $(pwd):/workspace -v ~/.ssh:/root/.ssh windsurf/cascade \
 ---
 
 ### Aider
+
 > AI pair programming — best for Git-integrated development
 
 ```bash
@@ -373,6 +390,7 @@ aider --model gpt-4o --auto-commits --message "Refactor"
 ---
 
 ### Continue Dev
+
 > VS Code CLI — best for IDE-integrated development
 
 ```bash
@@ -394,6 +412,7 @@ continue headless --agent "refactor-specialist" --model gpt-4o
 ---
 
 ### Cline
+
 > Task-based automation — autonomous task execution
 
 ```bash
@@ -418,6 +437,7 @@ cline "Design new feature" --mode architect
 ---
 
 ### Amazon Q
+
 > AWS-integrated AI — best for cloud infrastructure
 
 ```bash
@@ -442,6 +462,7 @@ q transform --source legacy.py --target modern.py
 ---
 
 ### OpenCode
+
 > Multi-language CLI — polyglot development support
 
 ```bash
@@ -466,12 +487,12 @@ OPENCODE_PROVIDER=anthropic opencode
 
 ### Risk Levels
 
-| Level | Description | Tools |
-|-------|-------------|-------|
-| 🟢 **Low** | Read-only default, approval required | Claude, Droid, Continue, Warp |
-| 🟠 **Medium** | Writes with explicit flags | Gemini, Codex, Kiro, Aider, Cline, Amazon Q, OpenCode, Windsurf |
-| ⚠️ **High** | Writes by default with safeguards | Cursor |
-| ⚡ **Very High** | Minimal safeguards | Copilot |
+| Level            | Description                          | Tools                                                           |
+| ---------------- | ------------------------------------ | --------------------------------------------------------------- |
+| 🟢 **Low**       | Read-only default, approval required | Claude, Droid, Continue, Warp                                   |
+| 🟠 **Medium**    | Writes with explicit flags           | Gemini, Codex, Kiro, Aider, Cline, Amazon Q, OpenCode, Windsurf |
+| ⚠️ **High**      | Writes by default with safeguards    | Cursor                                                          |
+| ⚡ **Very High** | Minimal safeguards                   | Copilot                                                         |
 
 ### Safe Flags (Read-Only)
 
@@ -596,13 +617,13 @@ done
 
 ## Troubleshooting
 
-| Issue | Cause | Solution |
-|-------|-------|----------|
+| Issue                 | Cause                          | Solution                                                          |
+| --------------------- | ------------------------------ | ----------------------------------------------------------------- |
 | **Hanging/no output** | Missing skip-confirmation flag | Add `--force`, `--yolo`, or `--permission-mode bypassPermissions` |
-| **Auth error** | Missing API key | Set `ANTHROPIC_API_KEY`, `GOOGLE_API_KEY`, `OPENAI_API_KEY` |
-| **Context limit** | File too large | Use Gemini (1M tokens) or split input |
-| **Permission denied** | Tool restrictions | Check `--allowedTools` or `--auto` level |
-| **Rate limited** | API quota exceeded | Wait or use `--fallback-model` |
+| **Auth error**        | Missing API key                | Set `ANTHROPIC_API_KEY`, `GOOGLE_API_KEY`, `OPENAI_API_KEY`       |
+| **Context limit**     | File too large                 | Use Gemini (1M tokens) or split input                             |
+| **Permission denied** | Tool restrictions              | Check `--allowedTools` or `--auto` level                          |
+| **Rate limited**      | API quota exceeded             | Wait or use `--fallback-model`                                    |
 
 ---
 
@@ -624,22 +645,22 @@ export GEMINI_MODEL="gemini-3.1-pro-preview"
 
 ## Quick Links
 
-| Tool | Primary Docs | CLI Reference | GitHub |
-|------|--------------|---------------|--------|
-| **Gemini** | [geminicli.com/docs](https://geminicli.com/docs/) | [Google Developers](https://developers.google.com/gemini-code-assist/docs/gemini-cli) | [google-gemini/gemini-cli](https://github.com/google-gemini/gemini-cli) |
-| **Claude** | [docs.anthropic.com](https://docs.anthropic.com/en/docs/claude-code/overview) | [CLI Reference](https://docs.claude.com/en/docs/claude-code/cli-reference) | [anthropics/claude-code](https://github.com/anthropics/claude-code) |
-| **Codex** | [developers.openai.com](https://developers.openai.com/codex/) | [CLI Reference](https://developers.openai.com/codex/cli/reference/) | [openai/codex](https://github.com/openai/codex) |
-| **Cursor** | [docs.cursor.com](https://docs.cursor.com/en/cli/overview) | [Agent Mode](https://docs.cursor.com/chat/agent) | - |
-| **Droid** | [docs.factory.ai](https://docs.factory.ai/cli/getting-started/quickstart) | [Product Page](https://factory.ai/product/cli) | [Factory-AI/factory](https://github.com/Factory-AI/factory) |
-| **Copilot** | [GitHub Docs](https://docs.github.com/en/copilot/concepts/agents/about-copilot-cli) | [Usage Guide](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/use-copilot-cli) | [github/copilot-cli](https://github.com/github/copilot-cli) |
-| **Kiro** | [kiro.dev/docs](https://kiro.dev/docs/) | [CLI Docs](https://kiro.dev/docs/cli/) | [kirodotdev/Kiro](https://github.com/kirodotdev/Kiro) |
-| **Warp** | [docs.warp.dev](https://docs.warp.dev) | [AI Features](https://docs.warp.dev/features/warp-ai) | [warpdotdev/Warp](https://github.com/warpdotdev/Warp) |
-| **Windsurf** | [docs.windsurf.com](https://docs.windsurf.com/) | [Editor](https://windsurf.com/editor) | - |
-| **Aider** | [aider.chat/docs](https://aider.chat/docs/) | [Main Site](https://aider.chat/) | [Aider-AI/aider](https://github.com/Aider-AI/aider) |
-| **Continue** | [docs.continue.dev](https://docs.continue.dev/quickstart) | [CLI Guide](https://docs.continue.dev/guides/cli) | [continuedev/continue](https://github.com/continuedev/continue) |
-| **Cline** | [docs.cline.bot](https://docs.cline.bot/cline-cli/overview) | [Main Site](https://cline.bot/) | [cline/cline](https://github.com/cline/cline) |
+| Tool         | Primary Docs                                                                           | CLI Reference                                                                                         | GitHub                                                                      |
+| ------------ | -------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| **Gemini**   | [geminicli.com/docs](https://geminicli.com/docs/)                                      | [Google Developers](https://developers.google.com/gemini-code-assist/docs/gemini-cli)                 | [google-gemini/gemini-cli](https://github.com/google-gemini/gemini-cli)     |
+| **Claude**   | [docs.anthropic.com](https://docs.anthropic.com/en/docs/claude-code/overview)          | [CLI Reference](https://docs.claude.com/en/docs/claude-code/cli-reference)                            | [anthropics/claude-code](https://github.com/anthropics/claude-code)         |
+| **Codex**    | [developers.openai.com](https://developers.openai.com/codex/)                          | [CLI Reference](https://developers.openai.com/codex/cli/reference/)                                   | [openai/codex](https://github.com/openai/codex)                             |
+| **Cursor**   | [docs.cursor.com](https://docs.cursor.com/en/cli/overview)                             | [Agent Mode](https://docs.cursor.com/chat/agent)                                                      | -                                                                           |
+| **Droid**    | [docs.factory.ai](https://docs.factory.ai/cli/getting-started/quickstart)              | [Product Page](https://factory.ai/product/cli)                                                        | [Factory-AI/factory](https://github.com/Factory-AI/factory)                 |
+| **Copilot**  | [GitHub Docs](https://docs.github.com/en/copilot/concepts/agents/about-copilot-cli)    | [Usage Guide](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/use-copilot-cli)          | [github/copilot-cli](https://github.com/github/copilot-cli)                 |
+| **Kiro**     | [kiro.dev/docs](https://kiro.dev/docs/)                                                | [CLI Docs](https://kiro.dev/docs/cli/)                                                                | [kirodotdev/Kiro](https://github.com/kirodotdev/Kiro)                       |
+| **Warp**     | [docs.warp.dev](https://docs.warp.dev)                                                 | [AI Features](https://docs.warp.dev/features/warp-ai)                                                 | [warpdotdev/Warp](https://github.com/warpdotdev/Warp)                       |
+| **Windsurf** | [docs.windsurf.com](https://docs.windsurf.com/)                                        | [Editor](https://windsurf.com/editor)                                                                 | -                                                                           |
+| **Aider**    | [aider.chat/docs](https://aider.chat/docs/)                                            | [Main Site](https://aider.chat/)                                                                      | [Aider-AI/aider](https://github.com/Aider-AI/aider)                         |
+| **Continue** | [docs.continue.dev](https://docs.continue.dev/quickstart)                              | [CLI Guide](https://docs.continue.dev/guides/cli)                                                     | [continuedev/continue](https://github.com/continuedev/continue)             |
+| **Cline**    | [docs.cline.bot](https://docs.cline.bot/cline-cli/overview)                            | [Main Site](https://cline.bot/)                                                                       | [cline/cline](https://github.com/cline/cline)                               |
 | **Amazon Q** | [AWS Docs](https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/command-line.html) | [CLI Reference](https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/command-line-reference.html) | [aws/amazon-q-developer-cli](https://github.com/aws/amazon-q-developer-cli) |
-| **OpenCode** | [opencode.ai/docs](https://opencode.ai/docs/) | [CLI Docs](https://opencode.ai/docs/cli/) | [sst/opencode](https://github.com/sst/opencode) |
+| **OpenCode** | [opencode.ai/docs](https://opencode.ai/docs/)                                          | [CLI Docs](https://opencode.ai/docs/cli/)                                                             | [sst/opencode](https://github.com/sst/opencode)                             |
 
 ---
 

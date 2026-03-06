@@ -6,12 +6,14 @@
 **Note:** Gemini 2.5 Flash/Pro typically support ~1M-token context in the CLI, though actual limits may vary slightly by API version or account tier. Some developer preview users may have access to up to ~2M tokens.
 
 **When NOT to use Gemini:**
+
 - ❌ You need extremely low cost (Gemini uses premium pricing for large contexts)
 - ❌ You need ultra-low-latency (slower than smaller models for short prompts)
 - ❌ You need GPT-style code generation (better for analysis than generation)
 - ❌ You're working with small codebases (overkill for simple tasks)
 
 ### Quick Nav
+
 - [Start Here](#-start-here)
 - [Why Use Gemini](#-why-use-gemini)
 - [Best Use Cases](#-best-use-cases)
@@ -31,6 +33,7 @@
 Google Gemini CLI is a command-line interface for Google's Gemini AI models, designed for massive context windows (up to ~1M tokens) and large-scale codebase analysis. It excels at repository-wide reviews, multi-file analysis, and handling extremely large codebases.
 
 **Key Characteristics:**
+
 - Massive context windows (1M+ tokens)
 - Strong for large-scale codebases
 - Headless mode for automation
@@ -40,27 +43,32 @@ Google Gemini CLI is a command-line interface for Google's Gemini AI models, des
 ## Installation
 
 **Using npm:**
+
 ```bash
 npm install -g @google/gemini-cli
 ```
 
 **System Requirements:**
+
 - Node.js 18 or later
 - API key from Google AI Studio
 
 ## 🚀 Start Here
 
 **Interactive mode (default):**
+
 ```bash
 gemini
 ```
 
 **One-shot mode (non-interactive):**
+
 ```bash
 gemini "Summarize this repo"
 ```
 
 **Interactive mode with initial prompt:**
+
 ```bash
 gemini -i "Review this codebase"
 # or
@@ -70,6 +78,7 @@ gemini --prompt-interactive "Review this codebase"
 ## Interactive Mode
 
 **Start interactive session:**
+
 ```bash
 # Start interactive mode (default)
 gemini
@@ -115,27 +124,30 @@ git diff | gemini "Review these changes"
 ```
 
 **Exit codes:**
+
 - `0` = Success
 - Non-zero = Error
 
 ## Available Models
 
-| Model | Context | Speed | Cost | Best For |
-|-------|---------|-------|------|----------|
-| **gemini-3.1-pro-preview** | ~1M tokens | Medium | High | Latest flagship, best for coding and complex reasoning (Feb 2026) |
-| **gemini-3.1-flash-lite-preview** | ~1M tokens | Very Fast | Low | Latest lightweight model for fast tasks (Mar 2026) |
-| **gemini-2.5-pro** | ~1M tokens | Medium | Medium-High | Massive repos, deep analysis, enhanced reasoning |
-| **gemini-2.5-flash** | ~1M tokens | Fast | Low-Medium | Quick analysis, large context, general tasks |
-| **gemini-1.5-pro** | ~1M tokens | Medium | Medium | Balanced performance for most use cases |
-| **gemini-1.5-flash** | ~1M tokens | Fast | Low | Fast responses for simple tasks |
+| Model                             | Context    | Speed     | Cost        | Best For                                                          |
+| --------------------------------- | ---------- | --------- | ----------- | ----------------------------------------------------------------- |
+| **gemini-3.1-pro-preview**        | ~1M tokens | Medium    | High        | Latest flagship, best for coding and complex reasoning (Feb 2026) |
+| **gemini-3.1-flash-lite-preview** | ~1M tokens | Very Fast | Low         | Latest lightweight model for fast tasks (Mar 2026)                |
+| **gemini-2.5-pro**                | ~1M tokens | Medium    | Medium-High | Massive repos, deep analysis, enhanced reasoning                  |
+| **gemini-2.5-flash**              | ~1M tokens | Fast      | Low-Medium  | Quick analysis, large context, general tasks                      |
+| **gemini-1.5-pro**                | ~1M tokens | Medium    | Medium      | Balanced performance for most use cases                           |
+| **gemini-1.5-flash**              | ~1M tokens | Fast      | Low         | Fast responses for simple tasks                                   |
 
 > **Deprecation Notices (March 2026):**
+>
 > - ~~gemini-3-pro-preview~~: **Shut down March 9, 2026.** Use `gemini-3.1-pro-preview` instead.
 > - Gemini 2.0 flash models: **Shut down June 1, 2026.**
 > - CLI syntax: `-p` flag is deprecated. Positional prompt is now the default (`gemini "your prompt"`).
 > - CLI version: v0.24.5
 
 **Model Selection:**
+
 ```bash
 # Use specific model (positional syntax)
 gemini "query" --model gemini-3-pro-preview
@@ -162,6 +174,7 @@ gemini config get model
 ## CLI Syntax
 
 **Basic usage:**
+
 ```bash
 # One-shot (non-interactive)
 gemini [options] "Your prompt"
@@ -174,6 +187,7 @@ gemini [options] -i "Your prompt"
 ```
 
 **Common options:**
+
 - `query..`: Positional prompt (one-shot by default)
 - `-i, --prompt-interactive TEXT`: Execute prompt and continue in interactive mode
 - `-p, --prompt TEXT`: **DEPRECATED** - Use positional prompt instead
@@ -195,23 +209,27 @@ gemini [options] -i "Your prompt"
 - `--experimental-acp`: Start agent in ACP mode
 
 **Commands:**
+
 - `gemini mcp`: Manage MCP servers
 - `gemini extensions <command>`: Manage Gemini CLI extensions
 
 ## Approval Modes
 
 **Default (prompt for approval):**
+
 ```bash
 gemini "Review this code"
 # Will prompt for approval before executing tools
 ```
 
 **Auto-edit (auto-approve edit tools):**
+
 ```bash
 gemini "Fix linting issues" --approval-mode auto_edit
 ```
 
 **YOLO mode (auto-approve all tools):**
+
 ```bash
 gemini "Fix bugs and commit" --yolo
 # or
@@ -219,6 +237,7 @@ gemini "Fix bugs and commit" --approval-mode yolo
 ```
 
 **Allow specific tools without confirmation:**
+
 ```bash
 gemini "Analyze codebase" --allowed-tools grep,read,glob
 ```
@@ -226,11 +245,13 @@ gemini "Analyze codebase" --allowed-tools grep,read,glob
 ## Output Formats
 
 **Text (default):**
+
 ```bash
 gemini "What is the capital of France?"
 ```
 
 **JSON (for automation):**
+
 ```bash
 gemini "What is the capital of France?" --output-format json
 # or shorthand
@@ -238,6 +259,7 @@ gemini "What is the capital of France?" -o json
 ```
 
 Returns structured data:
+
 ```json
 {
   "response": "The capital of France is Paris.",
@@ -261,6 +283,7 @@ Returns structured data:
 ```
 
 **Streaming JSON (real-time events):**
+
 ```bash
 gemini "Analyze this code" --output-format stream-json
 # or shorthand
@@ -272,11 +295,13 @@ Emits real-time events (init, message, tool_use, tool_result, error, result) as 
 ## Configuration
 
 **Environment Variables:**
+
 ```bash
 export GEMINI_API_KEY=your_api_key
 ```
 
 **Auto-approve actions:**
+
 ```bash
 gemini "query" --yolo
 # or
@@ -284,11 +309,13 @@ gemini "query" --approval-mode yolo
 ```
 
 **Include additional directories:**
+
 ```bash
 gemini "query" --include-directories src,docs
 ```
 
 **Debug mode:**
+
 ```bash
 gemini "query" --debug
 ```
@@ -296,17 +323,20 @@ gemini "query" --debug
 ## Examples
 
 **Code review:**
+
 ```bash
 cat src/auth.py | gemini "Review this authentication code for security issues" > security-review.txt
 ```
 
 **Generate commit messages:**
+
 ```bash
 result=$(git diff --cached | gemini "Write a concise commit message for these changes" --output-format json)
 echo "$result" | jq -r '.response'
 ```
 
 **Batch code analysis:**
+
 ```bash
 for file in src/*.py; do
     result=$(cat "$file" | gemini "Find potential bugs and suggest improvements" --output-format json)
@@ -315,11 +345,13 @@ done
 ```
 
 **Log analysis:**
+
 ```bash
 grep "ERROR" /var/log/app.log | tail -20 | gemini "Analyze these errors and suggest root cause and fixes" > error-analysis.txt
 ```
 
 **Release notes generation:**
+
 ```bash
 result=$(git log --oneline v1.0.0..HEAD | gemini "Generate release notes from these commits" --output-format json)
 echo "$result" | jq -r '.response' >> CHANGELOG.md
@@ -328,6 +360,7 @@ echo "$result" | jq -r '.response' >> CHANGELOG.md
 ## CI/CD Integration
 
 **GitHub Actions workflow:**
+
 ```yaml
 name: Gemini Code Review
 
@@ -348,7 +381,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install Gemini CLI
         run: npm install -g @google/gemini-cli
@@ -363,13 +396,13 @@ jobs:
             --output-format json \
             --model gemini-3-pro-preview \
             > gemini_review.json || exit 1
-          
+
           if command -v jq &> /dev/null; then
             REVIEW=$(cat gemini_review.json | jq -r '.response // "Review completed"')
           else
             REVIEW=$(cat gemini_review.json | grep -o '"response":"[^"]*"' | cut -d'"' -f4 || echo "Review completed")
           fi
-          
+
           echo "review_output<<EOF" >> $GITHUB_OUTPUT
           echo "$REVIEW" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
@@ -388,6 +421,7 @@ jobs:
 ```
 
 **Direct CLI usage in CI/CD:**
+
 ```bash
 #!/bin/bash
 set -e
@@ -418,6 +452,7 @@ fi
 ```
 
 **Best practices for CI/CD:**
+
 - Use `--output-format json` for structured, parseable output
 - Handle exit codes properly (non-zero indicates failure)
 - Use `--model` flag to specify model if needed
@@ -442,4 +477,3 @@ fi
 - [Gemini CLI Docs – Google Developers](https://developers.google.com/gemini-code-assist/docs/gemini-cli)
 - [Gemini CLI Headless Mode](https://geminicli.com/docs/cli/headless/)
 - [Google AI Studio](https://aistudio.google.com/)
-

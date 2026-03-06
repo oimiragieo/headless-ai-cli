@@ -6,12 +6,14 @@
 **Note:** Cline CLI 2.0 (Feb 2026) is a complete ground-up rebuild with redesigned terminal UI, parallel agents with isolated state, improved headless mode for CI/CD, and ACP support for Zed/Neovim/Emacs. Install: `npm install -g cline`.
 
 **When NOT to use Cline:**
+
 - ❌ You need massive context windows (Gemini CLI handles larger repos better)
 - ❌ You need read-only analysis by default (Cline executes tasks autonomously with YOLO mode)
 - ❌ You need deterministic, production-safe runs (Cline makes changes autonomously)
 - ❌ You're working with very small codebases (overkill for simple tasks)
 
 ### Quick Nav
+
 - [Start Here](#-start-here)
 - [Installation](#-installation)
 - [Interactive Mode](#interactive-mode)
@@ -30,6 +32,7 @@
 Cline is a command-line interface for interacting with Cline AI coding assistant. It provides both interactive and non-interactive modes for task execution, with support for autonomous execution, task management, and CI/CD integration.
 
 **Key Characteristics:**
+
 - Interactive and non-interactive modes
 - Autonomous task execution with `-y/--yolo` flag
 - Multiple model provider support (Anthropic, OpenAI, Google Gemini, etc.)
@@ -39,26 +42,31 @@ Cline is a command-line interface for interacting with Cline AI coding assistant
 - Two modes: act and plan
 
 **Three Ways to Start:**
+
 1. **With a prompt**: `cline "Create a new Python script"`
 2. **Via stdin**: `echo "Create a todo app" | cline`
 3. **Interactive mode**: `cline` (no arguments)
 
 **Modes:**
+
 - **Plan mode** (default): Create a plan before execution
 - **Act mode**: Execute changes immediately
 
 ## Installation
 
 **Using npm:**
+
 ```bash
 npm install -g cline
 ```
 
 **System Requirements:**
+
 - Node.js 18 or later
 - API keys for selected model providers
 
 **Authentication:**
+
 ```bash
 # Authenticate and configure providers
 cline auth
@@ -72,16 +80,19 @@ cline auth
 ## 🚀 Start Here
 
 **Interactive mode (default):**
+
 ```bash
 cline
 ```
 
 **Start with a prompt (one-shot):**
+
 ```bash
 cline "Create a new Python script that prints hello world"
 ```
 
 **Autonomous mode (YOLO):**
+
 ```bash
 cline "Create a todo app" --yolo
 # or shorthand
@@ -91,6 +102,7 @@ cline "Create a todo app" -y
 ## Interactive Mode
 
 **Start interactive session:**
+
 ```bash
 # Start interactive mode (no arguments)
 cline
@@ -153,11 +165,13 @@ cline "Analyze codebase" --output-format json --yolo
 ```
 
 **Key Flags for Headless Mode:**
+
 - `-y, --yolo`: YOLO mode - enables autonomous planning and execution
 - `-o, --oneshot`: Full autonomous mode - complete task without interaction
 - `-F, --output-format`: Specify output format (`rich`, `json`, `plain`)
 
 **Exit codes:**
+
 - `0` = Success
 - Non-zero = Error
 
@@ -189,23 +203,24 @@ cline task list
 
 Cline supports multiple AI model providers:
 
-| Provider | Models | Description |
-|----------|--------|-------------|
-| **Anthropic** | Claude Opus 4.6, Claude Sonnet 4.6, Claude Haiku 4.5 | Strong reasoning, code analysis |
-| **OpenAI** | GPT-5.3-Codex, GPT-5.1, GPT-4o | Code generation, general tasks |
-| **Kimi** | Kimi K2.5 (free trial with CLI 2.0) | Free model option |
-| **Minimax** | Minimax M2.5 (free with CLI 2.0) | Free model option |
-| **OpenRouter** | Various models | Access to multiple models via OpenRouter |
-| **X AI (Grok)** | Grok models | Alternative option |
-| **AWS Bedrock** | Claude models via Bedrock | Enterprise AWS integration |
-| **Google Gemini** | Gemini 3.1 Pro, Gemini 2.5 Flash | Large context support |
-| **Ollama** | Local models | Self-hosted, privacy-focused |
-| **Cerebras** | Cerebras models | High-performance option |
-| **OpenAI Compatible** | Any OpenAI-compatible API | Flexible provider support |
+| Provider              | Models                                               | Description                              |
+| --------------------- | ---------------------------------------------------- | ---------------------------------------- |
+| **Anthropic**         | Claude Opus 4.6, Claude Sonnet 4.6, Claude Haiku 4.5 | Strong reasoning, code analysis          |
+| **OpenAI**            | GPT-5.3-Codex, GPT-5.1, GPT-4o                       | Code generation, general tasks           |
+| **Kimi**              | Kimi K2.5 (free trial with CLI 2.0)                  | Free model option                        |
+| **Minimax**           | Minimax M2.5 (free with CLI 2.0)                     | Free model option                        |
+| **OpenRouter**        | Various models                                       | Access to multiple models via OpenRouter |
+| **X AI (Grok)**       | Grok models                                          | Alternative option                       |
+| **AWS Bedrock**       | Claude models via Bedrock                            | Enterprise AWS integration               |
+| **Google Gemini**     | Gemini 3.1 Pro, Gemini 2.5 Flash                     | Large context support                    |
+| **Ollama**            | Local models                                         | Self-hosted, privacy-focused             |
+| **Cerebras**          | Cerebras models                                      | High-performance option                  |
+| **OpenAI Compatible** | Any OpenAI-compatible API                            | Flexible provider support                |
 
 > **Note (March 2026):** Cline CLI 2.0 released Feb 2026 with parallel agents, improved headless mode, redesigned TUI, and ACP support for Zed/Neovim/Emacs. Free models available: Kimi K2.5 and Minimax M2.5.
 
 **Model Configuration:**
+
 ```bash
 # Authenticate and configure provider
 cline auth
@@ -218,6 +233,7 @@ cline auth
 ```
 
 **Provider Selection:**
+
 - Configure during `cline auth` setup
 - Supports multiple providers simultaneously
 - Switch between providers as needed
@@ -228,17 +244,20 @@ cline auth
 **A command-line interface for interacting with Cline AI coding assistant.**
 
 Start a new task by providing a prompt:
+
 ```bash
 cline "Create a new Python script that prints hello world"
 ```
 
 Or pipe a prompt via stdin:
+
 ```bash
 echo "Create a todo app" | cline
 cat prompt.txt | cline --yolo
 ```
 
 Or run with no arguments to enter interactive mode:
+
 ```bash
 cline
 ```
@@ -248,6 +267,7 @@ This CLI also provides task management, configuration, and monitoring capabiliti
 For detailed documentation including all commands, options, and examples, see the manual page: `man cline`
 
 **Usage:**
+
 ```bash
 cline [prompt] [flags]
 cline [command]
@@ -282,18 +302,21 @@ version     Show version information
 ```
 
 **Authentication:**
+
 ```bash
 # Authenticate and configure what model is used
 cline auth
 ```
 
 **Shell Completion:**
+
 ```bash
 # Generate the autocompletion script for the specified shell
 cline completion <SHELL>      # bash, zsh, fish, powershell, etc.
 ```
 
 **Configuration:**
+
 ```bash
 # Set and manage global Cline configuration variables
 cline config [command]
@@ -324,6 +347,7 @@ cline config set <key> <value>
 ```
 
 **Key Configuration Settings** (from `cline config list`):
+
 - `api-configuration.*` - API provider settings (OpenAI headers, model IDs, thinking budgets)
 - `plan-mode-api-provider` - API provider for plan mode (default: cline)
 - `act-mode-api-provider` - API provider for act mode (default: cline)
@@ -348,6 +372,7 @@ cline config set <key> <value>
 - `auto-approval-settings.*` - Auto approval configuration
 
 **Instance Management:**
+
 ```bash
 # Create new instance
 cline instance new [--default]
@@ -363,6 +388,7 @@ cline instance delete <instance-id>
 ```
 
 **Task Management:**
+
 ```bash
 # Create new task (interactive)
 cline task new "Your prompt here"
@@ -381,18 +407,21 @@ cline task delete <task-id>
 ```
 
 **Logs:**
+
 ```bash
 # Manage Cline log files
 cline logs [options]
 ```
 
 **Version:**
+
 ```bash
 # Show version information
 cline version
 ```
 
 **Help:**
+
 ```bash
 # Help about any command
 cline help [command]
@@ -405,6 +434,7 @@ cline help [command]
 Cline supports three output formats for different use cases:
 
 **Rich (default):**
+
 ```bash
 cline "Explain this code"
 # or explicitly
@@ -414,6 +444,7 @@ cline "Explain this code" --output-format rich
 Rich format provides formatted, colorized output for human readability. Best for interactive use and terminal displays.
 
 **JSON (for automation):**
+
 ```bash
 cline "Analyze codebase" --output-format json
 ```
@@ -421,6 +452,7 @@ cline "Analyze codebase" --output-format json
 JSON format provides structured, machine-parseable output ideal for CI/CD pipelines and automation scripts. Parse with `jq` or other JSON tools.
 
 **Plain (simple text):**
+
 ```bash
 cline "Generate documentation" --output-format plain
 ```
@@ -428,6 +460,7 @@ cline "Generate documentation" --output-format plain
 Plain format provides simple text output without formatting or colors. Useful for logging, piping to files, or environments without terminal formatting support.
 
 **Example with JSON parsing:**
+
 ```bash
 result=$(cline "Generate code" --output-format json --yolo)
 if command -v jq &> /dev/null; then
@@ -444,6 +477,7 @@ fi
 Workflows are markdown files stored in `.clinerules/workflows/` directory.
 
 **Creating a Workflow:**
+
 ```bash
 # Create workflow directory
 mkdir -p .clinerules/workflows
@@ -459,12 +493,14 @@ EOF
 ```
 
 **Invoke Workflows:**
+
 - Use `/workflow-filename.md` command in Cline chat
 - Workflows are markdown files in `.clinerules/workflows/`
 - Can be shared across team members
 - Support for complex multi-step automation
 
 **Example Workflows:**
+
 - Deploy workflows for automated deployment
 - Code review workflows for PR analysis
 - Test generation workflows for unit tests
@@ -473,6 +509,7 @@ EOF
 ## CI/CD Integration
 
 **GitHub Actions workflow:**
+
 ```yaml
 name: Cline Code Review
 
@@ -493,7 +530,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install Cline CLI
         run: npm install -g cline
@@ -523,7 +560,7 @@ jobs:
             } catch (e) {
               console.log('Review file not found, using default message');
             }
-            
+
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
@@ -533,6 +570,7 @@ jobs:
 ```
 
 **Direct CLI usage in CI/CD:**
+
 ```bash
 #!/bin/bash
 set -e
@@ -557,6 +595,7 @@ fi
 ```
 
 **Best practices for CI/CD:**
+
 - Use `-y/--yolo` flag for autonomous execution (headless mode)
 - Use `--output-format json` for structured, parseable output
 - Store API keys as secrets, never hardcode
@@ -567,21 +606,25 @@ fi
 ## Examples
 
 **Generate unit tests:**
+
 ```bash
 cline "Generate unit tests for all Go files" --yolo
 ```
 
 **Code review with file attachment:**
+
 ```bash
 cline "Review this code for bugs and security issues" -f src/auth.py --yolo
 ```
 
 **Refactoring task:**
+
 ```bash
 cline "Refactor authentication module to use modern patterns" --yolo
 ```
 
 **Batch processing:**
+
 ```bash
 for file in src/*.js; do
   cline "Review and improve: $file" -f "$file" --yolo
@@ -589,26 +632,31 @@ done
 ```
 
 **With JSON output:**
+
 ```bash
 cline "Analyze the codebase structure" --output-format json --yolo > analysis.json
 ```
 
 **Pipe from stdin:**
+
 ```bash
 git diff | cline "Review these changes and suggest improvements" --yolo
 ```
 
 **Image-based UI recreation:**
+
 ```bash
 cline "Recreate this UI in React" -i screenshot.png --yolo
 ```
 
 **Plan mode (architecture design):**
+
 ```bash
 cline "Design a microservices architecture for this monolith" --mode plan --yolo
 ```
 
 **Advanced: Multi-instance workflow:**
+
 ```bash
 # Create instance for frontend
 cline instance new --name frontend --default
@@ -636,4 +684,3 @@ cline task new -y "Review backend code"
 - Workflows: [docs.cline.bot/features/slash-commands/workflows](https://docs.cline.bot/features/slash-commands/workflows)
 
 **Note:** Cline is actively developed. Check the official documentation for the latest features, CLI capabilities, and workflow examples.
-

@@ -4,12 +4,14 @@
 **Risk level:** ⚠️ High (writes files with `--force`, strong for chained workflows)
 
 **When NOT to use Cursor:**
+
 - ❌ You need production-safe CI/CD runs (Droid is safer with read-only default)
 - ❌ You need massive context windows (Gemini handles larger repos)
 - ❌ You need deterministic, predictable output (delta messages can be verbose)
 - ❌ You're working in untrusted environments (requires `--force` for file writes)
 
 ### Quick Nav
+
 - [Start Here](#-start-here)
 - [Why Use Cursor](#-why-use-cursor)
 - [Best Use Cases](#-best-use-cases)
@@ -29,6 +31,7 @@
 Cursor Agent is a command-line tool designed for workflow automation and multi-agent orchestration. It can chain tasks such as plan → code → test → deploy, and integrates well with VS Code and terminal pipelines.
 
 **Key Characteristics:**
+
 - Strong for workflow automation
 - Headless mode for automation
 - Can chain multiple tasks
@@ -38,16 +41,19 @@ Cursor Agent is a command-line tool designed for workflow automation and multi-a
 ## Installation
 
 **Using curl:**
+
 ```bash
 curl https://cursor.com/install -fsS | bash
 ```
 
 **Set API key:**
+
 ```bash
 export CURSOR_API_KEY=your_api_key_here
 ```
 
 **System Requirements:**
+
 - API key from Cursor
 - Network connection
 
@@ -75,6 +81,7 @@ wsl bash -lc "cursor-agent -p 'Your prompt here'"
 ## Available Models
 
 **View available models:**
+
 - Use interactive mode and type `/model` to see all available models
 - No CLI flag exists for listing models; use the interactive mode
 
@@ -86,30 +93,31 @@ cursor-agent
 
 **Available models (updated March 2026):**
 
-| Model Command | Full Name | Category | Description |
-|---------------|-----------|----------|-------------|
-| `composer-1` | Composer 1 | Cursor Native | Cursor's proprietary model |
-| `auto` | Auto | Smart Selection | Free tier - automatically selects best model |
-| `sonnet-4.5` | Claude 4.5 Sonnet | Claude | Balanced reasoning and speed |
-| `sonnet-4.5-thinking` | Claude 4.5 Sonnet (Thinking) | Claude | Extended reasoning mode |
-| `opus-4.6` | Claude 4.6 Opus | Claude | Best for complex tasks (Feb 2026) |
-| `opus-4.6-thinking` | Claude 4.6 Opus (Thinking) | Claude | Extended reasoning mode |
-| `sonnet-4.6` | Claude 4.6 Sonnet | Claude | Latest balanced model (Feb 2026) |
-| `sonnet-4.6-thinking` | Claude 4.6 Sonnet (Thinking) | Claude | Extended reasoning mode |
-| `opus-4.5` | Claude 4.5 Opus | Claude | Previous Opus model |
-| `gemini-3-pro` | Gemini 3 Pro | Google | Large context, latest Gemini |
-| `gpt-5` | GPT-5 | OpenAI | Standard GPT-5 |
-| `gpt-5.1` | GPT-5.1 | OpenAI | Latest GPT model |
-| `gpt-5-high` | GPT-5 High | OpenAI | Extended reasoning |
-| `gpt-5.1-high` | GPT-5.1 High | OpenAI | Latest with extended reasoning |
-| `gpt-5-codex` | GPT-5 Codex | OpenAI Codex | Code generation focused |
-| `gpt-5-codex-high` | GPT-5 Codex High | OpenAI Codex | Code generation + extended reasoning |
-| `gpt-5.1-codex` | GPT-5.1 Codex | OpenAI Codex | Code generation |
-| `gpt-5.1-codex-high` | GPT-5.1 Codex High | OpenAI Codex | Code + extended reasoning |
-| `gpt-5.3-codex` | GPT-5.3 Codex | OpenAI Codex | Latest combined model (Feb 2026) |
-| `grok` | Grok | xAI | Grok AI model |
+| Model Command         | Full Name                    | Category        | Description                                  |
+| --------------------- | ---------------------------- | --------------- | -------------------------------------------- |
+| `composer-1`          | Composer 1                   | Cursor Native   | Cursor's proprietary model                   |
+| `auto`                | Auto                         | Smart Selection | Free tier - automatically selects best model |
+| `sonnet-4.5`          | Claude 4.5 Sonnet            | Claude          | Balanced reasoning and speed                 |
+| `sonnet-4.5-thinking` | Claude 4.5 Sonnet (Thinking) | Claude          | Extended reasoning mode                      |
+| `opus-4.6`            | Claude 4.6 Opus              | Claude          | Best for complex tasks (Feb 2026)            |
+| `opus-4.6-thinking`   | Claude 4.6 Opus (Thinking)   | Claude          | Extended reasoning mode                      |
+| `sonnet-4.6`          | Claude 4.6 Sonnet            | Claude          | Latest balanced model (Feb 2026)             |
+| `sonnet-4.6-thinking` | Claude 4.6 Sonnet (Thinking) | Claude          | Extended reasoning mode                      |
+| `opus-4.5`            | Claude 4.5 Opus              | Claude          | Previous Opus model                          |
+| `gemini-3-pro`        | Gemini 3 Pro                 | Google          | Large context, latest Gemini                 |
+| `gpt-5`               | GPT-5                        | OpenAI          | Standard GPT-5                               |
+| `gpt-5.1`             | GPT-5.1                      | OpenAI          | Latest GPT model                             |
+| `gpt-5-high`          | GPT-5 High                   | OpenAI          | Extended reasoning                           |
+| `gpt-5.1-high`        | GPT-5.1 High                 | OpenAI          | Latest with extended reasoning               |
+| `gpt-5-codex`         | GPT-5 Codex                  | OpenAI Codex    | Code generation focused                      |
+| `gpt-5-codex-high`    | GPT-5 Codex High             | OpenAI Codex    | Code generation + extended reasoning         |
+| `gpt-5.1-codex`       | GPT-5.1 Codex                | OpenAI Codex    | Code generation                              |
+| `gpt-5.1-codex-high`  | GPT-5.1 Codex High           | OpenAI Codex    | Code + extended reasoning                    |
+| `gpt-5.3-codex`       | GPT-5.3 Codex                | OpenAI Codex    | Latest combined model (Feb 2026)             |
+| `grok`                | Grok                         | xAI             | Grok AI model                                |
 
 **Model selection examples:**
+
 ```bash
 # Use specific model
 cursor-agent -p --model gpt-5.1-high "Your prompt here"
@@ -136,6 +144,7 @@ cursor-agent
 ```
 
 **Notes:**
+
 - **Auto model** is available in the free tier and automatically selects the best model for your task
 - **Thinking/High models** provide extended reasoning at potentially higher cost
 - Model availability may vary based on your Cursor subscription tier
@@ -144,11 +153,13 @@ cursor-agent
 ## CLI Syntax
 
 **Basic usage:**
+
 ```bash
 cursor-agent [options] -p "Your prompt"
 ```
 
 **Common options:**
+
 - `-p, --print TEXT`: Provide prompt directly (enables headless mode)
 - `--force`: Enable file modifications (required for writes in scripts)
 - `--output-format FORMAT`: Output format (`text`, `json`, `stream-json`)
@@ -159,12 +170,14 @@ cursor-agent [options] -p "Your prompt"
 ## File Modification
 
 **Default (proposes changes only):**
+
 ```bash
 cursor-agent -p "Add JSDoc comments to this file"
 # Won't modify files, only proposes changes
 ```
 
 **Enable file modifications:**
+
 ```bash
 🚨 cursor-agent -p --force "Refactor this code to use ES6+ syntax"
 # Actually modifies files without confirmation
@@ -175,42 +188,52 @@ cursor-agent -p "Add JSDoc comments to this file"
 ## Output Formats
 
 **Text (default):**
+
 ```bash
 cursor-agent -p "What does this codebase do?"
 ```
+
 - Clean, final-answer-only responses
 
 **JSON (structured analysis):**
+
 ```bash
 cursor-agent -p --force --output-format json \
   "Review the recent code changes and provide feedback"
 ```
+
 - Structured data for programmatic processing
 
 **Streaming JSON (real-time progress):**
+
 ```bash
 cursor-agent -p --force --output-format stream-json \
   "Analyze this project structure and create a summary report"
 ```
+
 - Message-level progress tracking
 
 **Streaming with partial output (incremental deltas):**
+
 ```bash
 cursor-agent -p --force --output-format stream-json --stream-partial-output \
   "Analyze this project structure and create a summary report"
 ```
+
 - Model-native incremental streaming
 - Smooth progress updates character-by-character
 
 ## Examples
 
 **Simple codebase question:**
+
 ```bash
 #!/bin/bash
 cursor-agent -p "What does this codebase do?"
 ```
 
 **Automated code review:**
+
 ```bash
 #!/bin/bash
 cursor-agent -p --force --output-format text \
@@ -218,11 +241,12 @@ cursor-agent -p --force --output-format text \
   - Code quality and readability
   - Potential bugs or issues
   - Security considerations
-  
+
   Provide specific suggestions for improvement and write to review.txt"
 ```
 
 **Real-time progress tracking:**
+
 ```bash
 cursor-agent -p --force --output-format stream-json --stream-partial-output \
   "Analyze this project structure and create a summary report" | \
@@ -235,6 +259,7 @@ cursor-agent -p --force --output-format stream-json --stream-partial-output \
 ## CI/CD Integration
 
 **GitHub Actions workflow:**
+
 ```yaml
 name: Cursor Code Review
 
@@ -266,7 +291,7 @@ jobs:
             cursor-agent -p --force --output-format json \
             "Review these code changes for bugs, security issues, and best practices. Provide actionable feedback." \
             > cursor_review.json || exit 1
-          
+
           REVIEW=$(cat cursor_review.json | jq -r '.result // "Review completed"')
           echo "review_output<<EOF" >> $GITHUB_OUTPUT
           echo "$REVIEW" >> $GITHUB_OUTPUT
@@ -286,6 +311,7 @@ jobs:
 ```
 
 **Direct CLI usage in CI/CD:**
+
 ```bash
 #!/bin/bash
 set -e
@@ -310,6 +336,7 @@ fi
 ```
 
 **Best practices for CI/CD:**
+
 - Always use `--force` when file modifications are needed
 - Use `--output-format json` for structured, parseable output
 - Handle exit codes properly (non-zero indicates failure)
@@ -332,4 +359,3 @@ fi
 - [Cursor Agent](https://cursor.com/)
 - [Cursor CLI Headless Mode](https://cursor.com/docs/cli/headless)
 - [Cursor Documentation](https://cursor.com/docs)
-

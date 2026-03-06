@@ -1,0 +1,31 @@
+{
+  "config": {
+    "default": true,
+    // Line length - disabled: tables and code blocks exceed limits
+    "MD013": false,
+    // Inline HTML - disabled: shields.io badges use HTML-like syntax
+    "MD033": false,
+    // First line heading - disabled: amazon-q.md starts with deprecation notice
+    "MD041": false,
+    // Duplicate headings - allowed in different sections
+    "MD024": { "siblings_only": true },
+    // Emphasis as heading - disabled: template pattern uses **bold** labels
+    "MD036": false,
+    // Fenced code blocks must specify language
+    "MD040": true,
+    // Image alt text - no images in repo
+    "MD045": false,
+    // Reference link labels
+    "MD052": false,
+    // Link fragments - disabled: template uses placeholder anchors, emoji headings create fragment mismatches
+    "MD051": false,
+    // Ordered list prefix style - disabled: step-by-step instructions use sequential numbering
+    "MD029": false,
+    // Heading increment - disabled: template pattern uses ### Quick Nav directly under # Tool Name
+    "MD001": false
+  },
+  "ignores": [
+    "node_modules/**",
+    "LICENSE"
+  ]
+}

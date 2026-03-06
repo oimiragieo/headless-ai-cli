@@ -4,12 +4,14 @@
 **Risk level:** 🟢 Low (tool approval required, fine-grained control)
 
 **When NOT to use Claude:**
+
 - ❌ You need massive context windows (Gemini handles larger repos better)
 - ❌ You need UI/front-end generation (Codex is better for this)
 - ❌ You need completely automated runs without any approval (Droid is safer)
 - ❌ You're working with large monorepos (context limits may be restrictive)
 
 ### Quick Nav
+
 - [Start Here](#-start-here)
 - [Why Use Claude](#-why-use-claude)
 - [Best Use Cases](#-best-use-cases)
@@ -29,6 +31,7 @@
 Anthropic Claude (Claude Code) is a command-line AI coding assistant tuned for agentic coding, architecture, and reasoning. It starts an interactive session by default, with `-p/--print` mode for non-interactive output.
 
 **Key Characteristics:**
+
 - Interactive mode by default, headless mode with `-p/--print`
 - Multiple model options (Haiku, Sonnet, Opus) with aliases
 - Fine-grained tool control and permission modes
@@ -39,11 +42,13 @@ Anthropic Claude (Claude Code) is a command-line AI coding assistant tuned for a
 ## Installation
 
 **Using npm:**
+
 ```bash
 npm install -g @anthropic-ai/claude-code
 ```
 
 **System Requirements:**
+
 - Node.js 18 or later
 - API key from Anthropic
 
@@ -81,6 +86,7 @@ claude -p "Generate a user profile" \
 ```
 
 **Key Flags:**
+
 - `-p` or `--print`: Enables headless mode (non-interactive execution). Note: workspace trust dialog is skipped in -p mode.
 - `--permission-mode bypassPermissions`: Bypass permission prompts for automation
 - `--dangerously-skip-permissions`: Bypass ALL permission checks (sandbox only)
@@ -89,15 +95,16 @@ claude -p "Generate a user profile" \
 
 ## Available Models
 
-| Model | Full Model ID | Context | Speed | Cost | Best For |
-|-------|---------------|---------|-------|------|----------|
-| **claude-haiku-4.5** | `claude-haiku-4-5-20251001` | ~200K | Fast | Low | Quick tasks, budget-conscious |
-| **claude-sonnet-4.6** | `claude-sonnet-4-6-20250514` | ~200K (1M beta) | Medium | Medium | Daily coding, balanced (default) |
-| **claude-opus-4.6** | `claude-opus-4-6-20250205` | ~200K (1M beta) | Medium | Medium-High | Best for coding, agents, computer use |
+| Model                 | Full Model ID                | Context         | Speed  | Cost        | Best For                              |
+| --------------------- | ---------------------------- | --------------- | ------ | ----------- | ------------------------------------- |
+| **claude-haiku-4.5**  | `claude-haiku-4-5-20251001`  | ~200K           | Fast   | Low         | Quick tasks, budget-conscious         |
+| **claude-sonnet-4.6** | `claude-sonnet-4-6-20250514` | ~200K (1M beta) | Medium | Medium      | Daily coding, balanced (default)      |
+| **claude-opus-4.6**   | `claude-opus-4-6-20250205`   | ~200K (1M beta) | Medium | Medium-High | Best for coding, agents, computer use |
 
 > **Note (March 2026):** Claude Opus 4.6 released Feb 5, 2026. Claude Sonnet 4.6 released Feb 17, 2026. Both support 1M context in beta. Opus 4.6 defaults to medium effort. The "ultrathink" keyword enables extended thinking. Claude Opus 4/4.1/4.5 and Sonnet 4.5 are still available but aliases (`sonnet`, `opus`) now map to 4.6 versions.
 
 **Model Selection:**
+
 ```bash
 # Use model alias (recommended)
 claude -p "query" --model sonnet
@@ -127,6 +134,7 @@ claude -p "query"
 The effort parameter is available via the Anthropic API and Claude Code CLI for Claude Opus 4.6. Use the "ultrathink" keyword in prompts to enable extended thinking mode.
 
 **Benefits:**
+
 - **Cost Control**: Adjust computational effort based on task complexity
 - **Performance Tuning**: More effort for complex tasks, less for simple ones
 - **Flexibility**: Fine-tune the cost/quality tradeoff per request
@@ -136,6 +144,7 @@ The effort parameter is available via the Anthropic API and Claude Code CLI for 
 ## CLI Syntax
 
 **Basic usage:**
+
 ```bash
 # Interactive mode (default)
 claude [options] [prompt]
@@ -147,6 +156,7 @@ claude [options] -p "Your prompt"
 **Core Options:**
 
 **Basic:**
+
 - `-p, --print`: Print response and exit (headless mode). Note: workspace trust dialog is skipped.
 - `-d, --debug [filter]`: Enable debug mode with optional category filtering (e.g., "api,hooks" or "!statsig,!file")
 - `--verbose`: Override verbose mode setting from config
@@ -154,6 +164,7 @@ claude [options] -p "Your prompt"
 - `-h, --help`: Display help
 
 **Output Control:**
+
 - `--output-format <format>`: Output format (only with --print): "text" (default), "json", or "stream-json"
 - `--json-schema <schema>`: JSON Schema for structured output validation
 - `--include-partial-messages`: Include partial message chunks as they arrive (only with --print and stream-json)
@@ -161,28 +172,33 @@ claude [options] -p "Your prompt"
 - `--replay-user-messages`: Re-emit user messages from stdin on stdout (only with stream-json input/output)
 
 **Permissions & Security:**
+
 - `--permission-mode <mode>`: Permission mode: acceptEdits, bypassPermissions, default, dontAsk, plan
 - `--dangerously-skip-permissions`: Bypass all permission checks (sandboxes only)
 - `--allow-dangerously-skip-permissions`: Enable bypassing permissions as an option
 
 **Tools:**
-- `--allowedTools, --allowed-tools <tools...>`: Comma/space-separated list of allowed tools (e.g., "Bash(git:*) Edit")
+
+- `--allowedTools, --allowed-tools <tools...>`: Comma/space-separated list of allowed tools (e.g., "Bash(git:\*) Edit")
 - `--tools <tools...>`: Specify available tools from built-in set (only with --print). Use "" to disable all, "default" for all.
 - `--disallowedTools, --disallowed-tools <tools...>`: Comma/space-separated list of denied tools
 
 **Model & Settings:**
+
 - `--model <model>`: Model alias (sonnet/opus/haiku) or full name (claude-sonnet-4-5-20250929)
 - `--fallback-model <model>`: Enable automatic fallback when overloaded (only with --print)
 - `--settings <file-or-json>`: Path to settings JSON file or JSON string
 - `--setting-sources <sources>`: Comma-separated setting sources to load (user, project, local)
 
 **Session Management:**
+
 - `-c, --continue`: Continue most recent conversation
 - `-r, --resume [sessionId]`: Resume conversation by session ID or select interactively
 - `--fork-session`: Create new session ID when resuming (use with --resume or --continue)
 - `--session-id <uuid>`: Use specific session ID (must be valid UUID)
 
 **Customization:**
+
 - `--system-prompt <prompt>`: System prompt for the session
 - `--append-system-prompt <prompt>`: Append to default system prompt
 - `--agents <json>`: JSON object defining custom agents
@@ -193,6 +209,7 @@ claude [options] -p "Your prompt"
 - `--ide`: Auto-connect to IDE on startup if available
 
 **Commands:**
+
 - `mcp`: Configure and manage MCP servers
 - `plugin`: Manage Claude Code plugins
 - `migrate-installer`: Migrate from global npm to local installation
@@ -204,16 +221,19 @@ claude [options] -p "Your prompt"
 ## Output Formats
 
 **Text (default):**
+
 ```bash
 claude -p "Explain file src/components/Header.tsx"
 ```
 
 **JSON (for automation):**
+
 ```bash
 claude -p "How does the data layer work?" --output-format json
 ```
 
 Returns structured data:
+
 ```json
 {
   "type": "result",
@@ -229,6 +249,7 @@ Returns structured data:
 ```
 
 **Streaming JSON (real-time events):**
+
 ```bash
 claude -p "Build an application" --output-format stream-json
 ```
@@ -238,6 +259,7 @@ Streams each message as it is received, beginning with an `init` system message,
 ## Configuration
 
 **Tool control:**
+
 ```bash
 # Allow specific tools
 claude -p "query" --allowedTools "Bash,Read,WebSearch,mcp__filesystem"
@@ -253,6 +275,7 @@ claude -p "query" --tools ""
 ```
 
 **Permission modes:**
+
 ```bash
 # Accept edits without prompting
 claude -p "query" --permission-mode acceptEdits
@@ -271,6 +294,7 @@ claude -p "query" --dangerously-skip-permissions
 ```
 
 **Session management:**
+
 ```bash
 # Continue most recent conversation
 claude --continue "Now refactor this for better performance"
@@ -289,6 +313,7 @@ claude -p "Your prompt" --session-id "550e8400-e29b-41d4-a716-446655440000"
 ```
 
 **MCP configuration:**
+
 ```bash
 # Load MCP servers from JSON file
 claude -p "query" --mcp-config servers.json
@@ -301,6 +326,7 @@ claude -p "query" --mcp-config servers.json --strict-mcp-config
 ```
 
 **System prompt customization:**
+
 ```bash
 # Append to default system prompt
 claude -p "query" --append-system-prompt "You are an SRE expert. Diagnose issues and provide action items."
@@ -312,6 +338,7 @@ claude -p "query" --system-prompt "You are a security auditor. Focus on vulnerab
 ## Examples
 
 **SRE Incident Response:**
+
 ```bash
 #!/bin/bash
 investigate_incident() {
@@ -329,6 +356,7 @@ investigate_incident "Payment API returning 500 errors" "high"
 ```
 
 **Automated Security Review:**
+
 ```bash
 audit_pr() {
     local pr_number="$1"
@@ -342,6 +370,7 @@ audit_pr 123 > security-report.json
 ```
 
 **Multi-turn Legal Assistant:**
+
 ```bash
 session_id=$(claude -p "Start legal review session" --output-format json | jq -r '.session_id')
 
@@ -353,6 +382,7 @@ claude -p --resume "$session_id" "Generate executive summary of risks"
 ## CI/CD Integration
 
 **GitHub Actions workflow:**
+
 ```yaml
 name: Claude Code Review
 
@@ -373,7 +403,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install Claude CLI
         run: npm install -g @anthropic-ai/claude-code
@@ -409,6 +439,7 @@ jobs:
 ```
 
 **Direct CLI usage in CI/CD:**
+
 ```bash
 # Parse JSON response with bypass permissions
 result=$(claude -p "Generate code" --output-format json --permission-mode bypassPermissions)
@@ -430,6 +461,7 @@ result=$(claude -p "Generate user profile" \
 ```
 
 **Best practices for CI/CD:**
+
 - Use `--permission-mode bypassPermissions` to prevent prompts in automation
 - Use `--output-format json` for structured output
 - Pre-approve tools with `--allowedTools` to avoid approval prompts
@@ -454,4 +486,3 @@ result=$(claude -p "Generate user profile" \
 - [Anthropic Claude Models](https://docs.claude.ai)
 - [Claude Code Headless Mode](https://code.claude.com/docs/en/headless.md)
 - [Anthropic Console](https://console.anthropic.com/)
-

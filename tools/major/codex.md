@@ -6,6 +6,7 @@
 **Note:** This is the 2025 OpenAI Codex CLI tool, not the original 2021 Codex model. The CLI provides programmatic access to OpenAI's latest code generation models (GPT-5 Codex, etc.).
 
 **When NOT to use Codex:**
+
 - ❌ You need deep reasoning for complex architecture (Claude Opus is better)
 - ❌ You need massive context windows (Gemini handles larger repos)
 - ❌ You're not in a Git repository (requires Git repo by default, unless you override)
@@ -14,6 +15,7 @@
 **Git repository requirement:** The Codex CLI assumes the workspace is a Git repository because many of its built-in capabilities rely on diff analysis and file tracking. Use `--skip-git-repo-check` to override this requirement.
 
 ### Quick Nav
+
 - [Start Here](#-start-here)
 - [Why Use Codex](#-why-use-codex)
 - [Best Use Cases](#-best-use-cases)
@@ -33,6 +35,7 @@
 OpenAI Codex is a command-line coding agent designed for UI generation, rapid prototyping, and planning tasks. It converts natural language into working code and provides both interactive and non-interactive modes for different workflows.
 
 **Key Characteristics:**
+
 - Interactive and non-interactive modes
 - Strong for UI generation and prototyping
 - Structured output with JSON Schema support
@@ -44,34 +47,40 @@ OpenAI Codex is a command-line coding agent designed for UI generation, rapid pr
 - Experimental plan tracking for complex multi-step tasks
 
 **Two Modes:**
+
 1. **Interactive Mode** (default): `codex [OPTIONS] [PROMPT]`
 2. **Non-Interactive Mode** (for automation): `codex exec [OPTIONS] [PROMPT]`
 
 ## Installation
 
 **Using npm:**
+
 ```bash
 npm install -g @openai/codex
 ```
 
 **System Requirements:**
+
 - Node.js 18 or later
 - Git repository (by default, can be overridden with `--skip-git-repo-check`)
 - API key from OpenAI
 
 **Authentication:**
 Set your OpenAI API key as an environment variable:
+
 ```bash
 export OPENAI_API_KEY=your_api_key_here
 codex exec "query"
 ```
 
 Or use it inline for a single command:
+
 ```bash
 OPENAI_API_KEY=your_api_key_here codex exec "query"
 ```
 
 **For `codex exec` only:** You can also use `CODEX_API_KEY` to override credentials for a single run:
+
 ```bash
 CODEX_API_KEY=your-api-key codex exec --json "triage open bug reports"
 ```
@@ -81,16 +90,19 @@ CODEX_API_KEY=your-api-key codex exec --json "triage open bug reports"
 ## 🚀 Start Here
 
 **Interactive mode (default):**
+
 ```bash
 codex
 ```
 
 **Interactive mode with initial prompt:**
+
 ```bash
 codex "generate a unit test"
 ```
 
 **Non-interactive mode (for automation):**
+
 ```bash
 codex exec "generate a unit test"
 ```
@@ -98,6 +110,7 @@ codex exec "generate a unit test"
 ## Interactive Mode
 
 **Start interactive session:**
+
 ```bash
 # Start interactive mode (default)
 codex
@@ -125,6 +138,7 @@ codex --search "Find best practices for React hooks"
 ```
 
 **Interactive mode options:**
+
 - `[PROMPT]` - Optional initial prompt to start the session
 - `-m, --model <MODEL>` - Model to use (e.g., `gpt-5.1-codex-high`)
 - `-i, --image <FILE>...` - Attach image(s) to initial prompt
@@ -162,18 +176,19 @@ codex exec --json --color never "review code changes" > review.jsonl
 
 ## Available Models
 
-| Model | Description | Speed | Cost | Best For |
-|-------|-------------|-------|------|----------|
-| **gpt-5.3-codex** | Latest Codex + GPT-5 combined training, ~25% faster (Feb 2026) | Very Fast | Medium-High | Fastest code generation, implementation-heavy tasks |
-| **gpt-5.2-codex** | Proven Codex model with Extra High reasoning (Jan 2026) | Fast | Medium | Solid implementation, debugging |
-| **gpt-5.1-codex-max** | Codex-optimized flagship for deep and fast reasoning | Fast | High | Complex code generation, deep reasoning |
-| **gpt-5.1-codex** | Standard Codex model | Medium | Medium | UI generation, prototyping, general coding |
-| **gpt-5.1-codex-mini** | Cheaper, faster, less capable | Very Fast | Low | Simple tasks, quick prototypes |
-| **gpt-5.1** | Broad world knowledge with strong general reasoning | Medium | Medium-High | Non-coding tasks, general reasoning |
+| Model                  | Description                                                    | Speed     | Cost        | Best For                                            |
+| ---------------------- | -------------------------------------------------------------- | --------- | ----------- | --------------------------------------------------- |
+| **gpt-5.3-codex**      | Latest Codex + GPT-5 combined training, ~25% faster (Feb 2026) | Very Fast | Medium-High | Fastest code generation, implementation-heavy tasks |
+| **gpt-5.2-codex**      | Proven Codex model with Extra High reasoning (Jan 2026)        | Fast      | Medium      | Solid implementation, debugging                     |
+| **gpt-5.1-codex-max**  | Codex-optimized flagship for deep and fast reasoning           | Fast      | High        | Complex code generation, deep reasoning             |
+| **gpt-5.1-codex**      | Standard Codex model                                           | Medium    | Medium      | UI generation, prototyping, general coding          |
+| **gpt-5.1-codex-mini** | Cheaper, faster, less capable                                  | Very Fast | Low         | Simple tasks, quick prototypes                      |
+| **gpt-5.1**            | Broad world knowledge with strong general reasoning            | Medium    | Medium-High | Non-coding tasks, general reasoning                 |
 
 > **Note (March 2026):** GPT-5.3-Codex launched Feb 5, 2026 and GPT-5.2-Codex launched Jan 14, 2026. Six older models (pre-5.1) were retired Feb 13, 2026.
 
 **Model Selection:**
+
 ```bash
 # Use latest flagship (recommended)
 codex exec "query" --model gpt-5.1-codex-max
@@ -197,21 +212,23 @@ codex exec --model gpt-5.1-codex-max --json --color never "query"
 
 Codex supports configurable reasoning depth for models like `gpt-5.1-codex-max`. This controls how much computational effort the model spends on reasoning.
 
-| Level | Description | Speed | Best For |
-|-------|-------------|-------|----------|
-| **Low** | Fast responses with lighter reasoning | Very Fast | Simple tasks, quick iterations |
-| **Medium** | Balances speed and reasoning depth (default) | Fast | Everyday coding tasks |
-| **High** | Maximizes reasoning depth | Slower | Complex problems, deep analysis |
-| **Extra high** | Extra high reasoning depth | Slowest | Most complex architectural decisions |
+| Level          | Description                                  | Speed     | Best For                             |
+| -------------- | -------------------------------------------- | --------- | ------------------------------------ |
+| **Low**        | Fast responses with lighter reasoning        | Very Fast | Simple tasks, quick iterations       |
+| **Medium**     | Balances speed and reasoning depth (default) | Fast      | Everyday coding tasks                |
+| **High**       | Maximizes reasoning depth                    | Slower    | Complex problems, deep analysis      |
+| **Extra high** | Extra high reasoning depth                   | Slowest   | Most complex architectural decisions |
 
 **Setting Reasoning Level:**
 
 The reasoning level is typically set interactively during model selection in the Codex CLI. For programmatic use, reasoning levels may be configured via:
+
 - Interactive CLI prompts when selecting models
 - Configuration files (`config.toml`)
 - Command-line flags (if supported - check `codex --help` for latest options)
 
 **Example usage:**
+
 ```bash
 # Interactive: CLI will prompt for reasoning level after model selection
 codex exec "Your prompt here"
@@ -224,6 +241,7 @@ codex exec "Your prompt here"
 ```
 
 **When to adjust reasoning level:**
+
 - **Low**: Rapid prototyping, simple code generation
 - **Medium**: Standard development tasks, most use cases
 - **High**: Complex refactoring, architectural decisions, debugging hard problems
@@ -232,6 +250,7 @@ codex exec "Your prompt here"
 ## CLI Syntax
 
 **Basic usage:**
+
 ```bash
 # Interactive mode
 codex [OPTIONS] [PROMPT]
@@ -241,6 +260,7 @@ codex exec [OPTIONS] [PROMPT]
 ```
 
 **Commands:**
+
 - `exec` (alias: `e`) - Run Codex non-interactively
 - `login` - Manage login
 - `logout` - Remove stored authentication credentials
@@ -255,6 +275,7 @@ codex exec [OPTIONS] [PROMPT]
 - `features` - Inspect feature flags
 
 **Common options:**
+
 - `[PROMPT]` - Optional user prompt to start the session
 - `-m, --model <MODEL>` - Model the agent should use
 - `-i, --image <FILE>...` - Optional image(s) to attach to initial prompt
@@ -273,12 +294,14 @@ codex exec [OPTIONS] [PROMPT]
 - `--local-provider <OSS_PROVIDER>` - Specify local provider (lmstudio or ollama)
 
 **Approval policies (`-a, --ask-for-approval`):**
+
 - `untrusted` - Only run "trusted" commands without approval (ls, cat, sed, etc.)
 - `on-failure` - Run all commands without approval; only ask if command fails
 - `on-request` - Model decides when to ask for approval
 - `never` - Never ask for approval; execution failures returned to model
 
 **Sandbox modes (`-s, --sandbox`):**
+
 - `read-only` - Read-only sandbox (default), no file modifications
 - `workspace-write` - Allow file creation/editing within workspace
 - `danger-full-access` - Full file system access (DANGEROUS)
@@ -286,15 +309,18 @@ codex exec [OPTIONS] [PROMPT]
 ## Permission Modes (Sandbox Policies)
 
 **Default (read-only):**
+
 ```bash
 codex exec "find any remaining TODOs and create plans"
 ```
+
 - Read-only sandbox (default)
 - No file modifications
 - No networked commands
 - Safe for analysis and planning tasks
 
 **Workspace-write (allow file edits):**
+
 ```bash
 # Using --full-auto flag (shorthand for workspace-write)
 codex exec --full-auto "Refactor authentication module"
@@ -302,15 +328,18 @@ codex exec --full-auto "Refactor authentication module"
 # Or explicitly specify sandbox mode
 codex exec --sandbox workspace-write "Update configuration files"
 ```
+
 - Allows file creation and editing within workspace
 - No system modifications
 - No network access
 - Suitable for code refactoring and file updates
 
 **Danger-full-access (full permissions):**
+
 ```bash
 codex exec --sandbox danger-full-access "Install dependencies and update config"
 ```
+
 - Full file system access
 - Network access enabled
 - Can install packages and run commands
@@ -319,14 +348,17 @@ codex exec --sandbox danger-full-access "Install dependencies and update config"
 ## Output Control
 
 **Default (final message to stdout):**
+
 ```bash
 codex exec "generate release notes" | tee release-notes.md
 ```
+
 - Streams activity to stderr
 - Final agent message to stdout
 - Easy to pipe into other tools
 
 **Save to file:**
+
 ```bash
 codex exec -o output.md "analyze codebase"
 # or
@@ -334,11 +366,13 @@ codex exec --output-last-message output.md "analyze codebase"
 ```
 
 **JSON streaming (all events):**
+
 ```bash
 codex exec --json "summarize the repo structure" | jq
 ```
 
 **Color output control:**
+
 ```bash
 # Always use colors
 codex exec --color always "analyze code"
@@ -352,6 +386,7 @@ codex exec --color auto "review changes"
 
 **JSON Event Types:**
 When using `--json`, events are emitted as JSONL (newline-delimited JSON). Event types include:
+
 - `thread.started`: Thread initialization
 - `turn.started`: Turn begins
 - `turn.completed`: Turn successfully completed
@@ -373,6 +408,7 @@ When using `--json`, events are emitted as JSONL (newline-delimited JSON). Event
 Use JSON Schema to receive structured JSON output. This ensures the final agent message conforms to your specified schema, making it perfect for automation and CI/CD pipelines.
 
 **schema.json:**
+
 ```json
 {
   "type": "object",
@@ -393,6 +429,7 @@ Use JSON Schema to receive structured JSON output. This ensures the final agent 
 ```
 
 **Usage:**
+
 ```bash
 codex exec "Extract project metadata" \
   --output-schema ./schema.json \
@@ -406,18 +443,21 @@ The output file will contain JSON that strictly conforms to your schema, making 
 Codex maintains session state, allowing you to continue conversations across multiple commands.
 
 **Resume last session:**
+
 ```bash
 codex exec "Review the change for race conditions"
 codex exec resume --last "Fix the race conditions you found"
 ```
 
 **Resume specific session:**
+
 ```bash
 codex exec resume <SESSION_ID> "Continue from where we left off"
 ```
 
 **Session ID extraction:**
 When using `--json` output, session IDs are included in the thread events:
+
 ```bash
 codex exec --json "analyze code" | jq -r 'select(.type=="thread.started") | .thread_id'
 ```
@@ -425,17 +465,21 @@ codex exec --json "analyze code" | jq -r 'select(.type=="thread.started") | .thr
 ## TypeScript SDK
 
 **Install SDK:**
+
 ```bash
 npm install @openai/codex-sdk
 ```
 
 **Usage:**
+
 ```typescript
 import { Codex } from "@openai/codex-sdk";
 
 const codex = new Codex();
 const thread = codex.startThread();
-const result = await thread.run("Make a plan to diagnose and fix the CI failures");
+const result = await thread.run(
+  "Make a plan to diagnose and fix the CI failures"
+);
 
 // Continue on same thread
 const result2 = await thread.run("Execute the plan");
@@ -444,12 +488,14 @@ const result2 = await thread.run("Execute the plan");
 ## Examples
 
 **Automated code review:**
+
 ```bash
 codex exec --json "Review PR changes for bugs and security issues" | \
   jq -r 'select(.type=="item.completed" and .item.type=="agent_message") | .item.text'
 ```
 
 **Structured metadata extraction:**
+
 ```bash
 codex exec "Extract project metadata" \
   --output-schema ./schema.json \
@@ -457,6 +503,7 @@ codex exec "Extract project metadata" \
 ```
 
 **Multi-step task with session:**
+
 ```bash
 codex exec "Analyze codebase structure"
 codex exec resume --last "Generate migration plan"
@@ -464,16 +511,19 @@ codex exec resume --last "Create execution checklist"
 ```
 
 **Batch processing with working directory:**
+
 ```bash
 codex exec --cd /path/to/project --full-auto "Refactor all TypeScript files to use ES6+ syntax"
 ```
 
 **CI/CD-friendly execution:**
+
 ```bash
 codex exec --json --color never --full-auto "Run tests and fix any failures" > ci-output.jsonl
 ```
 
 **Using experimental plan tracking:**
+
 ```bash
 codex exec --include-plan-tool --json "Plan and execute a major refactoring" | \
   jq 'select(.type=="item.completed" and .item.type=="plan_update")'
@@ -482,6 +532,7 @@ codex exec --include-plan-tool --json "Plan and execute a major refactoring" | \
 ## CI/CD Integration
 
 **GitHub Action (using official action):**
+
 ```yaml
 name: Codex pull request review
 on:
@@ -500,13 +551,13 @@ jobs:
       - uses: actions/checkout@v5
         with:
           ref: refs/pull/${{ github.event.pull_request.number }}/merge
-      
+
       - name: Pre-fetch base and head refs
         run: |
           git fetch --no-tags origin \
             ${{ github.event.pull_request.base.ref }} \
             +refs/pull/${{ github.event.pull_request.number }}/head
-      
+
       - name: Run Codex
         id: run_codex
         uses: openai/codex-action@v1
@@ -517,7 +568,7 @@ jobs:
           safety-strategy: drop-sudo
           sandbox: workspace-write
           codex-args: '["--json", "--color", "never"]'
-      
+
       - name: Post Codex feedback
         if: steps.run_codex.outputs.final_message != ''
         uses: actions/github-script@v7
@@ -535,6 +586,7 @@ jobs:
 
 **Autofix CI pattern:**
 Codex can automatically fix CI failures and open pull requests with patches:
+
 ```yaml
 name: Autofix CI
 on:
@@ -554,7 +606,7 @@ jobs:
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.event.workflow_run.head_branch }}
-      
+
       - name: Run Codex Autofix
         uses: openai/codex-action@v1
         with:
@@ -566,6 +618,7 @@ jobs:
 ```
 
 **Direct CLI usage in CI/CD:**
+
 ```yaml
 - name: Install Codex CLI
   run: npm install -g @openai/codex
@@ -577,13 +630,14 @@ jobs:
     codex exec --json --color never --full-auto \
       "Review code changes for bugs and security issues" \
       > codex-review.jsonl || exit 1
-    
+
     # Parse results
     jq -r 'select(.type=="item.completed" and .item.type=="agent_message") | .item.text' \
       codex-review.jsonl > review-summary.txt
 ```
 
 **Key CI/CD considerations:**
+
 - Use `--color never` for clean log output
 - Use `--json` for structured, parseable output
 - Set appropriate sandbox modes based on trust level
@@ -607,4 +661,3 @@ jobs:
 - [OpenAI Codex](https://openai.com/research/codex)
 - [Codex SDK - Using Codex CLI Programmatically](https://developers.openai.com/codex/sdk#using-codex-cli-programmatically)
 - [OpenAI Platform](https://platform.openai.com/)
-

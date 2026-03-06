@@ -1,0 +1,19 @@
+{
+  "name": "headless-ai-cli-docs",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CI tooling for AI CLI documentation repository",
+  "scripts": {
+    "lint": "markdownlint-cli2 \"**/*.md\" \"#node_modules\"",
+    "lint:fix": "markdownlint-cli2 --fix \"**/*.md\" \"#node_modules\"",
+    "format": "prettier --check \"**/*.md\"",
+    "format:fix": "prettier --write \"**/*.md\"",
+    "check:freshness": "bash scripts/check-freshness.sh",
+    "check:sync": "bash scripts/check-readme-sync.sh",
+    "validate": "npm run lint && npm run format && npm run check:freshness && npm run check:sync"
+  },
+  "devDependencies": {
+    "markdownlint-cli2": "^0.17.0",
+    "prettier": "^3.5.0"
+  }
+}

@@ -4,12 +4,14 @@
 **Risk level:** 🟢 Very Low (read-only by default, safest for CI/CD)
 
 **When NOT to use Droid:**
+
 - ❌ You need delta streaming (Droid doesn't support incremental text updates)
 - ❌ You need massive context windows (Gemini handles larger repos better)
 - ❌ You need UI/front-end generation (Codex is better for this)
 - ❌ You need complex multi-turn reasoning (Claude Opus is better)
 
 ### Quick Nav
+
 - [Start Here](#-start-here)
 - [Why Use Droid](#-why-use-droid)
 - [Best Use Cases](#-best-use-cases)
@@ -29,6 +31,7 @@
 Factory AI Droid is Factory's AI coding agent that works in both interactive and non-interactive modes. It's designed primarily for CI/CD pipelines and automation scripts with secure defaults (read-only mode) and explicit opt-in for mutations via autonomy levels.
 
 **Key Characteristics:**
+
 - Interactive and non-interactive modes
 - Secure by default (read-only)
 - Structured output formats
@@ -36,17 +39,20 @@ Factory AI Droid is Factory's AI coding agent that works in both interactive and
 - Composable for shell scripting
 
 **Two Modes:**
+
 1. **Interactive Mode** (default): `droid` or `droid "initial prompt"`
 2. **Non-Interactive Mode** (for automation): `droid exec`
 
 ## Installation
 
 **macOS/Linux:**
+
 ```bash
 curl -fsSL https://app.factory.ai/cli | sh
 ```
 
 **Windows (PowerShell):**
+
 ```powershell
 irm https://app.factory.ai/cli/windows | iex
 ```
@@ -55,6 +61,7 @@ irm https://app.factory.ai/cli/windows | iex
 Generate your API key from the [Factory Settings Page](https://app.factory.ai/settings/api-keys)
 
 **Set Environment Variable:**
+
 ```bash
 export FACTORY_API_KEY=fk-...
 ```
@@ -62,11 +69,13 @@ export FACTORY_API_KEY=fk-...
 ## 🚀 Start Here
 
 **Interactive mode (default):**
+
 ```bash
 droid "analyze this folder"
 ```
 
 **Non-interactive mode (for automation):**
+
 ```bash
 droid exec "analyze this folder"
 ```
@@ -74,6 +83,7 @@ droid exec "analyze this folder"
 ## Interactive Mode
 
 **Start interactive session:**
+
 ```bash
 # Start interactive mode (default)
 droid
@@ -115,26 +125,28 @@ droid exec --session-id <session-id> "continue with next steps"
 
 **Factory Provided Models** (multipliers represent cost in Standard Tokens):
 
-| Rank | Model | Cost Multiplier | Description | Best For |
-|------|-------|-----------------|-------------|----------|
-| 1 | **Claude Opus 4.6** | - | Latest Anthropic flagship with Max reasoning (Feb 2026) | Complex work, best depth and safety |
-| 2 | **Claude Opus 4.6 Fast** | - | Opus 4.6 tuned for faster response; 12x multiplier | Speed-critical complex tasks |
-| 3 | **Claude Opus 4.5** | 1.2x | Proven quality-and-safety balance | Strong default for TUI and exec |
-| 4 | **GPT-5.1-Codex-Max** | - | Fast coding loops with Extra High reasoning | Heavy implementation, debugging |
-| 5 | **Claude Sonnet 4.5** | 1.2x | Balanced cost/quality daily driver | General-purpose coding |
-| 6 | **GPT-5.3-Codex** | - | Newest OpenAI coding model with Extra High reasoning (Feb 2026) | Implementation-heavy tasks |
-| 7 | **GPT-5.2-Codex** | - | Proven OpenAI coding model with Extra High reasoning (Jan 2026) | Solid implementation |
-| 8 | **GPT-5.1-Codex** | 0.5x | Quick iteration with solid code quality | Lower-cost coding |
-| 9 | **Haiku 4.5** | 0.4x | Claude Haiku 4.5 | Fast and cost-effective |
-| 10 | **Droid Core (GLM-4.6)** | 0.25x | GLM-4.6 open-source model | Most cost-effective option |
+| Rank | Model                    | Cost Multiplier | Description                                                     | Best For                            |
+| ---- | ------------------------ | --------------- | --------------------------------------------------------------- | ----------------------------------- |
+| 1    | **Claude Opus 4.6**      | -               | Latest Anthropic flagship with Max reasoning (Feb 2026)         | Complex work, best depth and safety |
+| 2    | **Claude Opus 4.6 Fast** | -               | Opus 4.6 tuned for faster response; 12x multiplier              | Speed-critical complex tasks        |
+| 3    | **Claude Opus 4.5**      | 1.2x            | Proven quality-and-safety balance                               | Strong default for TUI and exec     |
+| 4    | **GPT-5.1-Codex-Max**    | -               | Fast coding loops with Extra High reasoning                     | Heavy implementation, debugging     |
+| 5    | **Claude Sonnet 4.5**    | 1.2x            | Balanced cost/quality daily driver                              | General-purpose coding              |
+| 6    | **GPT-5.3-Codex**        | -               | Newest OpenAI coding model with Extra High reasoning (Feb 2026) | Implementation-heavy tasks          |
+| 7    | **GPT-5.2-Codex**        | -               | Proven OpenAI coding model with Extra High reasoning (Jan 2026) | Solid implementation                |
+| 8    | **GPT-5.1-Codex**        | 0.5x            | Quick iteration with solid code quality                         | Lower-cost coding                   |
+| 9    | **Haiku 4.5**            | 0.4x            | Claude Haiku 4.5                                                | Fast and cost-effective             |
+| 10   | **Droid Core (GLM-4.6)** | 0.25x           | GLM-4.6 open-source model                                       | Most cost-effective option          |
 
 > **Note (March 2026):** Stack rank updated Feb 25, 2026 per Factory docs. Droid CLI now at v0.65.0. New features include `/diagnostics` command, session archiving, inline rename, custom model reasoning effort, and concurrent mission warnings.
 
 **Additional Options:**
+
 - **Custom Model** - User-configured via BYOK (Bring Your Own Key)
 - **Spec Mode Model** - Can be configured separately from main model
 
 **Model Selection:**
+
 ```bash
 # Use model name
 droid exec -m "Sonnet 4.5" "analyze code"
@@ -156,6 +168,7 @@ droid exec -m "Gemini 3 Pro (High)" -r low -f plan.md
 ```
 
 **Cost Considerations:**
+
 - Most cost-effective: Droid Core (0.25x)
 - Budget-friendly: Haiku 4.5 (0.4x), GPT-5.1 series (0.5x)
 - Balanced: Gemini 3 Pro (0.8x), Sonnet/Opus 4.5 (1.2x)
@@ -164,11 +177,13 @@ droid exec -m "Gemini 3 Pro (High)" -r low -f plan.md
 ## CLI Syntax
 
 **Basic usage:**
+
 ```bash
 droid exec [options] "Your prompt"
 ```
 
 **Common options:**
+
 - `-f, --file FILE`: Read prompt from file
 - `-m, --model MODEL`: Specify model (short name or full ID)
 - `-r, --auto LEVEL`: Autonomy level (`low`, `medium`, `high`)
@@ -179,6 +194,7 @@ droid exec [options] "Your prompt"
 ## Autonomy Levels
 
 **Default (read-only):**
+
 - ✅ Reading files, logs, git status, directory listings
 - ❌ No modifications to files or system
 - **Use case:** Safe analysis and planning
@@ -188,6 +204,7 @@ droid exec "Analyze the authentication system and create a detailed migration pl
 ```
 
 **`--auto low`** - Low-risk Operations:
+
 - ✅ File creation/editing in project directories
 - ❌ No system modifications or package installations
 - **Use case:** Documentation updates, code formatting
@@ -197,6 +214,7 @@ droid exec --auto low "add JSDoc comments to all functions"
 ```
 
 **`--auto medium`** - Development Operations:
+
 - ✅ Installing packages (npm, pip), git operations (no push), building code
 - ❌ No git push, sudo commands, or production changes
 - **Use case:** Local development, testing, dependency management
@@ -206,6 +224,7 @@ droid exec --auto medium "install deps, run tests, fix issues"
 ```
 
 **`--auto high`** - Production Operations:
+
 - ✅ Git push, running untrusted code, production deployments
 - ❌ Still blocks: sudo rm -rf /, system-wide changes
 - ⚠️ **Factory-side restrictions:** Even at high autonomy, Droid cannot execute certain destructive commands (factory-enforced safety limits)
@@ -218,16 +237,19 @@ droid exec --auto high "fix bug, test, commit, and push to main"
 ## Output Formats
 
 **Text (default):**
+
 ```bash
 droid exec --auto low "create a python file that prints 'hello world'"
 ```
 
 **JSON (for automation):**
+
 ```bash
 droid exec "summarize this repository" --output-format json
 ```
 
 **Debug (streaming):**
+
 ```bash
 droid exec "run ls command" --output-format debug
 ```
@@ -235,6 +257,7 @@ droid exec "run ls command" --output-format debug
 ## Examples
 
 **Security audit:**
+
 ```bash
 droid exec --auto low \
   "Run a comprehensive security audit of this codebase. Check for:
@@ -243,18 +266,20 @@ droid exec --auto low \
   - Insecure authentication patterns
   - Hardcoded secrets
   - Insecure dependencies
-  
+
   Write findings to security-audit.json in JSON format." \
   --output-format json > audit-result.json
 ```
 
 **License enforcement:**
+
 ```bash
 git ls-files "*.ts" | xargs -I {} \
   droid exec --auto low "Ensure {} begins with the Apache-2.0 header; add it if missing"
 ```
 
 **Code review:**
+
 ```bash
 droid exec --auto low "Review PR changes for bugs and security issues" --output-format json
 ```
@@ -262,6 +287,7 @@ droid exec --auto low "Review PR changes for bugs and security issues" --output-
 ## CI/CD Integration
 
 **GitHub Actions workflow:**
+
 ```yaml
 name: Factory Droid Automation
 
@@ -341,6 +367,7 @@ jobs:
 ```
 
 **GitLab CI example:**
+
 ```yaml
 droid-audit:
   script:
@@ -354,6 +381,7 @@ droid-audit:
 ```
 
 **Direct CLI usage in CI/CD:**
+
 ```bash
 #!/bin/bash
 set -e
@@ -382,6 +410,7 @@ fi
 ```
 
 **Best practices for CI/CD:**
+
 - Default mode is read-only (safest for CI/CD)
 - Use `--auto` flags only when file modifications are needed
 - Use `--output-format json` for structured, parseable output
@@ -406,4 +435,3 @@ fi
 - [Factory AI Droid Exec](https://docs.factory.ai/cli/droid-exec/overview.md)
 - [Factory AI Settings](https://app.factory.ai/settings/api-keys)
 - [Factory AI Documentation](https://docs.factory.ai/)
-

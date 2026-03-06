@@ -29,4 +29,3 @@ This workflow automates code review tasks using Cline.
 ## Usage
 
 Invoke this workflow in Cline using: `/code-review.md`
-

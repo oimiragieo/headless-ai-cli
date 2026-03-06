@@ -1,9 +1,9 @@
 ---
 name: Verification Report
 about: Report that you've tested a tool and docs are accurate (or not)
-title: '[VERIFIED] '
-labels: 'verification'
-assignees: ''
+title: "[VERIFIED] "
+labels: "verification"
+assignees: ""
 ---
 
 ## Tool Verified

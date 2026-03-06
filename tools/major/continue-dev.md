@@ -4,12 +4,14 @@
 **Risk level:** 🟢 Low (VS Code extension with CLI support)
 
 **When NOT to use Continue Dev:**
+
 - ❌ You need pure CLI-only workflows (Continue is primarily a VS Code extension)
 - ❌ You're not using VS Code
 - ❌ You need headless-only automation
 - ❌ You need massive context windows (Gemini handles larger repos better)
 
 ### Quick Nav
+
 - [Start Here](#-start-here)
 - [Why Use Continue Dev](#-why-use-continue-dev)
 - [Best Use Cases](#-best-use-cases)
@@ -27,6 +29,7 @@
 Continue Dev is an open-source CLI tool designed to accelerate development workflows through Continuous AI. It offers both a Text User Interface (TUI) mode for interactive development and a Headless mode for running background agents, integrating seamlessly into existing development environments.
 
 **Key Characteristics:**
+
 - Interactive TUI mode for exploration and debugging
 - Headless mode for CI/CD pipelines and automation
 - Context engineering with `@` file references and `/` commands
@@ -37,6 +40,7 @@ Continue Dev is an open-source CLI tool designed to accelerate development workf
 ## Installation
 
 **CLI Installation:**
+
 ```bash
 # Ensure Node.js 18+ is installed
 node --version
@@ -49,12 +53,14 @@ yarn global add @continuedev/cli
 ```
 
 **VS Code Extension (Optional):**
+
 1. Open VS Code
 2. Go to Extensions (Ctrl+Shift+X / Cmd+Shift+X)
 3. Search for "Continue"
 4. Install the Continue extension
 
 **System Requirements:**
+
 - VS Code 1.70.0 or later
 - API keys for LLM providers (OpenAI, Anthropic, etc.)
 
@@ -78,6 +84,7 @@ continue
 **Non-interactive execution for automation, scripting, and CI/CD pipelines:**
 
 **Basic Headless Usage:**
+
 ```bash
 # Run prompt in headless mode
 cn -p "Your prompt here"
@@ -96,6 +103,7 @@ cn -p "Review this code for bugs and security issues" --file src/main.py
 ```
 
 **Headless Mode with Agents:**
+
 ```bash
 # Run background agents
 continue headless --agent "code-review" --trigger "pull-request"
@@ -111,6 +119,7 @@ continue headless --agent <agent-name> [options]
 ```
 
 **Headless Mode with Files:**
+
 ```bash
 # Process specific file
 cn -p "Add docstrings" --file src/main.py
@@ -123,6 +132,7 @@ cn -p "Analyze codebase" --directory src/
 ```
 
 **TUI Mode (Interactive):**
+
 ```bash
 # Start interactive TUI
 cn
@@ -135,11 +145,13 @@ cn
 ```
 
 **Context Engineering:**
+
 - `@filename` - Reference specific files
 - `/command` - Execute specific tasks
 - Supports file editing, terminal commands, Git operations
 
 **Key Headless Flags:**
+
 - `-p, --prompt TEXT`: Provide prompt directly (headless mode)
 - `--file, -f FILE`: Include file in context
 - `--files, -F FILES`: Include multiple files (space-separated)
@@ -153,19 +165,20 @@ cn
 
 Continue Dev supports multiple LLM providers:
 
-| Provider | Models | Description |
-|----------|--------|-------------|
-| OpenAI | `gpt-5.3-codex`, `gpt-5.1`, `gpt-4o`, `o3-mini` | Code generation, latest models |
-| Anthropic | `claude-opus-4-6`, `claude-sonnet-4-6`, `claude-haiku-4-5` | Strong reasoning (API key required since Jan 2026) |
-| Google | `gemini-3.1-pro`, `gemini-2.5-pro` | Large context support |
-| DeepSeek | `deepseek-r1`, `deepseek-chat`, `deepseek-v3` | Alternative with strong reasoning |
-| Local | Various via Ollama | Run models locally |
-| Open Source | CodeLlama, StarCoder | Local models |
-| OpenAI Compatible | Any OpenAI-compatible API (e.g., Komilion) | Smart routing for mixed workloads |
+| Provider          | Models                                                     | Description                                        |
+| ----------------- | ---------------------------------------------------------- | -------------------------------------------------- |
+| OpenAI            | `gpt-5.3-codex`, `gpt-5.1`, `gpt-4o`, `o3-mini`            | Code generation, latest models                     |
+| Anthropic         | `claude-opus-4-6`, `claude-sonnet-4-6`, `claude-haiku-4-5` | Strong reasoning (API key required since Jan 2026) |
+| Google            | `gemini-3.1-pro`, `gemini-2.5-pro`                         | Large context support                              |
+| DeepSeek          | `deepseek-r1`, `deepseek-chat`, `deepseek-v3`              | Alternative with strong reasoning                  |
+| Local             | Various via Ollama                                         | Run models locally                                 |
+| Open Source       | CodeLlama, StarCoder                                       | Local models                                       |
+| OpenAI Compatible | Any OpenAI-compatible API (e.g., Komilion)                 | Smart routing for mixed workloads                  |
 
 > **Note (March 2026):** Continue.dev pivoted to "Continuous AI" — a CLI-first platform running async agents on every PR. Headless mode for cloud agents, TUI mode for interactive sessions. Mission Control dashboard redesigned at hub.continue.dev. Anthropic blocked Claude Max subscription OAuth tokens in Jan 2026 — use API keys from console.anthropic.com instead.
 
 **Model Selection:**
+
 ```bash
 # Use specific model
 cn -p "Your task" --model gpt-4o
@@ -177,6 +190,7 @@ cn -p "Your task" --model claude-3.7-sonnet
 ```
 
 **Model Configuration:**
+
 - Configure in `config.yaml` or VS Code settings
 - Support for multiple models simultaneously
 - Model selection per conversation
@@ -185,12 +199,14 @@ cn -p "Your task" --model claude-3.7-sonnet
 ## CLI Syntax
 
 **Basic usage:**
+
 ```bash
 cn [options]
 continue [command] [options]
 ```
 
 **TUI Mode:**
+
 ```bash
 # Start interactive TUI
 cn
@@ -202,6 +218,7 @@ cn
 ```
 
 **Headless Mode:**
+
 ```bash
 # Basic headless prompt
 cn -p "Your prompt here"
@@ -227,6 +244,7 @@ cn -p "Analyze codebase" --directory src/
 ```
 
 **Common options:**
+
 - `-p, --prompt TEXT`: Provide prompt directly (headless mode)
 - `--file, -f FILE`: Include file in context
 - `--files, -F FILES`: Include multiple files (space-separated)
@@ -241,10 +259,12 @@ cn -p "Analyze codebase" --directory src/
 ## Configuration
 
 **Config file:**
+
 - Location: `config.yaml` in project root or `~/.continue/config.yaml`
 - Format: YAML configuration
 
 **Example config.yaml:**
+
 ```yaml
 models:
   - title: GPT-4
@@ -263,6 +283,7 @@ contextProviders:
 ```
 
 **Environment Variables:**
+
 ```bash
 export CONTINUE_API_KEY=your_key  # For Continue Mission Control
 export OPENAI_API_KEY=your_key
@@ -270,6 +291,7 @@ export ANTHROPIC_API_KEY=your_key
 ```
 
 **Continue Mission Control:**
+
 - API access management
 - Secrets management
 - Configuration synchronization
@@ -278,6 +300,7 @@ export ANTHROPIC_API_KEY=your_key
 ## Examples
 
 **TUI Mode:**
+
 ```bash
 # Start Continue
 cn
@@ -292,6 +315,7 @@ cn
 ```
 
 **Headless Mode:**
+
 ```bash
 # Basic headless prompt
 cn -p "Review this code for bugs and security issues" --file src/main.py
@@ -316,6 +340,7 @@ continue headless --agent "dependency-update" --schedule "0 2 * * *"
 ```
 
 **CI/CD Integration:**
+
 ```yaml
 # GitHub Actions example
 - name: Run Continue Security Audit
@@ -337,6 +362,7 @@ continue headless --agent "dependency-update" --schedule "0 2 * * *"
 **Headless automation for CI/CD pipelines:**
 
 **Basic CI/CD Pattern:**
+
 ```bash
 #!/bin/bash
 set -e
@@ -360,6 +386,7 @@ fi
 ```
 
 **GitHub Actions Example:**
+
 ```yaml
 name: Continue Dev Documentation Update
 
@@ -380,7 +407,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: "18"
 
       - name: Install Continue CLI
         run: npm install -g @continuedev/cli
@@ -404,6 +431,7 @@ jobs:
 ```
 
 **GitLab CI/CD:**
+
 ```yaml
 stages:
   - docs
@@ -421,6 +449,7 @@ update-docs:
 ```
 
 **Best Practices for CI/CD:**
+
 - Always use `-p` flag for headless mode prompts
 - Set `CONTINUE_API_KEY` as secret in CI/CD platform
 - Use `--file` or `--directory` flags for context
@@ -445,4 +474,3 @@ update-docs:
 - Continue Mission Control: [mission.continue.dev](https://mission.continue.dev)
 
 **Note:** Continue Dev is actively developed. Check the VS Code extension marketplace and GitHub for the latest features and CLI capabilities.
-

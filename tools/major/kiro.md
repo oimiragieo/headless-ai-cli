@@ -4,6 +4,7 @@
 **Risk level:** 🟠 Medium (IDE with AI agents, can modify files)
 
 **Kiro CLI** (v1.27, March 2026) is a full-featured terminal coding agent that replaced Amazon Q Developer CLI.
+
 - Install: `curl -fsSL https://cli.kiro.dev/install | bash`
 - Supports custom agents, skills, MCP servers, steering files, and granular tool trust
 - Dynamic model selection with `/model` command and tab completion
@@ -12,12 +13,14 @@
 - AST pattern search/rewrite tools for structural code transforms
 
 **When NOT to use Kiro:**
+
 - ❌ You need massive context windows (Gemini CLI handles larger repos better)
 - ❌ You need completely automated CI/CD without any user interaction (Droid is safer)
 - ❌ You're working in a server environment without GUI access (CLI available but IDE features require GUI)
 - ❌ You need deterministic, production-safe runs (Droid has better safety guarantees)
 
 ### Quick Nav
+
 - [Start Here](#-start-here)
 - [Why Use Kiro](#-why-use-kiro)
 - [Best Use Cases](#-best-use-cases)
@@ -37,6 +40,7 @@
 Kiro is an AI-powered Integrated Development Environment (IDE) developed by a team from Amazon, designed to enhance the software development process through agentic workflows and AI assistance. It integrates AI agents into the development workflow, acting as an AI pair programmer capable of turning ideas into production-ready code and handling routine tasks.
 
 **Key Characteristics:**
+
 - Built on VS Code foundation (Code OSS)
 - Spec-driven development approach
 - AWS Bedrock integration for AI capabilities
@@ -48,6 +52,7 @@ Kiro is an AI-powered Integrated Development Environment (IDE) developed by a te
 ### Kiro CLI (Headless Mode)
 
 **Install Kiro CLI:**
+
 ```bash
 # macOS/Linux/WSL (Windows Subsystem for Linux)
 curl -fsSL https://cli.kiro.dev/install | bash
@@ -63,12 +68,14 @@ kiro-cli login
 ```
 
 **⚠️ IMPORTANT - Windows Users:**
+
 - **MUST run in WSL (Windows Subsystem for Linux)**, NOT in PowerShell
 - Kiro CLI does not work in native Windows PowerShell
 - Use WSL terminal: `wsl` or open Ubuntu/Debian terminal
 - If you see errors in PowerShell, switch to WSL
 
 **System Requirements:**
+
 - macOS, Linux, or **WSL on Windows** (required for Windows)
 - Internet connection for authentication and AI features
 - Shell with curl available
@@ -76,6 +83,7 @@ kiro-cli login
 ### Kiro IDE (GUI Mode)
 
 **Download and Install:**
+
 1. Visit [kiro.help](https://kiro.help/docs) or [kiroai.ai](https://kiroai.ai)
 2. Download installer for your platform:
    - Windows: Windows 10 or later
@@ -83,11 +91,13 @@ kiro-cli login
    - Linux: Ubuntu 18.04 or later, or equivalent distributions
 
 **System Requirements:**
+
 - RAM: Minimum 4GB, recommended 8GB or more
 - Storage: At least 1GB of free disk space
 - Network: Internet connection required for AI features and updates
 
 **First Launch:**
+
 - Log in using: Google, GitHub, Microsoft, AWS, or Email
 - Import VS Code settings (optional)
 - Set up shell integration for agent command execution
@@ -97,6 +107,7 @@ kiro-cli login
 **⚠️ CRITICAL: Kiro CLI does NOT currently have a headless mode.**
 
 **CLI Usage (Interactive Mode Only):**
+
 ```bash
 # Install Kiro CLI (in WSL for Windows users)
 curl -fsSL https://cli.kiro.dev/install | bash
@@ -125,6 +136,7 @@ kiro-cli --agent <agent-name> chat
 **Note:** Kiro CLI does NOT support headless mode like `gemini -p ""` or `droid exec ""`. It requires interactive chat with agents.
 
 **IDE Mode:**
+
 ```bash
 # Download and install Kiro IDE from kiro.help/docs
 # Open Kiro IDE and use the integrated terminal for CLI operations
@@ -135,6 +147,7 @@ kiro-cli --agent <agent-name> chat
 Kiro CLI supports agent-based execution. While it uses an interactive chat mode by default, you can configure custom agents for specific tasks and use the CLI in automation workflows.
 
 **Agent-based execution:**
+
 ```bash
 # List available agents
 kiro-cli agent list
@@ -151,10 +164,12 @@ kiro-cli agent create <name> --manual
 ```
 
 **Skills for progressive context loading (v1.24+):**
+
 - Only metadata loads at startup; full content loads on demand
 - Requires YAML frontmatter with descriptive metadata
 
 **File references (v1.26+):**
+
 ```bash
 # Inject file contents inline (avoids tool calls, saves tokens)
 @src/main.rs    # file contents
@@ -162,21 +177,25 @@ kiro-cli agent create <name> --manual
 ```
 
 **Dynamic model selection (v1.26+):**
+
 ```bash
 /model claude-opus-4.6   # switch models with tab completion
 ```
 
 **Granular tool trust (v1.27+):**
+
 - Interactive picker for tiered shell command scoping
 - Trust exact command, command with any args, or base command with wildcards
 - Read/write tools: scope to file, directory, or entire tool
 
 **⚠️ Windows Users:**
+
 - **MUST run in WSL** (Windows Subsystem for Linux)
 - Does NOT work in PowerShell
 - Use `wsl` command or open Ubuntu/Debian terminal
 
 **Update CLI:**
+
 ```bash
 kiro-cli update
 ```
@@ -184,34 +203,39 @@ kiro-cli update
 ### Installation
 
 **Install Kiro CLI:**
+
 ```bash
 curl -fsSL https://cli.kiro.dev/install | bash
 ```
 
 **Upgrade from Amazon Q Developer CLI:**
+
 ```bash
 q update
 ```
 
 **Verify Installation:**
+
 ```bash
 kiro-cli --version
 ```
 
 **Authenticate:**
+
 ```bash
 kiro-cli login
 ```
 
 **You'll see a menu - select your login method:**
 
-```
+```text
 ? Select login method ›
 ❯ Use with Builder ID        # ← Select this for kiro.dev accounts
   Use with IDC Account
 ```
 
 **For kiro.dev accounts (Use with Builder ID):**
+
 1. Use arrow keys to select **"Use with Builder ID"**
 2. Press Enter
 3. Browser opens automatically
@@ -222,6 +246,7 @@ kiro-cli login
 6. Return to terminal - you're logged in
 
 **For AWS Identity Center/SSO (Use with IDC Account):**
+
 1. Use arrow keys to select **"Use with IDC Account"**
 2. Press Enter
 3. You'll be prompted: `? Enter Start URL ›`
@@ -233,6 +258,7 @@ kiro-cli login
 7. Sign in with your organization's SSO credentials
 
 **Verify Login:**
+
 ```bash
 kiro-cli whoami
 ```
@@ -244,12 +270,14 @@ This displays the account information you're currently authenticated with.
 **⚠️ CRITICAL: Kiro CLI REQUIRES AGENTS**
 
 **You CANNOT use direct command execution:**
+
 ```bash
 # ❌ THIS DOES NOT WORK - Kiro CLI does not support this
 kiro-cli "Install the project dependencies"  # ERROR: unrecognized subcommand
 ```
 
 **✅ CORRECT: Use agents with interactive chat:**
+
 ```bash
 # List available agents first
 kiro-cli agent list
@@ -266,6 +294,7 @@ kiro-cli --agent <agent-name> chat
 ```
 
 **Chat with Custom Agent:**
+
 ```bash
 # Use a custom agent for specialized tasks
 kiro-cli chat --agent frontend-specialist
@@ -276,6 +305,7 @@ kiro-cli --agent frontend-specialist chat
 ```
 
 **Managing Agents:**
+
 ```bash
 # List all available agents
 kiro-cli agent list
@@ -285,6 +315,7 @@ kiro-cli agent --help
 ```
 
 **⚠️ Important Notes:**
+
 - Kiro CLI **REQUIRES agents** - you cannot pass commands directly as arguments
 - Unlike `gemini -p ""` or `droid exec ""`, Kiro CLI uses interactive chat mode with agents
 - You must use `kiro-cli chat --agent <name>` to start, then type commands in the chat
@@ -324,6 +355,7 @@ Create a JSON file in your `.kiro` directory (e.g., `.kiro/agents/frontend-speci
 ```
 
 **Use Custom Agent:**
+
 ```bash
 kiro-cli chat --agent frontend-specialist
 ```
@@ -331,6 +363,7 @@ kiro-cli chat --agent frontend-specialist
 ### Authentication
 
 **Login Process:**
+
 1. Run `kiro-cli login`
 2. Select login method:
    - **Use with Builder ID** - For personal kiro.dev accounts (recommended)
@@ -344,17 +377,20 @@ kiro-cli chat --agent frontend-specialist
 7. Return to terminal - you're now logged in
 
 **Verify Authentication:**
+
 ```bash
 # Check current logged-in account
 kiro-cli whoami
 ```
 
 **Logout:**
+
 ```bash
 kiro-cli logout
 ```
 
 **Important Notes:**
+
 - **For kiro.dev accounts:** Always select **"Use with Builder ID"**
 - **AWS Builder ID** is AWS's personal identity system (same as kiro.dev)
 - **IDC Account** is only for organizations using AWS Identity Center/SSO
@@ -371,6 +407,7 @@ Kiro CLI prompts for approval before executing commands. Configure trusted comma
 ```
 
 **Command Approval:**
+
 - First-time commands require approval
 - Trusted commands execute automatically
 - All commands are logged for review
@@ -378,11 +415,13 @@ Kiro CLI prompts for approval before executing commands. Configure trusted comma
 ### IDE Integration
 
 **Terminal Integration (within Kiro IDE):**
+
 - Use Kiro's integrated terminal for CLI operations
 - Agent hooks can run commands automatically on file events
 - MCP (Model Context Protocol) for external tool integration
 
 **Agent Hooks (Event-Driven Automation):**
+
 ```bash
 # Agent hooks can be configured to run commands on file events
 # Example: Auto-generate tests on file save
@@ -396,6 +435,7 @@ Kiro CLI prompts for approval before executing commands. Configure trusted comma
 ### Adding MCP Servers via CLI
 
 **Add an MCP Server:**
+
 ```bash
 # Add a GitHub MCP server
 kiro-cli mcp add github \
@@ -411,12 +451,14 @@ kiro-cli mcp add <server-name> \
 ```
 
 **List Configured MCP Servers:**
+
 ```bash
 # View all configured MCP servers
 kiro-cli mcp list
 ```
 
 **Remove an MCP Server:**
+
 ```bash
 # Remove a configured MCP server
 kiro-cli mcp remove <server-name>
@@ -425,10 +467,12 @@ kiro-cli mcp remove <server-name>
 ### Configuring MCP Servers via JSON
 
 **Configuration File Locations:**
+
 - **Workspace-level:** `<project-root>/.kiro/settings/mcp.json`
 - **User-level:** `~/.kiro/settings/mcp.json`
 
 **Example `mcp.json` Configuration:**
+
 ```json
 {
   "mcpServers": {
@@ -465,12 +509,14 @@ kiro-cli mcp remove <server-name>
 **Configuration Options:**
 
 **For Local/Command-based Servers:**
+
 - `command`: Command to run the MCP server (e.g., `node`, `python`, `npx`)
 - `args`: Array of arguments to pass to the command
 - `env`: Environment variables to set for the server process
 - `disabled`: Set to `true` to temporarily disable the server
 
 **For Remote/HTTP Servers:**
+
 - `url`: Endpoint URL for the MCP server
 - `type`: Connection type (typically `"http"`)
 - `headers`: HTTP headers to include in requests (e.g., authentication tokens)
@@ -479,6 +525,7 @@ kiro-cli mcp remove <server-name>
 ### Using MCP Servers in Kiro
 
 **In Interactive Chat:**
+
 ```bash
 # Start chat mode
 kiro-cli chat
@@ -490,6 +537,7 @@ kiro-cli chat
 ```
 
 **MCP Server Capabilities:**
+
 - **GitHub Integration:** Access repositories, issues, pull requests, workflows
 - **Database Access:** Query databases, run migrations, manage schemas
 - **API Integration:** Connect to external APIs and services
@@ -499,6 +547,7 @@ kiro-cli chat
 ### Common MCP Server Examples
 
 **GitHub MCP Server:**
+
 ```json
 {
   "mcpServers": {
@@ -515,6 +564,7 @@ kiro-cli chat
 ```
 
 **PostgreSQL MCP Server:**
+
 ```json
 {
   "mcpServers": {
@@ -530,6 +580,7 @@ kiro-cli chat
 ```
 
 **Slack MCP Server:**
+
 ```json
 {
   "mcpServers": {
@@ -547,6 +598,7 @@ kiro-cli chat
 ### Troubleshooting MCP Servers
 
 **Verify MCP Server Status:**
+
 ```bash
 # List all configured servers and their status
 kiro-cli mcp list
@@ -556,12 +608,14 @@ kiro-cli mcp test <server-name>
 ```
 
 **Common Issues:**
+
 - **Authentication Errors:** Verify tokens and API keys in configuration
 - **Connection Failures:** Check URLs and network connectivity
 - **Disabled Servers:** Ensure `"disabled": false` in configuration
 - **Missing Dependencies:** For command-based servers, ensure required tools are installed
 
 **For More Information:**
+
 - **Official Documentation:** [https://kiro.dev/docs/cli/mcp](https://kiro.dev/docs/cli/mcp)
 - **MCP Protocol Spec:** [Model Context Protocol Documentation](https://modelcontextprotocol.io)
 
@@ -569,23 +623,25 @@ kiro-cli mcp test <server-name>
 
 Kiro utilizes **Claude models** via AWS Bedrock to power its AI capabilities:
 
-| Model | Credit Cost | Description | Context | Provider |
-|-------|-------------|-------------|---------|----------|
-| **Auto** (default) | 1.0x | Models chosen by task for optimal usage and consistent quality | Varies | AWS Bedrock |
-| **claude-opus-4.6** | 2.2x | Latest Claude Opus model (Feb 2026) - deep reasoning | ~200K (1M beta) | AWS Bedrock |
-| **claude-sonnet-4.6** | 1.3x | Latest Claude Sonnet model (Feb 2026) | ~200K (1M beta) | AWS Bedrock |
-| **claude-sonnet-4.5** | 1.3x | Previous Claude Sonnet model | ~200K tokens | AWS Bedrock |
-| **claude-haiku-4.5** | 0.4x | Fast, cost-effective model | ~200K tokens | AWS Bedrock |
+| Model                 | Credit Cost | Description                                                    | Context         | Provider    |
+| --------------------- | ----------- | -------------------------------------------------------------- | --------------- | ----------- |
+| **Auto** (default)    | 1.0x        | Models chosen by task for optimal usage and consistent quality | Varies          | AWS Bedrock |
+| **claude-opus-4.6**   | 2.2x        | Latest Claude Opus model (Feb 2026) - deep reasoning           | ~200K (1M beta) | AWS Bedrock |
+| **claude-sonnet-4.6** | 1.3x        | Latest Claude Sonnet model (Feb 2026)                          | ~200K (1M beta) | AWS Bedrock |
+| **claude-sonnet-4.5** | 1.3x        | Previous Claude Sonnet model                                   | ~200K tokens    | AWS Bedrock |
+| **claude-haiku-4.5**  | 0.4x        | Fast, cost-effective model                                     | ~200K tokens    | AWS Bedrock |
 
 > **Note (March 2026):** Kiro CLI v1.27. Dynamic model selection with `/model` command and tab completion (v1.26+). Use `/model clau<Tab>` for fuzzy matching.
 
 **Credit System:**
+
 - Credits are consumed based on model usage
 - Auto mode selects the best model for each task (1x credit)
 - Haiku is the most cost-effective (0.4x credit)
 - Opus is the most expensive but offers deepest reasoning (2.2x credit)
 
 **Model Selection:**
+
 - Default: Auto (recommended for optimal usage)
 - Manual selection available in Kiro IDE settings
 - CLI uses the model configured in your Kiro account
@@ -599,11 +655,13 @@ Kiro utilizes **Claude models** via AWS Bedrock to power its AI capabilities:
 **⚠️ CRITICAL: Kiro CLI REQUIRES AGENTS - Direct command execution does NOT work**
 
 **Basic usage:**
+
 ```bash
 kiro-cli [OPTIONS] [SUBCOMMAND]
 ```
 
 **Core Options:**
+
 - `-v, --verbose...`: Increase logging verbosity
 - `--help-all`: Print help for all subcommands
 - `--agent <AGENT>`: Launch chat with specified agent
@@ -613,6 +671,7 @@ kiro-cli [OPTIONS] [SUBCOMMAND]
 **Commands:**
 
 **AI & Chat:**
+
 ```bash
 # AI assistant in your terminal (interactive)
 kiro-cli chat
@@ -630,6 +689,7 @@ kiro-cli inline
 ```
 
 **Agent Management:**
+
 ```bash
 # Agent root commands
 kiro-cli agent
@@ -642,6 +702,7 @@ kiro-cli agent --help
 ```
 
 **MCP (Model Context Protocol):**
+
 ```bash
 # Manage MCP servers
 kiro-cli mcp
@@ -657,6 +718,7 @@ kiro-cli mcp remove <server-name>
 ```
 
 **Authentication:**
+
 ```bash
 # Login
 kiro-cli login
@@ -675,6 +737,7 @@ kiro-cli user
 ```
 
 **Desktop App Control:**
+
 ```bash
 # Launch the desktop app
 kiro-cli launch
@@ -690,6 +753,7 @@ kiro-cli dashboard
 ```
 
 **Configuration & Management:**
+
 ```bash
 # Customize appearance & behavior
 kiro-cli settings
@@ -717,6 +781,7 @@ kiro-cli integrations
 ```
 
 **Debugging & Support:**
+
 ```bash
 # Debug the app
 kiro-cli debug
@@ -726,12 +791,14 @@ kiro-cli issue
 ```
 
 **❌ WRONG - This does NOT work:**
+
 ```bash
 # This will FAIL - Kiro CLI does not support direct command execution
 kiro-cli "Install the project dependencies"  # ❌ ERROR: unrecognized subcommand
 ```
 
 **✅ CORRECT - Use agents:**
+
 ```bash
 # List available agents first
 kiro-cli agent list
@@ -751,6 +818,7 @@ kiro-cli --agent <agent-name> chat
 ### IDE Terminal Integration
 
 **Within Kiro IDE:**
+
 - Use integrated terminal for CLI operations
 - Agent hooks for automated command execution
 - **MCP (Model Context Protocol)** for external tool integration
@@ -761,31 +829,37 @@ kiro-cli --agent <agent-name> chat
 ## Features
 
 ### Spec-Driven Development
+
 - Transforms prompts into structured requirements, designs, and tasks
 - Facilitates systematic development approach
 - Generates detailed specifications from natural language
 
 ### Agent Hooks
+
 - Event-driven automations triggered by file events
 - Examples: Auto-generate tests, update documentation, run security scans
 - Configurable through Kiro IDE interface
 
 ### Vibe Coding
+
 - Natural language coding assistance
 - Conversational interaction with AI
 - Generate and modify code through chat interface
 
 ### VS Code Compatibility
+
 - Built on Code OSS foundation
 - Supports VS Code extensions (Open VSX)
 - Compatible with VS Code settings, themes, and keybindings
 
 ### Multimodal Chat Interface
+
 - Supports text, images, and code inputs
 - Upload UI mockups or architecture diagrams
 - Guide development using various input methods
 
 ### AWS Integration
+
 - Seamlessly integrates with AWS services
 - Leverages AWS Bedrock for enterprise-grade AI
 - Secure, enterprise-ready AI capabilities
@@ -793,11 +867,13 @@ kiro-cli --agent <agent-name> chat
 ## Configuration
 
 **Settings Location:**
+
 - User settings: Similar to VS Code settings
 - Extensions: Open VSX compatible
 - Agent configuration: Through Kiro IDE interface
 
 **Environment Variables:**
+
 ```bash
 # AWS credentials for Bedrock access (if using AWS integration)
 export AWS_ACCESS_KEY_ID=your_key
@@ -806,6 +882,7 @@ export AWS_REGION=us-east-1
 ```
 
 **Shell Integration:**
+
 - Kiro can set up shell integration for agent command execution
 - Configured during first launch or through settings
 
@@ -814,6 +891,7 @@ export AWS_REGION=us-east-1
 ### Headless Mode (CLI)
 
 **Interactive Chat Mode:**
+
 ```bash
 # Start chat session
 kiro-cli chat
@@ -826,6 +904,7 @@ kiro-cli chat
 ```
 
 **Chat with Custom Agent:**
+
 ```bash
 # Start chat with specific agent
 kiro-cli chat --agent frontend-specialist
@@ -836,6 +915,7 @@ kiro-cli --agent frontend-specialist chat
 ```
 
 **Managing Agents:**
+
 ```bash
 # List available agents
 kiro-cli agent list
@@ -845,6 +925,7 @@ kiro-cli agent --help
 ```
 
 **⚠️ CRITICAL Notes on Headless Mode:**
+
 - Kiro CLI **REQUIRES agents** - you **CANNOT** use direct command execution
 - `kiro-cli "command"` will fail with "unrecognized subcommand" error
 - Unlike `gemini -p "command"` or `droid exec "command"`, Kiro CLI uses interactive chat mode with agents
@@ -861,7 +942,8 @@ Kiro CLI's requirement for agents and interactive mode makes it **NOT suitable**
 ### IDE Mode
 
 **Spec-Driven Development:**
-```
+
+```text
 1. Open Kiro IDE
 2. Use chat interface: "Create a user authentication system"
 3. Kiro generates:
@@ -872,7 +954,8 @@ Kiro CLI's requirement for agents and interactive mode makes it **NOT suitable**
 ```
 
 **Agent Hooks:**
-```
+
+```text
 1. Configure agent hook: "On file save, run tests"
 2. Save a file
 3. Agent automatically runs test suite
@@ -880,7 +963,8 @@ Kiro CLI's requirement for agents and interactive mode makes it **NOT suitable**
 ```
 
 **Multimodal Development:**
-```
+
+```text
 1. Upload UI mockup image
 2. Ask: "Implement this design in React"
 3. Kiro generates code based on image
@@ -892,6 +976,7 @@ Kiro CLI's requirement for agents and interactive mode makes it **NOT suitable**
 **Kiro CLI supports headless mode for CI/CD pipelines:**
 
 **GitHub Actions Example:**
+
 ```yaml
 name: Kiro Code Review
 on: [pull_request]
@@ -916,11 +1001,13 @@ jobs:
 
 **Note on CI/CD Integration:**
 Kiro CLI uses interactive chat mode and is **not suitable for fully automated CI/CD pipelines**. For automated code reviews in CI/CD, consider using:
+
 - **Droid Exec** - Read-only by default, perfect for CI/CD
 - **Gemini CLI** - Direct command execution with `-p` flag
 - **Claude CLI** - Direct command execution with `-p` flag
 
 **For local development workflows:**
+
 ```bash
 # Start interactive chat
 kiro-cli chat
@@ -956,4 +1043,3 @@ kiro-cli chat
 - **Custom Agents:** [kiro.directory/guides](https://www.kiro.directory/guides)
 
 **Note:** Kiro is currently in public preview and free to use with some limits. Features and documentation may change as the product evolves. The CLI provides headless mode capabilities similar to other AI CLI tools.
-

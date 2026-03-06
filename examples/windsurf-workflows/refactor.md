@@ -32,4 +32,3 @@ This workflow automates code refactoring tasks.
 ## Usage
 
 Invoke this workflow in Cascade using: `/refactor`
-

@@ -27,4 +27,3 @@ This workflow automates unit test generation.
 ## Usage
 
 Invoke this workflow in Cline using: `/generate-tests.md`
-

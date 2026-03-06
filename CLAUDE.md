@@ -6,11 +6,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a comprehensive reference repository documenting AI CLI tools that support headless/non-interactive execution. The repository serves as a quick reference guide for developers integrating AI capabilities into automated workflows, CI/CD pipelines, and scripting environments.
 
-**Key Focus:** Headless syntax, features, available models, and automation patterns for 14 verified AI CLI tools.
+**Key Focus:** Headless syntax, features, available models, and automation patterns for 15 verified AI CLI tools.
 
 ## Repository Structure
 
-```
+```text
 headless-ai-cli/
 ├── README.md                    # Main index with quick reference and all installation commands
 ├── CLAUDE.md                    # This file - AI agent guidance for working in this repository
@@ -25,16 +25,17 @@ headless-ai-cli/
 │       └── verification_report.md
 ├── tools/
 │   ├── TEMPLATE.md              # Standardized template for adding new tools
-│   └── major/                   # Individual tool documentation (14 files)
+│   └── major/                   # Individual tool documentation (15 files)
 │       ├── gemini.md            # Google Gemini CLI - 1M token context
 │       ├── claude.md            # Anthropic Claude (Claude Code) - Deep reasoning
 │       ├── codex.md             # OpenAI Codex - UI generation
 │       ├── cursor.md            # Cursor Agent - Workflow automation
 │       ├── copilot.md           # GitHub Copilot CLI - GitHub integration
 │       ├── droid.md             # Factory AI Droid - CI/CD-safe
-│       ├── kiro.md              # Kiro AI IDE - Spec-driven development (⚠️ NO headless)
+│       ├── kiro.md              # Kiro CLI - Spec-driven development (full headless v1.27)
+│       ├── antigravity.md       # Google Antigravity - Multi-agent IDE (⚠️ NO headless)
 │       ├── warp.md              # Warp Terminal - Enhanced CLI experience (⚠️ terminal only)
-│       ├── windsurf.md          # Windsurf IDE - Cascade AI agent (⚠️ Docker required)
+│       ├── windsurf.md          # Windsurf IDE - Cascade AI agent (⚠️ Docker required, Cognition)
 │       ├── aider.md             # Aider - AI pair programming
 │       ├── continue-dev.md      # Continue Dev - VS Code integration
 │       ├── cline.md             # Cline - Task-based autonomous execution
@@ -90,21 +91,32 @@ Every tool documentation file follows this structure:
 **Risk level:** [🟢 Low / 🟠 Medium / ⚠️ High / ⚡ Very High]
 
 **When NOT to use [Tool]:**
+
 - ❌ Specific limitation 1
 - ❌ Specific limitation 2
 
 ### Quick Nav
+
 - Links to sections within the document
 
 ## Overview
+
 ## Installation
+
 ## 🚀 Start Here (Quick start example)
+
 ## Headless Mode
+
 ## Available Models
+
 ## CLI Syntax
+
 ## Configuration
+
 ## Examples
+
 ## Limitations
+
 ## References
 ```
 
@@ -120,6 +132,7 @@ Every tool documentation file follows this structure:
 ### Adding a New Tool
 
 1. **Verify the tool exists:**
+
    ```bash
    # Check official documentation
    # Verify CLI availability
@@ -127,6 +140,7 @@ Every tool documentation file follows this structure:
    ```
 
 2. **Use the template:**
+
    ```bash
    cp tools/TEMPLATE.md tools/major/new-tool.md
    ```
@@ -162,12 +176,14 @@ Every tool documentation file follows this structure:
 ### Testing Documentation
 
 All test scripts are in `test/` directory:
+
 - `{tool}-headless-basic.test.sh` - Basic headless mode tests
 - `{tool}-headless-advanced.test.sh` - Advanced headless scenarios
 - `{tool}-cicd-integration.test.sh` - CI/CD integration tests
 - `{tool}-workflows.test.sh` - Workflow automation tests
 
 Run tests to verify documentation accuracy:
+
 ```bash
 bash test/claude-headless-basic.test.sh
 bash test/gemini-workflows.test.sh
@@ -231,14 +247,15 @@ Models change frequently. When updating:
 
 Several tools have updated their recommended installation methods:
 
-| Tool | Current Recommended | Notes |
-|------|---------------------|-------|
-| **Claude Code** | Native: `curl -fsSL https://claude.ai/install.sh \| bash` | Preferred over npm |
-| **Codex** | npm or Homebrew: `brew install --cask codex` | Windows via WSL |
-| **Aider** | Install script: `curl -LsSf https://aider.chat/install.sh \| sh` | Python 3.10+ required |
-| **OpenCode** | Quick install: `curl -fsSL https://opencode.ai/install \| bash` | v0.1.x incompatible with older |
+| Tool            | Current Recommended                                              | Notes                          |
+| --------------- | ---------------------------------------------------------------- | ------------------------------ |
+| **Claude Code** | Native: `curl -fsSL https://claude.ai/install.sh \| bash`        | Preferred over npm             |
+| **Codex**       | npm or Homebrew: `brew install --cask codex`                     | Windows via WSL                |
+| **Aider**       | Install script: `curl -LsSf https://aider.chat/install.sh \| sh` | Python 3.10+ required          |
+| **OpenCode**    | Quick install: `curl -fsSL https://opencode.ai/install \| bash`  | v0.1.x incompatible with older |
 
 **Deprecated/Changed:**
+
 - Amazon Q Developer CLI → Migrated to Kiro CLI (Nov 2025)
 - GitHub Copilot CLI default model → Now Claude Sonnet 4.5
 
@@ -253,12 +270,14 @@ Several tools have updated their recommended installation methods:
 ### Common Patterns
 
 **Risk Levels:**
+
 - 🟢 Low: Read-only default, approval required
 - 🟠 Medium: Can modify files with explicit flags
 - ⚠️ High: Can modify files by default with safeguards
 - ⚡ Very High: Can execute commands with minimal safeguards
 
 **Icon Usage:**
+
 - 🚨 = Dangerous (requires caution)
 - 🛟 = Safe-by-default (read-only)
 - ⚙️ = Required configuration
@@ -288,17 +307,21 @@ Several tools have updated their recommended installation methods:
 ## Quick Reference: Tool Categories
 
 **Production CLI Tools with Full Headless Support (10 tools):**
+
 - Gemini, Claude, Codex, Cursor, Copilot, Droid, Aider, Continue Dev, Cline, Kiro
 
-**IDE/Terminal-Based Tools with Limited Headless Support (3 tools):**
+**IDE/Terminal-Based Tools with Limited/No Headless Support (4 tools):**
+
+- Antigravity (⚠️ Google desktop IDE - NO headless/CLI, use Gemini CLI instead)
 - Warp (⚠️ Terminal emulator - enhances other CLI tools, not standalone headless)
-- Windsurf (⚠️ Requires Docker container "windsurfinabox" for headless)
+- Windsurf (⚠️ Cognition/Devin AI ownership - requires Docker for headless)
 - Amazon Q (⚠️ DEPRECATED Nov 2025 - migrated to Kiro CLI)
 
 **Multi-Language Tools (1 tool):**
+
 - OpenCode
 
-**Total: 14 documented tools (10 with full headless, 3 with limited/no headless, 1 deprecated)**
+**Total: 15 documented tools (10 with full headless, 4 with limited/no headless, 1 deprecated)**
 
 ## ⚠️ Known Issues and Tech Debt
 
@@ -319,21 +342,27 @@ Several tools have updated their recommended installation methods:
    - Enhances experience of using OTHER AI CLI tools
    - No native headless automation capability
 
-4. **Windsurf**: IDE-based, requires Docker for headless
+4. **Windsurf**: IDE-based (Cognition/Devin AI ownership), requires Docker for headless
    - Missing CLI Syntax section in documentation
    - Headless mode via community Docker project only
 
+5. **Antigravity**: Google desktop IDE (Nov 2025), NO headless/CLI
+   - Google recommends Gemini CLI for headless automation
+   - No MCP support, aggressive rate limits
+   - Zero examples in `examples/` directory
+   - Zero test scripts in `test/` directory
+
 ### Test Coverage Gaps
 
-| Tool | Missing Tests |
-|------|---------------|
-| Kiro | ALL (basic, advanced, cicd, workflows) |
-| Cline | cicd-integration |
-| Cursor | cicd-integration |
-| Droid | cicd-integration |
-| Gemini | cicd-integration |
-| Warp | advanced, cicd-integration |
-| Windsurf | advanced, cicd-integration |
+| Tool     | Missing Tests                          |
+| -------- | -------------------------------------- |
+| Kiro     | ALL (basic, advanced, cicd, workflows) |
+| Cline    | cicd-integration                       |
+| Cursor   | cicd-integration                       |
+| Droid    | cicd-integration                       |
+| Gemini   | cicd-integration                       |
+| Warp     | advanced, cicd-integration             |
+| Windsurf | advanced, cicd-integration             |
 
 ### Documentation Section Gaps
 
@@ -346,16 +375,16 @@ Several tools have updated their recommended installation methods:
 - **Repository Created:** November 2025
 - **Last Major Update:** March 2026
 - **Last Audit:** March 2026
-- **Total Tools Documented:** 14 (10 with full headless support, 3 limited, 1 deprecated)
-- **Documentation Files:** 29 markdown files total
+- **Total Tools Documented:** 15 (10 with full headless support, 4 limited/no headless, 1 deprecated)
+- **Documentation Files:** 30 markdown files total
   - 4 main docs (README, CLAUDE, CONTRIBUTING, QUICK_REFERENCE)
-  - 14 individual tool docs (tools/major/)
+  - 15 individual tool docs (tools/major/)
   - 1 template (tools/TEMPLATE.md)
   - 1 test README (test/README.md)
-  - 6 workflow docs (examples/*-workflows/*.md)
+  - 6 workflow docs (examples/_-workflows/_.md)
   - 3 issue templates (.github/ISSUE_TEMPLATE/)
 - **Example Files:** 50 (CI/CD, automation, and workflow scripts)
-- **Test Scripts:** 56 (comprehensive test coverage for 13 of 14 tools)
+- **Test Scripts:** 56 (comprehensive test coverage for 13 of 15 tools)
 - **Total Lines of Documentation:** ~8,764 (main docs and tool files)
 
 ## Getting Help

@@ -33,6 +33,7 @@ export OPENAI_API_KEY=your_api_key_here
 
 **For Copilot tests:**
 GitHub Copilot CLI uses GitHub authentication (not an API key). You need:
+
 - GitHub account with Copilot access (Pro, Pro+, Business, or Enterprise plan)
 - Copilot CLI authenticated with your GitHub account
 - If receiving Copilot from an organization, ensure Copilot CLI policy is enabled
@@ -105,12 +106,6 @@ GitHub Copilot CLI uses GitHub authentication (not an API key). You need:
 - **`amazon-q-workflows.test.sh`**: Workflow automation patterns (code review, transformation, testing, documentation)
 - **`amazon-q-cicd-integration.test.sh`**: CI/CD integration patterns, error handling, and exit code validation
 
-#### Basic Tests
-
-
-#### Advanced Tests
-
-
 ### OpenCode CLI Tests
 
 #### Basic Tests
@@ -154,6 +149,7 @@ done
 ### Run Individual Tests
 
 **Claude Tests:**
+
 ```bash
 # Run basic tests
 bash test/claude-headless-basic.test.sh
@@ -175,6 +171,7 @@ bash test/claude-cicd-integration.test.sh
 ```
 
 **Codex Tests:**
+
 ```bash
 # Run basic tests
 bash test/codex-headless-basic.test.sh
@@ -196,6 +193,7 @@ bash test/codex-cicd-integration.test.sh
 ```
 
 **Copilot Tests:**
+
 ```bash
 # Run basic tests
 bash test/copilot-headless-basic.test.sh
@@ -213,6 +211,7 @@ bash test/copilot-cicd-integration.test.sh
 ### Run Tests in CI/CD
 
 **For Claude tests:**
+
 ```bash
 # Set API key from secret
 export ANTHROPIC_API_KEY=${{ secrets.ANTHROPIC_API_KEY }}
@@ -229,6 +228,7 @@ done
 ```
 
 **For Codex tests:**
+
 ```bash
 # Set API key from secret
 export OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
@@ -245,6 +245,7 @@ done
 ```
 
 **For Copilot tests:**
+
 ```bash
 # Install dependencies
 npm install -g @github/copilot
@@ -264,6 +265,7 @@ done
 ```
 
 **For Aider tests:**
+
 ```bash
 # Set API key from secret
 export OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
@@ -282,6 +284,7 @@ done
 ```
 
 **For Amazon Q Developer tests:**
+
 ```bash
 # Install dependencies
 wget https://github.com/aws/amazon-q-developer-cli/releases/latest/download/amazon-q-developer-cli-linux.zip
@@ -319,6 +322,7 @@ done
 ```
 
 **For OpenCode tests:**
+
 ```bash
 # Set API key from secret
 export OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
@@ -338,6 +342,7 @@ done
 ```
 
 **For Continue Dev tests:**
+
 ```bash
 # Set API key from secret
 export CONTINUE_API_KEY=${{ secrets.CONTINUE_API_KEY }}
@@ -366,7 +371,7 @@ Tests provide color-coded output:
 
 Each test file provides a summary at the end:
 
-```
+```text
 ==========================================
 Test Summary
 ==========================================
@@ -380,6 +385,7 @@ Failed: 2
 ### Without API Key / Authentication
 
 Tests will:
+
 - ✅ Validate CLI syntax and flags
 - ✅ Check exit codes for invalid commands
 - ✅ Verify JSON structure (if jq is available)
@@ -388,6 +394,7 @@ Tests will:
 ### With API Key
 
 Tests will:
+
 - ✅ Execute full test suite
 - ✅ Validate API responses
 - ✅ Test session management
@@ -399,11 +406,13 @@ Tests will:
 ### "Claude CLI not found"
 
 Install Claude CLI:
+
 ```bash
 npm install -g @anthropic-ai/claude-code
 ```
 
 Verify installation:
+
 ```bash
 claude --version
 ```
@@ -411,11 +420,13 @@ claude --version
 ### "Codex CLI not found"
 
 Install Codex CLI:
+
 ```bash
 npm install -g @openai/codex
 ```
 
 Verify installation:
+
 ```bash
 codex --version
 ```
@@ -423,11 +434,13 @@ codex --version
 ### "Copilot CLI not found"
 
 Install Copilot CLI:
+
 ```bash
 npm install -g @github/copilot
 ```
 
 Verify installation:
+
 ```bash
 copilot --version
 ```
@@ -440,31 +453,35 @@ Install jq (see Prerequisites above). Tests will still run but some JSON parsing
 
 **For Claude tests:**
 Set your API key:
+
 ```bash
 export ANTHROPIC_API_KEY=your_key_here
 ```
 
-Get your API key from: https://console.anthropic.com/
+Get your API key from: <https://console.anthropic.com/>
 
 **For Codex tests:**
 Set your API key:
+
 ```bash
 export OPENAI_API_KEY=your_key_here
 ```
 
-Get your API key from: https://platform.openai.com/api-keys
+Get your API key from: <https://platform.openai.com/api-keys>
 
 **For Copilot tests:**
 GitHub Copilot CLI uses GitHub authentication, not an API key. Ensure:
+
 1. You have GitHub Copilot access (Pro, Pro+, Business, or Enterprise plan)
 2. Copilot CLI is authenticated: `copilot --version` should work
 3. If using organization Copilot, ensure CLI policy is enabled
 4. Set `COPILOT_ALLOW_ALL=1` for non-interactive mode
 
-Get Copilot access from: https://github.com/features/copilot
+Get Copilot access from: <https://github.com/features/copilot>
 
 **For Aider tests:**
 Set your API key:
+
 ```bash
 export OPENAI_API_KEY=your_key_here
 # or
@@ -472,22 +489,24 @@ export ANTHROPIC_API_KEY=your_key_here
 ```
 
 Get your API keys from:
-- OpenAI: https://platform.openai.com/api-keys
-- Anthropic: https://console.anthropic.com/
+
+- OpenAI: <https://platform.openai.com/api-keys>
+- Anthropic: <https://console.anthropic.com/>
 
 **For Amazon Q Developer tests:**
 Amazon Q Developer CLI uses authentication via `q login`. For headless mode:
+
 1. Pre-authenticate locally: `q login`
 2. Copy `~/.amazonq/` directory to CI environment
 3. Or use AWS credentials if using AWS SDK integration
 
-Install CLI from: https://github.com/aws/amazon-q-developer-cli
+Install CLI from: <https://github.com/aws/amazon-q-developer-cli>
 
 1. Set API key: `export OPENAI_API_KEY=your_key` or `export ANTHROPIC_API_KEY=your_key`
 
-
 **For OpenCode tests:**
 OpenCode CLI uses API keys for LLM providers. For headless mode:
+
 1. Set API key: `export OPENAI_API_KEY=your_key` or `export ANTHROPIC_API_KEY=your_key`
 2. Install OpenCode: `npm install -g open-code`
 3. Authenticate: `opencode auth login`
@@ -497,6 +516,7 @@ Install CLI from: npm install -g open-code
 
 **For Continue Dev tests:**
 Continue Dev CLI uses API keys for LLM providers. For headless mode:
+
 1. Set API key: `export CONTINUE_API_KEY=your_key` or `export OPENAI_API_KEY=your_key` or `export ANTHROPIC_API_KEY=your_key`
 2. Install Continue Dev: `npm install -g @continuedev/cli`
 3. Use `-p` or `--prompt` flag for headless mode: `cn -p "Your prompt"`
@@ -506,12 +526,14 @@ Install CLI from: npm install -g @continuedev/cli
 ### Tests failing with API key set
 
 **For Claude tests:**
+
 1. Verify API key is valid: `echo $ANTHROPIC_API_KEY`
 2. Check rate limits: You may be hitting API rate limits
 3. Verify network connectivity
 4. Check Claude CLI version: `claude --version` (update if needed)
 
 **For Codex tests:**
+
 1. Verify API key is valid: `echo $OPENAI_API_KEY`
 2. Check rate limits: You may be hitting API rate limits
 3. Verify network connectivity
@@ -519,6 +541,7 @@ Install CLI from: npm install -g @continuedev/cli
 5. Ensure you have access to Codex models in your OpenAI account
 
 **For Copilot tests:**
+
 1. Verify authentication: `copilot --version` should work
 2. Check GitHub Copilot access: Ensure you have an active Copilot subscription
 3. Verify network connectivity
@@ -529,6 +552,7 @@ Install CLI from: npm install -g @continuedev/cli
 ### Permission denied errors
 
 Make scripts executable:
+
 ```bash
 chmod +x test/*.test.sh
 ```
@@ -538,6 +562,7 @@ chmod +x test/*.test.sh
 ### Claude CLI Coverage
 
 #### Basic Functionality
+
 - ✅ Headless mode flags (`-p`, `--print`)
 - ✅ Output formats (`text`, `json`, `stream-json`)
 - ✅ Permission bypass mode (`--permission-mode bypassPermissions`)
@@ -545,18 +570,21 @@ chmod +x test/*.test.sh
 - ✅ Stdin input
 
 #### JSON Output
+
 - ✅ Valid JSON structure
 - ✅ Required fields (`type`, `result`, `session_id`, `total_cost_usd`)
 - ✅ JSON parsing with jq
 - ✅ Error handling
 
 #### Streaming
+
 - ✅ Stream JSON format
 - ✅ Event types (`init`, `message`, `result`)
 - ✅ Real-time parsing
 - ✅ Incremental processing
 
 #### Session Management
+
 - ✅ Session ID extraction
 - ✅ Resume session (`--resume`)
 - ✅ Continue conversation (`--continue`)
@@ -564,12 +592,14 @@ chmod +x test/*.test.sh
 - ✅ Multiple session operations
 
 #### Tool Control
+
 - ✅ Allow tools (`--allowedTools`)
 - ✅ Disallow tools (`--disallowedTools`)
 - ✅ Permission modes
 - ✅ Tool approval behavior
 
 #### CI/CD Integration
+
 - ✅ Environment variable handling
 - ✅ Structured output for automation
 - ✅ Error handling in CI context
@@ -580,6 +610,7 @@ chmod +x test/*.test.sh
 ### Codex CLI Coverage
 
 #### Basic Functionality
+
 - ✅ Headless mode execution (`codex exec`)
 - ✅ Output formats (text, JSONL with `--json`)
 - ✅ Exit code handling
@@ -588,6 +619,7 @@ chmod +x test/*.test.sh
 - ✅ Model selection (`--model`, `-m`)
 
 #### JSONL Output
+
 - ✅ Valid JSONL structure (newline-delimited JSON)
 - ✅ Event types (`thread.started`, `turn.started`, `turn.completed`, `item.*`)
 - ✅ JSONL parsing with jq
@@ -595,12 +627,14 @@ chmod +x test/*.test.sh
 - ✅ Thread ID extraction
 
 #### Streaming
+
 - ✅ JSONL stream format
 - ✅ Event types (`thread.started`, `turn.*`, `item.*`, `error`)
 - ✅ Real-time parsing
 - ✅ Incremental processing
 
 #### Session Management
+
 - ✅ Thread ID extraction from JSONL
 - ✅ Resume last session (`resume --last`)
 - ✅ Resume specific session (`resume SESSION_ID`)
@@ -608,12 +642,14 @@ chmod +x test/*.test.sh
 - ✅ Multi-step workflows
 
 #### Sandbox Modes
+
 - ✅ Read-only sandbox (default)
 - ✅ Workspace-write sandbox (`--sandbox workspace-write`, `--full-auto`)
 - ✅ Danger-full-access sandbox (`--sandbox danger-full-access`)
 - ✅ Sandbox mode validation
 
 #### CI/CD Integration
+
 - ✅ Environment variable handling (`OPENAI_API_KEY`)
 - ✅ Structured output for automation (JSONL)
 - ✅ Error handling in CI context
@@ -625,6 +661,7 @@ chmod +x test/*.test.sh
 ### Copilot CLI Coverage
 
 #### Basic Functionality
+
 - ✅ Programmatic mode flags (`-p`, `--prompt`)
 - ✅ Output formats (text default, JSON if supported)
 - ✅ Silent mode (`--silent`, `-s`)
@@ -634,6 +671,7 @@ chmod +x test/*.test.sh
 - ✅ Stdin input
 
 #### Tool Control
+
 - ✅ Allow all tools (`--allow-all-tools`)
 - ✅ Allow specific tools (`--allow-tool`)
 - ✅ Deny specific tools (`--deny-tool`)
@@ -642,6 +680,7 @@ chmod +x test/*.test.sh
 - ✅ Tool precedence (deny takes precedence)
 
 #### CI/CD Integration
+
 - ✅ Environment variable handling (`COPILOT_ALLOW_ALL`)
 - ✅ Error handling in CI context
 - ✅ Exit code validation
@@ -653,6 +692,7 @@ chmod +x test/*.test.sh
 ### Aider CLI Coverage
 
 #### Basic Functionality
+
 - ✅ Headless mode flags (`--yes`, `-y`)
 - ✅ Message input (`--message`, stdin)
 - ✅ Model selection (`--model`)
@@ -661,6 +701,7 @@ chmod +x test/*.test.sh
 - ✅ Multiple file processing
 
 #### Advanced Features
+
 - ✅ Model selection (OpenAI, Anthropic, DeepSeek)
 - ✅ API key override (`--api-key`)
 - ✅ Git integration (default) and `--no-git` flag
@@ -669,6 +710,7 @@ chmod +x test/*.test.sh
 - ✅ Directory-based processing
 
 #### Workflow Automation
+
 - ✅ Code generation workflows
 - ✅ Refactoring workflows
 - ✅ Documentation generation
@@ -679,6 +721,7 @@ chmod +x test/*.test.sh
 - ✅ Batch processing
 
 #### CI/CD Integration
+
 - ✅ Environment variable handling (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`)
 - ✅ Error handling in CI context
 - ✅ Exit code validation
@@ -690,6 +733,7 @@ chmod +x test/*.test.sh
 ### Amazon Q Developer CLI Coverage
 
 #### Basic Functionality
+
 - ✅ Headless mode flags (`--prompt`, `-p`)
 - ✅ File input (`--file`, `-f`)
 - ✅ Multiple file processing (`--files`, `-F`)
@@ -699,6 +743,7 @@ chmod +x test/*.test.sh
 - ✅ Stdin input
 
 #### Advanced Features
+
 - ✅ File processing with context
 - ✅ Directory-based analysis
 - ✅ Multi-file batch processing
@@ -707,6 +752,7 @@ chmod +x test/*.test.sh
 - ✅ Output file generation
 
 #### Workflow Automation
+
 - ✅ Code review workflows
 - ✅ Code transformation workflows
 - ✅ Documentation generation
@@ -717,6 +763,7 @@ chmod +x test/*.test.sh
 - ✅ Batch processing
 
 #### CI/CD Integration
+
 - ✅ Authentication handling (pre-authenticated credentials)
 - ✅ Error handling in CI context
 - ✅ Exit code validation
@@ -725,7 +772,10 @@ chmod +x test/*.test.sh
 - ✅ Batch processing in CI
 - ✅ Git integration for changed files
 
+### Kiro CLI Coverage
+
 #### Basic Functionality
+
 - ✅ Headless mode flags (`--prompt`, `-p`, `--headless`)
 - ✅ File input (`--file`, `-f`)
 - ✅ Multiple file processing (`--files`, `-F`)
@@ -736,6 +786,7 @@ chmod +x test/*.test.sh
 - ✅ Model selection (`--model`, `-m`)
 
 #### Advanced Features
+
 - ✅ MCP server integration (`mcp setup`, `mcp start`, `mcp status`)
 - ✅ Memory Bank integration (`--memory-bank`)
 - ✅ File processing with context
@@ -746,6 +797,7 @@ chmod +x test/*.test.sh
 - ✅ Output file generation
 
 #### Workflow Automation
+
 - ✅ Code generation workflows
 - ✅ Refactoring workflows
 - ✅ Documentation generation
@@ -756,6 +808,7 @@ chmod +x test/*.test.sh
 - ✅ Batch processing
 
 #### CI/CD Integration
+
 - ✅ Environment variable handling (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`)
 - ✅ Error handling in CI context
 - ✅ Exit code validation
@@ -769,6 +822,7 @@ chmod +x test/*.test.sh
 ### OpenCode CLI Coverage
 
 #### Basic Functionality
+
 - ✅ Headless mode flags (`--headless`, `--prompt`, `-p`)
 - ✅ File input (`--file`, `-f`)
 - ✅ Multiple file processing (`--files`, `-F`)
@@ -779,6 +833,7 @@ chmod +x test/*.test.sh
 - ✅ Model selection (`--model`, `-m`)
 
 #### Advanced Features
+
 - ✅ Model selection (OpenAI, Anthropic, DeepSeek)
 - ✅ File processing with context
 - ✅ Directory-based analysis
@@ -789,6 +844,7 @@ chmod +x test/*.test.sh
 - ✅ Config file support (`--config`)
 
 #### Workflow Automation
+
 - ✅ Code generation workflows
 - ✅ Refactoring workflows
 - ✅ Documentation generation
@@ -799,6 +855,7 @@ chmod +x test/*.test.sh
 - ✅ Batch processing
 
 #### CI/CD Integration
+
 - ✅ Environment variable handling (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`)
 - ✅ Error handling in CI context
 - ✅ Exit code validation
@@ -810,6 +867,7 @@ chmod +x test/*.test.sh
 ### Continue Dev CLI Coverage
 
 #### Basic Functionality
+
 - ✅ Headless mode flags (`-p`, `--prompt`)
 - ✅ File input (`--file`, `-f`)
 - ✅ Multiple file processing (`--files`, `-F`)
@@ -820,6 +878,7 @@ chmod +x test/*.test.sh
 - ✅ Model selection (`--model`, `-m`)
 
 #### Advanced Features
+
 - ✅ Model selection (OpenAI, Anthropic, DeepSeek)
 - ✅ File processing with context
 - ✅ Directory-based analysis
@@ -830,6 +889,7 @@ chmod +x test/*.test.sh
 - ✅ Config file support (`--config`)
 
 #### Workflow Automation
+
 - ✅ Code generation workflows
 - ✅ Refactoring workflows
 - ✅ Documentation generation
@@ -840,6 +900,7 @@ chmod +x test/*.test.sh
 - ✅ Batch processing
 
 #### CI/CD Integration
+
 - ✅ Environment variable handling (`CONTINUE_API_KEY`, `OPENAI_API_KEY`, `ANTHROPIC_API_KEY`)
 - ✅ Error handling in CI context
 - ✅ Exit code validation
@@ -863,18 +924,20 @@ When adding new tests:
 ## References
 
 ### Claude CLI
+
 - [Claude Code Documentation](https://code.claude.com/docs/en/headless.md)
 - [Anthropic API Documentation](https://docs.anthropic.com)
 - [Claude CLI GitHub](https://github.com/anthropics/claude-code-cli)
 
 ### Codex CLI
+
 - [OpenAI Codex Documentation](https://openai.com/research/codex)
 - [Codex SDK Documentation](https://developers.openai.com/codex/sdk)
 - [OpenAI Platform](https://platform.openai.com/)
 
 ### Copilot CLI
+
 - [Installing GitHub Copilot CLI](https://docs.github.com/en/copilot/cli)
 - [About GitHub Copilot CLI](https://docs.github.com/en/copilot/concepts/agents/about-copilot-cli)
 - [Using GitHub Copilot CLI](https://docs.github.com/en/copilot/cli/using-github-copilot-cli)
 - [GitHub Copilot](https://github.com/features/copilot)
-

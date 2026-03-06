@@ -4,11 +4,13 @@
 **Risk level:** [🟢 Low / 🟠 Medium / ⚠️ High / ⚡ Very High]
 
 **When NOT to use [Tool Name]:**
+
 - ❌ [Reason 1]
 - ❌ [Reason 2]
 - ❌ [Reason 3]
 
 ### Quick Nav
+
 - [Start Here](#-start-here)
 - [Why Use [Tool]](#-why-use-tool)
 - [Best Use Cases](#-best-use-cases)
@@ -35,6 +37,7 @@
 ```
 
 **System Requirements:**
+
 - [Requirements]
 
 ## 🚀 Start Here
@@ -53,34 +56,39 @@
 
 ## Available Models
 
-| Model | Description | Context | Speed | Cost |
-|-------|-------------|---------|-------|------|
-| Model 1 | Description | Size | Speed | Cost |
+| Model   | Description | Context | Speed | Cost |
+| ------- | ----------- | ------- | ----- | ---- |
+| Model 1 | Description | Size    | Speed | Cost |
 
 ## CLI Syntax
 
 **Command structure:**
+
 ```bash
 tool [command] [options] [arguments]
 ```
 
 **Common flags:**
+
 - `--flag`: Description
 - `--option VALUE`: Description
 
 ## Output Formats
 
 **Text (default):**
+
 ```bash
 tool command
 ```
 
 **JSON (for automation):**
+
 ```bash
 tool command --json
 ```
 
 **Streaming:**
+
 ```bash
 tool command --stream
 ```
@@ -88,12 +96,14 @@ tool command --stream
 ## Configuration
 
 **Environment variables:**
+
 ```bash
 export TOOL_API_KEY=your_key
 export TOOL_CONFIG_PATH=/path/to/config
 ```
 
 **Config files:**
+
 - Location: `~/.tool/config.json`
 - Format: JSON/YAML/TOML
 
@@ -102,19 +112,23 @@ export TOOL_CONFIG_PATH=/path/to/config
 **Risk level:** [Description]
 
 **Permission model:**
+
 - [How permissions work]
 
 **Best practices:**
+
 - [Security recommendations]
 
 ## Examples
 
 **Example 1:**
+
 ```bash
 # Example command
 ```
 
 **Example 2:**
+
 ```bash
 # Example command
 ```
@@ -122,11 +136,13 @@ export TOOL_CONFIG_PATH=/path/to/config
 ## CI/CD Integration
 
 **GitHub Actions example:**
+
 ```yaml
 # YAML example
 ```
 
 **GitLab CI example:**
+
 ```yaml
 # YAML example
 ```
@@ -142,4 +158,3 @@ export TOOL_CONFIG_PATH=/path/to/config
 - Official Documentation: [URL]
 - GitHub Repository: [URL]
 - API Reference: [URL]
-
