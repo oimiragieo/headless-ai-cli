@@ -13,7 +13,7 @@
     "validate": "npm run lint && npm run format && npm run check:freshness && npm run check:sync"
   },
   "devDependencies": {
-    "markdownlint-cli2": "^0.17.0",
+    "markdownlint-cli2": "^0.21.0",
     "prettier": "^3.5.0"
   }
 }
