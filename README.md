@@ -1,6 +1,6 @@
 # 🧠 AI CLI Reference Repository
 
-[![Last Updated](https://img.shields.io/badge/Last%20Updated-November%202025-blue)](https://github.com/oimiragieo/headless-ai-cli)
+[![Last Updated](https://img.shields.io/badge/Last%20Updated-March%202026-blue)](https://github.com/oimiragieo/headless-ai-cli)
 [![Tools Documented](https://img.shields.io/badge/Tools%20Documented-14-green)](https://github.com/oimiragieo/headless-ai-cli/tree/main/tools/major)
 [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
@@ -43,30 +43,30 @@ Multi-language support?               → OpenCode
 
 | Tool | Install | Headless | Output | Writes | Verified |
 |------|---------|:--------:|:------:|:------:|----------|
-| [Gemini CLI](tools/major/gemini.md) | `npm i -g @google/gemini-cli` | ✅ | JSON | flag | Nov 2025 |
-| [Claude Code](tools/major/claude.md) | `npm i -g @anthropic-ai/claude-code` | ✅ | JSON | approval | Nov 2025 |
-| [Codex](tools/major/codex.md) | `npm i -g @openai/codex` | ✅ | JSON | flag | Nov 2025 |
-| [Cursor](tools/major/cursor.md) | `curl script` | ✅ | JSON | default | Nov 2025 |
-| [Droid](tools/major/droid.md) | `curl script` | ✅ | JSON | flag | Nov 2025 |
-| [Copilot](tools/major/copilot.md) | `npm i -g @github/copilot` | ✅ | text | flag | Nov 2025 |
-| [Aider](tools/major/aider.md) | `pip install aider-chat` | ✅ | text | flag | Nov 2025 |
-| [Continue Dev](tools/major/continue-dev.md) | `npm i -g @continuedev/cli` | ✅ | text | approval | Nov 2025 |
-| [Cline](tools/major/cline.md) | `npm i -g cline` | ✅ | JSON | flag | Nov 2025 |
-| [OpenCode](tools/major/open-code.md) | `npm i -g open-code` | ✅ | text | flag | Nov 2025 |
-| [Kiro](tools/major/kiro.md) | `curl script` | ❌ | — | — | Jan 2026 |
-| [Warp](tools/major/warp.md) | `brew install --cask warp` | ❌ | — | — | Jan 2026 |
-| [Windsurf](tools/major/windsurf.md) | Docker | ⚠️ | text | default | Nov 2025 |
-| [Amazon Q](tools/major/amazon-q.md) | `brew install amazon-q` | ✅ | JSON | flag | DEPRECATED |
+| [Gemini CLI](tools/major/gemini.md) | `npm i -g @google/gemini-cli` | ✅ | JSON | flag | Mar 2026 |
+| [Claude Code](tools/major/claude.md) | `npm i -g @anthropic-ai/claude-code` | ✅ | JSON | approval | Mar 2026 |
+| [Codex](tools/major/codex.md) | `npm i -g @openai/codex` | ✅ | JSON | flag | Mar 2026 |
+| [Cursor](tools/major/cursor.md) | `curl script` | ✅ | JSON | default | Mar 2026 |
+| [Droid](tools/major/droid.md) | `curl script` | ✅ | JSON | flag | Mar 2026 |
+| [Copilot](tools/major/copilot.md) | `npm i -g @github/copilot` | ✅ | text | flag | Mar 2026 |
+| [Aider](tools/major/aider.md) | `pip install aider-chat` | ✅ | text | flag | Mar 2026 |
+| [Continue Dev](tools/major/continue-dev.md) | `npm i -g @continuedev/cli` | ✅ | text | approval | Mar 2026 |
+| [Cline](tools/major/cline.md) | `npm i -g cline` | ✅ | JSON | flag | Mar 2026 |
+| [OpenCode](tools/major/open-code.md) | `npm i -g open-code` | ✅ | text | flag | Mar 2026 |
+| [Kiro](tools/major/kiro.md) | `curl script` | ✅ | text | approval | Mar 2026 |
+| [Warp](tools/major/warp.md) | `brew install --cask warp` | ❌ | — | — | Mar 2026 |
+| [Windsurf](tools/major/windsurf.md) | Docker | ⚠️ | text | default | Mar 2026 |
+| [Amazon Q](tools/major/amazon-q.md) | `q update` → Kiro | ✅ | JSON | flag | DEPRECATED |
 
 **Headless:** ✅ native | ⚠️ workaround required | ❌ not supported
 **Output:** JSON = structured output flag available | text = plain text only
 **Writes:** approval = requires user approval | flag = opt-in via CLI flag | default = writes without prompting
 
 **Notes:**
-- Kiro is an IDE; no headless CLI mode exists
+- Kiro CLI v1.27 (Mar 2026) now has full terminal agent support with custom agents, skills, and granular tool trust
 - Warp is a terminal emulator, not a standalone CLI tool
 - Windsurf requires Docker container for headless; see [windsurfinabox](https://github.com/pfcoperez/windsurfinabox)
-- Amazon Q CLI deprecated Nov 2025; migrated to Kiro
+- Amazon Q CLI deprecated Nov 2025; upgrade to Kiro via `q update`
 
 ## ⚡ Quick Start Example: GitHub Actions PR Review
 
@@ -240,13 +240,13 @@ We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 These tools change frequently. CLI flags and features may drift between updates.
 
-**Last verification:** January 2026
+**Last verification:** March 2026
 
 If you find outdated information, please [open an issue](https://github.com/oimiragieo/headless-ai-cli/issues).
 
 ## 📊 Repository Statistics
 
-- **Tools Documented:** 14 (9 with full headless support, 4 limited, 1 deprecated)
+- **Tools Documented:** 14 (10 with full headless support, 3 limited, 1 deprecated)
 - **CI/CD Examples:** 50 workflows and scripts
 - **Test Scripts:** 56 verification scripts
 - **Documentation:** 29 markdown files, ~8,764 lines

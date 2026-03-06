@@ -1,7 +1,7 @@
 # AI CLI Quick Reference
 
 > **Single-source reference for headless AI CLI tools**
-> *Last Updated: January 2026 | 14 Tools Documented (9 full headless, 4 limited, 1 deprecated)*
+> *Last Updated: March 2026 | 14 Tools Documented (10 full headless, 3 limited, 1 deprecated)*
 
 ---
 
@@ -20,7 +20,7 @@
 | **VS Code integration** | Continue Dev | IDE-first development |
 | **Task automation** | Cline | Autonomous task execution |
 | **Multi-language** | OpenCode | Polyglot support |
-| **Spec-driven development** | Kiro ⚠️ | IDE only - NO headless mode |
+| **Spec-driven development** | Kiro | Full CLI agent (v1.27) with skills, agents, tool trust |
 | **Enhanced terminal** | Warp ⚠️ | macOS terminal UX (no headless) |
 | **IDE development** | Windsurf ⚠️ | Docker-only headless |
 
@@ -57,7 +57,7 @@ Code review automation       → All tools with --output-format json
 | Continue | ✅ | ❌ | ❌ | approval | Win/Mac/Linux |
 | Cline | ✅ | ✅ | ❌ | flag | Win/Mac/Linux |
 | OpenCode | ✅ | ❌ | ❌ | flag | Win/Mac/Linux |
-| Kiro | ❌ | — | — | — | IDE only |
+| Kiro | ✅ | ❌ | ❌ | approval | Win/Mac/Linux |
 | Warp | ❌ | — | — | — | macOS terminal |
 | Windsurf | ⚠️ | ❌ | ❌ | default | Docker required |
 | Amazon Q | ✅ | ✅ | ❌ | flag | DEPRECATED |
@@ -76,7 +76,7 @@ Map standard actions across all tools:
 | **JSON output** | `--output-format json` | `--output-format json` | `--json` | `--output-format json` |
 | **Skip confirmations** | (default) | `--permission-mode bypassPermissions` | `--full-auto` | `--auto high` |
 | **Read-only mode** | N/A | `--allowedTools "Read"` | (default) | `--auto low` |
-| **Set model** | `--model gemini-3-pro` | `--model opus` | `--model gpt-5.1` | N/A |
+| **Set model** | `--model gemini-3.1-pro` | `--model opus` | `--model gpt-5.3-codex` | N/A |
 | **Pipe input** | `cat file \| gemini -p` | `cat file \| claude -p` | `cat file \| codex exec` | `cat file \| droid exec` |
 
 | Action | Cursor | Copilot | Cline | Amazon Q |
@@ -145,7 +145,7 @@ Kiro IDE:     https://kiro.dev/
 gemini -p "Explain this codebase"
 
 # JSON output with model selection
-gemini -p "List all API endpoints" --output-format json --model gemini-3-pro-preview
+gemini -p "List all API endpoints" --output-format json --model gemini-3.1-pro-preview
 
 # Pipe input
 git diff | gemini -p "Review these changes" --output-format json
@@ -157,7 +157,7 @@ gemini -p "Generate documentation" --output-format streaming
 **Tags:** `#cloud` `#chat` `#code` `#json` `#headless` `#streaming` `#large-context`
 **Compatibility:** ✅ Win/Mac/Linux | ✅ Streaming | ✅ JSON | ✅ Headless | ✅ File input
 **Docs:** [geminicli.com/docs](https://geminicli.com/docs/) | [GitHub](https://github.com/google-gemini/gemini-cli)
-**Verified:** Nov 2025
+**Verified:** Mar 2026
 
 ---
 
@@ -184,7 +184,7 @@ claude -p --resume abc123 "Continue the refactoring"
 **Tags:** `#cloud` `#reasoning` `#code` `#json` `#headless` `#streaming` `#tools`
 **Compatibility:** ✅ Win/Mac/Linux | ✅ Streaming | ✅ JSON | ✅ Headless | ✅ Tool control
 **Docs:** [docs.anthropic.com](https://docs.anthropic.com/en/docs/claude-code/overview) | [GitHub](https://github.com/anthropics/claude-code)
-**Verified:** Nov 2025
+**Verified:** Mar 2026
 
 ---
 
@@ -208,7 +208,7 @@ codex exec "Complex refactor" --reasoning high --full-auto
 **Tags:** `#cloud` `#ui` `#code` `#json` `#headless` `#full-auto` `#schema`
 **Compatibility:** ✅ Win/Mac/Linux | ✅ Streaming | ✅ JSON | ✅ Headless | ✅ Schema validation
 **Docs:** [developers.openai.com/codex](https://developers.openai.com/codex/) | [GitHub](https://github.com/openai/codex)
-**Verified:** Nov 2025
+**Verified:** Mar 2026
 
 ---
 
@@ -223,13 +223,13 @@ cursor-agent -p "Update all tests for new API"
 cursor-agent -p "Refactor entire module" --force --output-format json
 
 # With specific model
-cursor-agent -p "Complex migration" --model claude-3.5-sonnet --force
+cursor-agent -p "Complex migration" --model opus-4.6 --force
 ```
 
 **Tags:** `#ide` `#workflow` `#agent` `#json` `#headless` `#multi-step`
 **Compatibility:** ✅ Win/Mac/Linux | ✅ Streaming | ✅ JSON | ✅ Headless | ⚠️ High risk (writes by default)
 **Docs:** [docs.cursor.com](https://docs.cursor.com/en/cli/overview) | No public GitHub
-**Verified:** Nov 2025
+**Verified:** Mar 2026
 
 ---
 
@@ -253,7 +253,7 @@ droid exec "Generate tests" --auto low --seed 12345 --output-format json
 **Tags:** `#cloud` `#cicd` `#safe` `#json` `#headless` `#deterministic` `#audit`
 **Compatibility:** ✅ Win/Mac/Linux | ✅ JSON | ✅ Headless | 🟢 Read-only default
 **Docs:** [docs.factory.ai](https://docs.factory.ai/cli/getting-started/quickstart) | [GitHub](https://github.com/Factory-AI/factory)
-**Verified:** Nov 2025
+**Verified:** Mar 2026
 
 ---
 
@@ -277,30 +277,36 @@ copilot explain "git rebase -i HEAD~5"
 **Tags:** `#cloud` `#github` `#pr` `#issues` `#headless` `#suggest` `#explain`
 **Compatibility:** ✅ Win/Mac/Linux | ⚠️ Limited JSON | ✅ Headless | ⚡ Very high risk
 **Docs:** [GitHub Docs](https://docs.github.com/en/copilot/concepts/agents/about-copilot-cli) | [GitHub](https://github.com/github/copilot-cli)
-**Verified:** Nov 2025
+**Verified:** Mar 2026
 
 ---
 
 ### Kiro
-> Spec-driven development — agents-only headless mode
+> Full terminal coding agent (v1.27) — custom agents, skills, granular tool trust
 
 ```bash
 # Install and authenticate
 curl -fsSL https://cli.kiro.dev/install | bash
 kiro-cli login  # Browser auth required
 
-# Interactive chat (required - no direct execution)
-kiro-cli chat
-# > Install project dependencies
-
-# With custom agent
+# Chat with custom agent
 kiro-cli chat --agent frontend-specialist
+
+# Create AI-assisted agent
+kiro-cli agent create my-agent
+
+# File references (inline context)
+# @src/main.rs  → injects file contents
+# @src/         → shows directory tree
+
+# Dynamic model selection
+# /model claude-opus-4.6
 ```
 
-**Tags:** `#ide` `#spec-driven` `#agents` `#interactive`
-**Compatibility:** ✅ Win/Mac/Linux | ⚠️ Agents only headless | ⚠️ Limited JSON
-**Docs:** [kiro.dev/docs](https://kiro.dev/docs/) | [GitHub](https://github.com/kirodotdev/Kiro)
-**Verified:** Nov 2025
+**Tags:** `#cli` `#agents` `#skills` `#tool-trust` `#headless`
+**Compatibility:** ✅ Win/Mac/Linux | ✅ Agents + skills | ✅ Headless (agent-based) | ✅ 18-language code intelligence
+**Docs:** [kiro.dev/docs/cli](https://kiro.dev/docs/cli/) | [GitHub](https://github.com/kirodotdev/Kiro)
+**Verified:** Mar 2026
 
 ---
 
@@ -318,7 +324,7 @@ open -a Warp
 **Tags:** `#terminal` `#macos` `#gui` `#ux`
 **Compatibility:** ❌ macOS only | ❌ No headless | ❌ GUI required
 **Docs:** [docs.warp.dev](https://docs.warp.dev) | [GitHub](https://github.com/warpdotdev/Warp)
-**Verified:** Nov 2025
+**Verified:** Mar 2026
 
 ---
 
@@ -338,7 +344,7 @@ docker run -v $(pwd):/workspace -v ~/.ssh:/root/.ssh windsurf/cascade \
 **Tags:** `#ide` `#docker` `#agent` `#cascade`
 **Compatibility:** ✅ Win/Mac/Linux (via Docker) | ⚠️ Docker only | ⚠️ Limited JSON
 **Docs:** [docs.windsurf.com](https://docs.windsurf.com/) | No public GitHub
-**Verified:** Nov 2025
+**Verified:** Mar 2026
 
 ---
 
@@ -362,7 +368,7 @@ aider --model gpt-4o --auto-commits --message "Refactor"
 **Tags:** `#local` `#pair-programming` `#git` `#ollama` `#headless`
 **Compatibility:** ✅ Win/Mac/Linux | ✅ Offline (with Ollama) | ⚠️ Limited JSON | ✅ Git integration
 **Docs:** [aider.chat/docs](https://aider.chat/docs/) | [GitHub](https://github.com/Aider-AI/aider)
-**Verified:** Nov 2025
+**Verified:** Mar 2026
 
 ---
 
@@ -383,7 +389,7 @@ continue headless --agent "refactor-specialist" --model gpt-4o
 **Tags:** `#ide` `#vscode` `#headless` `#agents` `#tui`
 **Compatibility:** ✅ Win/Mac/Linux | ✅ Headless | ⚠️ Limited JSON | ✅ VS Code integration
 **Docs:** [docs.continue.dev](https://docs.continue.dev/quickstart) | [GitHub](https://github.com/continuedev/continue)
-**Verified:** Nov 2025
+**Verified:** Mar 2026
 
 ---
 
@@ -407,7 +413,7 @@ cline "Design new feature" --mode architect
 **Tags:** `#automation` `#tasks` `#yolo` `#headless` `#json`
 **Compatibility:** ✅ Win/Mac/Linux | ✅ Headless | ⚠️ Limited JSON | 🟠 Medium risk
 **Docs:** [docs.cline.bot](https://docs.cline.bot/cline-cli/overview) | [GitHub](https://github.com/cline/cline)
-**Verified:** Nov 2025
+**Verified:** Mar 2026
 
 ---
 
@@ -431,7 +437,7 @@ q transform --source legacy.py --target modern.py
 **Tags:** `#cloud` `#aws` `#iam` `#cloudformation` `#headless` `#json`
 **Compatibility:** ✅ Win/Mac/Linux | ✅ Headless | ✅ JSON | 🟠 Medium risk
 **Docs:** [AWS Docs](https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/command-line.html) | [GitHub](https://github.com/aws/amazon-q-developer-cli)
-**Verified:** Nov 2025
+**Verified:** Mar 2026
 
 ---
 
@@ -452,7 +458,7 @@ OPENCODE_PROVIDER=anthropic opencode
 **Tags:** `#multi-language` `#polyglot` `#headless` `#providers`
 **Compatibility:** ✅ Win/Mac/Linux | ✅ Headless (stdin) | ⚠️ Limited JSON
 **Docs:** [opencode.ai/docs](https://opencode.ai/docs/) | [GitHub](https://github.com/sst/opencode)
-**Verified:** Nov 2025
+**Verified:** Mar 2026
 
 ---
 
@@ -610,8 +616,8 @@ export OPENAI_API_KEY="sk-..."            # Codex
 export GITHUB_TOKEN="ghp_..."             # Copilot
 
 # Model defaults
-export ANTHROPIC_MODEL="claude-sonnet-4-5-20250929"
-export GEMINI_MODEL="gemini-3-pro-preview"
+export ANTHROPIC_MODEL="claude-sonnet-4-6-20250514"
+export GEMINI_MODEL="gemini-3.1-pro-preview"
 ```
 
 ---
@@ -647,6 +653,6 @@ export GEMINI_MODEL="gemini-3-pro-preview"
 
 ---
 
-**Last Updated:** November 2025
+**Last Updated:** March 2026
 **Tools Documented:** 14 (all verified)
 **Maintainer:** [headless-ai-cli](https://github.com/oimiragieo/headless-ai-cli)
