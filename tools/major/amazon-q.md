@@ -5,8 +5,12 @@
 > Amazon Q Developer CLI has been **deprecated** and migrated to **Kiro CLI** as of November 17, 2025.
 > - The CLI will only receive critical security fixes going forward
 > - New users should use [Kiro CLI](kiro.md) instead
-> - Existing installations will continue to work but are not actively maintained
-> - See: [GitHub - aws/amazon-q-developer-cli](https://github.com/aws/amazon-q-developer-cli) for migration details
+> - Existing installations can upgrade with `q update` (auto-upgraded Nov 24, 2025)
+> - `q` and `q chat` commands still work for backward compatibility
+> - Config migrated: `~/.aws/amazonq/` → `~/.kiro/`
+> - Tool permissions renamed: `execute_bash`→`shell`, `fs_write`→`write`, `fs_read`→`read`
+> - License changed: Apache 2.0 → AWS Intellectual Property License
+> - See: [Kiro CLI Upgrade](https://kiro.dev/changelog/cli/) for migration details
 
 **Version tested:** Latest (check with `q --version`)
 **Risk level:** 🟢 Low (AWS service integration, controlled access)

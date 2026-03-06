@@ -122,15 +122,20 @@ Windsurf supports multiple LLM providers:
 
 | Provider | Models | Description |
 |----------|--------|-------------|
-| **OpenAI** | GPT-4, GPT-4 Turbo, GPT-3.5-turbo | Code generation, general tasks |
-| **Anthropic** | Claude 3 Opus, Claude 3 Sonnet, Claude 3 Haiku | Strong reasoning, code analysis |
-| **Google** | Gemini Pro, Gemini Flash | Alternative option, large context |
+| **Anthropic** | Claude Opus 4.6, Claude Opus 4.6 (fast), Claude Sonnet 4.6 | Latest flagship models (Feb 2026) |
+| **OpenAI** | GPT-5.3-Codex, GPT-5.1, GPT-4o | Code generation, general tasks |
+| **Google** | Gemini 3.1 Pro, Gemini 2.5 Pro | Large context support |
+| **Zhipu AI** | GLM-5 | Open-source alternative |
+| **Minimax** | Minimax M2.5 | Cost-effective option |
 
 **Model Configuration:**
 - Configure in Windsurf IDE settings
 - Select models per project or globally
-- Support for multiple models simultaneously
+- **Arena Mode** (Wave 14): side-by-side model comparison with hidden identities, personal + global leaderboards
+- **Plan Mode**: task planning before execution
 - API keys managed in IDE settings
+
+> **Note (March 2026):** Windsurf now owned by Cognition (after OpenAI acquisition bid fell through). Phoenix Alpha in Next channel (Mar 3, 2026). Linux ARM64 binaries now available. Cascade hooks configuration added. MCP improvements include OAuth auto-login and Windows fixes.
 
 **Cascade Agent:**
 - AI-driven assistant that autonomously executes complex, multi-step tasks

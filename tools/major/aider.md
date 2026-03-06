@@ -123,11 +123,14 @@ Aider supports multiple LLM providers with the latest models:
 
 | Provider | Models | Description |
 |----------|--------|-------------|
-| OpenAI | `gpt-4o`, `gpt-4o-mini`, `o1`, `o1-mini`, `o3`, `o3-mini`, `gpt-3.5-turbo` | Default provider, excellent code generation |
-| Anthropic | `claude-3.7-sonnet`, `claude-3-opus`, `claude-3.5-sonnet`, `claude-3-sonnet`, `claude-3-haiku` | Strong reasoning, excellent for refactoring |
+| OpenAI | `gpt-5.3-codex`, `gpt-5.1`, `gpt-4o`, `o3`, `o3-mini` | Default provider, latest code models |
+| Anthropic | `claude-opus-4.6`, `claude-sonnet-4.6`, `claude-haiku-4.5` | Strong reasoning, excellent for refactoring |
 | DeepSeek | `deepseek-r1`, `deepseek-chat`, `deepseek-v3` | Alternative with strong reasoning, cost-effective |
-| Google | `gemini-pro`, `gemini-1.5-pro` | Alternative option |
+| Google | `gemini-3.1-pro`, `gemini-2.5-pro`, `gemini-2.5-flash` | Large context support |
+| xAI | Grok models | Alternative option |
 | Local | Various via Ollama | Run models locally (requires Ollama setup) |
+
+> **Note (March 2026):** Aider now has 41,000+ GitHub stars, 5M+ PyPI installs, and supports 75+ providers. Architect/editor mode squeezes top-tier performance from cheaper models. Built-in voice-to-code mode available. No breaking CLI changes — bring-your-own-key model remains core philosophy.
 
 **Model Selection:**
 ```bash

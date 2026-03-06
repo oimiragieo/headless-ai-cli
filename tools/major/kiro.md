@@ -3,12 +3,13 @@
 **Version tested:** Latest (check with `kiro --version` or via IDE)  
 **Risk level:** 🟠 Medium (IDE with AI agents, can modify files)
 
-**⚠️ IMPORTANT: Kiro CLI does NOT currently have a headless mode.**
-- Kiro CLI requires agents and interactive chat mode
-- You cannot use `kiro-cli "command"` - this will fail
-- Must use `kiro-cli chat --agent <name>` for interactive sessions
-- Not suitable for automated CI/CD pipelines or non-interactive scripts
-- Windows users must run in WSL (not PowerShell)
+**Kiro CLI** (v1.27, March 2026) is a full-featured terminal coding agent that replaced Amazon Q Developer CLI.
+- Install: `curl -fsSL https://cli.kiro.dev/install | bash`
+- Supports custom agents, skills, MCP servers, steering files, and granular tool trust
+- Dynamic model selection with `/model` command and tab completion
+- File references with `@path` syntax for inline context
+- Code intelligence for 18 languages out of the box
+- AST pattern search/rewrite tools for structural code transforms
 
 **When NOT to use Kiro:**
 - ❌ You need massive context windows (Gemini CLI handles larger repos better)
@@ -131,27 +132,44 @@ kiro-cli --agent <agent-name> chat
 
 ## Headless Mode
 
-**⚠️ CRITICAL: Kiro CLI does NOT currently have a headless mode.**
+Kiro CLI supports agent-based execution. While it uses an interactive chat mode by default, you can configure custom agents for specific tasks and use the CLI in automation workflows.
 
-**Kiro CLI** provides a command-line interface, but **does NOT support headless mode**. Unlike other AI CLI tools (`gemini -p ""`, `droid exec ""`, `claude -p ""`), Kiro CLI **REQUIRES agents** and uses an **interactive chat mode**. Direct command execution does NOT work.
-
-**❌ This does NOT work:**
-```bash
-kiro-cli "Install dependencies"  # ERROR: unrecognized subcommand
-```
-
-**✅ You MUST use agents:**
+**Agent-based execution:**
 ```bash
 # List available agents
 kiro-cli agent list
 
-# Start chat with an agent (REQUIRED)
+# Start chat with an agent
 kiro-cli chat --agent <agent-name>
 # OR
 kiro-cli --agent <agent-name> chat
 
-# Then type commands in the interactive chat
+# Create a new agent (AI-assisted, v1.27+)
+kiro-cli agent create <name>
+# OR manual mode
+kiro-cli agent create <name> --manual
 ```
+
+**Skills for progressive context loading (v1.24+):**
+- Only metadata loads at startup; full content loads on demand
+- Requires YAML frontmatter with descriptive metadata
+
+**File references (v1.26+):**
+```bash
+# Inject file contents inline (avoids tool calls, saves tokens)
+@src/main.rs    # file contents
+@src/           # directory tree
+```
+
+**Dynamic model selection (v1.26+):**
+```bash
+/model claude-opus-4.6   # switch models with tab completion
+```
+
+**Granular tool trust (v1.27+):**
+- Interactive picker for tiered shell command scoping
+- Trust exact command, command with any args, or base command with wildcards
+- Read/write tools: scope to file, directory, or entire tool
 
 **⚠️ Windows Users:**
 - **MUST run in WSL** (Windows Subsystem for Linux)
@@ -168,6 +186,11 @@ kiro-cli update
 **Install Kiro CLI:**
 ```bash
 curl -fsSL https://cli.kiro.dev/install | bash
+```
+
+**Upgrade from Amazon Q Developer CLI:**
+```bash
+q update
 ```
 
 **Verify Installation:**
@@ -549,10 +572,12 @@ Kiro utilizes **Claude models** via AWS Bedrock to power its AI capabilities:
 | Model | Credit Cost | Description | Context | Provider |
 |-------|-------------|-------------|---------|----------|
 | **Auto** (default) | 1.0x | Models chosen by task for optimal usage and consistent quality | Varies | AWS Bedrock |
-| **claude-sonnet-4.5** | 1.3x | The latest Claude Sonnet model | ~200K tokens | AWS Bedrock |
-| **claude-sonnet-4** | 1.3x | Hybrid reasoning and coding for regular use | ~200K tokens | AWS Bedrock |
-| **claude-haiku-4.5** | 0.4x | The latest Claude Haiku model (fast, cost-effective) | ~200K tokens | AWS Bedrock |
-| **claude-opus-4.5** | 2.2x | The latest Claude Opus model - Experimental (deep reasoning) | ~200K tokens | AWS Bedrock |
+| **claude-opus-4.6** | 2.2x | Latest Claude Opus model (Feb 2026) - deep reasoning | ~200K (1M beta) | AWS Bedrock |
+| **claude-sonnet-4.6** | 1.3x | Latest Claude Sonnet model (Feb 2026) | ~200K (1M beta) | AWS Bedrock |
+| **claude-sonnet-4.5** | 1.3x | Previous Claude Sonnet model | ~200K tokens | AWS Bedrock |
+| **claude-haiku-4.5** | 0.4x | Fast, cost-effective model | ~200K tokens | AWS Bedrock |
+
+> **Note (March 2026):** Kiro CLI v1.27. Dynamic model selection with `/model` command and tab completion (v1.26+). Use `/model clau<Tab>` for fuzzy matching.
 
 **Credit System:**
 - Credits are consumed based on model usage
@@ -908,20 +933,22 @@ kiro-cli chat
 
 ## Limitations
 
-- **CLI vs IDE:** Kiro CLI provides headless mode, but full IDE features require GUI
+- **CLI vs IDE:** Kiro CLI (v1.27) is a full terminal agent, but some IDE features still require GUI
 - **Authentication Required:** CLI requires login/authentication:
   - Browser-based: `kiro-cli login` opens browser (interactive)
-  - API key: `export KIRO_API_KEY=key` (for CI/CD)
-- **Command Approval:** Commands may require approval unless trusted (configurable)
+  - External identity providers supported (v1.26+)
+- **Command Approval:** Commands may require approval unless trusted (granular tool trust in v1.27)
 - **AWS Dependency:** AI features require AWS Bedrock access (for IDE mode)
-- **Context Limits:** Depends on AWS Bedrock model limits (typically ~200K tokens)
+- **Context Limits:** Depends on AWS Bedrock model limits (typically ~200K tokens, 1M beta for Claude 4.6)
+- **License Change:** Changed from Apache 2.0 (Amazon Q) to AWS Intellectual Property License
 - **Not as Deterministic as Droid:** Less suitable for production CI/CD than Droid's read-only default
 
 ## References
 
-- **Official Website:** [kiroai.ai](https://kiroai.ai)
-- **Documentation:** [kiro.help/docs](https://kiro.help/docs)
-- **CLI Documentation:** [kiro.help/docs/kiro/chat/terminal](https://kiro.help/docs/kiro/chat/terminal)
+- **Official Website:** [kiro.dev](https://kiro.dev)
+- **CLI Documentation:** [kiro.dev/docs/cli](https://kiro.dev/docs/cli/)
+- **CLI Changelog:** [kiro.dev/changelog/cli](https://kiro.dev/changelog/cli/)
+- **CLI Commands Reference:** [kiro.dev/docs/cli/reference/cli-commands](https://kiro.dev/docs/cli/reference/cli-commands/)
 - **CLI Installation:** [cli.kiro.dev](https://cli.kiro.dev)
 - **MCP Configuration:** [kiro.dev/docs/cli/mcp](https://kiro.dev/docs/cli/mcp) ⭐
 - **Getting Started:** [kiro.help/docs/kiro/introduction/installation](https://kiro.help/docs/kiro/introduction/installation)

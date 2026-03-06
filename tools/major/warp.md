@@ -135,10 +135,12 @@ Warp lets you choose from a curated set of Large Language Models (LLMs) to power
 
 | Provider | Models | Description |
 |----------|--------|-------------|
-| **OpenAI** | GPT-5, GPT-5.1 | Select between low, medium, and high reasoning modes |
-| **Anthropic** | Claude Sonnet 4.5, Claude Opus 4.1, Claude Haiku 4.5, Claude Sonnet 4 | Strong reasoning and coding capabilities |
-| **Google** | Gemini 3 Pro, Gemini 2.5 Pro | Large context support |
+| **OpenAI** | GPT-5.3-Codex, GPT-5.1, GPT-5 | Select between low, medium, and high reasoning modes |
+| **Anthropic** | Claude Opus 4.6, Claude Sonnet 4.6, Claude Haiku 4.5 | Strong reasoning and coding capabilities |
+| **Google** | Gemini 3.1 Pro, Gemini 2.5 Pro | Large context support |
 | **z.ai** | GLM 4.6 | Hosted in the US by Fireworks AI |
+
+> **Note (March 2026):** Warp released Agents 3.0 with Slack/Linear/GitHub Actions integrations, interactive code review, `/plan` for spec-driven development, and full terminal use (REPLs, debuggers). New "Oz" orchestration platform for cloud agents. Warp remains a terminal emulator — not a standalone headless CLI tool.
 
 **Auto Models:**
 

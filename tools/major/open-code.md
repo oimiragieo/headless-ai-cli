@@ -128,23 +128,23 @@ opencode models
 - `opencode/grok-code`
 
 **GitHub Copilot Models** (available after authenticating with GitHub Copilot):
-- `github-copilot/grok-code-fast-1`
-- `github-copilot/gpt-5.1-codex`
+- `github-copilot/claude-opus-4.6`
+- `github-copilot/claude-sonnet-4.6`
+- `github-copilot/claude-sonnet-4.5`
 - `github-copilot/claude-haiku-4.5`
-- `github-copilot/gemini-3-pro-preview`
-- `github-copilot/oswe-vscode-prime`
+- `github-copilot/gpt-5.3-codex`
+- `github-copilot/gpt-5.1-codex`
 - `github-copilot/gpt-5.1-codex-mini`
 - `github-copilot/gpt-5.1`
-- `github-copilot/gpt-5-codex`
+- `github-copilot/gpt-5`
+- `github-copilot/gpt-5-mini`
 - `github-copilot/gpt-4o`
 - `github-copilot/gpt-4.1`
-- `github-copilot/claude-opus-41`
-- `github-copilot/gpt-5-mini`
+- `github-copilot/gemini-3.1-pro`
 - `github-copilot/gemini-2.5-pro`
-- `github-copilot/claude-sonnet-4`
-- `github-copilot/gpt-5`
-- `github-copilot/claude-opus-4.5`
-- `github-copilot/claude-sonnet-4.5`
+- `github-copilot/grok-code-fast-1`
+
+> **Note (March 2026):** OpenCode now at ~v1.1.6 with desktop app, agent management (`opencode agent create/list`), `opencode attach` for remote backends, skills ecosystem, deep link support, and multi-model mid-session switching with context preservation. Updates via `opencode upgrade`.
 
 **Supported Providers** (from `opencode auth login`):
 

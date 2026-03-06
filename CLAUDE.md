@@ -287,11 +287,10 @@ Several tools have updated their recommended installation methods:
 
 ## Quick Reference: Tool Categories
 
-**Production CLI Tools with Full Headless Support (9 tools):**
-- Gemini, Claude, Codex, Cursor, Copilot, Droid, Aider, Continue Dev, Cline
+**Production CLI Tools with Full Headless Support (10 tools):**
+- Gemini, Claude, Codex, Cursor, Copilot, Droid, Aider, Continue Dev, Cline, Kiro
 
-**IDE/Terminal-Based Tools with Limited Headless Support (4 tools):**
-- Kiro (⚠️ NO native headless mode - spec-driven IDE only)
+**IDE/Terminal-Based Tools with Limited Headless Support (3 tools):**
 - Warp (⚠️ Terminal emulator - enhances other CLI tools, not standalone headless)
 - Windsurf (⚠️ Requires Docker container "windsurfinabox" for headless)
 - Amazon Q (⚠️ DEPRECATED Nov 2025 - migrated to Kiro CLI)
@@ -299,21 +298,21 @@ Several tools have updated their recommended installation methods:
 **Multi-Language Tools (1 tool):**
 - OpenCode
 
-**Total: 14 documented tools (9 with full headless, 4 with limited/no headless, 1 deprecated)**
+**Total: 14 documented tools (10 with full headless, 3 with limited/no headless, 1 deprecated)**
 
 ## ⚠️ Known Issues and Tech Debt
 
 ### Critical Documentation Gaps
 
-1. **Kiro**: Documented but lacks actual headless mode capability (contradicts repo purpose)
-   - Tool documentation states: "Kiro CLI does NOT currently have a headless mode"
+1. **Kiro**: ~~Documented but lacks actual headless mode~~ **RESOLVED (March 2026)** — Kiro CLI v1.27 is now a full terminal agent with custom agents, skills, granular tool trust, and dynamic model selection. Reclassified to full headless support.
    - Zero examples in `examples/` directory
    - Zero test scripts in `test/` directory
-   - **Action needed**: Add examples or reclassify as IDE-only tool
+   - **Action needed**: Add CI/CD examples and test scripts
 
 2. **Amazon Q Developer CLI**: **DEPRECATED** as of November 17, 2025
-   - Migrated to Kiro CLI (closed-source)
-   - Will only receive critical security fixes
+   - Migrated to Kiro CLI via `q update` (auto-upgraded Nov 24, 2025)
+   - License changed from Apache 2.0 to AWS Intellectual Property License
+   - `q` and `q chat` commands still work for backward compatibility
    - Documentation retained for legacy reference
 
 3. **Warp**: Terminal emulator, not a standalone CLI tool
@@ -345,9 +344,9 @@ Several tools have updated their recommended installation methods:
 ## Version Information
 
 - **Repository Created:** November 2025
-- **Last Major Update:** January 2026
-- **Last Audit:** January 2026
-- **Total Tools Documented:** 14 (9 with full headless support, 4 limited, 1 deprecated)
+- **Last Major Update:** March 2026
+- **Last Audit:** March 2026
+- **Total Tools Documented:** 14 (10 with full headless support, 3 limited, 1 deprecated)
 - **Documentation Files:** 29 markdown files total
   - 4 main docs (README, CLAUDE, CONTRIBUTING, QUICK_REFERENCE)
   - 14 individual tool docs (tools/major/)

@@ -92,8 +92,10 @@ claude -p "Generate a user profile" \
 | Model | Full Model ID | Context | Speed | Cost | Best For |
 |-------|---------------|---------|-------|------|----------|
 | **claude-haiku-4.5** | `claude-haiku-4-5-20251001` | ~200K | Fast | Low | Quick tasks, budget-conscious |
-| **claude-sonnet-4.5** | `claude-sonnet-4-5-20250929` | ~200K | Medium | Medium | Daily coding, balanced (default) |
-| **claude-opus-4.5** | `claude-opus-4-5-20251101` | ~200K | Medium | Medium-High | Best for coding, agents, computer use |
+| **claude-sonnet-4.6** | `claude-sonnet-4-6-20250514` | ~200K (1M beta) | Medium | Medium | Daily coding, balanced (default) |
+| **claude-opus-4.6** | `claude-opus-4-6-20250205` | ~200K (1M beta) | Medium | Medium-High | Best for coding, agents, computer use |
+
+> **Note (March 2026):** Claude Opus 4.6 released Feb 5, 2026. Claude Sonnet 4.6 released Feb 17, 2026. Both support 1M context in beta. Opus 4.6 defaults to medium effort. The "ultrathink" keyword enables extended thinking. Claude Opus 4/4.1/4.5 and Sonnet 4.5 are still available but aliases (`sonnet`, `opus`) now map to 4.6 versions.
 
 **Model Selection:**
 ```bash
@@ -103,11 +105,11 @@ claude -p "query" --model opus
 claude -p "query" --model haiku
 
 # Use full model ID
-claude -p "query" --model claude-opus-4-5-20251101
-claude -p "query" --model claude-sonnet-4-5-20250929
+claude -p "query" --model claude-opus-4-6-20250205
+claude -p "query" --model claude-sonnet-4-6-20250514
 
 # Use shortened version
-claude -p "query" --model claude-opus-4.5
+claude -p "query" --model claude-opus-4.6
 
 # With fallback model for overload scenarios
 claude -p "query" --model opus --fallback-model sonnet
@@ -117,19 +119,19 @@ export ANTHROPIC_MODEL="claude-haiku-4-5-20251001"
 claude -p "query"
 ```
 
-## Effort Parameter (Beta)
+## Effort Parameter
 
-**New in Claude Opus 4.5:** The effort parameter allows you to control how much "thinking budget" Claude spends on a request, giving you more control over cost versus performance tradeoffs.
+**Available for Claude Opus 4.6:** The effort parameter controls how much "thinking budget" Claude spends on a request, giving you control over cost versus performance tradeoffs. Opus 4.6 defaults to medium effort.
 
 **Usage:**
-The effort parameter is available via the Anthropic API for Claude Opus 4.5. Check the latest [Claude API documentation](https://docs.anthropic.com/) for command-line flag support in Claude Code CLI.
+The effort parameter is available via the Anthropic API and Claude Code CLI for Claude Opus 4.6. Use the "ultrathink" keyword in prompts to enable extended thinking mode.
 
 **Benefits:**
 - **Cost Control**: Adjust computational effort based on task complexity
 - **Performance Tuning**: More effort for complex tasks, less for simple ones
 - **Flexibility**: Fine-tune the cost/quality tradeoff per request
 
-**Note:** This is a beta feature available for Claude Opus 4.5. Refer to official Anthropic documentation for the latest API parameters and CLI flag support.
+**Note:** Refer to official Anthropic documentation for the latest API parameters and CLI flag support.
 
 ## CLI Syntax
 

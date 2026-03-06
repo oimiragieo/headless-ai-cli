@@ -171,28 +171,28 @@ git diff | copilot -p "Review these changes"
 - **Claude Sonnet 4.5** (1x premium request multiplier) - default
 - GitHub reserves the right to change the default model
 
-**Available models (verified from CLI, November 2025):**
+**Available models (updated March 2026 — GA release Feb 25, 2026):**
 
 | # | Model | Cost Multiplier | Description |
 |---|-------|-----------------|-------------|
 | 1 | **Auto** | 0.9x (10% Off) | Automatically selects the best model for the task |
-| 2 | **Claude Sonnet 4.5** | 1x | Default, balanced performance |
-| 3 | **Claude Sonnet 4** | 1x | Previous Claude version |
-| 4 | **GPT-5** | 1x | Latest OpenAI model |
-| 5 | **GPT-5-Mini** | 0x | Free tier OpenAI model |
-| 6 | **GPT-4.1** | 0x | Free tier OpenAI model |
-| 7 | **GPT-4o** | 0x | Previous flagship, now free tier |
-| 8 | **Gemini 3 Pro (Preview)** | 1x | Latest Google model |
-| 9 | **Gemini 2.5 Pro** | 1x | Previous Google flagship |
-| 10 | **Claude Opus 4.5 (Preview)** | - | New Infinite Context model |
-| 11 | **Claude Opus 4.1** | 10x | High-cost reasoning model |
-| 12 | **Claude Haiku 4.5** | 0.33x | Low-latency efficient model |
-| 13 | **GPT-5-Codex (Preview)** | 1x | Specialized full-stack generation |
-| 14 | **GPT-5.1 (Preview)** | 1x | Iterative update with improved reasoning |
-| 15 | **GPT-5.1-Codex (Preview)** | 1x | Latest coding-specific fine-tune |
-| 16 | **GPT-5.1-Codex-Mini (Preview)**| 0.33x | Lightweight coding model |
-| 17 | **Grok Code Fast 1** | 0x | xAI high-speed coding model |
-| 18 | **Raptor mini (Preview)** | 0x | Ultra-low latency experimental model |
+| 2 | **Claude Opus 4.6** | - | Latest Anthropic flagship (Feb 2026) |
+| 3 | **Claude Sonnet 4.6** | 1x | Latest balanced Claude model (Feb 2026) |
+| 4 | **Claude Sonnet 4.5** | 1x | Previous default, balanced performance |
+| 5 | **Claude Haiku 4.5** | 0.33x | Low-latency efficient model |
+| 6 | **GPT-5.3-Codex** | 1x | Latest combined Codex + GPT-5 model (Feb 2026) |
+| 7 | **GPT-5.1-Codex** | 1x | Proven coding-specific fine-tune |
+| 8 | **GPT-5.1-Codex-Mini** | 0.33x | Lightweight coding model |
+| 9 | **GPT-5.1** | 1x | Latest GPT with improved reasoning |
+| 10 | **GPT-5** | 1x | Standard GPT-5 |
+| 11 | **GPT-5-Mini** | 0x | Free tier OpenAI model |
+| 12 | **GPT-4.1** | 0x | Free tier OpenAI model |
+| 13 | **Gemini 3 Pro** | 1x | Latest Google model |
+| 14 | **Gemini 2.5 Pro** | 1x | Previous Google flagship |
+| 15 | **Grok Code Fast 1** | 0x | xAI high-speed coding model |
+| 16 | **Raptor mini (Preview)** | 0x | Ultra-low latency experimental model |
+
+> **Note (March 2026):** Copilot CLI reached General Availability on Feb 25, 2026. New features include: background delegation (`&` prefix), Fleet mode (`/fleet` for parallel subagents), Autopilot mode (fully autonomous), and multi-model support. Install: `brew install copilot-cli`, `npm install -g @github/copilot`, or `winget install GitHub.Copilot`. Requires Node.js 22+.
 
 **Premium request multipliers:**
 - `0x` = Free (does not consume premium requests)

@@ -164,10 +164,14 @@ codex exec --json --color never "review code changes" > review.jsonl
 
 | Model | Description | Speed | Cost | Best For |
 |-------|-------------|-------|------|----------|
-| **gpt-5.1-codex-max** | Latest Codex-optimized flagship for deep and fast reasoning (current) | Fast | High | Complex code generation, deep reasoning |
+| **gpt-5.3-codex** | Latest Codex + GPT-5 combined training, ~25% faster (Feb 2026) | Very Fast | Medium-High | Fastest code generation, implementation-heavy tasks |
+| **gpt-5.2-codex** | Proven Codex model with Extra High reasoning (Jan 2026) | Fast | Medium | Solid implementation, debugging |
+| **gpt-5.1-codex-max** | Codex-optimized flagship for deep and fast reasoning | Fast | High | Complex code generation, deep reasoning |
 | **gpt-5.1-codex** | Standard Codex model | Medium | Medium | UI generation, prototyping, general coding |
 | **gpt-5.1-codex-mini** | Cheaper, faster, less capable | Very Fast | Low | Simple tasks, quick prototypes |
 | **gpt-5.1** | Broad world knowledge with strong general reasoning | Medium | Medium-High | Non-coding tasks, general reasoning |
+
+> **Note (March 2026):** GPT-5.3-Codex launched Feb 5, 2026 and GPT-5.2-Codex launched Jan 14, 2026. Six older models (pre-5.1) were retired Feb 13, 2026.
 
 **Model Selection:**
 ```bash

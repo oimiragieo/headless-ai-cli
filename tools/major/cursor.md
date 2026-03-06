@@ -84,7 +84,7 @@ cursor-agent
 # Then type: /model
 ```
 
-**Available models (verified from CLI, November 2025):**
+**Available models (updated March 2026):**
 
 | Model Command | Full Name | Category | Description |
 |---------------|-----------|----------|-------------|
@@ -92,9 +92,11 @@ cursor-agent
 | `auto` | Auto | Smart Selection | Free tier - automatically selects best model |
 | `sonnet-4.5` | Claude 4.5 Sonnet | Claude | Balanced reasoning and speed |
 | `sonnet-4.5-thinking` | Claude 4.5 Sonnet (Thinking) | Claude | Extended reasoning mode |
-| `opus-4.5` | Claude 4.5 Opus | Claude | Best for complex tasks |
-| `opus-4.5-thinking` | Claude 4.5 Opus (Thinking) | Claude | Extended reasoning mode |
-| `opus-4.1` | Claude 4.1 Opus | Claude | Legacy Claude model |
+| `opus-4.6` | Claude 4.6 Opus | Claude | Best for complex tasks (Feb 2026) |
+| `opus-4.6-thinking` | Claude 4.6 Opus (Thinking) | Claude | Extended reasoning mode |
+| `sonnet-4.6` | Claude 4.6 Sonnet | Claude | Latest balanced model (Feb 2026) |
+| `sonnet-4.6-thinking` | Claude 4.6 Sonnet (Thinking) | Claude | Extended reasoning mode |
+| `opus-4.5` | Claude 4.5 Opus | Claude | Previous Opus model |
 | `gemini-3-pro` | Gemini 3 Pro | Google | Large context, latest Gemini |
 | `gpt-5` | GPT-5 | OpenAI | Standard GPT-5 |
 | `gpt-5.1` | GPT-5.1 | OpenAI | Latest GPT model |
@@ -102,8 +104,9 @@ cursor-agent
 | `gpt-5.1-high` | GPT-5.1 High | OpenAI | Latest with extended reasoning |
 | `gpt-5-codex` | GPT-5 Codex | OpenAI Codex | Code generation focused |
 | `gpt-5-codex-high` | GPT-5 Codex High | OpenAI Codex | Code generation + extended reasoning |
-| `gpt-5.1-codex` | GPT-5.1 Codex | OpenAI Codex | Latest code generation |
-| `gpt-5.1-codex-high` | GPT-5.1 Codex High | OpenAI Codex | Latest code + extended reasoning |
+| `gpt-5.1-codex` | GPT-5.1 Codex | OpenAI Codex | Code generation |
+| `gpt-5.1-codex-high` | GPT-5.1 Codex High | OpenAI Codex | Code + extended reasoning |
+| `gpt-5.3-codex` | GPT-5.3 Codex | OpenAI Codex | Latest combined model (Feb 2026) |
 | `grok` | Grok | xAI | Grok AI model |
 
 **Model selection examples:**

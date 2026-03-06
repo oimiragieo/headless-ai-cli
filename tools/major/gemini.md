@@ -122,12 +122,18 @@ git diff | gemini "Review these changes"
 
 | Model | Context | Speed | Cost | Best For |
 |-------|---------|-------|------|----------|
-| **gemini-3-pro-preview** | ~1M tokens | Medium | High | Most intelligent model, best for coding, agents, and complex reasoning (latest, Nov 2025) |
+| **gemini-3.1-pro-preview** | ~1M tokens | Medium | High | Latest flagship, best for coding and complex reasoning (Feb 2026) |
+| **gemini-3.1-flash-lite-preview** | ~1M tokens | Very Fast | Low | Latest lightweight model for fast tasks (Mar 2026) |
 | **gemini-2.5-pro** | ~1M tokens | Medium | Medium-High | Massive repos, deep analysis, enhanced reasoning |
 | **gemini-2.5-flash** | ~1M tokens | Fast | Low-Medium | Quick analysis, large context, general tasks |
 | **gemini-1.5-pro** | ~1M tokens | Medium | Medium | Balanced performance for most use cases |
 | **gemini-1.5-flash** | ~1M tokens | Fast | Low | Fast responses for simple tasks |
-| **gemini-1.5-flash-lite** | ~1M tokens | Very Fast | Very Low | Simple tasks needing quick responses |
+
+> **Deprecation Notices (March 2026):**
+> - ~~gemini-3-pro-preview~~: **Shut down March 9, 2026.** Use `gemini-3.1-pro-preview` instead.
+> - Gemini 2.0 flash models: **Shut down June 1, 2026.**
+> - CLI syntax: `-p` flag is deprecated. Positional prompt is now the default (`gemini "your prompt"`).
+> - CLI version: v0.24.5
 
 **Model Selection:**
 ```bash

@@ -115,16 +115,20 @@ droid exec --session-id <session-id> "continue with next steps"
 
 **Factory Provided Models** (multipliers represent cost in Standard Tokens):
 
-| Model | Cost Multiplier | Description | Best For |
-|-------|-----------------|-------------|----------|
-| **GPT-5.1-Codex** | 0.5x | Latest OpenAI Codex model | Code generation, UI prototyping |
-| **GPT-5.1** | 0.5x | Latest OpenAI GPT model | General intelligence and reasoning |
-| **Sonnet 4.5** | 1.2x | Claude Sonnet 4.5 | Balanced reasoning and coding |
-| **Opus 4.5** | 1.2x | Claude Opus 4.5 | Deep reasoning, complex architecture |
-| **Opus 4.1** | 6x | Claude Opus 4.1 (legacy) | Legacy model, higher cost |
-| **Haiku 4.5** | 0.4x | Claude Haiku 4.5 | Fast and cost-effective |
-| **Gemini 3 Pro (High)** | 0.8x | Google Gemini 3 Pro with high reasoning | Large context, complex analysis |
-| **Droid Core (GLM-4.6)** | 0.25x | GLM-4.6 open-source model | Most cost-effective option |
+| Rank | Model | Cost Multiplier | Description | Best For |
+|------|-------|-----------------|-------------|----------|
+| 1 | **Claude Opus 4.6** | - | Latest Anthropic flagship with Max reasoning (Feb 2026) | Complex work, best depth and safety |
+| 2 | **Claude Opus 4.6 Fast** | - | Opus 4.6 tuned for faster response; 12x multiplier | Speed-critical complex tasks |
+| 3 | **Claude Opus 4.5** | 1.2x | Proven quality-and-safety balance | Strong default for TUI and exec |
+| 4 | **GPT-5.1-Codex-Max** | - | Fast coding loops with Extra High reasoning | Heavy implementation, debugging |
+| 5 | **Claude Sonnet 4.5** | 1.2x | Balanced cost/quality daily driver | General-purpose coding |
+| 6 | **GPT-5.3-Codex** | - | Newest OpenAI coding model with Extra High reasoning (Feb 2026) | Implementation-heavy tasks |
+| 7 | **GPT-5.2-Codex** | - | Proven OpenAI coding model with Extra High reasoning (Jan 2026) | Solid implementation |
+| 8 | **GPT-5.1-Codex** | 0.5x | Quick iteration with solid code quality | Lower-cost coding |
+| 9 | **Haiku 4.5** | 0.4x | Claude Haiku 4.5 | Fast and cost-effective |
+| 10 | **Droid Core (GLM-4.6)** | 0.25x | GLM-4.6 open-source model | Most cost-effective option |
+
+> **Note (March 2026):** Stack rank updated Feb 25, 2026 per Factory docs. Droid CLI now at v0.65.0. New features include `/diagnostics` command, session archiving, inline rename, custom model reasoning effort, and concurrent mission warnings.
 
 **Additional Options:**
 - **Custom Model** - User-configured via BYOK (Bring Your Own Key)

@@ -155,12 +155,15 @@ Continue Dev supports multiple LLM providers:
 
 | Provider | Models | Description |
 |----------|--------|-------------|
-| OpenAI | `gpt-4o`, `gpt-4o-mini`, `o1`, `o3-mini`, `gpt-4`, `gpt-3.5-turbo` | Default option, excellent code generation |
-| Anthropic | `claude-3.7-sonnet`, `claude-3-opus`, `claude-3.5-sonnet`, `claude-3-haiku` | Strong reasoning capabilities |
-| Google | `gemini-pro`, `gemini-1.5-pro` | Alternative option |
+| OpenAI | `gpt-5.3-codex`, `gpt-5.1`, `gpt-4o`, `o3-mini` | Code generation, latest models |
+| Anthropic | `claude-opus-4-6`, `claude-sonnet-4-6`, `claude-haiku-4-5` | Strong reasoning (API key required since Jan 2026) |
+| Google | `gemini-3.1-pro`, `gemini-2.5-pro` | Large context support |
 | DeepSeek | `deepseek-r1`, `deepseek-chat`, `deepseek-v3` | Alternative with strong reasoning |
 | Local | Various via Ollama | Run models locally |
 | Open Source | CodeLlama, StarCoder | Local models |
+| OpenAI Compatible | Any OpenAI-compatible API (e.g., Komilion) | Smart routing for mixed workloads |
+
+> **Note (March 2026):** Continue.dev pivoted to "Continuous AI" — a CLI-first platform running async agents on every PR. Headless mode for cloud agents, TUI mode for interactive sessions. Mission Control dashboard redesigned at hub.continue.dev. Anthropic blocked Claude Max subscription OAuth tokens in Jan 2026 — use API keys from console.anthropic.com instead.
 
 **Model Selection:**
 ```bash

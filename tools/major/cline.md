@@ -1,9 +1,9 @@
 # 🤖 Cline CLI
 
-**Version tested:** Latest (check with `cline --version`)  
+**Version tested:** CLI 2.0 (Feb 2026) (check with `cline --version`)
 **Risk level:** 🟠 Medium (CLI tool with autonomous task execution)
 
-**Note:** Cline CLI provides both interactive and non-interactive modes. Use direct prompts with `--yolo` flag for autonomous execution in CI/CD pipelines, or leverage advanced instance/task management for complex workflows.
+**Note:** Cline CLI 2.0 (Feb 2026) is a complete ground-up rebuild with redesigned terminal UI, parallel agents with isolated state, improved headless mode for CI/CD, and ACP support for Zed/Neovim/Emacs. Install: `npm install -g cline`.
 
 **When NOT to use Cline:**
 - ❌ You need massive context windows (Gemini CLI handles larger repos better)
@@ -191,15 +191,19 @@ Cline supports multiple AI model providers:
 
 | Provider | Models | Description |
 |----------|--------|-------------|
-| **Anthropic** | Claude 3 Opus, Claude 3 Sonnet, Claude 3 Haiku | Strong reasoning, code analysis |
-| **OpenAI** | GPT-4, GPT-4 Turbo, GPT-3.5-turbo | Code generation, general tasks |
+| **Anthropic** | Claude Opus 4.6, Claude Sonnet 4.6, Claude Haiku 4.5 | Strong reasoning, code analysis |
+| **OpenAI** | GPT-5.3-Codex, GPT-5.1, GPT-4o | Code generation, general tasks |
+| **Kimi** | Kimi K2.5 (free trial with CLI 2.0) | Free model option |
+| **Minimax** | Minimax M2.5 (free with CLI 2.0) | Free model option |
 | **OpenRouter** | Various models | Access to multiple models via OpenRouter |
 | **X AI (Grok)** | Grok models | Alternative option |
 | **AWS Bedrock** | Claude models via Bedrock | Enterprise AWS integration |
-| **Google Gemini** | Gemini Pro, Gemini Flash | Large context support |
+| **Google Gemini** | Gemini 3.1 Pro, Gemini 2.5 Flash | Large context support |
 | **Ollama** | Local models | Self-hosted, privacy-focused |
 | **Cerebras** | Cerebras models | High-performance option |
 | **OpenAI Compatible** | Any OpenAI-compatible API | Flexible provider support |
+
+> **Note (March 2026):** Cline CLI 2.0 released Feb 2026 with parallel agents, improved headless mode, redesigned TUI, and ACP support for Zed/Neovim/Emacs. Free models available: Kimi K2.5 and Minimax M2.5.
 
 **Model Configuration:**
 ```bash
