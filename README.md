@@ -123,29 +123,44 @@ jobs:
 
 **More examples:** See [`examples/`](examples/) for CI/CD workflows and automation scripts.
 
-## 🚀 Installation Commands
+## 🚀 Installation Commands (All 14 Tools)
 
 ```bash
-# Core Tools (npm)
-npm install -g @google/gemini-cli        # Gemini - 1M token context
-npm install -g @anthropic-ai/claude-code # Claude - Deep reasoning
-npm install -g @openai/codex             # Codex - UI generation
-npm install -g @github/copilot           # Copilot - GitHub integration
-npm install -g @continuedev/cli          # Continue Dev - VS Code CLI
-npm install -g cline                     # Cline - Task automation
-npm install -g open-code                 # OpenCode - Multi-language
+# ── Shell Script Installs (recommended where available) ──────────────
+curl -fsSL https://claude.ai/install.sh | bash        # Claude Code (preferred over npm)
+curl -fsSL https://cli.kiro.dev/install | bash         # Kiro CLI (v1.27)
+curl -fsSL https://app.factory.ai/cli | sh             # Droid (Factory AI)
+curl https://cursor.com/install -fsS | bash            # Cursor Agent
+curl -LsSf https://aider.chat/install.sh | sh          # Aider (Python 3.10+ required)
+curl -fsSL https://opencode.ai/install | bash          # OpenCode
 
-# Shell Script Installs
-curl https://cursor.com/install -fsS | bash          # Cursor
-curl -fsSL https://app.factory.ai/cli | sh           # Droid
-curl -fsSL https://cli.kiro.dev/install | bash       # Kiro
+# ── npm (Node.js) ───────────────────────────────────────────────────
+npm install -g @google/gemini-cli                      # Gemini - 1M token context
+npm install -g @anthropic-ai/claude-code               # Claude (alt install)
+npm install -g @openai/codex                           # Codex - UI generation
+npm install -g @github/copilot                         # Copilot CLI (GA Feb 2026)
+npm install -g @continuedev/cli                        # Continue Dev
+npm install -g cline                                   # Cline CLI 2.0
+npm install -g open-code                               # OpenCode (alt install)
 
-# Python
-pip install aider-chat                   # Aider - AI pair programming
+# ── Homebrew (macOS) ────────────────────────────────────────────────
+brew install copilot-cli                               # Copilot CLI (alt install)
+brew install --cask codex                              # Codex (alt install)
+brew install --cask warp                               # Warp Terminal (macOS)
 
-# Platform-specific
-brew install --cask warp                 # Warp (macOS)
-brew install amazon-q-developer-cli      # Amazon Q (macOS)
+# ── WinGet (Windows) ────────────────────────────────────────────────
+winget install GitHub.Copilot                          # Copilot CLI (Windows)
+
+# ── pip (Python) ────────────────────────────────────────────────────
+pip install aider-chat                                 # Aider (alt install)
+
+# ── Manual / IDE Download ───────────────────────────────────────────
+# Windsurf IDE:  https://windsurf.com/editor
+# Kiro IDE:      https://kiro.dev/
+# Warp:          https://www.warp.dev/
+
+# ── Deprecated ──────────────────────────────────────────────────────
+# Amazon Q CLI → migrated to Kiro CLI (Nov 2025). Upgrade: q update
 ```
 
 ## 📚 Documentation Structure
