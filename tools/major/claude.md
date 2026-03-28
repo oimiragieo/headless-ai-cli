@@ -22,6 +22,7 @@
 - [Configuration](#-configuration)
 - [Examples](#-examples)
 - [CI/CD Integration](#-cicd-integration)
+- [Hooks](#-hooks-automation-lifecycle)
 - [Limitations](#-limitations)
 - [References](#-references)
 
@@ -591,7 +592,11 @@ Extend Claude Code with custom commands, agents, hooks, and MCP servers. Manage 
 
 **Channel Relay (`--channels`):**
 
-Permission relay allowing channel servers (Telegram, Discord, iMessage) to forward tool approval prompts to your phone for remote approval.
+Push events into a running Claude Code session from external sources. Channels are MCP server plugins (Telegram, Discord, iMessage) that can forward tool approval prompts to your phone for remote approval, or act as **webhook receivers** so CI failures, monitoring alerts, and deploy events reach Claude where it already has your files open. Requires claude.ai login (not API keys). Research preview as of v2.1.80.
+
+```bash
+claude --channels plugin:telegram@claude-plugins-official
+```
 
 **`--bare` Flag:**
 
@@ -625,6 +630,84 @@ Set a color for the prompt bar of the current session, useful for visually disti
 
 Claude automatically records and recalls memories across sessions, building up context about your preferences and project.
 
+## Hooks (Automation Lifecycle)
+
+Hooks are user-defined shell commands (or HTTP endpoints, LLM prompts, or agent subprocesses) that execute at specific points in Claude Code's lifecycle. They provide **deterministic control** — ensuring certain actions always happen rather than relying on the LLM. Hooks are critical for CI/CD pipelines and automation workflows.
+
+> **Important:** `PermissionRequest` hooks do **not** fire in non-interactive mode (`-p`). Use `PreToolUse` hooks for automated permission decisions in headless mode. Also note that `--bare` mode skips all hooks entirely.
+
+**Hook Types:**
+
+| Type        | Description                                              |
+| ----------- | -------------------------------------------------------- |
+| `command`   | Run a shell command (most common)                        |
+| `http`      | POST event data to an HTTP endpoint                      |
+| `prompt`    | Single-turn LLM evaluation (Haiku by default)            |
+| `agent`     | Multi-turn verification subagent with tool access         |
+
+**Key Hook Events for Automation:**
+
+| Event               | When it fires                          | CI/CD Use Case                              |
+| ------------------- | -------------------------------------- | ------------------------------------------- |
+| `PreToolUse`        | Before a tool call executes (can block)| Block dangerous commands, enforce policies   |
+| `PostToolUse`       | After a tool call succeeds             | Auto-format code, log commands               |
+| `Stop`              | When Claude finishes responding        | Verify task completion, run tests            |
+| `SessionStart`      | Session begins, resumes, or compacts   | Re-inject context after compaction           |
+| `UserPromptSubmit`  | When a prompt is submitted             | Validate/transform input                     |
+| `Notification`      | When Claude needs attention            | Desktop/webhook notifications                |
+
+**Configuration (add to settings JSON):**
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(git push *)",
+            "command": "echo 'Blocked: no pushes in CI' >&2 && exit 2"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path' | xargs npx prettier --write"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+**Hook I/O:**
+
+- **Input**: Event-specific JSON on stdin (includes `session_id`, `cwd`, `tool_name`, `tool_input`, etc.)
+- **Exit 0**: Action proceeds. Stdout added to context for `SessionStart`/`UserPromptSubmit`.
+- **Exit 2**: Action blocked. Stderr message fed back to Claude as feedback.
+- **Structured JSON output**: Exit 0 with JSON for fine-grained control (e.g., `"permissionDecision": "deny"` with a reason).
+
+**Matchers** filter hooks by tool name (regex): `"Bash"`, `"Edit|Write"`, `"mcp__github__.*"`. The `if` field (v2.1.85+) adds argument-level filtering using [permission rule syntax](https://code.claude.com/docs/en/permissions) (e.g., `"Bash(git *)"`).
+
+**Settings locations:**
+
+| Location                       | Scope          | Shareable |
+| ------------------------------ | -------------- | --------- |
+| `~/.claude/settings.json`      | All projects   | No        |
+| `.claude/settings.json`        | Single project | Yes       |
+| `.claude/settings.local.json`  | Single project | No        |
+| Managed policy settings        | Organization   | Yes       |
+
+See [Hooks Guide](https://code.claude.com/docs/en/hooks-guide) and [Hooks Reference](https://code.claude.com/docs/en/hooks) for full event schemas, async hooks, and MCP tool hooks.
+
 ## Limitations
 
 - Context limit now matches Gemini at 1M (GA since March 13, 2026)
@@ -643,4 +726,8 @@ Claude automatically records and recalls memories across sessions, building up c
 - [CLI Reference (all flags)](https://code.claude.com/docs/en/cli-reference)
 - [GitHub Actions Integration](https://code.claude.com/docs/en/github-actions)
 - [GitLab CI/CD Integration](https://code.claude.com/docs/en/gitlab-ci-cd)
+- [Hooks Guide](https://code.claude.com/docs/en/hooks-guide)
+- [Hooks Reference](https://code.claude.com/docs/en/hooks)
+- [Channels (Event Push)](https://code.claude.com/docs/en/channels)
+- [Scheduled Tasks](https://code.claude.com/docs/en/scheduled-tasks)
 - [Anthropic Console](https://console.anthropic.com/)
