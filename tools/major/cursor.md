@@ -1,6 +1,6 @@
 # 💻 Cursor Agent
 
-**Version tested:** Latest (check with `cursor-agent --version`)  
+**Version tested:** v2.6.22+ (check with `cursor-agent --version`)  
 **Risk level:** ⚠️ High (writes files with `--force`, strong for chained workflows)
 
 **When NOT to use Cursor:**
@@ -37,6 +37,18 @@ Cursor Agent is a command-line tool designed for workflow automation and multi-a
 - Can chain multiple tasks
 - File modification control via `--force`
 - Multiple output formats
+- Background Agents (remote VMs, parallel execution)
+- Automations (triggered by Slack, Linear, GitHub, PagerDuty, cron)
+- Composer 2 proprietary model (61.3 CursorBench, beats Opus 4.6)
+- Self-Hosted Cloud Agents (Mar 25, 2026) — code stays on your network, full dev environments with isolated VMs, plugins, multi-model harnesses
+- Bugbot Autofix (auto-fix PR issues, 70%+ resolution rate — now spins up cloud agents to test and propose fixes)
+- Subagents (v2.4) — independent agents for discrete tasks, run in parallel with their own context/tools/models; can recursively spawn subagents (v2.5)
+- Skills via `SKILL.md` files (v2.4) — domain-specific knowledge discovery and application
+- Image Generation (v2.4) — generate images from text or reference images in agent chat
+- Plugins & Marketplace (v2.5) — bundles of skills, subagents, MCP servers, hooks, rules; partners include Amplitude, AWS, Figma, Linear, Stripe
+- Team Plugin Marketplaces (v2.6) — private marketplace for enterprise internal plugin distribution
+- MCP Apps with interactive UIs (v2.6, Mar 3, 2026) — 30+ partner plugins (Atlassian, Datadog, GitLab, Glean, Hugging Face, monday.com, PlanetScale)
+- JetBrains IDE support via ACP (Mar 4, 2026) — IntelliJ IDEA, PyCharm, WebStorm, and other JetBrains IDEs
 
 ## Installation
 
@@ -95,6 +107,7 @@ cursor-agent
 
 | Model Command         | Full Name                    | Category        | Description                                  |
 | --------------------- | ---------------------------- | --------------- | -------------------------------------------- |
+| `composer-2`          | Composer 2                   | Cursor Native   | Frontier-level coding model, 4x faster, beats Opus 4.6 (Mar 2026) |
 | `composer-1`          | Composer 1                   | Cursor Native   | Cursor's proprietary model                   |
 | `auto`                | Auto                         | Smart Selection | Free tier - automatically selects best model |
 | `sonnet-4.5`          | Claude 4.5 Sonnet            | Claude          | Balanced reasoning and speed                 |
@@ -165,7 +178,9 @@ cursor-agent [options] -p "Your prompt"
 - `--output-format FORMAT`: Output format (`text`, `json`, `stream-json`)
 - `--stream-partial-output`: Enable incremental character-by-character updates
 - `--model MODEL`: Specify model (e.g., `gpt-5`, `auto`)
+- `--mode MODE`: Agent mode (`plan`, `ask`, or default code mode)
 - `--list-models`: List all available models
+- `& <message>`: Cloud Handoff — push conversation to a Cloud Agent (continue at cursor.com/agents)
 
 ## File Modification
 

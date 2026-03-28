@@ -1,9 +1,11 @@
 # 🤖 Cline CLI
 
-**Version tested:** CLI 2.0 (Feb 2026) (check with `cline --version`)
+**Version tested:** CLI 2.11.0 (check with `cline --version`)
 **Risk level:** 🟠 Medium (CLI tool with autonomous task execution)
 
-**Note:** Cline CLI 2.0 (Feb 2026) is a complete ground-up rebuild with redesigned terminal UI, parallel agents with isolated state, improved headless mode for CI/CD, and ACP support for Zed/Neovim/Emacs. Install: `npm install -g cline`.
+**Note:** Cline CLI 2.0 (Feb 2026) is a complete ground-up rebuild with redesigned terminal UI, parallel agents with isolated state, improved headless mode for CI/CD, and ACP support for Zed/Neovim/Emacs. Install: `npm install -g cline`. Latest: CLI 2.11.0, Extension v3.76.0 (March 2026).
+
+**Security Note:** CLI v2.3.0 was compromised in a supply chain attack (Feb 17, 2026) via a stolen npm publish token. The malicious package was deprecated within 8 hours and v2.4.0 was published as a clean replacement. Publishing now uses OIDC via GitHub Actions. See [GHSA-9ppg-jx86-fqw7](https://github.com/cline/cline/security/advisories/GHSA-9ppg-jx86-fqw7).
 
 **When NOT to use Cline:**
 
@@ -40,6 +42,11 @@ Cline is a command-line interface for interacting with Cline AI coding assistant
 - File and image attachments
 - Multiple output formats (rich, json, plain)
 - Two modes: act and plan
+- `--json` flag for structured CI/CD output (JSONL streaming)
+- `--acp` flag for ACP (Agent Communication Protocol) compliance
+- Cline SDK for programmatic Node.js integration
+- Cline API — unified OpenAI-compatible endpoint for Claude, Gemini, GPT, DeepSeek, xAI
+- Repeated tool call loop detection to prevent infinite token waste (v3.76.0)
 
 **Three Ways to Start:**
 
@@ -207,17 +214,19 @@ Cline supports multiple AI model providers:
 | --------------------- | ---------------------------------------------------- | ---------------------------------------- |
 | **Anthropic**         | Claude Opus 4.6, Claude Sonnet 4.6, Claude Haiku 4.5 | Strong reasoning, code analysis          |
 | **OpenAI**            | GPT-5.3-Codex, GPT-5.1, GPT-4o                       | Code generation, general tasks           |
-| **Kimi**              | Kimi K2.5 (free trial with CLI 2.0)                  | Free model option                        |
-| **Minimax**           | Minimax M2.5 (free with CLI 2.0)                     | Free model option                        |
+| **Kimi**              | Kimi K2.5 (free trial with CLI 2.0, 262K context)   | Free model option with image support     |
+| **Minimax**           | Minimax M2.1, Minimax M2.5 (free with CLI 2.0)      | Free model option (all platforms)        |
+| **W&B Inference**     | 17 models via CoreWeave (v3.73.0+)                  | New provider                             |
 | **OpenRouter**        | Various models                                       | Access to multiple models via OpenRouter |
 | **X AI (Grok)**       | Grok models                                          | Alternative option                       |
 | **AWS Bedrock**       | Claude models via Bedrock                            | Enterprise AWS integration               |
 | **Google Gemini**     | Gemini 3.1 Pro, Gemini 2.5 Flash                     | Large context support                    |
 | **Ollama**            | Local models                                         | Self-hosted, privacy-focused             |
 | **Cerebras**          | Cerebras models                                      | High-performance option                  |
+| **Cline API**         | Claude, Gemini, GPT, DeepSeek, xAI via one endpoint | Unified OpenAI-compatible API            |
 | **OpenAI Compatible** | Any OpenAI-compatible API                            | Flexible provider support                |
 
-> **Note (March 2026):** Cline CLI 2.0 released Feb 2026 with parallel agents, improved headless mode, redesigned TUI, and ACP support for Zed/Neovim/Emacs. Free models available: Kimi K2.5 and Minimax M2.5.
+> **Note (March 2026):** Cline CLI 2.0 released Feb 2026 with parallel agents, improved headless mode, redesigned TUI, and ACP support for Zed/Neovim/Emacs. Free models available: Kimi K2.5, Minimax M2.1/M2.5. Cline SDK for programmatic Node.js integration. New Cline API for unified access. W&B Inference by CoreWeave (17 models) added in v3.73.0. CLI latest: v2.11.0 (March 2026). Extension latest: v3.76.0. Press Tab to switch between Plan and Act modes in TUI.
 
 **Model Configuration:**
 
@@ -286,6 +295,8 @@ cline [command]
 -s, --setting strings    Task settings (key=value format)
 -v, --verbose            Verbose output
 -y, --yolo               Enable yolo mode (non-interactive)
+--json                   Stream structured JSON output (for CI/CD)
+--acp                    Run as ACP-compliant agent (for Zed/Neovim/Emacs)
 ```
 
 **Available Commands:**
@@ -469,6 +480,24 @@ else
   echo "$result"
 fi
 ```
+
+## Cline Kanban (v2.11+)
+
+**Multi-agent orchestration via local web kanban board:**
+
+Cline Kanban is a standalone, CLI-agnostic multi-agent orchestration app launched in v2.11 (March 2026). It launches a local web UI from the terminal.
+
+```bash
+# Launch Kanban (now default mode in v2.11)
+cline
+```
+
+**Key Features:**
+
+- Each task card gets its own **git worktree** and terminal for parallel execution
+- **Dependency linking** between cards — dependent tasks auto-start when parents complete
+- **CLI-agnostic** — works with Claude Code, Codex, and Cline agents
+- No merge conflicts between parallel agent work
 
 ## Workflows
 

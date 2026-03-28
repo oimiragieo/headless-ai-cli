@@ -1,6 +1,6 @@
 # 🤖 OpenCode
 
-**Version tested:** Latest (check with `opencode --version`)  
+**Version tested:** v1.3.3 (check with `opencode --version`)  
 **Risk level:** 🟠 Medium (autonomous coding agent, can modify files and execute commands)
 
 **When NOT to use OpenCode:**
@@ -36,20 +36,36 @@ OpenCode is an AI coding assistant that can read files, write and modify code, e
 - Natural language interaction
 - File reading, writing, and code modification
 - Terminal command execution
-- Git integration
+- Git integration with git-backed session review
 - CI/CD pipeline support
+- GitLab Agent Platform integration
+- Node.js and Bun runtime support
+- Multistep authentication for Enterprise providers
+- Desktop app with file upload
 
 ## Installation
+
+**Using curl (recommended):**
+
+```bash
+curl -fsSL https://opencode.ai/install | bash
+```
 
 **Using npm:**
 
 ```bash
-npm install -g open-code
+npm install -g opencode-ai
+```
+
+**Using Homebrew:**
+
+```bash
+brew install anomalyco/tap/opencode
 ```
 
 **System Requirements:**
 
-- Node.js (for npm installation)
+- Node.js or Bun (for npm installation)
 - Git repository (for best experience)
 - API key for LLM provider (OpenAI, Anthropic, etc.)
 
@@ -153,7 +169,7 @@ opencode models
 - `github-copilot/gemini-2.5-pro`
 - `github-copilot/grok-code-fast-1`
 
-> **Note (March 2026):** OpenCode now at ~v1.1.6 with desktop app, agent management (`opencode agent create/list`), `opencode attach` for remote backends, skills ecosystem, deep link support, and multi-model mid-session switching with context preservation. Updates via `opencode upgrade`.
+> **Note (March 2026):** OpenCode now at v1.3.3. Features include desktop app with file upload, agent management (`opencode agent create/list`), `opencode attach` for remote backends, skills ecosystem, deep link support, multi-model mid-session switching with context preservation, GitLab Agent Platform integration for enterprise CI/CD, git-backed session review modes (review code changes in context), Node.js support (in addition to Bun), multistep authentication for Enterprise providers, heap snapshot functionality for debugging, and project navigation with keyboard shortcuts. Updates via `opencode upgrade`.
 
 **Supported Providers** (from `opencode auth login`):
 

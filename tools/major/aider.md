@@ -1,6 +1,6 @@
 # 🤖 Aider
 
-**Version tested:** Latest (check with `aider --version`)  
+**Version tested:** v0.86.2 (check with `aider --version`)
 **Risk level:** 🟠 Medium (can modify files, Git-based editing)
 
 **When NOT to use Aider:**
@@ -38,21 +38,26 @@ Aider is an AI pair-programming tool that integrates directly into your terminal
 - Codebase mapping for enhanced context
 - Voice-to-code capabilities
 - Automatic linting and testing
-- Supports 100+ programming languages
+- Supports 100+ programming languages including MATLAB and Clojure (tree-sitter-language-pack)
+- `/think-tokens` command for thinking token budget (8k, 10.5k, 0.5M formats)
+- `/reasoning-effort` command for model reasoning level control
+- `--auto-accept-architect` flag for automatic architect mode changes
+- `--add-gitignore-files` flag to include .gitignore-listed files in scope
+- `--commit-language` option to specify language for auto-generated commit messages
+- Optimized chat history summarization
 
 ## Installation
+
+**Using curl (recommended):**
+
+```bash
+curl -LsSf https://aider.chat/install.sh | sh
+```
 
 **Using pip:**
 
 ```bash
 pip install aider-chat
-```
-
-**Using aider-install (recommended):**
-
-```bash
-python -m pip install aider-install
-aider-install
 ```
 
 **Using pipx:**
@@ -69,7 +74,7 @@ brew install aider
 
 **System Requirements:**
 
-- Python 3.8 or later
+- Python 3.9-3.12 (curl installer bundles Python automatically)
 - Git repository (for best experience)
 - API key for LLM provider (OpenAI, Anthropic, etc.)
 
@@ -114,8 +119,8 @@ aider --yes --no-git --message "Add type hints" file1.py file2.py
 
 **Key Headless Flags:**
 
-- `--yes` / `-y`: Auto-accept all changes (essential for automation)
-- `--message MESSAGE` / `-m MESSAGE`: Provide initial prompt
+- `--yes-always` / `-y` / `--yes`: Auto-accept all changes (essential for automation; canonical name is `--yes-always`, `--yes` still works)
+- `--message MESSAGE` / `-m MESSAGE` / `--msg MESSAGE`: Provide initial prompt
 - `--no-git`: Disable Git integration (faster, less context)
 - `--model MODEL`: Specify LLM model
 - `--api-key PROVIDER=KEY`: Override API key for specific provider
@@ -131,16 +136,17 @@ aider --yes --no-git --message "Add type hints" file1.py file2.py
 
 Aider supports multiple LLM providers with the latest models:
 
-| Provider  | Models                                                     | Description                                       |
-| --------- | ---------------------------------------------------------- | ------------------------------------------------- |
-| OpenAI    | `gpt-5.3-codex`, `gpt-5.1`, `gpt-4o`, `o3`, `o3-mini`      | Default provider, latest code models              |
-| Anthropic | `claude-opus-4.6`, `claude-sonnet-4.6`, `claude-haiku-4.5` | Strong reasoning, excellent for refactoring       |
-| DeepSeek  | `deepseek-r1`, `deepseek-chat`, `deepseek-v3`              | Alternative with strong reasoning, cost-effective |
-| Google    | `gemini-3.1-pro`, `gemini-2.5-pro`, `gemini-2.5-flash`     | Large context support                             |
-| xAI       | Grok models                                                | Alternative option                                |
-| Local     | Various via Ollama                                         | Run models locally (requires Ollama setup)        |
+| Provider  | Models                                                           | Description                                       |
+| --------- | ---------------------------------------------------------------- | ------------------------------------------------- |
+| OpenAI    | `gpt-5.4`, `gpt-5.3-codex`, `gpt-5.1`, `gpt-4o`, `o3`, `o3-pro` | Default provider, latest code models              |
+| Anthropic | `claude-opus-4-6`, `claude-sonnet-4-6`, `claude-haiku-4-5`       | Strong reasoning, excellent for refactoring       |
+| DeepSeek  | `deepseek-r1`, `deepseek-chat`, `deepseek-v3`                    | Alternative with strong reasoning (65K max tokens), cost-effective |
+| Google    | `gemini-3.1-pro`, `gemini-2.5-pro`, `gemini-2.5-flash`           | Large context support with thinking tokens        |
+| Cohere    | `command-a`                                                      | Alternative option                                |
+| xAI       | Grok models                                                      | Alternative option                                |
+| Local     | Various via Ollama                                               | Run models locally (requires Ollama setup)        |
 
-> **Note (March 2026):** Aider now has 41,000+ GitHub stars, 5M+ PyPI installs, and supports 75+ providers. Architect/editor mode squeezes top-tier performance from cheaper models. Built-in voice-to-code mode available. No breaking CLI changes — bring-your-own-key model remains core philosophy.
+> **Note (March 2026):** Aider v0.86.2 now has 42,400+ GitHub stars, 5M+ PyPI installs, and supports 75+ providers. Architect/editor mode squeezes top-tier performance from cheaper models. Built-in voice-to-code mode available. New `/think-tokens` and `/reasoning-effort` commands for fine-grained model control. `--auto-accept-architect` flag (default: true) auto-accepts architect changes. `--commit-language` for multilingual commit messages. Tree-sitter-language-pack upgrade adds MATLAB and Clojure. Model aliases updated: `gemini` → gemini-2.5-pro, `flash` → gemini-2.5-flash, `sonnet`/`opus` → v4.6 Claude versions. No breaking CLI changes — bring-your-own-key model remains core philosophy.
 
 **Model Selection:**
 
@@ -151,8 +157,8 @@ aider --model o1
 aider --model o3-mini
 
 # Use Anthropic Claude (latest)
-aider --model claude-3.7-sonnet
-aider --model claude-3-opus
+aider --model claude-sonnet-4-6
+aider --model claude-opus-4-6
 
 # Use DeepSeek
 aider --model deepseek-r1
@@ -160,7 +166,7 @@ aider --model deepseek-chat
 
 # With API key override
 aider --model gpt-4o --api-key openai=your_key
-aider --model claude-3.7-sonnet --api-key anthropic=your_key
+aider --model claude-sonnet-4-6 --api-key anthropic=your_key
 
 # Headless with model selection
 aider --yes --model gpt-4o --message "Refactor code" src/
@@ -217,6 +223,30 @@ aider
 # > exit
 ```
 
+## Chat Modes
+
+Aider supports four distinct chat modes:
+
+| Mode | Command | Description |
+| ---- | ------- | ----------- |
+| **Code** | `/code` | Default — direct code editing |
+| **Architect** | `/architect` | Two-model approach: architect proposes, editor implements (SOTA results) |
+| **Ask** | `/ask` | Read-only discussion and analysis |
+| **Help** | `/help` | Aider usage help |
+
+**Architect mode** is a key feature that uses a two-model pipeline for top-tier performance:
+
+```bash
+# Launch in architect mode
+aider --architect
+
+# Specify editor model for architect mode
+aider --architect --editor-model claude-haiku-4-5
+
+# With auto-accept (default: true)
+aider --architect --auto-accept-architect
+```
+
 ## Configuration
 
 **Environment Variables:**
@@ -258,7 +288,7 @@ aider --yes --message "Add logging and error handling" src/main.py src/utils.py
 **Refactor code (headless):**
 
 ```bash
-aider --yes --model claude-3.7-sonnet --message "Refactor to use async/await" src/api.py
+aider --yes --model claude-sonnet-4-6 --message "Refactor to use async/await" src/api.py
 ```
 
 **Generate tests (headless):**
@@ -288,7 +318,7 @@ aider --yes --message "Add comprehensive docstrings following Google style guide
 **Security improvements (headless):**
 
 ```bash
-aider --yes --model claude-3.7-sonnet --message "Review and fix security vulnerabilities, add input validation" src/
+aider --yes --model claude-sonnet-4-6 --message "Review and fix security vulnerabilities, add input validation" src/
 ```
 
 **Code review automation:**
@@ -352,7 +382,7 @@ aider --yes --message "Ensure code follows style guide" $(git diff --cached --na
 aider --yes --model gpt-4o --message "Generate comprehensive unit tests" src/calculator.py
 
 # Refactor code
-aider --yes --model claude-3.7-sonnet --message "Refactor to use async/await patterns" src/api.py
+aider --yes --model claude-sonnet-4-6 --message "Refactor to use async/await patterns" src/api.py
 
 # Add documentation
 aider --yes --message "Add docstrings to all functions" src/

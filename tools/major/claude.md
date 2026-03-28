@@ -1,14 +1,13 @@
 # 🧩 Anthropic Claude (Claude Code)
 
-**Version tested:** Latest (check with `claude --version`)  
+**Version tested:** v2.1.86+ (check with `claude --version`)
 **Risk level:** 🟢 Low (tool approval required, fine-grained control)
 
 **When NOT to use Claude:**
 
-- ❌ You need massive context windows (Gemini handles larger repos better)
 - ❌ You need UI/front-end generation (Codex is better for this)
 - ❌ You need completely automated runs without any approval (Droid is safer)
-- ❌ You're working with large monorepos (context limits may be restrictive)
+- ❌ You need the cheapest option for simple tasks (Haiku or other tools may be more cost-effective)
 
 ### Quick Nav
 
@@ -38,19 +37,42 @@ Anthropic Claude (Claude Code) is a command-line AI coding assistant tuned for a
 - Session management with resume and fork capabilities
 - Structured output with JSON Schema validation
 - Plugin system and MCP server support
+- Voice mode with push-to-talk (`/voice`)
+- Scheduled recurring tasks with `/loop`
+- Batch file operations with `/batch` (conflict detection for overlapping edits)
+- Computer Use for macOS (mouse, keyboard, browser automation)
+- Agent Teams (experimental) for multi-agent collaboration with shared tasks
+- Plugin system for extending Claude Code with custom commands, agents, hooks
+- Auto Memory across sessions
+- Git worktrees for isolated agent/session work (`-w/--worktree`)
+- Channel relay (`--channels`) for remote tool approval via Telegram, Discord, iMessage
 
 ## Installation
 
-**Using npm:**
+**Native installer (recommended):**
+
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+```
+
+**Using Homebrew:**
+
+```bash
+brew install claude-code
+```
+
+**Using npm (deprecated as of Feb 2026):**
 
 ```bash
 npm install -g @anthropic-ai/claude-code
 ```
 
+> **Note:** npm installation is deprecated. The native installer auto-updates in the background. Homebrew installs do NOT auto-update.
+
 **System Requirements:**
 
-- Node.js 18 or later
-- API key from Anthropic
+- Node.js 18 or later (for npm install only)
+- API key from Anthropic or Claude subscription
 
 ## 🚀 Start Here
 
@@ -97,11 +119,11 @@ claude -p "Generate a user profile" \
 
 | Model                 | Full Model ID                | Context         | Speed  | Cost        | Best For                              |
 | --------------------- | ---------------------------- | --------------- | ------ | ----------- | ------------------------------------- |
-| **claude-haiku-4.5**  | `claude-haiku-4-5-20251001`  | ~200K           | Fast   | Low         | Quick tasks, budget-conscious         |
-| **claude-sonnet-4.6** | `claude-sonnet-4-6-20250514` | ~200K (1M beta) | Medium | Medium      | Daily coding, balanced (default)      |
-| **claude-opus-4.6**   | `claude-opus-4-6-20250205`   | ~200K (1M beta) | Medium | Medium-High | Best for coding, agents, computer use |
+| **claude-haiku-4.5**  | `claude-haiku-4-5-20251001`  | ~200K           | Fast   | $1/$5 per M tokens  | Quick tasks, budget-conscious         |
+| **claude-sonnet-4.6** | `claude-sonnet-4-6-20250514` | 1M (GA)         | Medium | $3/$15 per M tokens | Daily coding, balanced                |
+| **claude-opus-4.6**   | `claude-opus-4-6-20250205`   | 1M (GA)         | Medium | $5/$25 per M tokens | Best for coding, agents, computer use (default) |
 
-> **Note (March 2026):** Claude Opus 4.6 released Feb 5, 2026. Claude Sonnet 4.6 released Feb 17, 2026. Both support 1M context in beta. Opus 4.6 defaults to medium effort. The "ultrathink" keyword enables extended thinking. Claude Opus 4/4.1/4.5 and Sonnet 4.5 are still available but aliases (`sonnet`, `opus`) now map to 4.6 versions.
+> **Note (March 2026):** Claude Opus 4.6 released Feb 5, 2026. Claude Sonnet 4.6 released Feb 17, 2026. Both support 1M context (GA as of March 13, 2026 — no surcharge). Opus 4.6 is now the default model in Claude Code with 64K max output tokens. The `/effort` command (v2.1.76) sets model effort across three levels. The "ultrathink" keyword enables maximum extended thinking. Claude Opus 4/4.1/4.5 and Sonnet 4.5 are still available but aliases (`sonnet`, `opus`) now map to 4.6 versions. Up to 90% savings with prompt caching, 50% with batch processing. Latest CLI version: v2.1.86 (March 27, 2026).
 
 **Model Selection:**
 
@@ -131,7 +153,24 @@ claude -p "query"
 **Available for Claude Opus 4.6:** The effort parameter controls how much "thinking budget" Claude spends on a request, giving you control over cost versus performance tradeoffs. Opus 4.6 defaults to medium effort.
 
 **Usage:**
-The effort parameter is available via the Anthropic API and Claude Code CLI for Claude Opus 4.6. Use the "ultrathink" keyword in prompts to enable extended thinking mode.
+
+```bash
+# In interactive mode, use the /effort command (v2.1.76+)
+/effort           # View current effort level
+/effort high      # Set to high effort
+/effort low       # Set to low effort
+
+# In prompts, use "ultrathink" keyword for maximum effort
+claude -p "ultrathink: Analyze this complex architecture"
+```
+
+**Effort Levels (simplified in v2.1.76):**
+
+| Level      | Description                        | Best For                          |
+| ---------- | ---------------------------------- | --------------------------------- |
+| **Low**    | Fast responses, lighter reasoning  | Simple tasks, quick iterations    |
+| **Medium** | Balanced (default for Opus 4.6)    | Everyday coding tasks             |
+| **High**   | Maximum reasoning depth            | Complex architecture, deep analysis |
 
 **Benefits:**
 
@@ -207,6 +246,12 @@ claude [options] -p "Your prompt"
 - `--plugin-dir <paths...>`: Load plugins from directories (repeatable)
 - `--add-dir <directories...>`: Additional directories to allow tool access to
 - `--ide`: Auto-connect to IDE on startup if available
+- `--max-turns <n>`: Cap agentic turns (prevents runaway in CI/CD)
+- `--bare`: Skip hooks, LSP, plugins, skill walks for lightweight scripted calls
+- `-w, --worktree`: Start in an isolated git worktree
+- `--agent <name>`: Run as a named subagent
+- `--agents <json>`: Define ephemeral agent teams
+- `-n, --name <name>`: Name the session at startup
 
 **Commands:**
 
@@ -473,13 +518,71 @@ result=$(claude -p "Generate user profile" \
 - Store API keys as secrets, never hardcode
 - Consider `--fallback-model` for handling model overload scenarios
 
+## New Features (March 2026)
+
+**Voice Mode (`/voice`):**
+
+Push-to-talk voice interaction. Hold spacebar to speak, release to send. Supports 20+ languages. Activate with `/voice` in interactive mode. Rolling out progressively (~5% of Pro, Max, Team, Enterprise users).
+
+**Scheduled Tasks (`/loop`):**
+
+Run prompts or slash commands on a recurring interval, turning Claude Code into a background worker for PR reviews, deployment monitoring, and more.
+
+```bash
+# In interactive mode
+/loop 5m /review     # Run /review every 5 minutes
+/loop 10m            # Default 10-minute interval
+```
+
+**Batch File Operations (`/batch`):**
+
+Operate on multiple files simultaneously with conflict detection if two tasks modify the same file.
+
+**Computer Use:**
+
+Claude Code can operate your Mac — moving the mouse, clicking buttons, browsing the web, and opening applications. No manual configuration required. Available for macOS (Pro/Max users, added March 23, 2026).
+
+**Agent Teams (Experimental):**
+
+Multi-agent collaboration with shared tasks, inter-agent messaging, and centralized management. Disabled by default; enable via `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` environment variable. Agents work in isolated git worktrees.
+
+**Plugin System:**
+
+Extend Claude Code with custom commands, agents, hooks, and MCP servers. Manage with `claude plugin` command.
+
+**Channel Relay (`--channels`):**
+
+Permission relay allowing channel servers (Telegram, Discord, iMessage) to forward tool approval prompts to your phone for remote approval.
+
+**`--bare` Flag:**
+
+For scripted `-p` calls. Skips hooks, LSP, plugin sync, and skill directory walks. Requires `ANTHROPIC_API_KEY` or `apiKeyHelper` via `--settings`. OAuth/keychain auth disabled. Ideal for lightweight CI/CD scripted calls.
+
+```bash
+claude -p "Quick analysis" --bare --permission-mode bypassPermissions
+```
+
+**Session Colors (`/color`):**
+
+Set a color for the prompt bar of the current session, useful for visually distinguishing multiple parallel sessions.
+
+```bash
+/color blue    # Set session prompt bar to blue
+```
+
+**Auto Memory:**
+
+Claude automatically records and recalls memories across sessions, building up context about your preferences and project.
+
 ## Limitations
 
-- Context limit smaller than Gemini (200K vs 1M tokens)
-- Opus model may be slower/costlier; use Sonnet 4.5 for balanced performance
+- Context limit now matches Gemini at 1M (GA since March 13, 2026)
+- Opus 4.6 max output: 64K tokens
+- Opus model may be slower/costlier; use Sonnet 4.6 for balanced performance
 - Tool approval prompts can interrupt automation workflows (use `--permission-mode bypassPermissions` or pre-approve with `--allowedTools`)
 - `-p/--print` mode automatically skips workspace trust dialog
 - Model aliases (sonnet, opus, haiku) are supported; full model IDs can also be used for precision
+- npm installation deprecated (Feb 2026); use native installer or Homebrew instead
 
 ## References
 

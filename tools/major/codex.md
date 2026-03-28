@@ -1,6 +1,6 @@
 # 🧠 OpenAI Codex
 
-**Version tested:** Latest (check with `codex --version`)  
+**Version tested:** v0.116.0+ (check with `codex --version`)  
 **Risk level:** 🟠 Medium (sandbox modes differ, read-only default)
 
 **Note:** This is the 2025 OpenAI Codex CLI tool, not the original 2021 Codex model. The CLI provides programmatic access to OpenAI's latest code generation models (GPT-5 Codex, etc.).
@@ -45,6 +45,20 @@ OpenAI Codex is a command-line coding agent designed for UI generation, rapid pr
 - Autofix CI: Automatically fix CI failures and open PRs
 - MCP (Model Context Protocol) integration support
 - Experimental plan tracking for complex multi-step tasks
+- First-class plugin system with `/plugins` browser and install/remove management (syncs product-scoped plugins at startup)
+- Hooks engine with user prompt hook for custom automation
+- ChatGPT device-code sign-in for authentication
+- Custom CA certificate support for corporate proxies
+- Python SDK for programmatic access (alongside TypeScript SDK)
+- Experimental code mode
+- Multi-agent v2 with readable path-based addresses (`/root/agent_a`), structured inter-agent messaging, and agent listing
+- Custom CA certificate support for corporate proxies
+- `/title` terminal-title picker for distinguishing parallel sessions (works in classic TUI and app-server TUI)
+- App-server remote websocket connections with bearer-token auth
+- Image workflow improvements: `view_image` returns URLs, generated images reopenable from TUI, image history survives resume
+- Thread search with sidebar shortcut and keyboard shortcuts
+- One-click archive for all local threads in a project
+- Synced settings between Codex app and VS Code extension
 
 **Two Modes:**
 
@@ -178,6 +192,9 @@ codex exec --json --color never "review code changes" > review.jsonl
 
 | Model                  | Description                                                    | Speed     | Cost        | Best For                                            |
 | ---------------------- | -------------------------------------------------------------- | --------- | ----------- | --------------------------------------------------- |
+| **gpt-5.4**            | Recommended flagship — coding + reasoning + computer use (Mar 2026) | Fast  | Medium-High | Complex code gen, professional workflows, default   |
+| **gpt-5.4-mini**       | Lightweight model for exploration and review (Mar 2026)        | Very Fast | Low         | Codebase exploration, large-file review, subagents  |
+| **codex-spark**        | Research preview for ChatGPT Pro (1000+ tok/sec, Cerebras) (Mar 2026) | Ultra Fast | Medium | Text-only, 128k context, real-time coding           |
 | **gpt-5.3-codex**      | Latest Codex + GPT-5 combined training, ~25% faster (Feb 2026) | Very Fast | Medium-High | Fastest code generation, implementation-heavy tasks |
 | **gpt-5.2-codex**      | Proven Codex model with Extra High reasoning (Jan 2026)        | Fast      | Medium      | Solid implementation, debugging                     |
 | **gpt-5.1-codex-max**  | Codex-optimized flagship for deep and fast reasoning           | Fast      | High        | Complex code generation, deep reasoning             |
@@ -185,7 +202,7 @@ codex exec --json --color never "review code changes" > review.jsonl
 | **gpt-5.1-codex-mini** | Cheaper, faster, less capable                                  | Very Fast | Low         | Simple tasks, quick prototypes                      |
 | **gpt-5.1**            | Broad world knowledge with strong general reasoning            | Medium    | Medium-High | Non-coding tasks, general reasoning                 |
 
-> **Note (March 2026):** GPT-5.3-Codex launched Feb 5, 2026 and GPT-5.2-Codex launched Jan 14, 2026. Six older models (pre-5.1) were retired Feb 13, 2026.
+> **Note (March 2026):** GPT-5.4 Mini launched Mar 2026 for codebase exploration, subagent work, and is available in the Codex app, CLI, IDE extension, and Codex on the web. Codex-Spark in research preview (text-only, 128k context). GPT-5.3-Codex launched Feb 5, 2026. Six older models (pre-5.1) were retired Feb 13, 2026. CLI v0.116.0+ adds ChatGPT device-code sign-in, hooks engine, first-class plugin support with `/plugins` browser, multi-agent v2 with path-based addresses, thread search, and image workflow improvements.
 
 **Model Selection:**
 

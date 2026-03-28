@@ -3,7 +3,7 @@
 **Version tested:** Latest (check with `kiro --version` or via IDE)  
 **Risk level:** 🟠 Medium (IDE with AI agents, can modify files)
 
-**Kiro CLI** (v1.27, March 2026) is a full-featured terminal coding agent that replaced Amazon Q Developer CLI.
+**Kiro CLI** (v1.28.0, March 2026) is a full-featured terminal coding agent that replaced Amazon Q Developer CLI.
 
 - Install: `curl -fsSL https://cli.kiro.dev/install | bash`
 - Supports custom agents, skills, MCP servers, steering files, and granular tool trust
@@ -11,6 +11,11 @@
 - File references with `@path` syntax for inline context
 - Code intelligence for 18 languages out of the box
 - AST pattern search/rewrite tools for structural code transforms
+- Experimental refreshed TUI with `--tui` flag (v1.28)
+- `--list-models` for checking available models (v1.28)
+- `/chat new` command for starting fresh conversations (v1.28)
+- Rich markdown rendering with syntax-highlighted code blocks in TUI
+- Live status bar and interactive panels in TUI mode
 
 **When NOT to use Kiro:**
 
@@ -104,7 +109,20 @@ kiro-cli login
 
 ## 🚀 Start Here
 
-**⚠️ CRITICAL: Kiro CLI does NOT currently have a headless mode.**
+**Non-interactive mode is available with `--no-interactive` flag:**
+
+```bash
+# Non-interactive headless execution
+kiro-cli chat --no-interactive --trust-all-tools "Your prompt here"
+
+# With MCP startup requirement (fail fast if MCP servers don't start, important for CI/CD)
+kiro-cli chat --no-interactive --trust-all-tools --require-mcp-startup "Your prompt here"
+
+# Disable colors for CI logs
+KIRO_LOG_NO_COLOR=1 kiro-cli chat --no-interactive --trust-all-tools "Review code"
+```
+
+**Note:** Browser-based OAuth doesn't work in headless CI environments. MCP tools may not load in `--no-interactive` mode (known issue #5958).
 
 **CLI Usage (Interactive Mode Only):**
 
@@ -625,13 +643,16 @@ Kiro utilizes **Claude models** via AWS Bedrock to power its AI capabilities:
 
 | Model                 | Credit Cost | Description                                                    | Context         | Provider    |
 | --------------------- | ----------- | -------------------------------------------------------------- | --------------- | ----------- |
-| **Auto** (default)    | 1.0x        | Models chosen by task for optimal usage and consistent quality | Varies          | AWS Bedrock |
-| **claude-opus-4.6**   | 2.2x        | Latest Claude Opus model (Feb 2026) - deep reasoning           | ~200K (1M beta) | AWS Bedrock |
-| **claude-sonnet-4.6** | 1.3x        | Latest Claude Sonnet model (Feb 2026)                          | ~200K (1M beta) | AWS Bedrock |
-| **claude-sonnet-4.5** | 1.3x        | Previous Claude Sonnet model                                   | ~200K tokens    | AWS Bedrock |
+| **Auto** (default)    | 1.0x        | Kiro's model router — combines multiple frontier models, delivers Sonnet 4-class results | Varies          | AWS Bedrock |
+| **claude-opus-4.6**   | 2.2x        | Latest Claude Opus model (Feb 2026) - deep reasoning           | 1M (GA Mar 24, 2026) | AWS Bedrock |
+| **claude-sonnet-4.6** | 1.3x        | Latest Claude Sonnet model (Feb 2026), approaches Opus 4.6 intelligence | 1M (GA) | AWS Bedrock |
+| **claude-sonnet-4.0** | 1.3x        | Direct access for consistent model selection                   | ~200K tokens    | AWS Bedrock |
 | **claude-haiku-4.5**  | 0.4x        | Fast, cost-effective model                                     | ~200K tokens    | AWS Bedrock |
+| **DeepSeek** (open weight) | -       | Open weight, experimental support on all plans                 | Varies          | Open Weight |
+| **MiniMax** (open weight)  | -       | Open weight, experimental support                              | Varies          | Open Weight |
+| **Qwen3 Coder Next** (open weight) | 0.05x | 80B sparse MoE, purpose-built for coding agents, 70%+ SWE-Bench | 256K tokens | Open Weight |
 
-> **Note (March 2026):** Kiro CLI v1.27. Dynamic model selection with `/model` command and tab completion (v1.26+). Use `/model clau<Tab>` for fuzzy matching.
+> **Note (March 2026):** Kiro CLI v1.28.0. Dynamic model selection with `/model` command and tab completion (v1.26+). Use `/model clau<Tab>` for fuzzy matching. New `--list-models` flag (v1.28). Claude Opus 4.6 1M context GA as of March 24, 2026. Open weight models (DeepSeek, MiniMax, Qwen) now available on all plans. Experimental refreshed TUI with `--tui` flag featuring live status bar, rich markdown rendering, syntax-highlighted code blocks, and interactive panels. Persist TUI with `kiro-cli settings chat.ui "tui"` (macOS/Linux only).
 
 **Credit System:**
 
@@ -1020,7 +1041,7 @@ kiro-cli chat
 
 ## Limitations
 
-- **CLI vs IDE:** Kiro CLI (v1.27) is a full terminal agent, but some IDE features still require GUI
+- **CLI vs IDE:** Kiro CLI (v1.28) is a full terminal agent with experimental TUI, but some IDE features still require GUI
 - **Authentication Required:** CLI requires login/authentication:
   - Browser-based: `kiro-cli login` opens browser (interactive)
   - External identity providers supported (v1.26+)

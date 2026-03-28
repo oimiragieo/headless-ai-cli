@@ -137,7 +137,16 @@ warp-terminal agent run --prompt "Warp anything"
 - Multiple agents can run simultaneously
 - Unified panel for managing agent interactions
 - Full terminal use: can run interactive commands, work inside CLI apps
-- Supports MCP (Model Context Protocol) and codebase embeddings
+- Supports MCP (Model Context Protocol) with auto-detection (global + project-scoped servers)
+- Computer use for Cloud Agents (sandboxed cloud containers via Oz platform)
+- Built-in skills (Figma integration with auto-detection, custom skills with $ARGUMENTS/$N)
+- Warp Code — built-in file editor with code review tools and WARP.md project rules
+- Language server support in native code editor
+- Kitty keyboard protocol for enhanced TUI app support
+- Scheduled agents (Skills) — cron-based automation for code cleanup, dependency updates, issue triage
+- First-party integrations: Slack, Linear, GitHub Actions (tag Warp to investigate/fix/open PRs)
+- Redaction rules for diffs and files in Agent Mode
+- Ctrl-R AI query history from all past conversations
 
 ## Available Models
 
@@ -152,7 +161,7 @@ Warp lets you choose from a curated set of Large Language Models (LLMs) to power
 | **Google**    | Gemini 3.1 Pro, Gemini 2.5 Pro                       | Large context support                                |
 | **z.ai**      | GLM 4.6                                              | Hosted in the US by Fireworks AI                     |
 
-> **Note (March 2026):** Warp released Agents 3.0 with Slack/Linear/GitHub Actions integrations, interactive code review, `/plan` for spec-driven development, and full terminal use (REPLs, debuggers). New "Oz" orchestration platform for cloud agents. Warp remains a terminal emulator — not a standalone headless CLI tool.
+> **Note (March 2026):** Warp released Agents 3.0 with Slack/Linear/GitHub Actions integrations, interactive code review, `/plan` for spec-driven development, and full terminal use (REPLs, debuggers). New "Oz" orchestration platform for cloud agents with Computer Use (desktop GUI interaction in sandboxed containers). **New in March 2026:** Warp Code (built-in file editor, code review tools, WARP.md project rules), scheduled agents via Skills (cron-based automation), MCP server auto-detection (global + project-scoped), built-in Figma skills with auto-detection (`generate-figma-content`, `pull-figma-content`), Kitty keyboard protocol support, language server support in native code editor, skill arguments ($ARGUMENTS, $N), redaction rules for Agent Mode, web search for agents (configurable via Agent Profiles), and Ctrl-R AI query history from all past conversations. Warp has evolved from a terminal emulator to an agentic development environment, though it still serves as a terminal emulator at its core.
 
 **Auto Models:**
 

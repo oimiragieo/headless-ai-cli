@@ -31,7 +31,7 @@
 
 Windsurf is an AI-powered IDE with CLI capabilities, designed to enhance software development through AI assistance. It combines IDE features with AI-powered code generation, suggestions, and workflow automation.
 
-**Ownership (March 2026):** Cognition (Devin AI) acquired Windsurf's remaining assets and team in July 2025. Google separately hired Windsurf's CEO/co-founder in a ~$2.4B talent deal but did NOT acquire the product. Windsurf continues as an active product under Cognition ownership, still shipping updates (Phoenix Alpha, Mar 2026). Google's separate IDE is [Antigravity](antigravity.md).
+**Ownership (March 2026):** Cognition (Devin AI) acquired Windsurf in December 2025 for ~$250M (at $82M ARR, 350+ enterprise customers). Google separately hired Windsurf's CEO/co-founder in a ~$2.4B talent deal but did NOT acquire the product. Windsurf continues as an active product under Cognition ownership, still shipping updates (Phoenix Alpha, Wave 13/14, Mar 2026). Google's separate IDE is [Antigravity](antigravity.md).
 
 **Key Characteristics:**
 
@@ -137,8 +137,8 @@ Windsurf supports multiple LLM providers:
 | Provider      | Models                                                     | Description                       |
 | ------------- | ---------------------------------------------------------- | --------------------------------- |
 | **Anthropic** | Claude Opus 4.6, Claude Opus 4.6 (fast), Claude Sonnet 4.6 | Latest flagship models (Feb 2026) |
-| **OpenAI**    | GPT-5.3-Codex, GPT-5.1, GPT-4o                             | Code generation, general tasks    |
-| **Google**    | Gemini 3.1 Pro, Gemini 2.5 Pro                             | Large context support             |
+| **OpenAI**    | GPT-5.4 Mini, GPT-5.3-Codex, GPT-5.2-Codex (4 reasoning levels), GPT-5.1, GPT-4o | Code generation, general tasks    |
+| **Google**    | Gemini 3.1 Pro, Gemini 3 Flash, Gemini 2.5 Pro             | Large context support             |
 | **Zhipu AI**  | GLM-5                                                      | Open-source alternative           |
 | **Minimax**   | Minimax M2.5                                               | Cost-effective option             |
 
@@ -150,7 +150,7 @@ Windsurf supports multiple LLM providers:
 - **Plan Mode**: task planning before execution
 - API keys managed in IDE settings
 
-> **Note (March 2026):** Windsurf now owned by Cognition (after OpenAI acquisition bid fell through). Phoenix Alpha in Next channel (Mar 3, 2026). Linux ARM64 binaries now available. Cascade hooks configuration added. MCP improvements include OAuth auto-login and Windows fixes.
+> **Note (March 2026):** Windsurf now owned by Cognition ($250M acquisition, Dec 2025). Phoenix Alpha in Next channel (Mar 3, 2026). **Wave 13**: Parallel multi-agent sessions, Git worktrees, side-by-side Cascade panes, dedicated terminal profile. **Wave 14**: Arena Mode (side-by-side model comparison with hidden identities, personal + global leaderboards), Plan Mode for task planning. GPT-5.4 Mini (1x credits), Gemini 3 Flash, and GPT-5.2-Codex (with 4 reasoning effort levels) added. **Pricing overhaul (Mar 19, 2026)**: Credit-based billing replaced with quota system — Pro $20/mo, Teams $40/seat, Max $200/mo. Daily/weekly quota usage displayed in IDE. Linux ARM64 binaries now available. Cascade hooks and MCP OAuth auto-login added. JetBrains plugin support with separate changelog.
 
 **Cascade Agent:**
 

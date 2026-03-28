@@ -249,7 +249,7 @@ Several tools have updated their recommended installation methods:
 
 | Tool            | Current Recommended                                              | Notes                          |
 | --------------- | ---------------------------------------------------------------- | ------------------------------ |
-| **Claude Code** | Native: `curl -fsSL https://claude.ai/install.sh \| bash`        | Preferred over npm             |
+| **Claude Code** | Native: `curl -fsSL https://claude.ai/install.sh \| bash`        | npm deprecated Feb 2026, use native or `brew install claude-code` |
 | **Codex**       | npm or Homebrew: `brew install --cask codex`                     | Windows via WSL                |
 | **Aider**       | Install script: `curl -LsSf https://aider.chat/install.sh \| sh` | Python 3.10+ required          |
 | **OpenCode**    | Quick install: `curl -fsSL https://opencode.ai/install \| bash`  | v0.1.x incompatible with older |
@@ -257,7 +257,7 @@ Several tools have updated their recommended installation methods:
 **Deprecated/Changed:**
 
 - Amazon Q Developer CLI → Migrated to Kiro CLI (Nov 2025)
-- GitHub Copilot CLI default model → Now Claude Sonnet 4.5
+- GitHub Copilot CLI → Reached GA on Feb 25, 2026 (Node.js 22+ required). Default model: Claude Sonnet 4.5
 
 ## Writing Style Guidelines
 
@@ -313,7 +313,7 @@ Several tools have updated their recommended installation methods:
 **IDE/Terminal-Based Tools with Limited/No Headless Support (4 tools):**
 
 - Antigravity (⚠️ Google desktop IDE - NO headless/CLI, use Gemini CLI instead)
-- Warp (⚠️ Terminal emulator - enhances other CLI tools, not standalone headless)
+- Warp (⚠️ Agentic development environment - `warp-terminal agent run` for headless, but primarily a terminal emulator)
 - Windsurf (⚠️ Cognition/Devin AI ownership - requires Docker for headless)
 - Amazon Q (⚠️ DEPRECATED Nov 2025 - migrated to Kiro CLI)
 
@@ -327,7 +327,7 @@ Several tools have updated their recommended installation methods:
 
 ### Critical Documentation Gaps
 
-1. **Kiro**: ~~Documented but lacks actual headless mode~~ **RESOLVED (March 2026)** — Kiro CLI v1.27 is now a full terminal agent with custom agents, skills, granular tool trust, and dynamic model selection. Reclassified to full headless support.
+1. **Kiro**: ~~Documented but lacks actual headless mode~~ **RESOLVED (March 2026)** — Kiro CLI v1.28 is now a full terminal agent with custom agents, skills, granular tool trust, dynamic model selection, and experimental TUI (`--tui` flag). Reclassified to full headless support.
    - Zero examples in `examples/` directory
    - Zero test scripts in `test/` directory
    - **Action needed**: Add CI/CD examples and test scripts
@@ -338,9 +338,16 @@ Several tools have updated their recommended installation methods:
    - `q` and `q chat` commands still work for backward compatibility
    - Documentation retained for legacy reference
 
-3. **Warp**: Terminal emulator, not a standalone CLI tool
-   - Enhances experience of using OTHER AI CLI tools
-   - No native headless automation capability
+3. **Warp**: Evolved from terminal emulator to agentic development environment
+   - `warp-terminal agent run --prompt "..."` supports headless automation
+   - Oz cloud agent platform, scheduled agents, Slack/Linear/GitHub Actions integrations
+   - Still primarily a terminal emulator at its core
+
+6. **Cline**: Supply chain attack on CLI v2.3.0 (Feb 17, 2026)
+   - Malicious package via stolen npm publish token (~4,000 downloads in 8-hour window)
+   - v2.3.0 deprecated, v2.4.0 published as clean replacement
+   - Publishing now uses OIDC via GitHub Actions
+   - See [GHSA-9ppg-jx86-fqw7](https://github.com/cline/cline/security/advisories/GHSA-9ppg-jx86-fqw7)
 
 4. **Windsurf**: IDE-based (Cognition/Devin AI ownership), requires Docker for headless
    - Missing CLI Syntax section in documentation
@@ -348,7 +355,7 @@ Several tools have updated their recommended installation methods:
 
 5. **Antigravity**: Google desktop IDE (Nov 2025), NO headless/CLI
    - Google recommends Gemini CLI for headless automation
-   - No MCP support, aggressive rate limits
+   - **MCP support added** (Firebase MCP server, improved auth in v1.21.6), aggressive rate limits
    - Zero examples in `examples/` directory
    - Zero test scripts in `test/` directory
 
@@ -373,8 +380,8 @@ Several tools have updated their recommended installation methods:
 ## Version Information
 
 - **Repository Created:** November 2025
-- **Last Major Update:** March 2026
-- **Last Audit:** March 2026
+- **Last Major Update:** March 28, 2026
+- **Last Audit:** March 28, 2026
 - **Total Tools Documented:** 15 (10 with full headless support, 4 limited/no headless, 1 deprecated)
 - **Documentation Files:** 30 markdown files total
   - 4 main docs (README, CLAUDE, CONTRIBUTING, QUICK_REFERENCE)

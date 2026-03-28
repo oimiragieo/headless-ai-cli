@@ -1,6 +1,6 @@
 # 🚀 Google Gemini CLI
 
-**Version tested:** Latest (check with `gemini --version`)  
+**Version tested:** v0.35.2 (check with `gemini --version`)  
 **Risk level:** 🟠 Medium (can modify files, requires approval for some operations)
 
 **Note:** Gemini 2.5 Flash/Pro typically support ~1M-token context in the CLI, though actual limits may vary slightly by API version or account tier. Some developer preview users may have access to up to ~2M tokens.
@@ -39,6 +39,14 @@ Google Gemini CLI is a command-line interface for Google's Gemini AI models, des
 - Headless mode for automation
 - Structured output formats
 - File operations and shell command support
+- Subagents enabled by default with parallel tool scheduling and built-in research subagents
+- Plan Mode enabled by default for complex task breakdown (since v0.34.0)
+- JIT (Just-In-Time) Context Discovery for performance
+- Linux-native sandboxing (bubblewrap + seccomp)
+- Experimental browser agent for web page interaction
+- Auto model routing (routes between gemini-3.1-pro and gemini-3-flash automatically)
+- 30-day chat history retention (since v0.33.0)
+- Slash commands: `/memory`, `/init`, `/extensions`, `/restore`, `/rewind`
 
 ## Installation
 
@@ -48,9 +56,27 @@ Google Gemini CLI is a command-line interface for Google's Gemini AI models, des
 npm install -g @google/gemini-cli
 ```
 
+**Using Homebrew (macOS/Linux):**
+
+```bash
+brew install gemini-cli
+```
+
+**Using MacPorts:**
+
+```bash
+sudo port install gemini-cli
+```
+
+**Preview channel:**
+
+```bash
+npm install -g @google/gemini-cli@preview
+```
+
 **System Requirements:**
 
-- Node.js 18 or later
+- Node.js 20 or later
 - API key from Google AI Studio
 
 ## 🚀 Start Here
@@ -134,6 +160,7 @@ git diff | gemini "Review these changes"
 | --------------------------------- | ---------- | --------- | ----------- | ----------------------------------------------------------------- |
 | **gemini-3.1-pro-preview**        | ~1M tokens | Medium    | High        | Latest flagship, best for coding and complex reasoning (Feb 2026) |
 | **gemini-3.1-flash-lite-preview** | ~1M tokens | Very Fast | Low         | Latest lightweight model for fast tasks (Mar 2026)                |
+| **gemini-3-flash-preview**        | ~1M tokens | Fast      | Low-Medium  | Best value for agentic coding, 78% SWE-bench (Feb 2026)          |
 | **gemini-2.5-pro**                | ~1M tokens | Medium    | Medium-High | Massive repos, deep analysis, enhanced reasoning                  |
 | **gemini-2.5-flash**              | ~1M tokens | Fast      | Low-Medium  | Quick analysis, large context, general tasks                      |
 | **gemini-1.5-pro**                | ~1M tokens | Medium    | Medium      | Balanced performance for most use cases                           |
@@ -141,10 +168,12 @@ git diff | gemini "Review these changes"
 
 > **Deprecation Notices (March 2026):**
 >
-> - ~~gemini-3-pro-preview~~: **Shut down March 9, 2026.** Use `gemini-3.1-pro-preview` instead.
+> - ~~gemini-3-pro-preview~~: **Shut down March 9, 2026.** Alias now redirects to `gemini-3.1-pro-preview`.
+> - ~~gemini-2.5-flash-lite-preview-09-2025~~: **Shutting down March 31, 2026.**
+> - Gemini 2.5 Pro and 2.5 Flash: **Deprecation scheduled June 17, 2026.**
 > - Gemini 2.0 flash models: **Shut down June 1, 2026.**
 > - CLI syntax: `-p` flag is deprecated. Positional prompt is now the default (`gemini "your prompt"`).
-> - CLI version: v0.24.5
+> - CLI version: v0.35.2 (March 26, 2026). Preview: v0.36.0-preview.5.
 
 **Model Selection:**
 
@@ -207,6 +236,15 @@ gemini [options] -i "Your prompt"
 - `-d, --debug`: Enable debug mode
 - `--screen-reader`: Enable screen reader mode for accessibility
 - `--experimental-acp`: Start agent in ACP mode
+
+**New in v0.35.x:**
+
+- Customizable keyboard shortcuts and keybindings
+- Vim mode with common motions (`X`, `~`, `r`, `f/F/t/T`), yank and paste
+- Unified `SandboxManager` with Linux-native sandboxing (bubblewrap + seccomp)
+- JIT Context Discovery for file system tools
+- Subagents enabled by default with model-driven parallel tool scheduler
+- Code splitting for faster startup
 
 **Commands:**
 

@@ -1,6 +1,6 @@
 # 🚀 Google Antigravity
 
-**Version tested:** Latest (desktop app, auto-updates)
+**Version tested:** v1.21.6 (desktop app, auto-updates)
 **Risk level:** ⚠️ High (multi-agent IDE with autonomous execution, writes by default)
 
 **Note:** Antigravity is a desktop IDE, not a CLI tool. It has NO headless mode or CLI. Google recommends Gemini CLI for headless/CI/CD workflows. Included here for completeness as a major AI coding tool.
@@ -10,7 +10,7 @@
 - ❌ You need headless/CLI automation (use Gemini CLI instead)
 - ❌ You need CI/CD pipeline integration (no headless mode)
 - ❌ You need offline/air-gapped workflows (requires constant internet)
-- ❌ You need MCP (Model Context Protocol) support (not supported as of Mar 2026)
+- ~~❌ You need MCP (Model Context Protocol) support~~ **MCP now supported** (Firebase MCP server, improved auth in v1.21.6)
 - ❌ You need predictable rate limits (aggressive throttling reported)
 
 ### Quick Nav
@@ -40,6 +40,11 @@ Google Antigravity is an AI-powered desktop IDE launched November 2025 alongside
 - Plan Mode and Fast Mode for different workflows
 - Artifact transparency (plans, diffs, screenshots, test results)
 - 1M token working context (Gemini 3.1 Pro supports 2M)
+- MCP support (Firebase MCP server, improved MCP auth in v1.21.6)
+- AGENTS.md support for custom rules (reads from AGENTS.md in addition to GEMINI.md, v1.20.3+)
+- Linux sandboxing support (v1.21.6)
+- Simplified/condensed chat UI with one-click chat archival
+- Improved sidebar design
 
 **Ownership:** Google (launched Nov 18, 2025)
 
@@ -105,7 +110,7 @@ Models available in Antigravity (Individual/Free tier):
 | **Gemini 3.1 Pro**    | Google    | Primary agent model, 2M context  |
 | **Gemini 3 Flash**    | Google    | Faster/lighter model             |
 | **Claude Opus 4.6**   | Anthropic | Premium reasoning (rate-limited) |
-| **Claude Sonnet 4.5** | Anthropic | Long-form tasks (rate-limited)   |
+| **Claude Sonnet 4.6** | Anthropic | Long-form tasks (rate-limited)   |
 | **gpt-oss-120b**      | OpenAI    | Lightweight edits                |
 
 > **Note (March 2026):** Third-party model access (Claude, GPT) is heavily rate-limited — users report as few as 5-7 Claude prompts per week on the Pro plan. Gemini models have more generous limits.
@@ -182,7 +187,7 @@ Models available in Antigravity (Individual/Free tier):
 ## Limitations
 
 - **No headless mode or CLI** — desktop IDE only (use Gemini CLI for automation)
-- **No MCP support** — unlike Cursor, Kiro, and Claude Code
+- **MCP support added** — Firebase MCP server (Google-maintained, public preview Feb 2026), improved MCP auth in v1.21.6
 - **Aggressive rate limits** — free tier and Pro tier both have tight limits
 - **Third-party model throttling** — Claude/GPT access heavily rate-limited (5-7 prompts/week reported)
 - **Requires constant internet** — no offline capability
@@ -191,6 +196,7 @@ Models available in Antigravity (Individual/Free tier):
 - **Security concerns** — Feb 2026 audit identified 70+ vulnerabilities in v1.107.0
 - **Vendor lock-in** — deep Google ecosystem integration
 - **Rate limit reliability** — advertised 5-hour refresh cycle not consistently honored
+- **Deprecations in v1.21.6** — Follow-along mode and playground feature removed from Agent Manager
 
 **Benchmarks:**
 

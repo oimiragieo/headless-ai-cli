@@ -1,14 +1,13 @@
 # 🔄 Continue Dev
 
-**Version tested:** Latest (check via VS Code extension or CLI)  
+**Version tested:** CLI v1.5.45 (check via `cn --version` or VS Code extension)  
 **Risk level:** 🟢 Low (VS Code extension with CLI support)
 
 **When NOT to use Continue Dev:**
 
-- ❌ You need pure CLI-only workflows (Continue is primarily a VS Code extension)
-- ❌ You're not using VS Code
-- ❌ You need headless-only automation
 - ❌ You need massive context windows (Gemini handles larger repos better)
+- ❌ You need fully autonomous execution without approval (Droid is safer)
+- ❌ You need simple one-shot prompts (Claude/Gemini `-p` is simpler)
 
 ### Quick Nav
 
@@ -26,7 +25,7 @@
 
 ## Overview
 
-Continue Dev is an open-source CLI tool designed to accelerate development workflows through Continuous AI. It offers both a Text User Interface (TUI) mode for interactive development and a Headless mode for running background agents, integrating seamlessly into existing development environments.
+Continue Dev (`cn`) is an open-source, modular coding agent for the command line. It provides a battle-tested agent loop — plug in your model, rules, and tools. Out of the box, `cn` comes with tools for understanding your codebase, editing files, running terminal commands, and more.
 
 **Key Characteristics:**
 
@@ -34,7 +33,14 @@ Continue Dev is an open-source CLI tool designed to accelerate development workf
 - Headless mode for CI/CD pipelines and automation
 - Context engineering with `@` file references and `/` commands
 - Tool integration (file editing, terminal, Git, web search)
-- Model flexibility with Continue Mission Control
+- Model flexibility with Continue Mission Control (hub.continue.dev)
+- `cn review` command for source-controlled AI code checks (renamed from `cn check`)
+- `--id` option for connecting to existing remote agents via tunnel
+- Shell mode for terminal command execution
+- Hooks system for automation
+- Session pause/resume capabilities
+- Git branch display in CLI for repository context
+- Home directory safety warning
 - Open-source (Apache-2.0 license)
 
 ## Installation
@@ -160,6 +166,11 @@ cn
 - `--workflow NAME`: Execute workflow
 - `--schedule SCHEDULE`: Schedule agent (cron format)
 - `--output, -o FILE`: Save output to file
+- `--allow TOOL`: Always allow a tool (e.g., `--allow "Write(**/*.ts)"`)
+- `--ask TOOL`: Always ask before using a tool (e.g., `--ask "Bash(curl*)"`)
+- `--exclude TOOL`: Never use a tool (e.g., `--exclude Fetch`)
+- `--id ID`: Connect to existing remote agent via tunnel
+- `--resume`: Resume previous session
 
 ## Available Models
 
@@ -175,7 +186,7 @@ Continue Dev supports multiple LLM providers:
 | Open Source       | CodeLlama, StarCoder                                       | Local models                                       |
 | OpenAI Compatible | Any OpenAI-compatible API (e.g., Komilion)                 | Smart routing for mixed workloads                  |
 
-> **Note (March 2026):** Continue.dev pivoted to "Continuous AI" — a CLI-first platform running async agents on every PR. Headless mode for cloud agents, TUI mode for interactive sessions. Mission Control dashboard redesigned at hub.continue.dev. Anthropic blocked Claude Max subscription OAuth tokens in Jan 2026 — use API keys from console.anthropic.com instead.
+> **Note (March 2026):** Continue.dev pivoted to "Continuous AI" — a CLI-first platform running async agents on every PR. Headless mode for cloud agents, TUI mode for interactive sessions. Mission Control dashboard redesigned at hub.continue.dev. CLI v1.5.45 adds `cn review` (renamed from `cn check`), `--id` for remote agent tunnels, shell mode, hooks system, session pause/resume, git branch display, and home directory warning. Anthropic blocked Claude Max subscription OAuth tokens in Jan 2026 — use API keys from console.anthropic.com instead.
 
 **Model Selection:**
 

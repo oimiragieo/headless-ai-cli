@@ -1,9 +1,9 @@
 # 🤖 GitHub Copilot CLI
 
-**Version tested:** Latest (check with `copilot --version`)  
+**Version tested:** v1.0.12+ (check with `copilot --version`)  
 **Risk level:** ⚡ Very High (can run shell/git, requires careful tool management)
 
-**Note:** GitHub Copilot CLI is in public preview with data protection and subject to change.
+**Note:** GitHub Copilot CLI reached General Availability on Feb 25, 2026.
 
 **When NOT to use Copilot:**
 
@@ -48,6 +48,21 @@ GitHub Copilot CLI is the command-line version of GitHub Copilot, designed for p
 - Trusted directories for security
 - MCP (Model Context Protocol) support
 - Headless mode with proper exit codes for automation
+- `/undo` command for reverting changes
+- `/review` command for inline code review
+- `/context` command for context management
+- `/compact` command for compacting conversation
+- `/resume` command for resuming previous sessions
+- `/changelog` command for viewing changelog
+- Plan mode (cycle with Shift+Tab)
+- Experimental multi-session support
+- `/diff` view for reviewing changes
+- MCP servers auto-load from `.mcp.json` at git root
+- Model display header shows active reasoning effort level
+- Lower memory use for large files
+- Plugin system and SDK for custom slash commands
+- Policy enforcement for third-party MCP servers
+- Ctrl+T toggle for model reasoning visibility
 
 ## Installation
 
@@ -59,7 +74,7 @@ npm install -g @github/copilot
 
 **System Requirements:**
 
-- Node.js 18 or later
+- Node.js 22 or later
 - GitHub account with Copilot access
 - Network connection
 
@@ -68,10 +83,11 @@ npm install -g @github/copilot
 **Who can use this feature:**
 
 - GitHub Copilot CLI is available with the following plans:
-  - GitHub Copilot Pro
-  - GitHub Copilot Pro+
-  - GitHub Copilot Business
-  - GitHub Copilot Enterprise
+  - GitHub Copilot Free ($0/mo — 50 premium requests/month)
+  - GitHub Copilot Pro ($10/mo)
+  - GitHub Copilot Pro+ ($39/mo)
+  - GitHub Copilot Business ($19/user/mo)
+  - GitHub Copilot Enterprise ($39/user/mo)
 
 **Organization requirements:**
 
@@ -193,21 +209,23 @@ git diff | copilot -p "Review these changes"
 | #   | Model                     | Cost Multiplier | Description                                       |
 | --- | ------------------------- | --------------- | ------------------------------------------------- |
 | 1   | **Auto**                  | 0.9x (10% Off)  | Automatically selects the best model for the task |
-| 2   | **Claude Opus 4.6**       | -               | Latest Anthropic flagship (Feb 2026)              |
-| 3   | **Claude Sonnet 4.6**     | 1x              | Latest balanced Claude model (Feb 2026)           |
-| 4   | **Claude Sonnet 4.5**     | 1x              | Previous default, balanced performance            |
-| 5   | **Claude Haiku 4.5**      | 0.33x           | Low-latency efficient model                       |
-| 6   | **GPT-5.3-Codex**         | 1x              | Latest combined Codex + GPT-5 model (Feb 2026)    |
-| 7   | **GPT-5.1-Codex**         | 1x              | Proven coding-specific fine-tune                  |
-| 8   | **GPT-5.1-Codex-Mini**    | 0.33x           | Lightweight coding model                          |
-| 9   | **GPT-5.1**               | 1x              | Latest GPT with improved reasoning                |
-| 10  | **GPT-5**                 | 1x              | Standard GPT-5                                    |
-| 11  | **GPT-5-Mini**            | 0x              | Free tier OpenAI model                            |
-| 12  | **GPT-4.1**               | 0x              | Free tier OpenAI model                            |
-| 13  | **Gemini 3 Pro**          | 1x              | Latest Google model                               |
-| 14  | **Gemini 2.5 Pro**        | 1x              | Previous Google flagship                          |
-| 15  | **Grok Code Fast 1**      | 0x              | xAI high-speed coding model                       |
-| 16  | **Raptor mini (Preview)** | 0x              | Ultra-low latency experimental model              |
+| 2   | **GPT-5.4**               | 1x              | Latest OpenAI flagship — coding + reasoning (Mar 2026) |
+| 3   | **GPT-5.4 Mini**          | 0.33x           | Fastest time-to-first-token, codebase exploration (Mar 2026) |
+| 4   | **Claude Opus 4.6**       | -               | Latest Anthropic flagship (Feb 2026)              |
+| 5   | **Claude Sonnet 4.6**     | 1x              | Latest balanced Claude model (Feb 2026)           |
+| 6   | **Claude Sonnet 4.5**     | 1x              | Previous default, balanced performance            |
+| 7   | **Claude Haiku 4.5**      | 0.33x           | Low-latency efficient model                       |
+| 8   | **GPT-5.3-Codex**         | 1x              | Base coding model (Mar 2026)                      |
+| 9   | **GPT-5.1-Codex**         | 1x              | Proven coding-specific fine-tune                  |
+| 10  | **GPT-5.1-Codex-Mini**    | 0.33x           | Lightweight coding model                          |
+| 11  | **GPT-5.1**               | 1x              | Latest GPT with improved reasoning                |
+| 12  | **GPT-5**                 | 1x              | Standard GPT-5                                    |
+| 13  | **GPT-5-Mini**            | 0x              | Free tier OpenAI model                            |
+| 14  | **GPT-4.1**               | 0x              | Free tier OpenAI model                            |
+| 15  | **Gemini 3.1 Pro (Preview)** | 1x           | Latest Google model (Mar 2026)                    |
+| 16  | **Gemini 2.5 Pro**        | 1x              | Previous Google flagship                          |
+| 17  | **Grok Code Fast 1**      | 0x              | xAI high-speed coding model (GA in Free tier)     |
+| 18  | **Raptor mini (Preview)** | 0x              | Ultra-low latency experimental model              |
 
 > **Note (March 2026):** Copilot CLI reached General Availability on Feb 25, 2026. New features include: background delegation (`&` prefix), Fleet mode (`/fleet` for parallel subagents), Autopilot mode (fully autonomous), and multi-model support. Install: `brew install copilot-cli`, `npm install -g @github/copilot`, or `winget install GitHub.Copilot`. Requires Node.js 22+.
 
@@ -269,6 +287,11 @@ copilot [options] -p "Your prompt"
 - `--log-dir <directory>`: Set log file directory (default: ~/.copilot/logs/)
 - `--agent <agent>`: Specify a custom agent to use, only in prompt mode
 - `--no-custom-instructions`: Disable loading of custom instructions from AGENTS.md and related files
+- `--allow-all` / `--yolo`: Enable all permissions at once (supports `on`, `off`, `show` subcommands)
+- `--experimental`: Enable experimental features
+- `--banner`: Show banner
+- `--bash-env`: Source BASH_ENV in shell sessions
+- `--disable-parallel-tools-execution`: Disable parallel tool execution for shell commands
 - `--screen-reader`: Enable screen reader optimizations
 - `-v, --version`: Show version information
 - `-h, --help`: Display help for command
@@ -702,7 +725,7 @@ copilot --model claude-haiku-4.5 -p "Quick analysis" --silent --no-color --allow
 - Tool approval system can be bypassed with `--allow-all-tools`
 - Can execute shell/git commands without clear warnings in some modes
 - Scoping of permissions is heuristic and GitHub does not guarantee that all files outside trusted directories will be protected
-- GitHub Copilot CLI is in public preview with data protection and subject to change
+- GitHub Copilot CLI reached GA on Feb 25, 2026 (no longer preview)
 - Model availability may change; GitHub reserves the right to change available models
 - Programmatic mode (`-p`) exits with nonzero codes on permission or communication errors, which is useful for automation but requires proper error handling
 

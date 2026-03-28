@@ -1,6 +1,6 @@
 # 🤖 Factory AI Droid
 
-**Version tested:** Latest (check with `droid --version`)  
+**Version tested:** v0.82.0+ (check with `droid --version`)  
 **Risk level:** 🟢 Very Low (read-only by default, safest for CI/CD)
 
 **When NOT to use Droid:**
@@ -37,6 +37,18 @@ Factory AI Droid is Factory's AI coding agent that works in both interactive and
 - Structured output formats
 - Fail-fast behavior
 - Composable for shell scripting
+- Skills UI for remote sessions
+- Full internationalization (Japanese, Chinese, Korean)
+- Droid Computer for desktop automation
+- Custom Droids (subagents) — specialized agents in `.factory/droids/`
+- MCP support with OAuth auth and 40+ pre-configured servers (including Figma and Granola)
+- Official GitHub Action (`Factory-AI/droid-action`) for PR automation
+- Signals (recursive self-improvement) — LLM-as-judge analyzes sessions, files tickets, Droid fixes itself
+- Interleaved thinking display with streaming
+- Session tags (`--tag` flag) for categorization
+- Word-level diff highlighting in GitHub diff mode
+- Built-in create-PR skill with local verification checklist
+- Bulk MCP tool management
 
 **Two Modes:**
 
@@ -49,6 +61,14 @@ Factory AI Droid is Factory's AI coding agent that works in both interactive and
 
 ```bash
 curl -fsSL https://app.factory.ai/cli | sh
+```
+
+**Using npm:**
+
+```bash
+npm install -g @factory/cli
+# or
+npm install -g droid
 ```
 
 **Windows (PowerShell):**
@@ -136,9 +156,14 @@ droid exec --session-id <session-id> "continue with next steps"
 | 7    | **GPT-5.2-Codex**        | -               | Proven OpenAI coding model with Extra High reasoning (Jan 2026) | Solid implementation                |
 | 8    | **GPT-5.1-Codex**        | 0.5x            | Quick iteration with solid code quality                         | Lower-cost coding                   |
 | 9    | **Haiku 4.5**            | 0.4x            | Claude Haiku 4.5                                                | Fast and cost-effective             |
-| 10   | **Droid Core (GLM-4.6)** | 0.25x           | GLM-4.6 open-source model                                       | Most cost-effective option          |
+| 10   | **Claude Sonnet 4.6**    | 1.2x            | Latest Claude Sonnet model (Feb 2026)                           | Balanced cost/quality               |
+| 11   | **GPT-5.4**              | -               | Latest OpenAI flagship (Mar 2026)                               | Complex coding + reasoning          |
+| 12   | **Gemini 3.1 Pro**       | 0.8x            | Latest Google flagship                                          | Large context analysis              |
+| 13   | **MiniMax M2.5**         | 0.1x            | Cheapest model with reasoning support                           | Budget-friendly with reasoning      |
+| 14   | **Kimi K2.5**            | -               | Image support for design workflows                              | Image-based workflows               |
+| 15   | **Droid Core (GLM-5)**   | 0.25x           | GLM-5 open-source model                                         | Most cost-effective option          |
 
-> **Note (March 2026):** Stack rank updated Feb 25, 2026 per Factory docs. Droid CLI now at v0.65.0. New features include `/diagnostics` command, session archiving, inline rename, custom model reasoning effort, and concurrent mission warnings.
+> **Note (March 2026):** Stack rank updated Feb 25, 2026 per Factory docs. New features include `/diagnostics` command, session archiving, inline rename, custom model reasoning effort, concurrent mission warnings, Skills UI for remote sessions, Mission Control redesign, full i18n support (Japanese, Chinese, Korean), execute tool syntax highlighting, session type tags for missions/subagents, token limit settings interface, Droid Computer setup flow, faster `@` search indexing with background worker, grouped exec sessions, improved mission worker pause/resume, enhanced subagent model inheritance and permissions, better cross-provider message conversion, and improved text wrapping for Create tool results.
 
 **Additional Options:**
 
@@ -190,6 +215,7 @@ droid exec [options] "Your prompt"
 - `--output-format FORMAT`: Output format (`text`, `json`, `debug`)
 - `--cwd PATH`: Working directory
 - `--session-id ID`: Continue session
+- `--tag TAG`: Categorize session with custom tag
 
 ## Autonomy Levels
 

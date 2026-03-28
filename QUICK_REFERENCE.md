@@ -20,7 +20,7 @@
 | **VS Code integration**        | Continue Dev   | IDE-first development                                  |
 | **Task automation**            | Cline          | Autonomous task execution                              |
 | **Multi-language**             | OpenCode       | Polyglot support                                       |
-| **Spec-driven development**    | Kiro           | Full CLI agent (v1.27) with skills, agents, tool trust |
+| **Spec-driven development**    | Kiro           | Full CLI agent (v1.28) with skills, agents, tool trust, TUI |
 | **Enhanced terminal**          | Warp ⚠️        | macOS terminal UX (no headless)                        |
 | **Google Cloud + multi-agent** | Antigravity ⚠️ | Desktop IDE only (no headless)                         |
 | **IDE development**            | Windsurf ⚠️    | Docker-only headless (Cognition)                       |
@@ -98,18 +98,12 @@ Map standard actions across all tools:
 ```bash
 # Core tools
 npm install -g @google/gemini-cli        # Gemini CLI
-npm install -g @anthropic-ai/claude-code # Claude Code
+npm install -g @anthropic-ai/claude-code # Claude Code (⚠️ npm deprecated, use native installer)
 npm install -g @openai/codex             # OpenAI Codex
 npm install -g @github/copilot           # GitHub Copilot
 npm install -g @continuedev/cli          # Continue Dev
 npm install -g cline                     # Cline
-npm install -g open-code                 # OpenCode
-
-# All npm tools at once
-npm install -g @google/gemini-cli @anthropic-ai/claude-code @openai/codex @github/copilot @continuedev/cli cline open-code
-
-# Update all npm tools
-npm upgrade -g @google/gemini-cli @anthropic-ai/claude-code @openai/codex @github/copilot @continuedev/cli cline open-code
+npm install -g opencode-ai               # OpenCode
 ```
 
 ### pip (Python)
@@ -121,16 +115,22 @@ pip install aider-chat                   # Aider
 ### curl (Shell Scripts)
 
 ```bash
+curl -fsSL https://claude.ai/install.sh | bash        # Claude Code (recommended)
 curl https://cursor.com/install -fsS | bash           # Cursor
 curl -fsSL https://app.factory.ai/cli | sh            # Droid
 curl -fsSL https://cli.kiro.dev/install | bash        # Kiro
+curl -fsSL https://opencode.ai/install | bash         # OpenCode
+curl -LsSf https://aider.chat/install.sh | sh         # Aider
 ```
 
 ### brew (macOS)
 
 ```bash
+brew install claude-code                 # Claude Code
+brew install gemini-cli                  # Gemini CLI
 brew install --cask warp                 # Warp Terminal
-brew install amazon-q-developer-cli      # Amazon Q
+brew install aider                       # Aider
+brew install amazon-q-developer-cli      # Amazon Q (deprecated)
 ```
 
 ### Manual Download
