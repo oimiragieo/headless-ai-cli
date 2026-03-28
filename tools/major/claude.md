@@ -27,11 +27,13 @@
 
 ## Overview
 
-Anthropic Claude (Claude Code) is a command-line AI coding assistant tuned for agentic coding, architecture, and reasoning. It starts an interactive session by default, with `-p/--print` mode for non-interactive output.
+Anthropic Claude (Claude Code) is a command-line AI coding assistant tuned for agentic coding, architecture, and reasoning. It starts an interactive session by default, with `-p/--print` mode for non-interactive output. The CLI is part of the **Agent SDK**, which also provides [Python](https://platform.claude.com/docs/en/agent-sdk/python) and [TypeScript](https://platform.claude.com/docs/en/agent-sdk/typescript) packages for full programmatic control with structured outputs, tool approval callbacks, and native message objects.
+
+> **Note:** The `-p` CLI mode was previously called "headless mode." All CLI options work the same way — Anthropic now refers to this as the Agent SDK CLI.
 
 **Key Characteristics:**
 
-- Interactive mode by default, headless mode with `-p/--print`
+- Interactive mode by default, headless mode with `-p/--print` (Agent SDK CLI)
 - Multiple model options (Haiku, Sonnet, Opus) with aliases
 - Fine-grained tool control and permission modes
 - Session management with resume and fork capabilities
@@ -110,10 +112,13 @@ claude -p "Generate a user profile" \
 **Key Flags:**
 
 - `-p` or `--print`: Enables headless mode (non-interactive execution). Note: workspace trust dialog is skipped in -p mode.
+- `--bare`: Recommended for scripted/CI calls. Skips auto-discovery of hooks, skills, plugins, MCP servers, auto memory, and CLAUDE.md.
 - `--permission-mode bypassPermissions`: Bypass permission prompts for automation
 - `--dangerously-skip-permissions`: Bypass ALL permission checks (sandbox only)
 - `--output-format`: Specify output format (`text`, `json`, `stream-json`)
 - `--json-schema`: JSON Schema for structured output validation
+
+> **Note:** User-invoked [skills](https://code.claude.com/docs/en/skills) (like `/commit`) and [built-in commands](https://code.claude.com/docs/en/commands) are only available in interactive mode. In `-p` mode, describe the task you want accomplished instead.
 
 ## Available Models
 
@@ -218,7 +223,7 @@ claude [options] -p "Your prompt"
 
 **Tools:**
 
-- `--allowedTools, --allowed-tools <tools...>`: Comma/space-separated list of allowed tools (e.g., "Bash(git:\*) Edit")
+- `--allowedTools, --allowed-tools <tools...>`: Comma/space-separated list of allowed tools using [permission rule syntax](https://code.claude.com/docs/en/settings#permission-rule-syntax). Supports prefix matching with trailing ` *` (e.g., `Bash(git diff *)` allows any command starting with `git diff`). **Important:** the space before `*` matters — `Bash(git diff*)` would also match `git diff-index`.
 - `--tools <tools...>`: Specify available tools from built-in set (only with --print). Use "" to disable all, "default" for all.
 - `--disallowedTools, --disallowed-tools <tools...>`: Comma/space-separated list of denied tools
 
@@ -238,8 +243,9 @@ claude [options] -p "Your prompt"
 
 **Customization:**
 
-- `--system-prompt <prompt>`: System prompt for the session
+- `--system-prompt <prompt>`: System prompt for the session (fully replaces default)
 - `--append-system-prompt <prompt>`: Append to default system prompt
+- `--append-system-prompt-file <file>`: Append contents of a file to the default system prompt
 - `--agents <json>`: JSON object defining custom agents
 - `--mcp-config <configs...>`: Load MCP servers from JSON files or strings (space-separated)
 - `--strict-mcp-config`: Only use MCP servers from --mcp-config
@@ -293,13 +299,44 @@ Returns structured data:
 }
 ```
 
+When using `--json-schema`, the validated structured output is in the `structured_output` field (not `result`):
+
+```bash
+# Extract structured output with jq
+claude -p "Extract function names from auth.py" \
+  --output-format json \
+  --json-schema '{"type":"object","properties":{"functions":{"type":"array","items":{"type":"string"}}},"required":["functions"]}' \
+  | jq '.structured_output'
+```
+
 **Streaming JSON (real-time events):**
 
 ```bash
-claude -p "Build an application" --output-format stream-json
+claude -p "Explain recursion" --output-format stream-json --verbose --include-partial-messages
 ```
 
-Streams each message as it is received, beginning with an `init` system message, followed by user and assistant messages, and ending with a `result` system message with stats.
+Streams each message as it is received, beginning with an `init` system message, followed by user and assistant messages, and ending with a `result` system message with stats. Use `--verbose` and `--include-partial-messages` to receive tokens as they're generated.
+
+Filter for streaming text deltas with jq:
+
+```bash
+claude -p "Write a poem" --output-format stream-json --verbose --include-partial-messages | \
+  jq -rj 'select(.type == "stream_event" and .event.delta.type? == "text_delta") | .event.delta.text'
+```
+
+**API Retry Events:**
+
+When an API request fails with a retryable error during streaming, Claude Code emits a `system/api_retry` event before retrying:
+
+| Field            | Type            | Description                                          |
+| ---------------- | --------------- | ---------------------------------------------------- |
+| `type`           | `"system"`      | Message type                                         |
+| `subtype`        | `"api_retry"`   | Identifies this as a retry event                     |
+| `attempt`        | integer         | Current attempt number (starting at 1)               |
+| `max_retries`    | integer         | Total retries permitted                              |
+| `retry_delay_ms` | integer         | Milliseconds until next attempt                      |
+| `error_status`   | integer or null | HTTP status code, or `null` for connection errors    |
+| `error`          | string          | Error category (e.g., `rate_limit`, `server_error`, `authentication_failed`, `billing_error`, `invalid_request`, `max_output_tokens`, `unknown`) |
 
 ## Configuration
 
@@ -414,6 +451,13 @@ audit_pr() {
 audit_pr 123 > security-report.json
 ```
 
+**Automated Commit from Staged Changes:**
+
+```bash
+claude -p "Look at my staged changes and create an appropriate commit" \
+  --allowedTools "Bash(git diff *),Bash(git log *),Bash(git status *),Bash(git commit *)"
+```
+
 **Multi-turn Legal Assistant:**
 
 ```bash
@@ -445,13 +489,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
       - name: Install Claude CLI
-        run: npm install -g @anthropic-ai/claude-code
+        run: curl -fsSL https://claude.ai/install.sh | bash
 
       - name: Run Claude Code Review
         id: claude_review
@@ -556,11 +595,23 @@ Permission relay allowing channel servers (Telegram, Discord, iMessage) to forwa
 
 **`--bare` Flag:**
 
-For scripted `-p` calls. Skips hooks, LSP, plugin sync, and skill directory walks. Requires `ANTHROPIC_API_KEY` or `apiKeyHelper` via `--settings`. OAuth/keychain auth disabled. Ideal for lightweight CI/CD scripted calls.
+For scripted `-p` calls. Skips hooks, LSP, plugin sync, skill directory walks, auto memory, CLAUDE.md, and MCP servers. Only flags you pass explicitly take effect — a hook in a teammate's `~/.claude` or an MCP server in the project's `.mcp.json` won't run. Requires `ANTHROPIC_API_KEY` or `apiKeyHelper` via `--settings`. OAuth/keychain auth disabled.
+
+> **Note:** `--bare` is the recommended mode for scripted and SDK calls, and will become the default for `-p` in a future release.
 
 ```bash
 claude -p "Quick analysis" --bare --permission-mode bypassPermissions
 ```
+
+In bare mode, Claude has access to Bash, file read, and file edit tools. Pass any additional context you need with flags:
+
+| To load                 | Use                                                     |
+| ----------------------- | ------------------------------------------------------- |
+| System prompt additions | `--append-system-prompt`, `--append-system-prompt-file` |
+| Settings                | `--settings <file-or-json>`                             |
+| MCP servers             | `--mcp-config <file-or-json>`                           |
+| Custom agents           | `--agents <json>`                                       |
+| A plugin directory      | `--plugin-dir <path>`                                   |
 
 **Session Colors (`/color`):**
 
@@ -587,5 +638,9 @@ Claude automatically records and recalls memories across sessions, building up c
 ## References
 
 - [Anthropic Claude Models](https://docs.claude.ai)
-- [Claude Code Headless Mode](https://code.claude.com/docs/en/headless.md)
+- [Claude Code Agent SDK CLI (Headless Mode)](https://code.claude.com/docs/en/headless.md)
+- [Agent SDK Overview (Python/TypeScript)](https://platform.claude.com/docs/en/agent-sdk/overview)
+- [CLI Reference (all flags)](https://code.claude.com/docs/en/cli-reference)
+- [GitHub Actions Integration](https://code.claude.com/docs/en/github-actions)
+- [GitLab CI/CD Integration](https://code.claude.com/docs/en/gitlab-ci-cd)
 - [Anthropic Console](https://console.anthropic.com/)
